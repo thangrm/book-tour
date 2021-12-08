@@ -11,7 +11,7 @@ body {
     width: 100%;
     margin: 0 auto;
     padding-top: 20px;
-    background-image: url('image/background-header.png');
+    background-image: url('../image/background-header.png');
     background-size: auto 766px;
     background-repeat: no-repeat;
     background-position: top;
@@ -226,7 +226,7 @@ body {
 
                 .text-slogan{
                     padding-left: 10px;
-                    font-size: 26px;
+                    font-size: 25px;
                 }
             }
 
@@ -278,7 +278,7 @@ body {
 
         .content-introduce{
             margin-top: 60px;
-            height: 250px;
+            height: 450px;
             font-size: 16px;
 
             .icon-droplet-introduce{
@@ -298,6 +298,105 @@ body {
         .box-introduce-image{
             width: 75%;
             margin-bottom: 80px;
+        }
+    }
+
+    @media only screen and (max-width: 576px) {
+        .box-introduce-image{
+            min-height: 300px;
+        }
+
+    
+        .box-text-introduce{
+            .introduce-title{
+                font-size: 28px;
+            }
+        }
+    }
+}
+
+/*========== Slide Destinations ==========*/
+.box-slide{
+    .header-slide{
+        display: flex;
+        justify-content: space-between;
+
+        .title-slide{
+            font-size: 40px;
+            font-weight: 500;
+            font-style: normal;
+            line-height: 40px;
+            width: 551px;
+        }
+
+        .btn-view-all{
+            width: 92px;
+            height: 38px;
+            background: #1C1C1E;
+            color: white;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+
+        }
+    }
+
+    .body-slide{
+        position: relative;
+        margin-top: 60px;
+
+        .card-destination{
+            width: 255px;
+            border: none;
+
+            img{
+                width: 100%;
+            }
+
+            .card-body{
+                padding: 12px 0;
+
+                .card-title{
+                    margin-bottom: 2px;
+                }
+            }
+        }
+    }
+    .next-slide{
+        position: absolute;
+        right: -34px;
+        top: 30%;
+        z-index: 1;
+    }
+
+    .next-slide:hover{
+        cursor: pointer;
+    }
+
+    @media only screen and (max-width: 992px) {
+        .body-slide{
+            .card-destination{
+                width: 200px;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 576px) {
+        .body-slide{
+            .card-destination{
+                width: 135px;
+            }
+        }
+
+        .next-slide{
+            right: 10px;
+        }
+
+        .header-slide{
+            .title-slide{
+                width: 250px;
+                font-size: 24px;
+            }
         }
     }
 }
