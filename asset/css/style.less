@@ -172,23 +172,6 @@ body {
                 margin: 18px 30px;
             }
 
-            .input-inner-icon{
-                position: relative;
-     
-                img{
-                    position: absolute;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    left: 25px;
-                    z-index: 1;
-                }
-
-                input{
-                    padding-left: 60px;
-                    height: 64px;
-                }
-            }
-
             .btn-search-submit{
                 height: 64px;
                 background-color: @orange-primary;
@@ -511,9 +494,90 @@ body {
     
     @media only screen and (max-width: 576px) {
         .card-tour{
-            width: 250px;
+            width: 90%;
         }
     }
 }
+/*========== Mail Deals ==========*/
+.mail-deals{
+    width: 100%;
+    margin-top: 150px;
 
+    .title-mail{
+        width: 100%;
+        max-width: 434px;
+        height: 80px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 100%;
+        color: @black-title;
+        p{
+            margin: 0;
+            span{
+                color: @orange-primary;
+            }
+        }
+
+    }
+
+    .form-input-mail{
+        width: 100%;
+        .input-mail{
+            input{
+                height: 48px;
+                border: 1px solid @subcolor;
+            }
+        }
+
+        .btn-send-mail{
+            margin-left: 54px;
+            width: 101px;
+            height: 48px;
+            background-color: @black-title;
+            color: white;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 22px;
+            letter-spacing: 0em;
+        }
+    }
+
+    @media only screen and (max-width: 1200px) {
+        .form-input-mail{
+            .btn-send-mail{
+                margin-left: 15px;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 576px) {
+        .title-mail{
+            font-size: 30px;
+        }
+
+           .form-input-mail{
+            .btn-send-mail{
+                margin-left: 15px;
+            }
+        }
+    }
+}
 /*========== Other ==========*/
+.input-inner-icon{
+    position: relative;
+
+    img{
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 25px;
+        z-index: 1;
+    }
+
+    input{
+        padding-left: 60px;
+        height: 64px;
+    }
+}
