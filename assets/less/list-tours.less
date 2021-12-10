@@ -1,3 +1,4 @@
+/*========== Header ==========*/
 .header-list-tours {
     background-image: url('../images/background-tour.png');
     background-size: auto 400px;
@@ -38,6 +39,201 @@
                     line-height: 28px;
                 }
             }
+        }
+    }
+}
+
+/*========== List Tours Item ==========*/
+.list-tours {
+    .title-slide {
+        margin: 0;
+    }
+
+    .btn-filter-wrap {
+        position: relative;
+
+        .btn-filter {
+            height: 38px;
+            width: 105px;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 22px;
+            border: 1.5px solid #1E1E1E;
+            border-radius: 0;
+            padding-top: 10px;
+
+            i {
+                font-size: 20px;
+            }
+        }
+
+        .collapse-fillter {
+            position: absolute;
+            right: 0;
+            top: 60px;
+            height: 780px;
+            width: 350px;
+            border-radius: 0px;
+            padding: 24px;
+            box-shadow: 0px 4px 36px 0px #00000033;
+            z-index: 3;
+            background: #FFFFFF;
+
+            .card {
+                padding: 0;
+                border: none;
+
+                .filter-header {
+                    text-transform: uppercase;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 23px;
+                    margin-bottom: 20px;
+
+                    p {
+                        margin: 0;
+                        color: #03387D;
+                    }
+
+                    .text-clear {
+                        color: #C4C4C4;
+                    }
+
+                    .text-clear:hover {
+                        color: #03387D;
+                        cursor: pointer;
+                    }
+                }
+
+                h5 {
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                }
+
+                .form-select-filter {
+                    .form-group {
+                        .form-check {
+                            margin-bottom: 20px;
+
+                            .form-check-input {
+                                margin-right: 15px;
+                            }
+                        }
+                    }
+
+                    .btn-submit-filter {
+                        height: 48px;
+                        width: 301px;
+                        margin-top: 32px;
+                        background-color: @orange-primary;
+                        color: white;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 24px;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .body-slide {
+        .card-tour {
+            width: 100%;
+            margin-bottom: 45px;
+
+            .card-body {
+                .card-title {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    .pagination-list-tours {
+        .pagination-text {
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 17px;
+            letter-spacing: 0em;
+            color: #8E8E93;
+            margin-right: 35%;
+        }
+
+        .page-navigation {
+            .pagination {
+                .page-item {
+                    .page-link {
+                        width: 48px;
+                        height: 48px;
+                        padding: 0;
+                        text-align: center;
+                        line-height: 48px;
+                        background: #E8E9EA;
+                        color: @text-content;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 700;
+                        margin: 12px;
+
+                        img {
+                            padding-bottom: 5px;
+                        }
+                    }
+                }
+
+                .page-item.active a {
+                    background-color: @black-title;
+                    color: white;
+                }
+            }
+
+        }
+    }
+
+    @media only screen and (max-width: 992px) {
+        .pagination-list-tours {
+            .pagination-text {
+                margin-right: 10%;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .pagination-list-tours {
+            flex-direction: column;
+
+
+            .pagination-text {
+                text-align: center;
+                width: 100%;
+                margin-right: 15%;
+            }
+
+            .page-navigation {
+                width: 100%;
+
+                .pagination {
+                    justify-content: center !important;
+
+                    .page-item {
+                        .page-link {
+                            width: 30px;
+                            height: 30px;
+                            line-height: 30px;
+                            font-size: 15px;
+                            margin: 10;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

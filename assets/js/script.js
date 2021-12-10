@@ -65,8 +65,19 @@ $(document).ready(function() {
         $(slideID).trigger('next.owl.carousel');
     })
 
-
+    // Change icon nav-header
     $('#navbarBtn').on('click', function() {
         $('#navbarBtn').toggleClass('navbar-active-btn');
     });
+
+    // Chang icon Filter - List Tour Page
+    $('#btnFilterTours').on('click', function() {
+        $('.iconBtnFilter').toggleClass('d-none');
+    });
+
+    // Clear form filter
+    $('#clearFormFilter').on('click', function() {
+        $('#formSelectFilter')[0].reset();
+    })
+
 });

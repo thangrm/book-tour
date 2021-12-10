@@ -1,6 +1,7 @@
 @orange-primary: #FF7B42;
 @black-title: #1C1C1E;
 @subcolor: #636567;
+@text-content: #4F4F52;
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 
@@ -78,7 +79,7 @@ body {
         }
     }
 
-    @media only screen and (max-width: 575.5px) {
+    @media only screen and (max-width: 575.98px) {
         .navbar-header {
             width: 300px;
             height: 100%;
@@ -352,11 +353,20 @@ body {
                     color: @black-title;
                     font-style: normal;
                     font-weight: 500;
+                    display: -webkit-box;
+                    overflow: hidden;
+                    -webkit-line-clamp: 2;
+                    text-overflow: ellipsis;
+                    -webkit-box-orient: vertical;
                 }
 
                 .card-text {
                     color: @subcolor;
                     font-weight: 400;
+
+                    .card-title {
+                        display: inline;
+                    }
                 }
             }
         }
@@ -388,6 +398,20 @@ body {
             .title-slide {
                 width: 250px;
                 font-size: 24px;
+            }
+        }
+
+        .body-slide {
+            .card-body {
+                div {
+                    flex-direction: column;
+                    align-items: flex-start !important;
+                    text-align: left;
+
+                    p {
+                        padding: 0;
+                    }
+                }
             }
         }
     }
