@@ -2,12 +2,14 @@
     .header-slide {
         display: flex;
         justify-content: space-between;
+        align-items: flex-end;
         .title-slide {
             font-size: 40px;
             font-weight: 500;
             font-style: normal;
             line-height: 40px;
             width: 551px;
+            margin-bottom: 0;
         }
         .btn-view-all {
             width: 92px;
@@ -22,8 +24,31 @@
     .body-slide {
         position: relative;
         margin-top: 60px;
+        .owl-nav {
+            .disabled {
+                display: none;
+            }
+            button {
+                position: absolute;
+                top: 30%;
+            }
+            .owl-prev {
+                left: -35px;
+                img {
+                    transform: rotate(180deg);
+                }
+            }
+            .owl-next {
+                right: -35px;
+            }
+            .button:hover {
+                cursor: pointer;
+                z-index: 1;
+            }
+        }
         .card {
             border: none;
+            width: 100%;
             img {
                 width: 100%;
             }
@@ -49,24 +74,22 @@
             }
         }
     }
-    .next-slide {
-        position: absolute;
-        right: -34px;
-        top: 30%;
-        z-index: 1;
-    }
-    .next-slide:hover {
-        cursor: pointer;
-    }
-    @media only screen and (max-width: 1024px) {
-        .next-slide {
-            right: -5px;
+    @media only screen and (max-width: 1200px) {
+        .body-slide {
+            .owl-nav {
+                button {
+                    top: -35px;
+                }
+                .owl-prev {
+                    left: 2%;
+                }
+                .owl-next {
+                    right: 2%;
+                }
+            }
         }
     }
     @media only screen and (max-width: 576px) {
-        .next-slide {
-            right: 0;
-        }
         .header-slide {
             .title-slide {
                 width: 250px;

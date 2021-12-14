@@ -100,6 +100,9 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 .box-slide .header-slide .title-slide {
@@ -108,6 +111,7 @@ body {
   font-style: normal;
   line-height: 40px;
   width: 551px;
+  margin-bottom: 0;
 }
 
 .box-slide .header-slide .btn-view-all {
@@ -125,8 +129,36 @@ body {
   margin-top: 60px;
 }
 
+.box-slide .body-slide .owl-nav .disabled {
+  display: none;
+}
+
+.box-slide .body-slide .owl-nav button {
+  position: absolute;
+  top: 30%;
+}
+
+.box-slide .body-slide .owl-nav .owl-prev {
+  left: -35px;
+}
+
+.box-slide .body-slide .owl-nav .owl-prev img {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.box-slide .body-slide .owl-nav .owl-next {
+  right: -35px;
+}
+
+.box-slide .body-slide .owl-nav .button:hover {
+  cursor: pointer;
+  z-index: 1;
+}
+
 .box-slide .body-slide .card {
   border: none;
+  width: 100%;
 }
 
 .box-slide .body-slide .card img {
@@ -157,27 +189,19 @@ body {
   display: inline;
 }
 
-.box-slide .next-slide {
-  position: absolute;
-  right: -34px;
-  top: 30%;
-  z-index: 1;
-}
-
-.box-slide .next-slide:hover {
-  cursor: pointer;
-}
-
-@media only screen and (max-width: 1024px) {
-  .box-slide .next-slide {
-    right: -5px;
+@media only screen and (max-width: 1200px) {
+  .box-slide .body-slide .owl-nav button {
+    top: -35px;
+  }
+  .box-slide .body-slide .owl-nav .owl-prev {
+    left: 2%;
+  }
+  .box-slide .body-slide .owl-nav .owl-next {
+    right: 2%;
   }
 }
 
 @media only screen and (max-width: 576px) {
-  .box-slide .next-slide {
-    right: 0;
-  }
   .box-slide .header-slide .title-slide {
     width: 250px;
     font-size: 24px;
@@ -362,10 +386,11 @@ div[slider] > input[type=range]::-ms-tooltip {
 /* layout */
 .header {
   width: 100%;
+  height: 766px;
   margin: 0 auto;
   padding-top: 20px;
   background-image: url("../images/background-header.png");
-  background-size: auto 766px;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
 }
@@ -404,6 +429,7 @@ div[slider] > input[type=range]::-ms-tooltip {
 @media only screen and (max-width: 992px) {
   .header {
     background-size: auto 535px;
+    height: auto;
   }
   .header .navbar-header .nav-item a {
     padding: 8px 1.2em;
@@ -446,7 +472,7 @@ div[slider] > input[type=range]::-ms-tooltip {
 }
 
 .header .box-content-header {
-  margin-top: 152px;
+  margin-top: 153px;
   /* Text Header*/
   /* Feature */
   /* Search */
@@ -864,13 +890,16 @@ div[slider] > input[type=range]::-ms-tooltip {
   width: 100%;
 }
 
+.mail-deals .form-input-mail .input-mail {
+  margin-left: 0;
+}
+
 .mail-deals .form-input-mail .input-mail input {
   height: 48px;
   border: 1px solid #636567;
 }
 
 .mail-deals .form-input-mail .btn-send-mail {
-  margin-left: 54px;
   width: 101px;
   height: 48px;
   background-color: #1C1C1E;

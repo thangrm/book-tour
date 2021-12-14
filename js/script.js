@@ -1,8 +1,12 @@
 $(document).ready(function() {
     $("#slideDestinations").owlCarousel({
-        loop: true,
-        margin: 1,
+        loop: false,
+        margin: 30,
         responsiveClass: true,
+        nav: true,
+        navText: [`<img src="images/icon/arrow-right.svg" alt="prev">`,
+            `<img src="images/icon/arrow-right.svg" alt="next">`
+        ],
         responsive: {
             0: {
                 items: 2,
@@ -20,9 +24,13 @@ $(document).ready(function() {
     });
 
     $("#slideTours").owlCarousel({
-        loop: true,
-        margin: 1,
+        loop: false,
+        margin: 30,
         responsiveClass: true,
+        nav: true,
+        navText: [`<img src="images/icon/arrow-right.svg" alt="prev">`,
+            `<img src="images/icon/arrow-right.svg" alt="next">`
+        ],
         responsive: {
             0: {
                 items: 1,
@@ -41,9 +49,13 @@ $(document).ready(function() {
 
 
     $("#slideCultural").owlCarousel({
-        loop: true,
-        margin: 1,
+        loop: false,
+        margin: 30,
         responsiveClass: true,
+        nav: true,
+        navText: [`<img src="images/icon/arrow-right.svg" alt="prev">`,
+            `<img src="images/icon/arrow-right.svg" alt="next">`
+        ],
         responsive: {
             0: {
                 items: 1,
@@ -64,7 +76,6 @@ $(document).ready(function() {
         loop: false,
         margin: 30,
         dotsContainer: '.owl-dots-container',
-
         responsive: {
             0: {
                 items: 3,
