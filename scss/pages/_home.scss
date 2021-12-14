@@ -193,13 +193,13 @@
     .form-input-mail {
         width: 100%;
         .input-mail {
+            margin-left: 0;
             input {
                 height: 48px;
                 border: 1px solid $subcolor;
             }
         }
         .btn-send-mail {
-            margin-left: 54px;
             width: 101px;
             height: 48px;
             background-color: $black-title;
