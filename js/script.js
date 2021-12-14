@@ -60,6 +60,21 @@ $(document).ready(function() {
         }
     });
 
+    $("#slideImageThumnail").owlCarousel({
+        loop: false,
+        margin: 30,
+        dotsContainer: '.owl-dots-container',
+
+        responsive: {
+            0: {
+                items: 3,
+            },
+            1200: {
+                items: 4,
+            },
+        }
+    });
+
     $('.next-slide').click(function(event) {
         let slideID = event.target.getAttribute('data-target');
         $(slideID).trigger('next.owl.carousel');
@@ -80,4 +95,11 @@ $(document).ready(function() {
         $('#formSelectFilter')[0].reset();
     })
 
+    // Choose thumbnail image
+    $('.thumbnailItem').on('click', function(e) {
+        $('.thumbnailItem').removeClass("target");
+        e.target.classList.add("target");
+        linkSrc = e.target.getAttribute('src');
+        $('#mainImageTour').attr('src', linkSrc);
+    })
 });

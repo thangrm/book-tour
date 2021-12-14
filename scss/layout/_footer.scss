@@ -1,0 +1,101 @@
+.footer {
+    margin-top: 150px;
+    background-color: $black-title;
+    .footer-info {
+        .footer-logo {
+            .footer-social {
+                img {
+                    width: 20px;
+                    height: 16px;
+                    margin-right: 35px;
+                }
+            }
+        }
+        .footer-nav {
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 52px;
+            text-align: left;
+            a {
+                color: white;
+                padding-top: 0;
+            }
+            a:hover {
+                cursor: pointer;
+                color: $orange-primary;
+            }
+        }
+        .footer-contact {
+            margin-top: 15px;
+            .contact-item {
+                .icon-contact {
+                    display: inline-block;
+                    margin-right: 20px;
+                }
+                p {
+                    display: inline-block;
+                    width: 80%;
+                    a {
+                        color: white;
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 400;
+                        letter-spacing: 0em;
+                        text-align: left;
+                    }
+                    a:hover {
+                        color: $orange-primary;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    .copyright {
+        height: 41px;
+        width: 100%;
+        background-color: #000000;
+        margin: 0 auto;
+        text-align: center;
+        span {
+            color: white;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 41px;
+            letter-spacing: 0em;
+        }
+    }
+    @media only screen and (max-width: 992px) {
+        .footer-info {
+            .footer-logo {
+                .footer-social {
+                    img {
+                        margin-right: 15px;
+                    }
+                }
+            }
+            .footer-contact {
+                .contact-item {
+                    .icon-contact {
+                        margin-right: 10px;
+                        img {
+                            width: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        .footer-info {
+            .footer-logo {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+    }
+    @media only screen and (max-width: 576px) {}
+}

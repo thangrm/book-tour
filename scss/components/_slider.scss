@@ -1,0 +1,89 @@
+.box-slide {
+    .header-slide {
+        display: flex;
+        justify-content: space-between;
+        .title-slide {
+            font-size: 40px;
+            font-weight: 500;
+            font-style: normal;
+            line-height: 40px;
+            width: 551px;
+        }
+        .btn-view-all {
+            width: 92px;
+            height: 38px;
+            background: #1C1C1E;
+            color: white;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+        }
+    }
+    .body-slide {
+        position: relative;
+        margin-top: 60px;
+        .card {
+            border: none;
+            img {
+                width: 100%;
+            }
+            .card-body {
+                padding: 12px 0;
+                .card-title {
+                    color: $black-title;
+                    font-style: normal;
+                    font-weight: 500;
+                    display: -webkit-box;
+                    overflow: hidden;
+                    -webkit-line-clamp: 2;
+                    text-overflow: ellipsis;
+                    -webkit-box-orient: vertical;
+                }
+                .card-text {
+                    color: $subcolor;
+                    font-weight: 400;
+                    .card-title {
+                        display: inline;
+                    }
+                }
+            }
+        }
+    }
+    .next-slide {
+        position: absolute;
+        right: -34px;
+        top: 30%;
+        z-index: 1;
+    }
+    .next-slide:hover {
+        cursor: pointer;
+    }
+    @media only screen and (max-width: 1024px) {
+        .next-slide {
+            right: -5px;
+        }
+    }
+    @media only screen and (max-width: 576px) {
+        .next-slide {
+            right: 0;
+        }
+        .header-slide {
+            .title-slide {
+                width: 250px;
+                font-size: 24px;
+            }
+        }
+        .body-slide {
+            .card-body {
+                div {
+                    flex-direction: column;
+                    align-items: flex-start !important;
+                    text-align: left;
+                    p {
+                        padding: 0;
+                    }
+                }
+            }
+        }
+    }
+}
