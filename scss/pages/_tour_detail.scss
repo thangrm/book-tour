@@ -1,0 +1,196 @@
+/*========== Header ==========*/
+
+.header-tour-detail {
+    background-image: none;
+    height: 130px;
+    .logo {
+        filter: invert(1);
+    }
+    .navbar {
+        .navbar-header {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            .nav-item {
+                a {
+                    color: black;
+                }
+                a:hover {
+                    color: $orange-primary;
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 575.98px) {
+        .navbar-header {
+            background: #525253;
+        }
+    }
+}
+
+.box-detail-tour {
+    .header-detail {
+        .title-tour {
+            font-size: 36px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 36px;
+        }
+        .text-content {
+            color: $subcolor;
+            font-weight: 400;
+        }
+        .rate {
+            width: 65px;
+            height: 30px;
+            padding: 0 10px;
+            background-color: $orange-primary;
+            display: inline-flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-right: 40px;
+            img {
+                height: 16px;
+                width: 16px;
+                display: inline;
+            }
+            span {
+                padding-top: 4px;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 22px;
+                color: white;
+            }
+        }
+    }
+    .box-detail-content {
+        margin-top: 38px;
+        .body-tour-slide {
+            .main-image-tour {
+                position: relative;
+                width: 92%;
+                .main-image {
+                    width: 100%;
+                    position: relative;
+                    img {
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }
+                .main-image:after {
+                    content: "";
+                    display: block;
+                    padding-bottom: 85%;
+                }
+                .ribbon {
+                    height: 35px;
+                    width: 50px;
+                    right: 2%;
+                    z-index: 2;
+                }
+                .list-image-thumbnail {
+                    width: 100%;
+                    margin-top: 30px;
+                    img {
+                        width: 100%;
+                        height: 97px;
+                    }
+                    img:hover {
+                        border: 1px solid burlywood;
+                        filter: none !important;
+                    }
+                    img:not(.target) {
+                        filter: blur(3px);
+                    }
+                }
+            }
+        }
+        .box-book-now {
+            background-color: #f4f4f4;
+            padding: 30px;
+            overflow: hidden;
+            hr {
+                margin-left: -30px;
+                width: 150%;
+            }
+            .card-text {
+                color: $black-content;
+            }
+            .card-title {
+                font-size: 20px;
+                font-weight: 500;
+            }
+            .info-tour {
+                .card-title {
+                    font-size: 14px;
+                }
+                .card-text {
+                    color: $black-content;
+                    .card-title {
+                        color: $black-title;
+                        font-weight: 500;
+                        font-size: 14px;
+                    }
+                }
+            }
+            .input-inner-icon {
+                margin: 20px 0;
+            }
+            .btn-search-submit {
+                height: 64px;
+                background-color: $orange-primary;
+                color: white;
+                border: none;
+                font-size: 14px;
+                font-weight: 700;
+            }
+            .total-price {
+                color: $black-title;
+                margin-bottom: 30px;
+                .card-text {
+                    font-size: 20px;
+                    font-weight: 400;
+                    padding: 0;
+                    margin: 0;
+                }
+                .card-title {
+                    font-weight: 700;
+                    font-size: 20px;
+                    padding: 0;
+                    margin: 0;
+                }
+            }
+        }
+        @media only screen and (max-width: 992px) {
+            .body-tour-slide {
+                .main-image-tour {
+                    width: 100%;
+                }
+            }
+        }
+        @media only screen and (max-width: 992px) {
+            .box-book-now {
+                margin-top: 80px;
+            }
+        }
+        @media only screen and (max-width: 576px) {
+            .body-tour-slide {
+                .main-image-tour {
+                    .list-image-thumbnail {
+                        img {
+                            height: 75px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
