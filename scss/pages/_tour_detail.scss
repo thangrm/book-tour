@@ -66,49 +66,116 @@
     }
     .box-detail-content {
         margin-top: 38px;
-        .body-tour-slide {
-            .main-image-tour {
-                position: relative;
-                width: 92%;
-                .main-image {
-                    width: 100%;
+        .box-body-detail {
+            width: 92%;
+            .body-tour-slide {
+                .main-image-tour {
                     position: relative;
-                    img {
-                        position: absolute;
-                        top: 0;
-                        bottom: 0;
-                        left: 0;
-                        right: 0;
+                    .main-image {
                         width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                        object-position: center;
+                        position: relative;
+                        img {
+                            position: absolute;
+                            top: 0;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            object-position: center;
+                        }
                     }
-                }
-                .main-image:after {
-                    content: "";
-                    display: block;
-                    padding-bottom: 85%;
-                }
-                .ribbon {
-                    height: 35px;
-                    width: 50px;
-                    right: 2%;
-                    z-index: 2;
-                }
-                .list-image-thumbnail {
-                    width: 100%;
-                    margin-top: 30px;
-                    img {
+                    .main-image:after {
+                        content: "";
+                        display: block;
+                        padding-bottom: 85%;
+                    }
+                    .ribbon {
+                        height: 35px;
+                        width: 50px;
+                        right: 2%;
+                        z-index: 2;
+                    }
+                    .list-image-thumbnail {
                         width: 100%;
-                        height: 97px;
+                        margin-top: 30px;
+                        img {
+                            width: 100%;
+                            height: 97px;
+                        }
+                        img:hover {
+                            border: 1px solid burlywood;
+                            filter: none !important;
+                        }
+                        img:not(.target) {
+                            filter: blur(3px);
+                        }
                     }
-                    img:hover {
-                        border: 1px solid burlywood;
-                        filter: none !important;
+                }
+            }
+            .box-descriptions {
+                margin-top: 50px;
+                hr {
+                    height: 2px;
+                }
+                .nav {
+                    .nav-item {
+                        .nav-link {
+                            margin: 0;
+                            padding: 0;
+                            text-align: left;
+                            width: auto;
+                            font-size: 24px;
+                            font-style: normal;
+                            font-weight: 700;
+                            text-align: center;
+                            color: #888888;
+                        }
+                        .active {
+                            background-color: transparent;
+                            color: $orange-primary;
+                        }
                     }
-                    img:not(.target) {
-                        filter: blur(3px);
+                }
+                .tab-content {
+                    .tab-pane {
+                        .box-text {
+                            margin: 30px 0 50px 0;
+                            margin-bottom: 50px;
+                            .panel-title {
+                                font-size: 20px;
+                                font-style: normal;
+                                font-weight: 700;
+                                color: black;
+                            }
+                            .panel-sub-title {
+                                font-weight: bold;
+                                color: rgba(30, 30, 30, 0.8);
+                            }
+                            .panel-text {
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 30px;
+                                color: #4F4F4F;
+                            }
+                            ul {
+                                padding-left: 16px;
+                                list-style-position: outside;
+                                li {
+                                    color: #4F4F4F;
+                                }
+                            }
+                            .tick-vert {
+                                list-style-image: url('../images/icon/tick-vert.svg');
+                                padding-left: 25px;
+                                li {
+                                    padding-left: 20px;
+                                    margin-bottom: 10px;
+                                }
+                            }
+                        }
                     }
                 }
             }
