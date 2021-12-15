@@ -1351,7 +1351,6 @@ div[slider] > input[type=range]::-ms-tooltip {
 
 .box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text ul {
   padding-left: 16px;
-  list-style-position: outside;
 }
 
 .box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text ul li {
@@ -1366,6 +1365,83 @@ div[slider] > input[type=range]::-ms-tooltip {
 .box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .tick-vert li {
   padding-left: 20px;
   margin-bottom: 10px;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion {
+  border: none;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item {
+  border: none;
+  background: #F4F4F4;
+  margin-bottom: 20px;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .accordion-button {
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  color: #04316A;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .accordion-button:not(.collapsed) {
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  background: #F4F4F4;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .collapsed {
+  border: 1px solid #C4C4C4;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .accordion-body .list-itineraries {
+  list-style-image: url("../images/icon/map-pin.svg");
+  list-style: none;
+  padding-left: 25px;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .accordion-body .list-itineraries .itineraty-item {
+  position: relative;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  margin-bottom: 30px;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .accordion-body .list-itineraries .itineraty-item .title-itinerary {
+  color: #04316A;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .accordion-body .list-itineraries .itineraty-item .duration-itinerary {
+  margin-top: 30px;
+  font-weight: bold;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .accordion-body .list-itineraries .itineraty-item .duration-itinerary span {
+  font-weight: 400;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-descriptions .tab-content .tab-pane .box-text .accordion .accordion-item .accordion-body .list-itineraries li:after {
+  display: block;
+  content: "";
+  background: url("../images/icon/map-pin.svg");
+  width: 18px;
+  height: 22px;
+  position: absolute;
+  top: 5px;
+  left: -25px;
 }
 
 .box-detail-tour .box-detail-content .box-book-now {
@@ -1435,20 +1511,23 @@ div[slider] > input[type=range]::-ms-tooltip {
 }
 
 @media only screen and (max-width: 992px) {
-  .box-detail-tour .box-detail-content .body-tour-slide .main-image-tour {
+  .box-detail-tour .box-detail-content .box-body-detail {
     width: 100%;
   }
-}
-
-@media only screen and (max-width: 992px) {
   .box-detail-tour .box-detail-content .box-book-now {
     margin-top: 80px;
+  }
+  .box-detail-tour .box-detail-content .box-body-detail .box-descriptions .nav .nav-item .nav-link {
+    font-size: 22px;
   }
 }
 
 @media only screen and (max-width: 576px) {
   .box-detail-tour .box-detail-content .body-tour-slide .main-image-tour .list-image-thumbnail img {
     height: 75px;
+  }
+  .box-detail-tour .box-detail-content .box-body-detail .box-descriptions .nav .nav-item .nav-link {
+    font-size: 16px;
   }
 }
 /*# sourceMappingURL=main.css.map */
