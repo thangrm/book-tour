@@ -6,6 +6,7 @@
     background-repeat: no-repeat;
     background-position: top;
     min-height: 400px;
+    height: auto;
     .box-content-header {
         margin-top: 90px;
         .text-header {
@@ -44,6 +45,7 @@
 /*========== List Tours Item ==========*/
 
 .list-tours {
+    margin-top: 0;
     .title-slide {
         margin: 0;
     }
