@@ -70,13 +70,22 @@
 
 .card-destination {
     width: 255px;
+    img {
+        height: 350px !important;
+    }
     .card-body {
+        h5 {
+            min-height: 28px !important;
+            margin: 0;
+        }
         .card-title {
+            -webkit-line-clamp: 1 !important;
             font-size: 20px;
             margin-bottom: 2px;
         }
         .card-text {
             font-size: 14px;
+            padding: 0;
         }
     }
 }
