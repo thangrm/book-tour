@@ -13,6 +13,8 @@
     <!-- owl carousel -->
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="css/owl.theme.default.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
     <!-- custom css -->
     <link rel="stylesheet" href="css/main.css" />
 </head>
@@ -132,7 +134,7 @@
                             <!-- panel -->
                             <div class="tab-content" id="pills-tabContent">
                                 <!-- panel descriptions -->
-                                <div class="tab-pane panel-desc fade" id="pills-desc" role="tabpanel" aria-labelledby="pills-desc-tab">
+                                <div class="tab-pane panel-desc fade show active" id="pills-desc" role="tabpanel" aria-labelledby="pills-desc-tab">
                                     <div class="box-text">
                                         <p class="panel-title">
                                             Overview
@@ -266,9 +268,36 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="box-text">
+                                        <p class="panel-title">
+                                            Maps
+                                        </p>
+                                        <div class="box-maps">
+                                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.870471877026!2d105.79155841446575!3d20.997828686015115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab1167edbae7%3A0xa0790fee2a2a9c1b!2sAdamo%20Software%20-%20Leading%20Vietnam%20Software%20Outsourcing%20Company!5e0!3m2!1svi!2s!4v1639630813755!5m2!1svi!2s"
+                                                style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 
+                                        </div>
+                                    </div>
+                                    <div class="box-text">
+                                        <p class="panel-title">
+                                            360° Panoramic Images and Videos
+                                        </p>
+                                        <div class="box-images-panoramic" id="imagePanoramic">
+                                            <div class="wrap-panoramic">
+                                                <img src="images/icon/360.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="box-video">
+                                            <video controls id="videoTour">
+                                                <source src="video/sample-video.mp4" type="video/mp4" />
+                                            </video>
+                                            <div class="wrap-video">
+                                                <i class="bi bi-play-fill" id="iconPlayVideo"></i>
+                                                <i class="bi bi-pause" id="iconPauseVideo"></i>
+                                            </div>
+                                        </div>
 
-
+                                    </div>
                                 </div>
 
                                 <!-- panel additional info -->
@@ -347,7 +376,7 @@
                                 </div>
 
                                 <!-- panel reviews -->
-                                <div class="tab-pane panel-review fade show active" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+                                <div class="tab-pane panel-review fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
                                     <div class="box-rate-review">
                                         <div class="row">
                                             <div class="col-12 col-md-5">
@@ -638,6 +667,9 @@
 
 <!-- owl carousel -->
 <script src="js/owl.carousel.js"></script>
+
+<!-- panellum -->
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 
 <!-- custom js -->
 <script src="js/slider.js"></script>

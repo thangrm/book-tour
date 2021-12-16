@@ -113,4 +113,30 @@ $(document).ready(function() {
         linkSrc = e.target.getAttribute('src');
         $('#mainImageTour').attr('src', linkSrc);
     })
+
+    //Panorama
+    pannellum.viewer('imagePanoramic', {
+        "type": "equirectangular",
+        "panorama": "./images/travel-360.jpg",
+        "autoLoad": true,
+    });
+
+    //Video
+    $('#videoTour, .wrap-video').on('click', function() {;
+        let video = $('#videoTour').get(0);
+        if (video.paused) {
+            video.play();
+            $('#iconPlayVideo').hide();
+            $('#iconPauseVideo').show();
+            $('.wrap-video').hide();
+        } else {
+            video.pause();
+            $('#iconPlayVideo').show();
+            $('#iconPauseVideo').hide();
+        }
+    });
+
+    $('#imagePanoramic').on('click', function() {
+        $('.wrap-panoramic').hide();
+    });
 });
