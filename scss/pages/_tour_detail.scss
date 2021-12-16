@@ -114,11 +114,8 @@
                     }
                 }
             }
-            .box-descriptions {
+            .box-info {
                 margin-top: 50px;
-                hr {
-                    height: 2px;
-                }
                 .nav {
                     .nav-item {
                         .nav-link {
@@ -139,6 +136,10 @@
                     }
                 }
                 .tab-content {
+                    hr {
+                        height: 0.5px;
+                        color: #888888;
+                    }
                     .tab-pane {
                         .box-text {
                             margin: 30px 0 50px 0;
@@ -203,22 +204,22 @@
                                         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
                                     }
                                     .accordion-body {
-                                        .list-itineraries {
-                                            list-style-image: url('../images/icon/map-pin.svg');
+                                        .list-accordion {
                                             list-style: none;
                                             padding-left: 25px;
-                                            .itineraty-item {
+                                            line-height: 30px;
+                                            .list-accordion-item {
                                                 position: relative;
                                                 font-size: 16px;
                                                 font-weight: 400;
                                                 line-height: 30px;
                                                 margin-bottom: 30px;
-                                                .title-itinerary {
+                                                .title-item {
                                                     color: #04316A;
                                                     font-weight: bold;
                                                     margin-bottom: 0;
                                                 }
-                                                .duration-itinerary {
+                                                .duration-item {
                                                     margin-top: 30px;
                                                     font-weight: bold;
                                                     span {
@@ -239,6 +240,147 @@
                                         }
                                     }
                                 }
+                            }
+                        }
+                    }
+                    .panel-info {
+                        .box-text {
+                            .accordion {
+                                .accordion-item {
+                                    .accordion-button {
+                                        img {
+                                            padding-top: 6px;
+                                            margin-right: 20px;
+                                        }
+                                    }
+                                    .collapsed {
+                                        color: black;
+                                        img {
+                                            filter: brightness(0);
+                                        }
+                                    }
+                                    .accordion-body {
+                                        p {
+                                            padding-left: 42px;
+                                        }
+                                    }
+                                }
+                            }
+                            li {
+                                margin-bottom: 10px;
+                            }
+                        }
+                    }
+                    .panel-review {
+                        .box-rate-review {
+                            width: 100%;
+                            background-color: #f4f4f4;
+                            padding: 30px;
+                            .box-rate {
+                                border-right: 1px solid #C4C4C4;
+                                padding: 0;
+                                .rate-title {
+                                    font-size: 48px;
+                                    font-weight: 600;
+                                    margin: 0;
+                                }
+                                .rate-text {
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    span {
+                                        font-weight: bold;
+                                    }
+                                }
+                                .list-rate-star {
+                                    font-size: 26px;
+                                }
+                            }
+                            .box-list-rate {
+                                padding: 0;
+                                .rate-item {
+                                    font-size: 18px;
+                                    font-weight: 500;
+                                    width: 100%;
+                                    overflow: hidden;
+                                    .number-star {
+                                        width: 40px;
+                                        margin: 0;
+                                        i {
+                                            font-size: 12px;
+                                        }
+                                    }
+                                    .text-review {
+                                        font-size: 14px;
+                                        width: 100px;
+                                    }
+                                    .progress {
+                                        flex-grow: 2;
+                                        flex-shrink: 2;
+                                        margin: 0 15px;
+                                        height: 8px;
+                                        .progress-bar {
+                                            border-radius: 8px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .box-review {
+                            margin-top: 30px;
+                            .form-review {
+                                margin-left: 15px;
+                                button {
+                                    font-size: 16px;
+                                    font-weight: 700;
+                                    background-color: $orange-primary;
+                                    color: white;
+                                    width: 170px;
+                                    height: 45px;
+                                    border: none;
+                                }
+                                button:hover {
+                                    transform: scale(1.01, 1.01);
+                                    transition: all 0.3s;
+                                }
+                                .rate-review {
+                                    i {
+                                        font-size: 26px;
+                                    }
+                                }
+                                textarea {
+                                    resize: none;
+                                }
+                            }
+                        }
+                        .box-list-review {
+                            hr {
+                                margin-top: 50px;
+                            }
+                            .title-review {
+                                img {
+                                    width: 80px;
+                                    height: 80px;
+                                    margin-right: 30px;
+                                }
+                                .info-review {
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    color: #4F4F4F;
+                                    .text-title {
+                                        font-weight: 600;
+                                    }
+                                }
+                            }
+                            .review-text {
+                                margin-top: 10px;
+                                font-size: 16px;
+                                font-weight: 400;
+                                color: #4F4F4F;
+                            }
+                        }
+                        @media only screen and (max-width: 768px) {
+                            .box-rate {
+                                border: none !important;
                             }
                         }
                     }
