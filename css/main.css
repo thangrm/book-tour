@@ -1200,6 +1200,10 @@ div[slider] > input[type=range]::-ms-tooltip {
   color: #FF7B42;
 }
 
+.header-tour-detail .navbar .navbar-header .nav-item .active {
+  color: #FF7B42;
+}
+
 @media only screen and (max-width: 575.98px) {
   .header-tour-detail .navbar-header {
     background: #525253;
@@ -1458,6 +1462,62 @@ div[slider] > input[type=range]::-ms-tooltip {
   position: absolute;
   top: 5px;
   left: -25px;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .box-maps {
+  width: 100%;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .box-maps iframe {
+  width: 100%;
+  height: 360px;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .box-images-panoramic {
+  width: 100%;
+  height: 360px;
+  position: relative;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .box-video {
+  position: relative;
+  width: 100%;
+  margin-top: 50px;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .box-video video {
+  width: 100%;
+  -o-object-fit: fill;
+     object-fit: fill;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .wrap-video,
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .wrap-panoramic {
+  position: absolute;
+  background-color: rgba(42, 44, 44, 0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .wrap-video i,
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .wrap-video img,
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .wrap-panoramic i,
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .wrap-panoramic img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  color: white;
+  font-size: 80px;
+}
+
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .wrap-video #iconPauseVideo,
+.box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .tab-pane .box-text .wrap-panoramic #iconPauseVideo {
+  display: none;
 }
 
 .box-detail-tour .box-detail-content .box-body-detail .box-info .tab-content .panel-info .box-text .accordion .accordion-item .accordion-button img {
