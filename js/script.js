@@ -114,6 +114,22 @@ $(document).ready(function() {
         $('#mainImageTour').attr('src', linkSrc);
     })
 
+    // Rate review{
+    $('.rate-star').hover(function(e) {
+        let currentRate = e.target.dataset.rate;
+        $('#rateReview').children().each(function() {
+            if (this.dataset.rate <= currentRate) {
+                this.classList.remove('bi-star');
+                this.classList.add('bi-star-fill');
+            } else {
+                this.classList.remove('bi-star-fill');
+                this.classList.add('bi-star');
+            }
+        });
+    }, function() {
+        // out
+    });
+
     //Panorama
     pannellum.viewer('imagePanoramic', {
         "type": "equirectangular",
@@ -129,10 +145,6 @@ $(document).ready(function() {
             $('#iconPlayVideo').hide();
             $('#iconPauseVideo').show();
             $('.wrap-video').hide();
-        } else {
-            video.pause();
-            $('#iconPlayVideo').show();
-            $('#iconPauseVideo').hide();
         }
     });
 

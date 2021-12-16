@@ -49,10 +49,18 @@
         .card {
             border: none;
             width: 100%;
-            img {
+            .card-image {
                 width: 100%;
-                height: 300px;
-                object-fit: cover;
+                padding-bottom: 80%;
+                position: relative;
+                .card-img-top {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    object-fit: cover;
+                }
             }
             .card-body {
                 padding: 12px 0;
