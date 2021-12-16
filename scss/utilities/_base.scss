@@ -7,6 +7,18 @@ body {
     filter: brightness(0) invert(1);
 }
 
+.fill-orange {
+    filter: invert(57%) sepia(74%) saturate(2141%) hue-rotate(333deg) brightness(107%) contrast(102%);
+}
+
+.fill-yellow {
+    filter: invert(64%) sepia(98%) saturate(425%) hue-rotate(350deg) brightness(100%) contrast(103%);
+}
+
+.fill-gray {
+    filter: invert(69%) sepia(54%) saturate(0%) hue-rotate(198deg) brightness(106%) contrast(87%);
+}
+
 .ribbon {
     position: absolute;
     top: -2px;
