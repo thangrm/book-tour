@@ -179,8 +179,33 @@ $(document).ready(function() {
     }
     caculatePrice();
 
-    // Form
+    // Form checkout
     $("#formCheckout").submit(function(e) {
+        e.preventDefault();
+    });
+
+    // Form contact
+    $("#formContact").submit(function(e) {
+        let name = $.trim($('#name').val());
+        let email = $.trim($('#email').val());
+        let phone = $.trim($('#phone ').val());
+        let messager = $.trim($('#messager').val());
+        $('#errorName').text('');
+        $('#errorEmail').text('');
+        $('#errorPhone').text('');
+
+        if (name == '') {
+            $('#errorName').text('Tên không được để trống');
+        }
+
+        if (email == '') {
+            $('#errorEmail').text('Email không được để trống');
+        }
+
+        if (phone == '') {
+            $('#errorPhone').text('Số  điện thoại không được để trống');
+        }
+
         e.preventDefault();
     });
 });
