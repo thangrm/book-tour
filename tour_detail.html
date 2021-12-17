@@ -13,7 +13,9 @@
     <!-- owl carousel -->
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="css/owl.theme.default.css">
-    <!-- Latest compiled and minified CSS -->
+    <!-- date-range-picker -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!-- pannellum -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
     <!-- custom css -->
     <link rel="stylesheet" href="css/main.css" />
@@ -563,17 +565,38 @@
                         <form action="">
                             <div class="input-inner-icon">
                                 <img src="images/icon/schedule.svg">
-                                <input class="form-control" type="text" placeholder="Departure time" value="25/02/2021 - 28/02/2021">
+                                <input class="form-control" type="text" name="daterange" placeholder="Departure time">
                             </div>
                             <div class="input-inner-icon">
                                 <img src="images/icon/people.svg">
-                                <input class="form-control" type="text" placeholder="People" value="2 Adults - 1 Children">
+                                <select class="form-control" id="selectNumberPeople" required>
+                                    <option value="1" class="">1 People</option>
+                                    <option value="2" class="">2 People</option>
+                                    <option value="3" class="">3 People</option>
+                                    <option value="4" class="">4 People</option>
+                                    <option value="5" class="">5 People</option>
+                                    <option value="6" class="">6 People</option>
+                                    <option value="7" class="">7 People</option>
+                                    <option value="8" class="">8 People</option>
+                                    <option value="9" class="">9 People</option>
+                                    <option value="10" class="">10 People</option>
+                                    <option value="11" class="">11 People</option>
+                                    <option value="12" class="">12 People</option>
+                                    <option value="13" class="">13 People</option>
+                                    <option value="14" class="">14 People</option>
+                                    <option value="15" class="">15 People</option>
+                                    <option value="16" class="">16 People</option>
+                                    <option value="17" class="">17 People</option>
+                                    <option value="18" class="">18 People</option>
+                                    <option value="19" class="">19 People</option>
+                                    <option value="20" class="">20 People</option>
+                                 </select>
                             </div>
                             <div class="total-price d-flex justify-content-between">
                                 <span class="card-text">
                                     Total
                                 </span>
-                                <span class="card-title">
+                                <span class="card-title" id="totalPrice">
                                     $450.00
                                 </span>
                             </div>
@@ -765,7 +788,6 @@
             </div>
         </div>
     </div>
-    </div>
     <!-------------------- End Related Tours -------------------->
 
     <!-------------------- Footer -------------------->
@@ -844,6 +866,10 @@
 
 <!-- owl carousel -->
 <script src="js/owl.carousel.js"></script>
+
+<!-- date-ranger-picker -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <!-- panellum -->
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>

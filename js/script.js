@@ -131,10 +131,16 @@ $(document).ready(function() {
     });
 
     //Panorama
-    pannellum.viewer('imagePanoramic', {
-        "type": "equirectangular",
-        "panorama": "./images/travel-360.jpg",
-        "autoLoad": true,
+    if ($('#imagePanoramic').length > 0) {
+        pannellum.viewer('imagePanoramic', {
+            "type": "equirectangular",
+            "panorama": "./images/travel-360.jpg",
+            "autoLoad": true,
+        });
+    }
+
+    $('#imagePanoramic').on('click', function() {
+        $('.wrap-panoramic').hide();
     });
 
     //Video
@@ -148,7 +154,29 @@ $(document).ready(function() {
         }
     });
 
-    $('#imagePanoramic').on('click', function() {
-        $('.wrap-panoramic').hide();
+    //Date Range Picker
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            locale: {
+                format: 'DD/MM/YYYY',
+            },
+            opens: 'left'
+        }, function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
     });
+
+    // Calculate Price
+    var PRICE_DEFAULT = 146;
+    $('#selectNumberPeople').on('change', function() {
+        caculatePrice();
+    });
+
+    function caculatePrice() {
+        let numberPeople = $('#selectNumberPeople').val();
+        let price = (numberPeople * PRICE_DEFAULT).toFixed(2);
+        $('#totalPrice').text('$' + price);
+    }
+    caculatePrice();
+
 });
