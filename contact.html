@@ -94,23 +94,21 @@
                     <p class="contact-text">Send us a message and we'll respond as soon as possible</p>
                     <form action="" class="form-contact" id="formContact">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="name" placeholder="Your Name">
+                            <input type="text" class="form-control" id="name" placeholder="Your Name" maxlength="50">
                             <span class="text-danger" id="errorName"></span>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="email" placeholder="Your Email">
+                            <input type="text" class="form-control" id="email" placeholder="Your Email" maxlength="100">
                             <span class="text-danger" id="errorEmail"></span>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="phone" placeholder="Your Phone">
+                            <input type="text" class="form-control" id="phone" placeholder="Your Phone" maxlength="15">
                             <span class="text-danger" id="errorPhone"></span>
                         </div>
                         <div class="form-group">
                             <textarea type="text" class="form-control" id="message" rows="5" placeholder="Messager"></textarea>
+                            <span class="text-danger" id="errorMessage"></span>
                         </div>
-
-
-
                         <div class="w-100 d-flex justify-content-end">
                             <button type="submit">Send Message</button>
                         </div>
