@@ -29,7 +29,7 @@
             <div class="row box-detail-content box-checkout-content">
                 <div class="col-12 col-lg-7 col-xl-8">
                     <div class="box-body-checkout">
-                        <form>
+                        <form id="formCheckout">
                             <hr>
                             <!-- checkout detail -->
                             <div class="box-checkout-item">
@@ -135,7 +135,9 @@
                                 </div>
 
                                 <div class="sub-checkout-item">
-                                    <button type="submit" class="btn-submit-checkout">Complete Booking</button>
+                                    <button type="submit" class="btn-submit-checkout" data-bs-toggle="modal" data-bs-target="#thanksModal">
+                                        Complete Booking
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -218,6 +220,19 @@
         </div>
     </div>
     <!-------------------- End Checkout -------------------->
+
+    <!-------------------- Thanks -------------------->
+    <div class="modal fade thank-modal" id="thanksModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="panel-thank modal-content d-flex justify-content-center align-items-center flex-column">
+                <p class="thank-title">Thank You!</p>
+                <p class="thank-text">Your order has been successfully ordered.</p>
+                <p class="thank-text"> Order information has been emailed to you. Thank you!</p>
+                <button class="btn-back-home"><a class="d-flex align-items-center justify-content-center" href="/">Back to our home</a></button>
+            </div>
+        </div>
+    </div>
+    <!-------------------- End Thanks -------------------->
 </body>
 
 <!-- cdn bootstrap -->
