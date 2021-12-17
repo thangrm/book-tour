@@ -179,6 +179,29 @@ $(document).ready(function() {
     }
     caculatePrice();
 
+    // Function validate
+    function stringContainsNumber(_string) {
+        return /\d/.test(_string);
+    }
+
+    function checkMail(_string) {
+        return /^[a-z][a-z0-9_\.]{2,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}/.test(_string);
+    }
+
+    function removeAllWhiteSpace(_string) {
+        return _string.replace(/\s+/g, '')
+    }
+
+    function checkPhone(_string) {
+        _string = _string.replace(/\s+/g, '');
+        // di động
+        if (/^(0|\+84)[35789]([0-9]{8})$/.test(_string)) {
+            return true;
+        }
+
+        return /^(0|\+84)2([0-9]{9})$/.test(_string)
+    }
+
     // Form checkout
     $("#formCheckout").submit(function(e) {
         e.preventDefault();
@@ -186,26 +209,41 @@ $(document).ready(function() {
 
     // Form contact
     $("#formContact").submit(function(e) {
+        e.preventDefault();
         let name = $.trim($('#name').val());
         let email = $.trim($('#email').val());
         let phone = $.trim($('#phone ').val());
-        let messager = $.trim($('#messager').val());
+        let message = $.trim($('#message').val());
         $('#errorName').text('');
         $('#errorEmail').text('');
         $('#errorPhone').text('');
+        $('#errorMessage').text('');
 
+        // validate name
         if (name == '') {
             $('#errorName').text('Tên không được để trống');
+        } else if (stringContainsNumber(name)) {
+            $('#errorName').text('Tên không được chứa số');
         }
 
+        // validate email
         if (email == '') {
             $('#errorEmail').text('Email không được để trống');
+        } else if (!checkMail(email)) {
+            $('#errorEmail').text('Email không đúng định dạng');
         }
 
+        // validate phone
         if (phone == '') {
             $('#errorPhone').text('Số  điện thoại không được để trống');
+        } else if (!checkPhone(phone)) {
+            $('#errorPhone').text('Số  điện thoại hợp lệ');
         }
 
-        e.preventDefault();
+        // validate message
+        if (message == '') {
+            $('#errorMessage').text('Lời nhắn không được để trống');
+        }
+
     });
 });
