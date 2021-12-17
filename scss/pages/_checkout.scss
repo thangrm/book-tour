@@ -135,3 +135,63 @@
         }
     }
 }
+
+.thank-modal {
+    background-image: url('/images/background-header.png');
+    background-size: cover;
+    .panel-thank {
+        position: fixed;
+        max-width: 845px;
+        max-height: 529px;
+        width: 90%;
+        height: 80%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.88) 1.52%, rgba(255, 255, 255, 0.8) 100%);
+        backdrop-filter: blur(42px);
+        .thank-title {
+            color: $orange-primary;
+            font-weight: bold;
+            font-size: 64px;
+        }
+        .thank-text {
+            color: #2C2E2F;
+            font-weight: normal;
+            font-size: 18px;
+            margin-bottom: 0;
+        }
+        .btn-back-home {
+            margin-top: 60px;
+            background-color: $orange-primary;
+            border: none;
+            a,
+            a:hover {
+                display: block;
+                height: 54px;
+                width: 293px;
+                color: white;
+                font-weight: bold;
+                font-size: 16px;
+                text-decoration: none;
+            }
+        }
+    }
+    @media only screen and (max-width: 992px) {
+        .panel-thank {
+            height: 60%;
+            .thank-title {
+                font-size: 50px;
+            }
+            .thank-text {
+                font-size: 12px;
+            }
+            .btn-back-home {
+                a,
+                a:hover {
+                    width: 200px;
+                }
+            }
+        }
+    }
+}

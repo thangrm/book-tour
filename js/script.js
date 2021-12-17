@@ -179,4 +179,8 @@ $(document).ready(function() {
     }
     caculatePrice();
 
+    // Form
+    $("#formCheckout").submit(function(e) {
+        e.preventDefault();
+    });
 });
