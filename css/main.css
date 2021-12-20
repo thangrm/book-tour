@@ -915,6 +915,7 @@ div[slider] > input[type=range]::-ms-tooltip {
 .mail-deals {
   width: 100%;
   margin-top: 150px;
+  margin-bottom: 150px;
 }
 
 .mail-deals .title-mail {

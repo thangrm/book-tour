@@ -184,6 +184,10 @@ $(document).ready(function() {
         return /\d/.test(_string);
     }
 
+    function stringOnlyNumber(_string) {
+        return /^\d+$/.test(_string);
+    }
+
     function checkMail(_string) {
         return /^[a-z][a-z0-9_\.]{2,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}/.test(_string);
     }
@@ -202,18 +206,106 @@ $(document).ready(function() {
         return /^(0|\+84)2([0-9]{9})$/.test(_string)
     }
 
+    function escapeHTML(str) {
+        return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function getValue(_selector) {
+        return escapeHTML(($.trim($(_selector).val())));
+    }
+
     // Form checkout
-    $("#formCheckout").submit(function(e) {
+    $("#btnSubmitCheckout").click(function(e) {
         e.preventDefault();
+        let firstName = getValue('#firstName');
+        let lastName = getValue('#lastName');
+        let email = getValue('#email');
+        let phone = getValue('#phone ');
+        let address = getValue('#address');
+        let city = getValue('#city');
+        let province = getValue('#province');
+        let zipCode = getValue('#zipCode ');
+        let country = getValue('#country');
+        let requirement = getValue('#requirement');
+        let payment = $('input[name=paymentMethod]:checked', '#formCheckout').val()
+
+        $('#errorFirstName').text('');
+        $('#errorLastName').text('');
+        $('#errorEmail').text('');
+        $('#errorPhone').text('');
+        $('#errorAddress').text('');
+        $('#errorCity').text('');
+        $('#errorProvince').text('');
+        $('#errorZipCode').text('');
+        $('#errorCountry').text('');
+        $('#errorRequirement').text('');
+
+        let flag = true;
+
+        // validate first name
+        if (firstName == '') {
+            $('#errorFirstName').text('Tên không được để trống');
+            flag = false;
+        } else if (stringContainsNumber(firstName)) {
+            $('#errorFirstName').text('Tên không được chứa số');
+            flag = false;
+        }
+
+        // validate last name
+        if (lastName == '') {
+            $('#errorLastName').text('Tên không được để trống');
+            flag = false;
+        } else if (stringContainsNumber(lastName)) {
+            $('#errorLastName').text('Tên không được chứa số');
+            flag = false;
+        }
+
+        // validate email
+        if (email == '') {
+            $('#errorEmail').text('Email không được để trống');
+            flag = false;
+        } else if (!checkMail(email)) {
+            $('#errorEmail').text('Email không đúng định dạng');
+            flag = false;
+        }
+
+        // validate phone
+        if (phone == '') {
+            $('#errorPhone').text('Số  điện thoại không được để trống');
+            flag = false;
+        } else if (!checkPhone(phone)) {
+            $('#errorPhone').text('Số  điện thoại hợp lệ');
+            flag = false;
+        }
+
+        // validate zipcode
+        if (zipCode != '') {
+            if (!stringOnlyNumber(zipCode)) {
+                $('#errorZipCode').text('Zipcode không hợp lệ');
+                flag = false;
+            }
+        }
+
+        if (flag) {
+            //$('#formCheckout').submit();
+            $('#thanksModal').modal('show');
+        } else {
+            document.getElementById("formCheckout").scrollIntoView();
+        }
     });
 
     // Form contact
     $("#formContact").submit(function(e) {
         e.preventDefault();
-        let name = $.trim($('#name').val());
-        let email = $.trim($('#email').val());
-        let phone = $.trim($('#phone ').val());
-        let message = $.trim($('#message').val());
+        let name = getValue('#name');
+        let email = getValue('#email');
+        let phone = getValue('#phone ');
+        let message = getValue('#message');
         $('#errorName').text('');
         $('#errorEmail').text('');
         $('#errorPhone').text('');
