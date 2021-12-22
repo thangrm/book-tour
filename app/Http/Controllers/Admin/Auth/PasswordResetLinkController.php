@@ -12,6 +12,12 @@ class PasswordResetLinkController extends Controller
     {
         return Auth::guard('admin');
     }
+
+    public function broker(): \Illuminate\Contracts\Auth\PasswordBroker
+    {
+        return Password::broker('admins');
+    }
+
     /**
      * Display the password reset link request view.
      *
@@ -27,11 +33,6 @@ class PasswordResetLinkController extends Controller
      *
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
-    public function broker(): \Illuminate\Contracts\Auth\PasswordBroker
-    {
-        return Password::broker('admins');
-    }
-
     /**
      * Handle an incoming password reset link request.
      *

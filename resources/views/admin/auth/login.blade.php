@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }} ">
-    <title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>
+    <title>Login Admin | Ngao Du</title>
     <!-- Custom CSS -->
     <link href="{{ asset('admin/dist/css/style.min.css') }}  " rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -56,7 +56,9 @@
                                 <input type="text" class="form-control form-control-lg" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
                             </div>
                             @error('email')
-                            <span class="text-danger"> {{ $message }}</span>
+                            <div class="col-12 ">
+                                <p class="text-danger">{{ $message }}</p>
+                            </div>
                             @enderror
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -65,7 +67,9 @@
                                 <input type="password" class="form-control form-control-lg" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
                             </div>
                             @error('password')
-                            <span class="text-danger"> {{ $message }}</span>
+                            <div class="col-12 ">
+                                <p class="text-danger">{{ $message }}</p>
+                            </div>
                             @enderror
 
                             <div class="form-group row">
@@ -79,7 +83,9 @@
                             </div>
                             <div class="form-group text-center">
                                 @error('login')
-                                <span class="text-danger"> {{ $message }}</span>
+                                <div class="col-12 text-left">
+                                    <p class="text-danger">{{ $message }}</p>
+                                </div>
                                 @enderror
                                 <div class="col-xs-12 p-b-20">
                                     <button class="btn btn-block btn-lg btn-info" type="submit">Log In</button>
@@ -88,15 +94,15 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
                                     <div class="social">
-                                        <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fab  fa-facebook"></i> </a>
-                                        <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fab  fa-google-plus"></i> </a>
+{{--                                        <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fab  fa-facebook"></i> </a>--}}
+{{--                                        <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fab  fa-google-plus"></i> </a>--}}
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>\
+            </div>
         </div>
     </div>
     <!-- ============================================================== -->
