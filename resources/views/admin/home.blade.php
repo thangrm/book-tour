@@ -3,4 +3,3 @@
     <button type="submit">Logout</button>
 </form>
 <?php
-phpinfo();

@@ -18,14 +18,14 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required'
         ]);
         $credentials = $request->only(['email', 'password']);
         if (Auth::guard('admin')->attempt($credentials)) {
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->back()->withInput()->withErrors(['login' => 'Tài khoản mật khẩu không chính xác']);
+            return redirect()->back()->withInput()->withErrors(['login' => 'Email or password is incorrect']);
         }
     }
 

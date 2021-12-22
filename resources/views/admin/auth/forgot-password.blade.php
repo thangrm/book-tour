@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }} ">
-    <title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>
+    <title>Forgot Password Admin | Ngao Du</title>
     <!-- Custom CSS -->
     <link href="{{ asset('admin/dist/css/style.min.css') }}  " rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -52,13 +52,17 @@
                     <!-- email -->
                         <div class="form-group row">
                             @if(Session::has('status'))
-                                <p class="text-success text-center w-100">  {{ Session::get('status')}}</p>
+                                <div class="col-12">
+                                    <p class="text-success">  {{ Session::get('status')}}</p>
+                                </div>
                             @endif
                             <div class="col-12">
                                 <input class="form-control form-control-lg" type="email" name="email" placeholder="Email" required>
                             </div>
                             @error('email')
-                            <span class="text-danger text-center w-100"> {{ $message }}</span>
+                                <div class="col-12">
+                                    <span class="text-danger"> {{ $message }}</span>
+                                </div>
                             @enderror
                         </div>
                         <!-- pwd -->
