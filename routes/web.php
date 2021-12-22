@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +28,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [LoginController::class, 'index'])->name('admin.login');
     Route::post('/login', [LoginController::class, 'login'])->name('admin.login.post');
     Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
+    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('admin.password.request');
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('admin.password.email');
+
 
     Route::middleware(['auth:admin'])->group(function() {
         Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');

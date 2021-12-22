@@ -39,64 +39,37 @@
     <!-- ============================================================== -->
     <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url({{ asset('admin/assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
         <div class="auth-box">
-            <div id="loginform">
+            <div id="recoverform" style="display: block">
                 <div class="logo">
                     <span class="db"><img src="{{ asset('admin/assets/images/logo-icon.png') }}" alt="logo" /></span>
-                    <h5 class="font-medium m-b-20">Sign In to Admin</h5>
+                    <h5 class="font-medium m-b-20">Recover Password</h5>
+                    <span>Enter your Email and instructions will be sent to you!</span>
                 </div>
-                <!-- Form -->
-                <div class="row">
-                    <div class="col-12">
-                        <form class="form-horizontal m-t-20" id="loginform" method="POST" action="{{ route('admin.login.post') }}">
-                            @csrf
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
-                                </div>
-                                <input type="text" class="form-control form-control-lg" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
+                <div class="row m-t-20">
+                    <!-- Form -->
+                    <form class="col-12"  method="POST" action="{{ route('admin.password.email') }}">
+                    @csrf
+                    <!-- email -->
+                        <div class="form-group row">
+                            @if(Session::has('status'))
+                                <p class="text-success text-center w-100">  {{ Session::get('status')}}</p>
+                            @endif
+                            <div class="col-12">
+                                <input class="form-control form-control-lg" type="email" name="email" placeholder="Email" required>
                             </div>
                             @error('email')
-                            <span class="text-danger"> {{ $message }}</span>
+                            <span class="text-danger text-center w-100"> {{ $message }}</span>
                             @enderror
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
-                                </div>
-                                <input type="password" class="form-control form-control-lg" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
+                        </div>
+                        <!-- pwd -->
+                        <div class="row m-t-20">
+                            <div class="col-12">
+                                <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">Reset</button>
                             </div>
-                            @error('password')
-                            <span class="text-danger"> {{ $message }}</span>
-                            @enderror
-
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Remember me</label>
-                                        <a href="{{ route('admin.password.request') }}" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group text-center">
-                                @error('login')
-                                <span class="text-danger"> {{ $message }}</span>
-                                @enderror
-                                <div class="col-xs-12 p-b-20">
-                                    <button class="btn btn-block btn-lg btn-info" type="submit">Log In</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                                    <div class="social">
-                                        <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fab  fa-facebook"></i> </a>
-                                        <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fab  fa-google-plus"></i> </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
-            </div>\
+            </div>
         </div>
     </div>
     <!-- ============================================================== -->
