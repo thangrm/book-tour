@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
+use App\Http\Controllers\Admin\DestinationController;
+use App\Http\Controllers\Admin\Auth\ChangePasswordController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +19,7 @@ use App\Http\Controllers\Admin\Auth\NewPasswordController;
 |
 */
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,15 +31,20 @@ Route::get('/dashboard', function () {
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [LoginController::class, 'index'])->name('admin.login');
     Route::post('/login', [LoginController::class, 'login'])->name('admin.login.post');
-    Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('admin.logout');
     Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('admin.password.request');
     Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('admin.password.email');
     Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('admin.password.reset');
     Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('admin.password.update');
 
-    Route::middleware(['auth:admin'])->group(function() {
-        Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/change-password', [ChangePasswordController::class, 'create'])->name('admin.password.change');
+        Route::post('/change-password', [ChangePasswordController::class, 'store'])->name('admin.password.store');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     });
+
 });
+
+Route::get('datatable-destination', [DestinationController::class, 'anyData'])->name('destination.data');
 
 
