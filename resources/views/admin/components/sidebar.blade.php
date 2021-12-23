@@ -40,7 +40,7 @@
             <!-- User Profile-->
             <li class="sidebar-item">
                 <a class="sidebar-link waves-effect waves-dark"
-                   href="javascript:void(0)" aria-expanded="false">
+                   href="{{ route('admin.dashboard') }}" aria-expanded="false">
                     <i class="mdi mdi-view-dashboard"></i>
                     <span class="hide-menu">Dashboard </span>
                 </a>
@@ -48,7 +48,7 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link waves-effect waves-dark"
-                   href="javascript:void(0)" aria-expanded="false">
+                   href="{{ route('destination.index') }}" aria-expanded="false">
                     <i class="mdi mdi-view-dashboard"></i>
                     <span class="hide-menu">Destinations Management</span>
                 </a>

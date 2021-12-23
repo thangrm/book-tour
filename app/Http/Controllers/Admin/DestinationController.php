@@ -9,14 +9,87 @@ use Yajra\Datatables\DataTables;
 
 class DestinationController extends Controller
 {
-    /**
-     * Displays datatables front end view
-     *
-     * @return \Illuminate\View\View
-     */
-    public function getIndex()
+    protected $destination;
+
+    public function __construct(Destination $destination)
     {
-        return view('datatables.index');
+        $this->destination = $destination;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('admin.destinations.view');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 
     /**
@@ -24,8 +97,9 @@ class DestinationController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function anyData()
+    public function anyData(Request $request)
     {
-        return DataTables::of(Destination::query())->make(true);
+        $data = $this->destination->getListDestination($request);
+        return $this->destination->getDataTable($data);
     }
 }

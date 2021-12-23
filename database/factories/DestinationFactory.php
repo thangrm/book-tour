@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 class DestinationFactory extends Factory
 {
     protected $model = Destination::class;
+
     /**
      * Define the model's default state.
      *
@@ -22,9 +23,10 @@ class DestinationFactory extends Factory
             'name' => $name,
             'slug' => $slug,
             'image' => $this->faker->filePath(),
-            'status' => $this->faker->numberBetween(0,1),
+            'status' => $this->faker->numberBetween(1, 2),
             'created_at' => time(),
             'updated_at' => time(),
+
         ];
     }
 }
