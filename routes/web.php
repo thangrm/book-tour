@@ -41,10 +41,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/change-password', [ChangePasswordController::class, 'create'])->name('admin.password.change');
         Route::post('/change-password', [ChangePasswordController::class, 'store'])->name('admin.password.store');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+        //Destination
+        Route::group(['prefix' => 'destination'], function () {
+            Route::get('/', [DestinationController::class, 'index'])->name('destination.index');
+            Route::get('data', [DestinationController::class, 'anyData'])->name('destination.data');
+        });
     });
-
 });
-
-Route::get('datatable-destination', [DestinationController::class, 'anyData'])->name('destination.data');
 
 
