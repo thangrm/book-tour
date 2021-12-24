@@ -43,10 +43,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         //Destination
-        Route::group(['prefix' => 'destination'], function () {
-            Route::get('/', [DestinationController::class, 'index'])->name('destination.index');
-            Route::get('data', [DestinationController::class, 'anyData'])->name('destination.data');
-        });
+        Route::resource('destination', DestinationController::class);
+    });
+    Route::group(['prefix' => 'destinations'], function () {
+        Route::get('data', [DestinationController::class, 'getData'])->name('destination.data');
     });
 });
 

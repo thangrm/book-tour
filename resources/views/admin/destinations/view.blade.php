@@ -21,10 +21,10 @@
         <table class="table table-bordered" id="destinationTable">
 
             <form class="form-horizontal">
-                <div class="card-body pl-0">
-                    <button class="btn btn-info mb-3">
-                        New Destination
-                    </button>
+                <div class="card-body pl-0 pt-0">
+                    <a class="btn btn-info mb-3" href="{{ route('destination.create') }}" class="text-white">New
+                        Destination
+                    </a>
                     <div class="row">
                         <div class="col-sm-12 col-lg-6">
                             <div class="form-group row">

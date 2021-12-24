@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function index(){
-        if(Auth::guard('admin')->check()){
+    public function index()
+    {
+        if (Auth::guard('admin')->check()) {
             return redirect()->route('admin.dashboard');
         }
         return view('admin.auth.login');
@@ -18,18 +19,19 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|exists:admins',
             'password' => 'required'
         ]);
         $credentials = $request->only(['email', 'password']);
         if (Auth::guard('admin')->attempt($credentials)) {
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->back()->withInput()->withErrors(['login' => 'Email or password is incorrect']);
+            return redirect()->back()->withInput()->withErrors(['password' => 'Password is invalid.']);
         }
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

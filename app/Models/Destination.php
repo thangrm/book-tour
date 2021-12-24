@@ -49,10 +49,13 @@ class Destination extends Model
                     return 'Inactive';
                 }
             })
+            ->editColumn('image', function ($data) {
+                return '<img src="' . asset('storage/images/destination/' . $data->image) . '" width="80" height="80">';
+            })
             ->addColumn('action', function ($data) {
                 return '<button>Edit</button><button>Delete</button>  ';
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'image'])
             ->make(true);
     }
 }
