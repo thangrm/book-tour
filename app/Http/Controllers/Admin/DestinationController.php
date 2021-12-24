@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use phpDocumentor\Reflection\Types\Array_;
 use Yajra\Datatables\DataTables;
 use App\Libraries\Utilities;
 
@@ -22,7 +21,7 @@ class DestinationController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -32,7 +31,7 @@ class DestinationController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -43,35 +42,15 @@ class DestinationController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:100|string|unique:destinations',
-            'image' => 'image|mimes:jpeg,jpg,png,gif|required|max:5000',
-        ]);
-        $nameDestination = Utilities::clearXSS($request->name);
-        $data['name'] = $nameDestination;
-        $data['slug'] = Str::slug($request->name);
-        $data['status'] = 1;    // default 1: active
-
-        // Upload Image
-        $folder_path = 'public/images/destination';
-        $file = $request->file('image')->getClientOriginalName();
-        $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
-        $extension = $request->file('image')->getClientOriginalExtension();
-
-        $image_name = date('mdYHis') . uniqid() . $file_name . '.' . $extension;
-        $request->file('image')->storeAs($folder_path, $image_name);
-        $data['image'] = $image_name;
-
-        Destination::create($data);
-
-        $notification = array(
-            'message' => 'New destination added successfully',
-            'alert-type' => 'success',
-        );
+        $request->validate($this->destination->rule());
+        $notification = $this->destination->storeDestination($request);
+        if ($notification['alert-type'] == 'error') {
+            return redirect()->back()->with($notification);
+        }
         return redirect()->route('destination.index')->with($notification);
     }
 
@@ -90,11 +69,12 @@ class DestinationController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $destination = Destination::find($id);
+        return view('admin.destinations.edit', compact('destination'));
     }
 
     /**
@@ -102,11 +82,16 @@ class DestinationController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->destination->ruleUpdate($id));
+        $notification = $this->destination->updateDestination($request, $id);
+        if ($notification['alert-type'] == 'error') {
+            return redirect()->back()->with($notification);
+        }
+        return redirect()->route('destination.index')->with($notification);
     }
 
     /**

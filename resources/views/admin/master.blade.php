@@ -14,6 +14,9 @@
     <title>Dashboard</title>
     <!-- Datatable -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+    <!--Bootstrap switch -->
+    <link rel="stylesheet" type="text/css"
+          href=" {{ asset('admin/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }} ">
     <!-- Custom CSS -->
     <link href="{{ asset('admin/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
@@ -105,6 +108,8 @@
 <script src="{{ asset('admin/dist/js/sidebarmenu.js') }}"></script>
 <!--Custom JavaScript -->
 <script src="{{ asset('admin/dist/js/custom.min.js') }}"></script>
+<!--Bootstrap switch -->
+<script src="{{asset('admin/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
 <!--This page JavaScript -->
 <!--chartis chart-->
 {{--<script src="{{ asset('admin/assets/libs/chartist/dist/chartist.min.js') }}"></script>--}}
@@ -114,9 +119,11 @@
 <!--chartjs -->
 {{--<script src="{{ asset('admin/assets/libs/chart.js/dist/Chart.min.js') }}"></script>--}}
 {{--<script src="{{ asset('admin/dist/js/pages/dashboards/dashboard1.js') }}"></script>--}}
-
+<!-- toastr -->
 <script src=" {{ asset('admin/assets/libs/toastr/build/toastr.min.js') }} "></script>
 <script src=" {{ asset('admin/assets/extra-libs/toastr/toastr-init.js') }} "></script>
+<!-- sweetalert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--datatable -->
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
@@ -137,12 +144,13 @@
             break;
     }
     @endif
+
     function disableSubmitButton(idForm) {
         $(idForm).submit(function () {
             $(this).find("button[type='submit']").prop('disabled', true);
         });
     }
-
+    
 </script>
 @yield('js')
 </body>
