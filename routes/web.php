@@ -24,9 +24,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [LoginController::class, 'index'])->name('admin.login');
@@ -38,15 +35,18 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('admin.password.update');
 
     Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
         Route::get('/change-password', [ChangePasswordController::class, 'create'])->name('admin.password.change');
         Route::post('/change-password', [ChangePasswordController::class, 'store'])->name('admin.password.store');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         //Destination
-        Route::resource('destination', DestinationController::class);
-    });
-    Route::group(['prefix' => 'destinations'], function () {
-        Route::get('data', [DestinationController::class, 'getData'])->name('destination.data');
+        Route::resource('destination', DestinationController::class)->except(['show']);
+        Route::group(['prefix' => 'destinations'], function () {
+            Route::get('data', [DestinationController::class, 'getData'])->name('destination.data');
+        });
     });
 });
 

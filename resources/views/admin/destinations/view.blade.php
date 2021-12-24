@@ -99,6 +99,50 @@
             $('#filterStatus').on('change', function () {
                 datatable.draw();
             });
+
+            $(document).on('click', '.delete', function (e) {
+                e.preventDefault();
+                let link = $(this).attr("href");
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success m-2',
+                        cancelButton: 'btn btn-danger m-2'
+                    },
+                    buttonsStyling: false
+                })
+                swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax(
+                            {
+                                url: link,
+                                type: 'delete',
+                                success: function (response) {
+                                    toastr.success('Destination deleted successfully');
+                                    datatable.ajax.reload();
+                                },
+                                error: function (response) {
+                                    toastr.error('Delete failed')
+                                }
+                            });
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            })
         });
     </script>
 @endsection

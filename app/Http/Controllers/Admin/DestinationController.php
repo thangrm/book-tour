@@ -102,7 +102,7 @@ class DestinationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->destination->desploy($id);
     }
 
     /**

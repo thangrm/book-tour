@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }}">
@@ -49,7 +50,7 @@
     <!-- Topbar header - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <header class="topbar">
-        @include('admin.components.nav');
+        @include('admin.layouts.nav');
     </header>
     <!-- ============================================================== -->
     <!-- End Topbar header -->
@@ -59,7 +60,7 @@
     <!-- ============================================================== -->
     <aside class="left-sidebar">
         <!-- Sidebar scroll-->
-    @include('admin.components.sidebar')
+    @include('admin.layouts.sidebar')
     <!-- End Sidebar scroll-->
     </aside>
     <!-- ============================================================== -->
@@ -75,7 +76,7 @@
     <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
-    @include('admin.components.footer')
+    @include('admin.layouts.footer')
     <!-- ============================================================== -->
         <!-- End footer -->
         <!-- ============================================================== -->
@@ -145,12 +146,18 @@
     }
     @endif
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     function disableSubmitButton(idForm) {
         $(idForm).submit(function () {
             $(this).find("button[type='submit']").prop('disabled', true);
         });
     }
-    
+
 </script>
 @yield('js')
 </body>
