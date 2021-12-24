@@ -1421,7 +1421,7 @@
 
 	F.Component = F.Class.extend(/** @lends FooTable.Component */{
 		/**
-		 * The base class for all FooTable components.
+		 * The base class for all FooTable layouts.
 		 * @constructs
 		 * @extends FooTable.Class
 		 * @param {FooTable.Table} instance - The parent {@link FooTable.Table} object for the component.
@@ -1439,7 +1439,7 @@
 			 */
 			this.ft = instance;
 			/**
-			 * Whether or not this component is enabled. Disabled components only have there preinit method called allowing for this value to be overridden.
+			 * Whether or not this component is enabled. Disabled layouts only have there preinit method called allowing for this value to be overridden.
 			 * @type {boolean}
 			 */
 			this.enabled = F.is.boolean(enabled) ? enabled : false;
@@ -1915,7 +1915,7 @@
 
 	F.Table = F.Class.extend(/** @lends FooTable.Table */{
 		/**
-		 * This class is the core of the plugin and drives the logic of all components.
+		 * This class is the core of the plugin and drives the logic of all layouts.
 		 * @constructs
 		 * @this FooTable.Table
 		 * @extends FooTable.Class
@@ -1940,7 +1940,7 @@
 			 */
 			this.id = F.instances.push(this);
 			/**
-			 * Whether or not the plugin and all components and add-ons are fully initialized.
+			 * Whether or not the plugin and all layouts and add-ons are fully initialized.
 			 * @instance
 			 * @type {boolean}
 			 */
@@ -1977,13 +1977,13 @@
 			 */
 			this.classes = [];
 			/**
-			 * All components for this instance of the plugin. These are executed in the order they appear in the array for the initialize phase and in reverse order for the destroy phase of the plugin.
+			 * All layouts for this instance of the plugin. These are executed in the order they appear in the array for the initialize phase and in reverse order for the destroy phase of the plugin.
 			 * @instance
 			 * @protected
 			 * @type {object}
-			 * @prop {Array.<FooTable.Component>} internal - The internal components for the plugin. These are executed either before all other components in the initialize phase or after them in the destroy phase of the plugin.
-			 * @prop {Array.<FooTable.Component>} core - The core components for the plugin. These are executed either after the internal components in the initialize phase or before them in the destroy phase of the plugin.
-			 * @prop {Array.<FooTable.Component>} custom - The custom components for the plugin. These are executed either after the core components in the initialize phase or before them in the destroy phase of the plugin.
+			 * @prop {Array.<FooTable.Component>} internal - The internal layouts for the plugin. These are executed either before all other layouts in the initialize phase or after them in the destroy phase of the plugin.
+			 * @prop {Array.<FooTable.Component>} core - The core layouts for the plugin. These are executed either after the internal layouts in the initialize phase or before them in the destroy phase of the plugin.
+			 * @prop {Array.<FooTable.Component>} custom - The custom layouts for the plugin. These are executed either after the core layouts in the initialize phase or before them in the destroy phase of the plugin.
 			 */
 			this.components = F.components.load((F.is.hash(this.data.components) ? this.data.components : this.o.components), this);
 			/**
@@ -2041,7 +2041,7 @@
 			});
 		},
 		/**
-		 * The preinit method is called prior to the plugins actual initialization and provides itself and it's components an opportunity to parse any additional option values.
+		 * The preinit method is called prior to the plugins actual initialization and provides itself and it's layouts an opportunity to parse any additional option values.
 		 * @instance
 		 * @private
 		 * @returns {jQuery.Promise}
@@ -2050,7 +2050,7 @@
 		_preinit: function(){
 			var self = this;
 			/**
-			 * The preinit.ft.table event is raised before any components.
+			 * The preinit.ft.table event is raised before any layouts.
 			 * Calling preventDefault on this event will disable the entire plugin.
 			 * @event FooTable.Table#"preinit.ft.table"
 			 * @param {jQuery.Event} e - The jQuery.Event object for the event.
@@ -2084,7 +2084,7 @@
 		_init: function(){
 			var self = this;
 			/**
-			 * The init.ft.table event is raised before any components are initialized.
+			 * The init.ft.table event is raised before any layouts are initialized.
 			 * Calling preventDefault on this event will disable the entire plugin.
 			 * @event FooTable.Table#"init.ft.table"
 			 * @param {jQuery.Event} e - The jQuery.Event object for the event.
@@ -2105,7 +2105,7 @@
 					if ($thead.children('tr').length == 0) $thead.remove();
 
 					/**
-					 * The postinit.ft.table event is raised after any components are initialized but before the table is
+					 * The postinit.ft.table event is raised after any layouts are initialized but before the table is
 					 * drawn for the first time.
 					 * Calling preventDefault on this event will disable the initial drawing of the table.
 					 * @event FooTable.Table#"postinit.ft.table"
@@ -2131,7 +2131,7 @@
 		destroy: function () {
 			var self = this;
 			/**
-			 * The destroy.ft.table event is called before all core components.
+			 * The destroy.ft.table event is called before all core layouts.
 			 * Calling preventDefault on this event will prevent the entire plugin from being destroyed.
 			 * @event FooTable.Table#"destroy.ft.table"
 			 * @param {jQuery.Event} e - The jQuery.Event object for the event.
@@ -2209,10 +2209,10 @@
 			// Detach `self.$el` from the DOM, retaining its event handlers
 			self.$el.detach();
 
-			// when drawing the order that the components are executed is important so chain the methods but use promises to retain async safety.
+			// when drawing the order that the layouts are executed is important so chain the methods but use promises to retain async safety.
 			return self.execute(false, true, 'predraw').then(function(){
 				/**
-				 * The predraw.ft.table event is raised after all core components and add-ons have executed there predraw functions but before they execute there draw functions.
+				 * The predraw.ft.table event is raised after all core layouts and add-ons have executed there predraw functions but before they execute there draw functions.
 				 * @event FooTable.Table#"predraw.ft.table"
 				 * @param {jQuery.Event} e - The jQuery.Event object for the event.
 				 * @param {FooTable.Table} ft - The instance of the plugin raising the event.
@@ -2220,7 +2220,7 @@
 				return self.raise('predraw.ft.table').then(function(){
 					return self.execute(false, true, 'draw').then(function(){
 						/**
-						 * The draw.ft.table event is raised after all core components and add-ons have executed there draw functions.
+						 * The draw.ft.table event is raised after all core layouts and add-ons have executed there draw functions.
 						 * @event FooTable.Table#"draw.ft.table"
 						 * @param {jQuery.Event} e - The jQuery.Event object for the event.
 						 * @param {FooTable.Table} ft - The instance of the plugin raising the event.
@@ -2228,7 +2228,7 @@
 						return self.raise('draw.ft.table').then(function(){
 							return self.execute(false, true, 'postdraw').then(function(){
 								/**
-								 * The postdraw.ft.table event is raised after all core components and add-ons have executed there postdraw functions.
+								 * The postdraw.ft.table event is raised after all core layouts and add-ons have executed there postdraw functions.
 								 * @event FooTable.Table#"postdraw.ft.table"
 								 * @param {jQuery.Event} e - The jQuery.Event object for the event.
 								 * @param {FooTable.Table} ft - The instance of the plugin raising the event.
@@ -2249,12 +2249,12 @@
 			});
 		},
 		/**
-		 * Executes the specified method with the optional number of parameters on all components and waits for the promise from each to be resolved before executing the next.
+		 * Executes the specified method with the optional number of parameters on all layouts and waits for the promise from each to be resolved before executing the next.
 		 * @this FooTable.Table
 		 * @instance
 		 * @protected
 		 * @param {boolean} reverse - Whether or not to execute the component methods in the reverse order to what they were registered in.
-		 * @param {boolean} enabled - Whether or not to execute the method on enabled components only.
+		 * @param {boolean} enabled - Whether or not to execute the method on enabled layouts only.
 		 * @param {string} methodName - The name of the method to execute.
 		 * @param {*} [param1] - The first parameter for the method.
 		 * @param {...*} [paramN] - Any number of additional parameters for the method.
@@ -2269,11 +2269,11 @@
 			return self._execute.apply(self, args);
 		},
 		/**
-		 * Executes the specified method with the optional number of parameters on all supplied components waiting for the result of each before executing the next.
+		 * Executes the specified method with the optional number of parameters on all supplied layouts waiting for the result of each before executing the next.
 		 * @this FooTable.Table
 		 * @instance
 		 * @private
-		 * @param {Array.<FooTable.Component>} components - The components to call the method on.
+		 * @param {Array.<FooTable.Component>} components - The layouts to call the method on.
 		 * @param {string} methodName - The name of the method to execute
 		 * @param {*} [param1] - The first parameter for the method.
 		 * @param {...*} [paramN] - Any additional parameters for the method.
@@ -3346,7 +3346,7 @@
 			/**
 			 * The base array of rows parsed from either the DOM or the constructor options.
 			 * The {@link FooTable.Rows#current} member is populated with a shallow clone of this array
-			 * during the predraw operation before any core or custom components are executed.
+			 * during the predraw operation before any core or custom layouts are executed.
 			 * @instance
 			 * @protected
 			 * @type {Array.<FooTable.Row>}
@@ -3807,7 +3807,7 @@
 			 */
 			this.focus = table.o.filtering.focus;
 			/**
-			 * A selector specifying where to place the filtering components form, if null the form is displayed within a row in the head of the table.
+			 * A selector specifying where to place the filtering layouts form, if null the form is displayed within a row in the head of the table.
 			 * @type {string}
 			 */
 			this.container = table.o.filtering.container;
@@ -4698,7 +4698,7 @@
 	 * @prop {boolean} ignoreCase=true - Whether or not ignore case when matching.
 	 * @prop {boolean} exactMatch=false - Whether or not search queries are treated as phrases when matching.
 	 * @prop {boolean} focus=true - Whether or not to focus the search input after the search/clear button is clicked or after auto applying the search input query.
-	 * @prop {string} container=null - A selector specifying where to place the filtering components form, if null the form is displayed within a row in the head of the table.
+	 * @prop {string} container=null - A selector specifying where to place the filtering layouts form, if null the form is displayed within a row in the head of the table.
 	 */
 	F.Defaults.prototype.filtering = {
 		enabled: false,
@@ -4953,7 +4953,7 @@
 			);
 		},
 		/**
-		 * Resets the table sorting to the initial state recorded in the components init method.
+		 * Resets the table sorting to the initial state recorded in the layouts init method.
 		 */
 		reset: function(){
 			if (!!this.initial){
@@ -5335,7 +5335,7 @@
 			 */
 			this.countFormat = table.o.paging.countFormat;
 			/**
-			 * A selector specifying where to place the paging components UI, if null the UI is displayed within a row in the foot of the table.
+			 * A selector specifying where to place the paging layouts UI, if null the UI is displayed within a row in the foot of the table.
 			 * @instance
 			 * @type {string}
 			 */
@@ -5924,7 +5924,7 @@
 	 * @prop {number} limit=5 - The maximum number of page links to display at once.
 	 * @prop {string} position="center" - The string used to specify the alignment of the pagination control.
 	 * @prop {number} size=10 - The number of rows displayed per page.
-	 * @prop {string} container=null - A selector specifying where to place the paging components UI, if null the UI is displayed within a row in the foot of the table.
+	 * @prop {string} container=null - A selector specifying where to place the paging layouts UI, if null the UI is displayed within a row in the foot of the table.
 	 * @prop {object} strings - An object containing the strings used by the paging buttons.
 	 * @prop {string} strings.first="&laquo;" - The string used for the 'first' button.
 	 * @prop {string} strings.prev="&lsaquo;" - The string used for the 'previous' button.
@@ -6115,7 +6115,7 @@
 			 * @type {string}
 			 */
 			this.deleteText = table.o.editing.deleteText;
-			
+
 			/**
 			 * The text that appears in the view button. This can contain HTML.
 			 * @type {string}
@@ -6810,7 +6810,7 @@
 	 * can be set to false and then followed by a call to the {@link FooTable.Table#draw} method.
 	 */
 	F.Rows.prototype.update = function(indexOrRow, data, redraw){
-		var len = this.ft.rows.all.length, 
+		var len = this.ft.rows.all.length,
 			row = indexOrRow;
 		if (F.is.number(indexOrRow) && indexOrRow >= 0 && indexOrRow < len){
 			row = this.ft.rows.all[indexOrRow];
@@ -6827,7 +6827,7 @@
 	 * can be set to false and then followed by a call to the {@link FooTable.Table#draw} method.
 	 */
 	F.Rows.prototype.delete = function(indexOrRow, redraw){
-		var len = this.ft.rows.all.length, 
+		var len = this.ft.rows.all.length,
 			row = indexOrRow;
 		if (F.is.number(indexOrRow) && indexOrRow >= 0 && indexOrRow < len){
 			row = this.ft.rows.all[indexOrRow];
@@ -6953,21 +6953,21 @@
 			localStorage.removeItem(this.key + ':' + key);
 		},
 		/**
-		 * Executes the {@link FooTable.Component#readState} function on all components.
+		 * Executes the {@link FooTable.Component#readState} function on all layouts.
 		 * @instance
 		 */
 		read: function(){
 			this.ft.execute(false, true, 'readState');
 		},
 		/**
-		 * Executes the {@link FooTable.Component#writeState} function on all components.
+		 * Executes the {@link FooTable.Component#writeState} function on all layouts.
 		 * @instance
 		 */
 		write: function(){
 			this.ft.execute(false, true, 'writeState');
 		},
 		/**
-		 * Executes the {@link FooTable.Component#clearState} function on all components.
+		 * Executes the {@link FooTable.Component#clearState} function on all layouts.
 		 * @instance
 		 */
 		clear: function(){

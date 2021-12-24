@@ -90,14 +90,10 @@ class Destination extends Model
         return $notification;
     }
 
-    protected function storeImage(Request $request)
+    public function desploy($id)
     {
-        $file = $request->file('image')->getClientOriginalName();
-        $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
-        $extension = pathinfo($file, PATHINFO_EXTENSION);
-        $image_name = date('mdYHis') . uniqid() . $file_name . '.' . $extension;
-        $request->file('image')->storeAs($this->path_save_image, $image_name);
-        return $image_name;
+        $item = Destination::findOrFail($id);
+        return $item->delete();
     }
 
     public function getListDestination(Request $request)
@@ -141,14 +137,24 @@ class Destination extends Model
                 return '<img src="' . asset("storage/images/destination/" . $data->image) . '" width="80" height="80">';
             })
             ->addColumn('action', function ($data) {
-                return '<a href="' . route("destination.edit", $data->id) . '" class="btn btn-success btn-sm rounded-0 text-white" type="button" data-toggle="tooltip" data-placement="top" title="Edit">
+                return '<a href="' . route("destination.edit", $data->id) . '" class="btn btn-success btn-sm rounded-0 text-white edit" type="button" data-toggle="tooltip" data-placement="top" title="Edit">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <a href="' . route("destination.edit", $data->id) . '" class="btn btn-danger btn-sm rounded-0 text-white" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                        <a href="' . route("destination.destroy", $data->id) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
                             <i class="fa fa-trash"></i>
                         </a>';
             })
             ->rawColumns(['image', 'status', 'action'])
             ->make(true);
+    }
+
+    protected function storeImage(Request $request)
+    {
+        $file = $request->file('image')->getClientOriginalName();
+        $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
+        $image_name = date('mdYHis') . uniqid() . $file_name . '.' . $extension;
+        $request->file('image')->storeAs($this->path_save_image, $image_name);
+        return $image_name;
     }
 }

@@ -567,7 +567,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
 
 
     /**
-     * Wrap the picker holder components together.
+     * Wrap the picker holder layouts together.
      */
     function createWrappedComponent() {
 
@@ -583,7 +583,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
                     // Create a picker box node
                     PickerConstructor._.node( 'div',
 
-                        // Create the components nodes.
+                        // Create the layouts nodes.
                         P.component.nodes( STATE.open ),
 
                         // The picker box class
