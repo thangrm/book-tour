@@ -137,6 +137,12 @@
             break;
     }
     @endif
+    function disableSubmitButton(idForm) {
+        $(idForm).submit(function () {
+            $(this).find("button[type='submit']").prop('disabled', true);
+        });
+    }
+
 </script>
 @yield('js')
 </body>

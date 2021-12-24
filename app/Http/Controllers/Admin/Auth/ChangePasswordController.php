@@ -59,12 +59,12 @@ class ChangePasswordController extends Controller
             $obj_user->save();
 
             $notification = array(
-                'message' => 'Changed Password Successfully',
+                'message' => 'Changed password successfully',
                 'alert-type' => 'success',
             );
             return redirect()->route('admin.dashboard')->with($notification);
         }
-        
+
         return redirect()->back()->withErrors(['old-password' => 'Incorrect Password']);
     }
 
