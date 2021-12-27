@@ -57,7 +57,7 @@
             <div class="card-body">
                 <div class="form-group m-b-0 text-right row">
                     <div class="col-11">
-                        <button type="submit" class="btn btn-info waves-effect waves-light">Add new destination</button>
+                        <button type="submit" class="btn btn-info waves-effect waves-light">Add new type</button>
                     </div>
                 </div>
             </div>
