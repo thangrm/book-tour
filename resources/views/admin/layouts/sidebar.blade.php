@@ -48,7 +48,7 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link waves-effect waves-dark"
-                   href="{{ route('destination.index') }}" aria-expanded="false">
+                   href="{{ route('destinations.index') }}" aria-expanded="false">
                     <i class="mdi mdi-view-dashboard"></i>
                     <span class="hide-menu">Destinations Management</span>
                 </a>
@@ -56,7 +56,7 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link waves-effect waves-dark"
-                   href="javascript:void(0)" aria-expanded="false">
+                   href="{{ route('types.index') }}" aria-expanded="false">
                     <i class="mdi mdi-view-dashboard"></i>
                     <span class="hide-menu">Type of tours </span>
                 </a>

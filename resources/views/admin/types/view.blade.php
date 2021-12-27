@@ -9,7 +9,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Destination</li>
+                            <li class="breadcrumb-item active" aria-current="page">Type of tour</li>
                         </ol>
                     </nav>
                 </div>
@@ -22,8 +22,8 @@
 
             <form class="form-horizontal">
                 <div class="card-body pl-0 pt-0">
-                    <a class="btn btn-info mb-3" href="{{ route('destinations.create') }}" class="text-white">New
-                        Destination
+                    <a class="btn btn-info mb-3" href="{{ route('types.create') }}" class="text-white">
+                        New type
                     </a>
                     <div class="row">
                         <div class="col-sm-12 col-lg-6">
@@ -57,7 +57,6 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Image</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -76,7 +75,7 @@
                 stateSave: true,
                 ordering: false,
                 ajax: {
-                    url: "{!! route('destinations.data') !!}",
+                    url: "{!! route('types.data') !!}",
                     data: function (d) {
                         d.search = $('#searchName').val();
                         d.status = $('#filterStatus').val();
@@ -86,7 +85,6 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
-                    {data: 'image', name: 'image'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action'},
                 ]
@@ -125,7 +123,7 @@
                                 url: link,
                                 type: 'delete',
                                 success: function (response) {
-                                    toastr.success('Destination deleted successfully');
+                                    toastr.success('Type of tour deleted successfully');
                                     datatable.ajax.reload();
                                 },
                                 error: function (response) {

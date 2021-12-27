@@ -10,7 +10,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">
-                                <a href="{{ route('destination.index') }}">Destination</a>
+                                <a href="{{ route('destinations.index') }}">Destination</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Edit</li>
                         </ol>
@@ -21,7 +21,7 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('destination.update',$destination->id) }}" class="form-horizontal" method="post"
+        <form action="{{ route('destinations.update',$destination->id) }}" class="form-horizontal" method="post"
               enctype="multipart/form-data"
               id="formEditDestination">
             @method('PUT')
@@ -64,7 +64,7 @@
                                 <option value="2" {{ $destination->status == 2 ? "selected" : "" }}>Inactive</option>
                             </select>
                         </div>
-                        @error('image')
+                        @error('status')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
