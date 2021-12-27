@@ -10,7 +10,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">
-                                <a href="{{ route('destination.index') }}">Destination</a>
+                                <a href="{{ route('destinations.index') }}">Destination</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Create</li>
                         </ol>
@@ -21,7 +21,7 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('destination.store') }}" class="form-horizontal" method="post"
+        <form action="{{ route('destinations.store') }}" class="form-horizontal" method="post"
               enctype="multipart/form-data"
               id="formCreateDestination">
             @csrf
@@ -48,6 +48,21 @@
                             <img id="showImg" style="max-height: 150px; margin: 10px 2px">
                         </div>
                         @error('image')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="image" class="col-sm-2 text-lg-right control-label col-form-label">Status
+                    </label>
+                    <div class="col-sm-9">
+                        <div class="input-group mb-3" style="width: 150px">
+                            <select class="form-control" name="status">
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                            </select>
+                        </div>
+                        @error('status')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>

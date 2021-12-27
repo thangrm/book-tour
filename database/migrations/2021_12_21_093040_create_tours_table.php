@@ -17,7 +17,7 @@ class CreateToursTable extends Migration
             $table->integer('id', true);
             $table->integer('type_id')->nullable()->index('type_id');
             $table->integer('destination_id')->nullable()->index('destination_id');
-            $table->string('name', 50);
+            $table->string('name', 50)->unique();
             $table->string('slug', 50);
             $table->string('image', 100);
             $table->string('paronamic_image', 100)->nullable();
@@ -29,6 +29,7 @@ class CreateToursTable extends Migration
             $table->text('additional')->nullable();
             $table->text('departure')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1: active, 0: inactive');
+            $table->tinyInteger('trending')->default(1)->comment('1: active, 0: inactive');
             $table->timestamps();
         });
     }

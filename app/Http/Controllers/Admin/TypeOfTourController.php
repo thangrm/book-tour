@@ -3,19 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Destination;
+use App\Models\TypeOfTour;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Yajra\Datatables\DataTables;
-use App\Libraries\Utilities;
 
-class DestinationController extends Controller
+class TypeOfTourController extends Controller
 {
-    protected $destination;
+    protected $typeTour;
 
-    public function __construct(Destination $destination)
+    public function __construct(TypeOfTour $typeTour)
     {
-        $this->destination = $destination;
+        $this->typeTour = $typeTour;
     }
 
     /**
@@ -25,7 +22,7 @@ class DestinationController extends Controller
      */
     public function index()
     {
-        return view('admin.destinations.view');
+        return view('admin.types.view');
     }
 
     /**
@@ -35,7 +32,6 @@ class DestinationController extends Controller
      */
     public function create()
     {
-        return view('admin.destinations.create');
     }
 
     /**
@@ -46,13 +42,7 @@ class DestinationController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->destination->rule());
-        $notification = $this->destination->storeDestination($request);
 
-        if ($notification['alert-type'] == 'error') {
-            return redirect()->back()->with($notification);
-        }
-        return redirect()->route('destinations.index')->with($notification);
     }
 
     /**
@@ -74,8 +64,7 @@ class DestinationController extends Controller
      */
     public function edit($id)
     {
-        $destination = Destination::find($id);
-        return view('admin.destinations.edit', compact('destination'));
+
     }
 
     /**
@@ -87,13 +76,7 @@ class DestinationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate($this->destination->ruleUpdate($id));
-        $notification = $this->destination->updateDestination($request, $id);
 
-        if ($notification['alert-type'] == 'error') {
-            return redirect()->back()->with($notification);
-        }
-        return redirect()->route('destinations.index')->with($notification);
     }
 
     /**
@@ -104,7 +87,7 @@ class DestinationController extends Controller
      */
     public function destroy($id)
     {
-        return $this->destination->remove($id);
+
     }
 
     /**
@@ -115,8 +98,8 @@ class DestinationController extends Controller
     public function getData(Request $request)
     {
         if ($request->ajax()) {
-            $data = $this->destination->getListDestination($request);
-            return $this->destination->getDataTable($data);
+            $data = $this->typeTour->getListTypeTour($request);
+            return $this->typeTour->getDataTable($data);
         }
     }
 }

@@ -5,8 +5,9 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
-use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\Auth\ChangePasswordController;
+use App\Http\Controllers\Admin\DestinationController;
+use App\Http\Controllers\Admin\TypeOfTourController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,6 @@ use App\Http\Controllers\Admin\Auth\ChangePasswordController;
 |
 */
 
-require __DIR__ . '/auth.php';
 Route::get('/', function () {
     return view('welcome');
 });
@@ -43,10 +43,18 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         //Destination
-        Route::resource('destination', DestinationController::class)->except(['show']);
+        Route::resource('destinations', DestinationController::class)->except(['show']);
         Route::group(['prefix' => 'destinations'], function () {
-            Route::get('data', [DestinationController::class, 'getData'])->name('destination.data');
+            Route::get('data', [DestinationController::class, 'getData'])->name('destinations.data');
         });
+
+        //Type of tour
+        Route::resource('types', TypeOfTourController::class)->except(['show']);
+        Route::group(['prefix' => 'types'], function () {
+            Route::get('data', [TypeOfTourController::class, 'getData'])->name('types.data');
+        });
+
+        
     });
 });
 
