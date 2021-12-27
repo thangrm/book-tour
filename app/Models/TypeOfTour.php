@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Libraries\Notification;
 use App\Libraries\Utilities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class TypeOfTour extends Model
@@ -15,12 +15,28 @@ class TypeOfTour extends Model
 
     protected $table = 'tour_types';
     protected $guarded = [];
+    protected $notification;
 
-    public function rule()
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+        $this->notification = new Notification();
+    }
+
+    public function rule(): array
     {
         return [
             'name' => 'required|max:50|string|unique:tour_types',
             'status' => 'required|between:1,2'
+        ];
+    }
+
+
+    public function ruleUpdate($id): array
+    {
+        return [
+            'name' => "required|max:50|string|unique:tour_types,name,$id",
+            'status' => "required|between:1,2"
         ];
     }
 
@@ -31,21 +47,31 @@ class TypeOfTour extends Model
         $data['status'] = $request->status;
 
         if (TypeOfTour::create($data)->exists) {
-            $notification = array(
-                'message' => 'New type added successfully',
-                'alert-type' => 'success',
-            );
+            $this->notification->setMessage('New type added successfully', Notification::SUCCESS);
         } else {
-            $notification = array(
-                'message' => 'Type creation failed',
-                'alert-type' => 'error',
-            );
+            $this->notification->setMessage('Type creation failed', Notification::ERROR);
         }
 
-        return $notification;
+        return $this->notification;
     }
 
-    public function getListTypeTour(Request $request)
+    public function updateType(Request $request, $id)
+    {
+        $type = TypeOfTour::findOrFail($id);
+        $nameType = Utilities::clearXSS($request->name);
+        $type->name = $nameType;
+        $type->status = $request->status;
+
+        if ($type->save()) {
+            $this->notification->setMessage('Type updated successfull', Notification::SUCCESS);
+        } else {
+            $this->notification->setMessage('Type update failed', Notification::ERROR);
+        }
+
+        return $this->notification;
+    }
+
+    public function getListType(Request $request)
     {
         $search = $request->search;
         $status = $request->status;

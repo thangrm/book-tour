@@ -61,18 +61,18 @@ class Destination extends Model
 
     public function updateDestination(Request $request, $id)
     {
-        $destination = Destination::find($id);
+        $destination = Destination::findOrFail($id);
 
-        $name_destination = Utilities::clearXSS($request->name);
-        $destination->name = $name_destination;
-        $destination->slug = Str::slug($name_destination);
+        $nameDestination = Utilities::clearXSS($request->name);
+        $destination->name = $nameDestination;
+        $destination->slug = Str::slug($nameDestination);
         $destination->status = $request->status;
 
         // Upload Image
         if ($request->hasFile('image')) {
-            $old_image = $destination->image;
+            $oldImage = $destination->image;
             $image = $this->storeImage($request);
-            Storage::delete($this->path_save_image, $old_image);
+            Storage::delete($this->path_save_image, $oldImage);
             $destination->image = $image;
         }
 
@@ -103,10 +103,10 @@ class Destination extends Model
         $file = $request->file('image')->getClientOriginalName();
         $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
         $extension = pathinfo($file, PATHINFO_EXTENSION);
-        $image_name = date('mdYHis') . uniqid() . $file_name . '.' . $extension;
-        $request->file('image')->storeAs($this->path_save_image, $image_name);
+        $imageName = date('mdYHis') . uniqid() . $file_name . '.' . $extension;
+        $request->file('image')->storeAs($this->path_save_image, $imageName);
 
-        return $image_name;
+        return $imageName;
     }
 
     public function getListDestination(Request $request)
