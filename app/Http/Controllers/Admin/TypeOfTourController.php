@@ -32,6 +32,7 @@ class TypeOfTourController extends Controller
      */
     public function create()
     {
+        return view('admin.types.create');
     }
 
     /**
@@ -42,7 +43,13 @@ class TypeOfTourController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->typeTour->rule());
+        $notification = $this->typeTour->storeType($request);
 
+        if ($notification['alert-type'] == 'error') {
+            return redirect()->back()->with($notification);
+        }
+        return redirect()->route('types.index')->with($notification);
     }
 
     /**

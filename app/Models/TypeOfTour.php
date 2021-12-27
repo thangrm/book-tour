@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Libraries\Utilities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class TypeOfTour extends Model
@@ -13,6 +15,35 @@ class TypeOfTour extends Model
 
     protected $table = 'tour_types';
     protected $guarded = [];
+
+    public function rule()
+    {
+        return [
+            'name' => 'required|max:50|string|unique:tour_types',
+            'status' => 'required|between:1,2'
+        ];
+    }
+
+    public function storeType(Request $request)
+    {
+        $nameType = Utilities::clearXSS($request->name);
+        $data['name'] = $nameType;
+        $data['status'] = $request->status;
+
+        if (TypeOfTour::create($data)->exists) {
+            $notification = array(
+                'message' => 'New type added successfully',
+                'alert-type' => 'success',
+            );
+        } else {
+            $notification = array(
+                'message' => 'Type creation failed',
+                'alert-type' => 'error',
+            );
+        }
+
+        return $notification;
+    }
 
     public function getListTypeTour(Request $request)
     {
