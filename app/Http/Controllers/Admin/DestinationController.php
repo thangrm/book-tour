@@ -93,6 +93,7 @@ class DestinationController extends Controller
         if ($notification['alert-type'] == 'error') {
             return redirect()->back()->with($notification);
         }
+        
         return redirect()->route('destinations.index')->with($notification);
     }
 

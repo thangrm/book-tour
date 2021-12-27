@@ -1,0 +1,28 @@
+.input-inner-icon {
+    margin: 18px 30px;
+    position: relative;
+    img {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 25px;
+        z-index: 1;
+    }
+    input {
+        padding-left: 60px;
+        height: 64px;
+    }
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("../images/icon/polygon.svg");
+        background-repeat: no-repeat;
+        background-position-x: 95%;
+        background-position-y: 50%;
+        padding-left: 60px;
+        height: 64px;
+    }
+    select:required:invalid {
+        color: gray;
+    }
+}

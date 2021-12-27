@@ -4,7 +4,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">Dashboard</h4>
+                <h4 class="page-title">Type of tour</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
@@ -33,7 +33,7 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="search" id="searchName"
                                            aria-describedby="emailHelp"
-                                           placeholder="Name destination">
+                                           placeholder="Name of type">
                                 </div>
                             </div>
                         </div>
