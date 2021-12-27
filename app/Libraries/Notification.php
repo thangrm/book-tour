@@ -37,7 +37,7 @@ class Notification
         return $this->type == Notification::ERROR;
     }
 
-    public function setMessage($message, $type)
+    public function setMessage($message, $type = Notification::INFO)
     {
         $this->message = $message;
         $this->type = $type;

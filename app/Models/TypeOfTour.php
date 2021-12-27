@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Libraries\Notification;
 use App\Libraries\Utilities;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -17,12 +18,18 @@ class TypeOfTour extends Model
     protected $guarded = [];
     protected $notification;
 
+
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
         $this->notification = new Notification();
     }
 
+    /**
+     * Validate rules for store
+     *
+     * @return array[]
+     */
     public function rule(): array
     {
         return [
@@ -30,8 +37,13 @@ class TypeOfTour extends Model
             'status' => 'required|between:1,2'
         ];
     }
-
-
+    
+    /**
+     * Validate rules for update
+     *
+     * @param $id
+     * @return array[]
+     */
     public function ruleUpdate($id): array
     {
         return [
@@ -40,6 +52,12 @@ class TypeOfTour extends Model
         ];
     }
 
+    /**
+     * Store a new type in database.
+     *
+     * @param Request $request
+     * @return Notification
+     */
     public function storeType(Request $request)
     {
         $nameType = Utilities::clearXSS($request->name);
@@ -55,6 +73,13 @@ class TypeOfTour extends Model
         return $this->notification;
     }
 
+    /**
+     * Update the type in database.
+     *
+     * @param Request $request
+     * @param $id
+     * @return Notification
+     */
     public function updateType(Request $request, $id)
     {
         $type = TypeOfTour::findOrFail($id);
@@ -71,6 +96,25 @@ class TypeOfTour extends Model
         return $this->notification;
     }
 
+    /**
+     * Delete the type by id in database.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function remove($id)
+    {
+        $type = TypeOfTour::findOrFail($id);
+
+        return $type->delete();
+    }
+
+    /**
+     * Get a list of type of tour
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function getListType(Request $request)
     {
         $search = $request->search;
@@ -93,6 +137,13 @@ class TypeOfTour extends Model
         return $this->orderBy('id', 'asc')->get();
     }
 
+    /**
+     * Format data according to Datatables
+     *
+     * @param Collection $data
+     * @return mixed
+     * @throws \Exception
+     */
     public function getDataTable($data)
     {
         return DataTables::of($data)

@@ -5,9 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Yajra\Datatables\DataTables;
-use App\Libraries\Utilities;
 
 class DestinationController extends Controller
 {
@@ -49,10 +46,10 @@ class DestinationController extends Controller
         $request->validate($this->destination->rule());
         $notification = $this->destination->storeDestination($request);
 
-        if ($notification['alert-type'] == 'error') {
-            return redirect()->back()->with($notification);
+        if ($notification->isError()) {
+            return redirect()->back()->with($notification->getMessage());
         }
-        return redirect()->route('destinations.index')->with($notification);
+        return redirect()->route('destinations.index')->with($notification->getMessage());
     }
 
     /**
@@ -74,7 +71,7 @@ class DestinationController extends Controller
      */
     public function edit($id)
     {
-        $destination = Destination::find($id);
+        $destination = Destination::findorFail($id);
         return view('admin.destinations.edit', compact('destination'));
     }
 
@@ -90,11 +87,11 @@ class DestinationController extends Controller
         $request->validate($this->destination->ruleUpdate($id));
         $notification = $this->destination->updateDestination($request, $id);
 
-        if ($notification['alert-type'] == 'error') {
-            return redirect()->back()->with($notification);
+        if ($notification->isError()) {
+            return redirect()->back()->with($notification->getMessage());
         }
-        
-        return redirect()->route('destinations.index')->with($notification);
+
+        return redirect()->route('destinations.index')->with($notification->getMessage());
     }
 
     /**
