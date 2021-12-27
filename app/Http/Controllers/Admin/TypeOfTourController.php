@@ -46,10 +46,10 @@ class TypeOfTourController extends Controller
         $request->validate($this->typeTour->rule());
         $notification = $this->typeTour->storeType($request);
 
-        if ($notification['alert-type'] == 'error') {
-            return redirect()->back()->with($notification);
+        if ($notification->isError()) {
+            return redirect()->back()->with($notification->getMessage());
         }
-        return redirect()->route('types.index')->with($notification);
+        return redirect()->route('types.index')->with($notification->getMessage());
     }
 
     /**
@@ -71,7 +71,8 @@ class TypeOfTourController extends Controller
      */
     public function edit($id)
     {
-
+        $type = TypeOfTour::findOrFail($id);
+        return view('admin.types.edit', compact('type'));
     }
 
     /**
@@ -83,7 +84,13 @@ class TypeOfTourController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate($this->typeTour->ruleUpdate($id));
+        $notification = $this->typeTour->updateType($request, $id);
 
+        if ($notification->isError()) {
+            return redirect()->back()->with($notification->getMessage());
+        }
+        return redirect()->route('types.index')->with($notification->getMessage());
     }
 
     /**
@@ -105,7 +112,7 @@ class TypeOfTourController extends Controller
     public function getData(Request $request)
     {
         if ($request->ajax()) {
-            $data = $this->typeTour->getListTypeTour($request);
+            $data = $this->typeTour->getListType($request);
             return $this->typeTour->getDataTable($data);
         }
     }
