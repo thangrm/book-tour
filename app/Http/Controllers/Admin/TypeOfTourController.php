@@ -49,6 +49,7 @@ class TypeOfTourController extends Controller
         if ($notification->isError()) {
             return redirect()->back()->with($notification->getMessage());
         }
+
         return redirect()->route('types.index')->with($notification->getMessage());
     }
 
@@ -90,6 +91,7 @@ class TypeOfTourController extends Controller
         if ($notification->isError()) {
             return redirect()->back()->with($notification->getMessage());
         }
+        
         return redirect()->route('types.index')->with($notification->getMessage());
     }
 
@@ -101,7 +103,7 @@ class TypeOfTourController extends Controller
      */
     public function destroy($id)
     {
-
+        return $this->typeTour->remove($id);
     }
 
     /**

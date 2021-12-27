@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Libraries\Notification;
 use App\Libraries\Utilities;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class Destination extends Model
@@ -16,7 +18,19 @@ class Destination extends Model
 
     protected $guarded = [];
     protected $path_save_image = 'public/images/destination';
+    protected $notification;
 
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+        $this->notification = new Notification();
+    }
+
+    /**
+     * Validate rules for store
+     *
+     * @return array[]
+     */
     public function rule(): array
     {
         return [
@@ -26,6 +40,12 @@ class Destination extends Model
         ];
     }
 
+    /**
+     * Validate rules for update
+     *
+     * @param $id
+     * @return array[]
+     */
     public function ruleUpdate($id): array
     {
         return [
@@ -35,6 +55,12 @@ class Destination extends Model
         ];
     }
 
+    /**
+     * Store a new destination in database.
+     *
+     * @param Request $request
+     * @return Notification
+     */
     public function storeDestination(Request $request)
     {
         $nameDestination = Utilities::clearXSS($request->name);
@@ -45,20 +71,21 @@ class Destination extends Model
         $image = $this->storeImage($request);
         $data['image'] = $image;
         if (Destination::create($data)->exists) {
-            $notification = array(
-                'message' => 'New destination added successfully',
-                'alert-type' => 'success',
-            );
+            $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
         } else {
-            $notification = array(
-                'message' => 'Destination creation failed',
-                'alert-type' => 'error',
-            );
+            $this->notification->setMessage('Destination creation failed', Notification::ERROR);
         }
 
-        return $notification;
+        return $this->notification;
     }
 
+    /**
+     * Update the destination in database.
+     *
+     * @param Request $request
+     * @param $id
+     * @return Notification
+     */
     public function updateDestination(Request $request, $id)
     {
         $destination = Destination::findOrFail($id);
@@ -77,27 +104,33 @@ class Destination extends Model
         }
 
         if ($destination->save()) {
-            $notification = array(
-                'message' => 'Destination updated successfully',
-                'alert-type' => 'success',
-            );
+            $this->notification->setMessage('Destination updated successfully', Notification::SUCCESS);
         } else {
-            $notification = array(
-                'message' => 'Destination update failed',
-                'alert-type' => 'error',
-            );
+            $this->notification->setMessage('Destination update failed', Notification::ERROR);
         }
 
-        return $notification;
+        return $this->notification;
     }
 
+    /**
+     * Delete the destination by id in database.
+     *
+     * @param $id
+     * @return mixed
+     */
     public function remove($id)
     {
-        $item = Destination::findOrFail($id);
+        $destination = Destination::findOrFail($id);
 
-        return $item->delete();
+        return $destination->delete();
     }
 
+    /**
+     * Store image for the destination.
+     *
+     * @param Request $request
+     * @return string
+     */
     protected function storeImage(Request $request)
     {
         $file = $request->file('image')->getClientOriginalName();
@@ -109,6 +142,12 @@ class Destination extends Model
         return $imageName;
     }
 
+    /**
+     * Get a list of destinations
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function getListDestination(Request $request)
     {
         $search = $request->search;
@@ -135,6 +174,13 @@ class Destination extends Model
         return $this->orderBy('id', 'asc')->get();
     }
 
+    /**
+     * Format data according to Datatables
+     *
+     * @param Collection $data
+     * @return mixed
+     * @throws \Exception
+     */
     public function getDataTable($data)
     {
         return DataTables::of($data)
