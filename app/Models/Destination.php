@@ -27,6 +27,14 @@ class Destination extends Model
     }
 
     /**
+     * Get the tours for the destination.
+     */
+    public function tours()
+    {
+        return $this->hasMany(Tour::class);
+    }
+
+    /**
      * Validate rules for store
      *
      * @return array[]
@@ -152,26 +160,19 @@ class Destination extends Model
     {
         $search = $request->search;
         $status = $request->status;
-
-        if (!empty($search) && !empty($status)) {
-            return $this->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%');
-                $query->orwhere('slug', 'like', '%' . $search . '%');
-            })
-                ->where('status', '=', $status)
-                ->orderBy('id', 'asc')->get();
-
-        } elseif (!empty($search)) {
-            return $this->where('name', 'like', '%' . $search . '%')
-                ->orwhere('slug', 'like', '%' . $search . '%')
-                ->orderBy('id', 'asc')->get();
-
-        } elseif (!empty($status)) {
-            return $this->where('status', '=', $status)
-                ->orderBy('id', 'asc')->get();
+        $query = $this->latest();
+        if (!empty($search)) {
+            $query->where(function ($sub) use ($search) {
+                $sub->where('name', 'like', '%' . $search . '%');
+                $sub->orwhere('slug', 'like', '%' . $search . '%');
+            });
         }
 
-        return $this->orderBy('id', 'asc')->get();
+        if (!empty($status)) {
+            $query->where('status', '=', $status);
+        }
+
+        return $query->get();
     }
 
     /**

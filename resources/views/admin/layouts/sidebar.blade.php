@@ -21,17 +21,9 @@
                             <a class="dropdown-item" href="{{ route('admin.password.change') }}">
                                 <i class="ti-user mr-1 ml-1"></i>Change Password
                             </a>
-                            {{--                            <a class="dropdown-item" href="javascript:void(0)">--}}
-                            {{--                                <i class="ti-wallet mr-1 ml-1"></i> My Balance--}}
-                            {{--                            </a>--}}
-                            {{--                            <a class="dropdown-item" href="javascript:void(0)">--}}
-                            {{--                                <i class="ti-email mr-1 ml-1"></i> Inbox</a>--}}
-                            {{--                            <div class="dropdown-divider"></div>--}}
-                            {{--                            <a class="dropdown-item" href="javascript:void(0)">--}}
-                            {{--                                <i class="ti-settings mr-1 ml-1"></i> Account Setting</a>--}}
-                            {{--                            <div class="dropdown-divider"></div>--}}
                             <a class="dropdown-item" href="{{ route('admin.logout') }}">
-                                <i class="fa fa-power-off mr-1 ml-1"></i> Logout</a>
+                                <i class="fa fa-power-off mr-1 ml-1"></i> Logout
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -64,7 +56,7 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link waves-effect waves-dark"
-                   href="javascript:void(0)" aria-expanded="false">
+                   href="{{ route('tours.index') }}" aria-expanded="false">
                     <i class="mdi mdi-view-dashboard"></i>
                     <span class="hide-menu">Tours Management </span>
                 </a>
