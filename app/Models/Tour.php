@@ -2,16 +2,64 @@
 
 namespace App\Models;
 
+use App\Libraries\Notification;
+use App\Libraries\Utilities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class Tour extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+    protected $notification;
+
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+        $this->notification = new Notification();
+    }
+
+    public function rule()
+    {
+        return array(
+            'name' => 'required|max:50|string|unique:tours',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
+            'destination_id' => 'required|exists:destinations,id',
+            'type_id' => 'required|exists:tour_types,id',
+            'duration' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|integer|between:1,2',
+            'trending' => 'required|integer|between:1,2',
+        );
+    }
+
+    /**
+     * Store a new tour in database.
+     *
+     * @param Request $request
+     * @return Notification
+     */
+    public function storeTour(Request $request)
+    {
+        $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
+        $input = Utilities::clearAllXSS($input);
+        $input['image'] = Utilities::storeImage($request, 'image', 'public/images/tours/');
+        $input['slug'] = Str::slug($input['name']);
+
+        if (Tour::create($input)->exists) {
+            $this->notification->setMessage('New tour added successfully', Notification::SUCCESS);
+        } else {
+            $this->notification->setMessage('Tour creation failed', Notification::ERROR);
+        }
+
+        return $this->notification;
+    }
 
     /**
      * Get the destination that owns the tour.
@@ -78,15 +126,15 @@ class Tour extends Model
      * @return mixed
      * @throws \Exception
      */
-    public
-    function getDataTable(
-        $data
-    ) {
+    public function getDataTable($data)
+    {
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('name', function ($data) {
+                $durationString = Utilities::durationToString($data->duration);
                 return "<b>$data->name </b> <br>
-                        $data->destination_name  ($data->type_name)";
+                        $data->destination_name  ($data->type_name)<br>
+                        <span style='font-size: smaller; color: #636567'> $durationString </span>";
             })
             ->editColumn('image', function ($data) {
                 return '<img src="' . asset("storage/images/tours/" . $data->image) . '" width="80" height="80">';

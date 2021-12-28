@@ -32,7 +32,7 @@
                                        class="col-sm-2 control-label col-form-label">Search:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="search" id="searchName"
-                                           placeholder="Search by title">
+                                           placeholder="Search by name">
                                 </div>
                             </div>
                         </div>
@@ -41,14 +41,17 @@
                     <div class="row">
                         <div class="col-sm-12 col-lg-4">
                             <div class="form-group row">
-                                <label for="filterStatus"
+                                <label for="filterDestination"
                                        class="col-sm-3 control-label col-form-label">Destination</label>
                                 <div class="col-9 col-lg-6">
                                     <select class="form-control" name="destination_id" id="filterDestination">
                                         <option value="">All</option>
-                                        @foreach($destinations as $destination)
-                                            <option value="{{ $destination->id }}"> {{ $destination->name }} </option>
-                                        @endforeach
+                                        @isset($destinations)
+                                            @foreach($destinations as $destination)
+                                                <option
+                                                    value="{{ $destination->id }}"> {{ $destination->name }} </option>
+                                            @endforeach
+                                        @endisset
                                     </select>
                                 </div>
                             </div>
@@ -56,14 +59,16 @@
 
                         <div class="col-sm-12 col-lg-4">
                             <div class="form-group row">
-                                <label for="filterStatus"
+                                <label for="filterType"
                                        class="col-sm-3 control-label col-form-label">Type of tour:</label>
                                 <div class="col-9 col-lg-6">
                                     <select class="form-control" name="type_id" id="filterType">
                                         <option value="">All</option>
-                                        @foreach($types as $type)
-                                            <option value="{{ $type->id }}"> {{ $type->name }} </option>
-                                        @endforeach
+                                        @isset($types)
+                                            @foreach($types as $type)
+                                                <option value="{{ $type->id }}"> {{ $type->name }} </option>
+                                            @endforeach
+                                        @endisset
                                     </select>
                                 </div>
                             </div>
@@ -88,7 +93,7 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Title</th>
+                <th>Name</th>
                 <th>Image</th>
                 <th>Price</th>
                 <th>Status</th>

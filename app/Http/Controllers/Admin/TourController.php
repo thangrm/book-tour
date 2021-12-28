@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 
 class TourController extends Controller
 {
+    protected $tour;
+
     public function __construct(Tour $tour)
     {
         $this->tour = $tour;
@@ -30,22 +32,31 @@ class TourController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        $destinations = Destination::latest()->get();
+        $types = TypeOfTour::latest()->get();
+        return view('admin.tours.create', compact(['destinations', 'types']));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->tour->rule());
+        $notification = $this->tour->storeTour($request);
+
+        if ($notification->isError()) {
+            return redirect()->back()->with($notification->getMessage());
+        }
+
+        return redirect()->route('tours.index')->with($notification->getMessage());
     }
 
     /**
@@ -100,9 +111,9 @@ class TourController extends Controller
      */
     public function getData(Request $request)
     {
-//        if ($request->ajax()) {
-        $data = $this->tour->getListTour($request);
-        return $this->tour->getDataTable($data);
-        //}
+        if ($request->ajax()) {
+            $data = $this->tour->getListTour($request);
+            return $this->tour->getDataTable($data);
+        }
     }
 }

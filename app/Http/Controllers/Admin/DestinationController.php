@@ -49,6 +49,7 @@ class DestinationController extends Controller
         if ($notification->isError()) {
             return redirect()->back()->with($notification->getMessage());
         }
+        
         return redirect()->route('destinations.index')->with($notification->getMessage());
     }
 

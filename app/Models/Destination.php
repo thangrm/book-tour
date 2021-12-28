@@ -17,7 +17,7 @@ class Destination extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $path_save_image = 'public/images/destination';
+    protected $path_save_image = 'public/images/destinations/';
     protected $notification;
 
     public function __construct(array $attributes = array())
@@ -144,7 +144,7 @@ class Destination extends Model
         $file = $request->file('image')->getClientOriginalName();
         $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
         $extension = pathinfo($file, PATHINFO_EXTENSION);
-        $imageName = date('mdYHis') . uniqid() . $file_name . '.' . $extension;
+        $imageName = date('YmdHis') . uniqid() . $file_name . '.' . $extension;
         $request->file('image')->storeAs($this->path_save_image, $imageName);
 
         return $imageName;
@@ -194,7 +194,7 @@ class Destination extends Model
                 }
             })
             ->editColumn('image', function ($data) {
-                return '<img src="' . asset("storage/images/destination/" . $data->image) . '" width="80" height="80">';
+                return '<img src="' . asset("storage/images/destinations/" . $data->image) . '" width="80" height="80">';
             })
             ->addColumn('action', function ($data) {
                 return '<a href="' . route("destinations.edit", $data->id) . '" class="btn btn-success btn-sm rounded-0 text-white edit" types="button" data-toggle="tooltip" data-placement="top" title="Edit">
