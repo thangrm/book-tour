@@ -74,23 +74,33 @@ class TourController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $tour = Tour::findorFail($id);
+        $destinations = Destination::latest()->get();
+        $types = TypeOfTour::latest()->get();
+        return view('admin.tours.edit', compact(['tour', 'destinations', 'types']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->tour->rule($id));
+        $notification = $this->tour->updateTour($request, $id);
+
+        if ($notification->isError()) {
+            return redirect()->back()->with($notification->getMessage());
+        }
+
+        return redirect()->route('tours.index')->with($notification->getMessage());
     }
 
     /**
@@ -101,7 +111,7 @@ class TourController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 
     /**

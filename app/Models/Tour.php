@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
@@ -18,47 +19,12 @@ class Tour extends Model
 
     protected $guarded = [];
     protected $notification;
+    protected $pathTour = 'public/images/tours/';
 
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
         $this->notification = new Notification();
-    }
-
-    public function rule()
-    {
-        return array(
-            'name' => 'required|max:50|string|unique:tours',
-            'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
-            'destination_id' => 'required|exists:destinations,id',
-            'type_id' => 'required|exists:tour_types,id',
-            'duration' => 'required|integer|min:1',
-            'price' => 'required|numeric|min:0',
-            'status' => 'required|integer|between:1,2',
-            'trending' => 'required|integer|between:1,2',
-        );
-    }
-
-    /**
-     * Store a new tour in database.
-     *
-     * @param Request $request
-     * @return Notification
-     */
-    public function storeTour(Request $request)
-    {
-        $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
-        $input = Utilities::clearAllXSS($input);
-        $input['image'] = Utilities::storeImage($request, 'image', 'public/images/tours/');
-        $input['slug'] = Str::slug($input['name']);
-
-        if (Tour::create($input)->exists) {
-            $this->notification->setMessage('New tour added successfully', Notification::SUCCESS);
-        } else {
-            $this->notification->setMessage('Tour creation failed', Notification::ERROR);
-        }
-
-        return $this->notification;
     }
 
     /**
@@ -77,6 +43,78 @@ class Tour extends Model
     public function type()
     {
         return $this->belongsTo(TypeOfTour::class);
+    }
+
+    /**
+     * @param $id
+     * @return string[]
+     */
+    public function rule($id = null)
+    {
+        $rule = array(
+            'name' => 'required|max:50|string|unique:tours',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
+            'destination_id' => 'required|exists:destinations,id',
+            'type_id' => 'required|exists:tour_types,id',
+            'duration' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|integer|between:1,2',
+            'trending' => 'required|integer|between:1,2',
+        );
+
+        if ($id != null) {
+            $rule['name'] = 'required|max:50|string|unique:tours,name,' . $id;
+            $rule['image'] = 'image|mimes:jpeg,jpg,png,gif|max:5000';
+        }
+
+        return $rule;
+    }
+
+    /**
+     * Store a new tour in database.
+     *
+     * @param Request $request
+     * @return Notification
+     */
+    public function storeTour(Request $request)
+    {
+        $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
+        $input = Utilities::clearAllXSS($input);
+        $input['image'] = Utilities::storeImage($request, 'image', $this->pathTour);
+        $input['slug'] = Str::slug($input['name']);
+
+        if ($this->create($input)->exists) {
+            $this->notification->setMessage('New tour added successfully', Notification::SUCCESS);
+        } else {
+            $this->notification->setMessage('Tour creation failed', Notification::ERROR);
+        }
+
+        return $this->notification;
+    }
+
+    public function updateTour(Request $request, $id)
+    {
+        $tour = $this->findOrFail($id);
+        $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
+        $input = Utilities::clearAllXSS($input);
+        $input['slug'] = Str::slug($input['name']);
+        $tour->fill($input);
+
+        // Upload Image
+        if ($request->hasFile('image')) {
+            $oldImage = $tour->image;
+            $image = Utilities::storeImage($request, 'image', $this->pathTour);
+            Storage::delete($this->pathTour . '.' . $oldImage);
+            $tour->image = $image;
+        }
+
+        if ($tour->save()) {
+            $this->notification->setMessage('Tour updated successfully', Notification::SUCCESS);
+        } else {
+            $this->notification->setMessage('Tour update failed', Notification::ERROR);
+        }
+
+        return $this->notification;
     }
 
     /**

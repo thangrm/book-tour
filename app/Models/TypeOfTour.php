@@ -42,7 +42,7 @@ class TypeOfTour extends Model
     {
         return [
             'name' => 'required|max:50|string|unique:tour_types',
-            'status' => 'required|between:1,2'
+            'status' => 'required|integer|between:1,2'
         ];
     }
 
@@ -56,7 +56,7 @@ class TypeOfTour extends Model
     {
         return [
             'name' => "required|max:50|string|unique:tour_types,name,$id",
-            'status' => "required|between:1,2"
+            'status' => "required|integer|between:1,2"
         ];
     }
 
@@ -72,7 +72,7 @@ class TypeOfTour extends Model
         $data['name'] = $nameType;
         $data['status'] = $request->status;
 
-        if (TypeOfTour::create($data)->exists) {
+        if ($this->create($data)->exists) {
             $this->notification->setMessage('New type added successfully', Notification::SUCCESS);
         } else {
             $this->notification->setMessage('Type creation failed', Notification::ERROR);
@@ -90,7 +90,7 @@ class TypeOfTour extends Model
      */
     public function updateType(Request $request, $id)
     {
-        $type = TypeOfTour::findOrFail($id);
+        $type = $this->findOrFail($id);
         $nameType = Utilities::clearXSS($request->name);
         $type->name = $nameType;
         $type->status = $request->status;
@@ -112,7 +112,7 @@ class TypeOfTour extends Model
      */
     public function remove($id)
     {
-        $type = TypeOfTour::findOrFail($id);
+        $type = $this->findOrFail($id);
 
         return $type->delete();
     }
@@ -128,7 +128,7 @@ class TypeOfTour extends Model
         $search = $request->search;
         $status = $request->status;
         $query = $this->latest();
-        
+
         if (!empty($search)) {
             $query->where('name', 'like', '%' . $search . '%');
         }

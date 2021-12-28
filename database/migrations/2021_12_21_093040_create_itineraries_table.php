@@ -16,7 +16,7 @@ class CreateItinerariesTable extends Migration
         Schema::create('itineraries', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('tour_id')->nullable()->index('tour_id');
-            $table->string('name', 150);
+            $table->string('name', 150)->unique();
             $table->timestamps();
         });
     }
