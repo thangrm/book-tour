@@ -42,7 +42,7 @@
                         <span class="text-danger">*</span> </label>
                     <div class="col-sm-9">
                         <div class="input-group mb-3">
-                            <input type="file" id="image" name="image" value="{{old('image')}}">
+                            <input type="file" id="image" name="image">
                         </div>
                         <div>
                             <img id="showImg" style="max-height: 150px; margin: 10px 2px">
@@ -52,12 +52,13 @@
                         @enderror
                     </div>
                 </div>
+
                 <div class="form-group row">
-                    <label for="image" class="col-sm-2 text-lg-right control-label col-form-label">Status
+                    <label for="status" class="col-sm-2 text-lg-right control-label col-form-label">Status
                     </label>
                     <div class="col-sm-9">
                         <div class="input-group mb-3" style="width: 150px">
-                            <select class="form-control" name="status">
+                            <select class="form-control" name="status" id="status">
                                 <option value="1">Active</option>
                                 <option value="2">Inactive</option>
                             </select>
@@ -67,6 +68,7 @@
                         @enderror
                     </div>
                 </div>
+                
             </div>
             <div class="card-body">
                 <div class="form-group m-b-0 text-right row">
