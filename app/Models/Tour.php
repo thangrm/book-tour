@@ -104,7 +104,7 @@ class Tour extends Model
         if ($request->hasFile('image')) {
             $oldImage = $tour->image;
             $image = Utilities::storeImage($request, 'image', $this->pathTour);
-            Storage::delete($this->pathTour . '.' . $oldImage);
+            Storage::delete($this->pathTour . $oldImage);
             $tour->image = $image;
         }
 
@@ -115,6 +115,21 @@ class Tour extends Model
         }
 
         return $this->notification;
+    }
+
+    /**
+     * Delete the type by id in database.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function remove($id)
+    {
+        $tour = $this->findOrFail($id);
+        $image = $tour->image;
+        Storage::delete($this->pathTour . $image);
+
+        return $tour->delete();
     }
 
     /**

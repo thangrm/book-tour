@@ -17,7 +17,7 @@ class Destination extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $path_save_image = 'public/images/destinations/';
+    protected $pathDestination = 'public/images/destinations/';
     protected $notification;
 
     public function __construct(array $attributes = array())
@@ -76,7 +76,7 @@ class Destination extends Model
         $data['slug'] = Str::slug($nameDestination);
         $data['status'] = $request->status;
 
-        $image = $this->storeImage($request);
+        $image = Utilities::storeImage($request, 'image', $this->pathDestination);
         $data['image'] = $image;
         if ($this->create($data)->exists) {
             $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
@@ -106,8 +106,8 @@ class Destination extends Model
         // Upload Image
         if ($request->hasFile('image')) {
             $oldImage = $destination->image;
-            $image = $this->storeImage($request);
-            Storage::delete($this->path_save_image . '.' . $oldImage);
+            $image = Utilities::storeImage($request, 'image', $this->pathDestination);
+            Storage::delete($this->pathDestination . $oldImage);
             $destination->image = $image;
         }
 
@@ -131,23 +131,6 @@ class Destination extends Model
         $destination = $this->findOrFail($id);
 
         return $destination->delete();
-    }
-
-    /**
-     * Store image for the destination.
-     *
-     * @param Request $request
-     * @return string
-     */
-    protected function storeImage(Request $request)
-    {
-        $file = $request->file('image')->getClientOriginalName();
-        $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
-        $extension = pathinfo($file, PATHINFO_EXTENSION);
-        $imageName = date('YmdHis') . uniqid() . $file_name . '.' . $extension;
-        $request->file('image')->storeAs($this->path_save_image, $imageName);
-
-        return $imageName;
     }
 
     /**

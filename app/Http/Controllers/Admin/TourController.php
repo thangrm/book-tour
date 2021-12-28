@@ -111,7 +111,7 @@ class TourController extends Controller
      */
     public function destroy($id)
     {
-        
+        return $this->tour->remove($id);
     }
 
     /**

@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <form action="{{ route('types.update',$type->id) }}" class="form-horizontal" method="post"
               enctype="multipart/form-data"
-              id="formEditDestination">
+              id="formEditType">
             @method('PUT')
             @csrf
             <div class="card-body">
@@ -66,4 +66,7 @@
     </div>
 @endsection
 @section('js')
+    <script>
+        disableSubmitButton('#formEditType');
+    </script>
 @endsection

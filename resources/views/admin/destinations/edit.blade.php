@@ -46,7 +46,7 @@
                             <input type="file" id="image" name="image">
                         </div>
                         <div>
-                            <img id="showImg" src="{{ asset('storage/images/destination/'.$destination->image) }}"
+                            <img id="showImg" src="{{ asset('storage/images/destinations/'.$destination->image) }}"
                                  style="max-height: 150px; margin: 10px 2px">
                         </div>
                         @error('image')
