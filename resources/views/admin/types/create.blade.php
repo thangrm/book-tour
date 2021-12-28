@@ -23,7 +23,7 @@
     <div class="container-fluid">
         <form action="{{ route('types.store') }}" class="form-horizontal" method="post"
               enctype="multipart/form-data"
-              id="formCreateDestination">
+              id="formCreateType">
             @csrf
             <div class="card-body">
                 <div class="form-group row">
@@ -65,4 +65,7 @@
     </div>
 @endsection
 @section('js')
+    <script>
+        disableSubmitButton('#formCreateType');
+    </script>
 @endsection

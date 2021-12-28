@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <form action="{{ route('tours.update', $tour->id) }}" class="form-horizontal" method="post"
               enctype="multipart/form-data"
-              id="formCreateTour">
+              id="formEditTour">
             @method('PUT')
             @csrf
             <div class="card-body">
@@ -173,7 +173,7 @@
                 reader.readAsDataURL(e.target.files['0']);
             });
 
-            disableSubmitButton('#formCreateTour');
+            disableSubmitButton('#formEditTour');
         });
     </script>
 @endsection
