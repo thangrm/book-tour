@@ -44,7 +44,7 @@ class Destination extends Model
         return [
             'name' => 'required|max:100|string|unique:destinations',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
-            'status' => 'required|between:1,2'
+            'status' => 'required|integer|between:1,2'
         ];
     }
 
@@ -59,7 +59,7 @@ class Destination extends Model
         return [
             'name' => "required|max:100|string|unique:destinations,name,$id",
             'image' => "image|mimes:jpeg,jpg,png,gif|max:5000",
-            'status' => "required|between:1,2"
+            'status' => "required|integer|between:1,2"
         ];
     }
 
@@ -78,7 +78,7 @@ class Destination extends Model
 
         $image = $this->storeImage($request);
         $data['image'] = $image;
-        if (Destination::create($data)->exists) {
+        if ($this->create($data)->exists) {
             $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
         } else {
             $this->notification->setMessage('Destination creation failed', Notification::ERROR);
@@ -96,7 +96,7 @@ class Destination extends Model
      */
     public function updateDestination(Request $request, $id)
     {
-        $destination = Destination::findOrFail($id);
+        $destination = $this->findOrFail($id);
 
         $nameDestination = Utilities::clearXSS($request->name);
         $destination->name = $nameDestination;
@@ -107,7 +107,7 @@ class Destination extends Model
         if ($request->hasFile('image')) {
             $oldImage = $destination->image;
             $image = $this->storeImage($request);
-            Storage::delete($this->path_save_image, $oldImage);
+            Storage::delete($this->path_save_image . '.' . $oldImage);
             $destination->image = $image;
         }
 
@@ -128,7 +128,7 @@ class Destination extends Model
      */
     public function remove($id)
     {
-        $destination = Destination::findOrFail($id);
+        $destination = $this->findOrFail($id);
 
         return $destination->delete();
     }
