@@ -26,6 +26,14 @@ class TypeOfTour extends Model
     }
 
     /**
+     * Get the tours for the type.
+     */
+    public function tours()
+    {
+        return $this->hasMany(Tour::class);
+    }
+
+    /**
      * Validate rules for store
      *
      * @return array[]
@@ -37,7 +45,7 @@ class TypeOfTour extends Model
             'status' => 'required|between:1,2'
         ];
     }
-    
+
     /**
      * Validate rules for update
      *
@@ -119,22 +127,17 @@ class TypeOfTour extends Model
     {
         $search = $request->search;
         $status = $request->status;
-
-        if (!empty($search) && !empty($status)) {
-            return $this->where('name', 'like', '%' . $search . '%')
-                ->where('status', '=', $status)
-                ->orderBy('id', 'asc')->get();
-
-        } elseif (!empty($search)) {
-            return $this->where('name', 'like', '%' . $search . '%')
-                ->orderBy('id', 'asc')->get();
-
-        } elseif (!empty($status)) {
-            return $this->where('status', '=', $status)
-                ->orderBy('id', 'asc')->get();
+        $query = $this->latest();
+        
+        if (!empty($search)) {
+            $query->where('name', 'like', '%' . $search . '%');
         }
 
-        return $this->orderBy('id', 'asc')->get();
+        if (!empty($status)) {
+            $query->where('status', '=', $status);
+        }
+
+        return $query->get();
     }
 
     /**
