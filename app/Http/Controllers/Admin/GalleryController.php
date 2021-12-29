@@ -15,7 +15,6 @@ class GalleryController extends Controller
         $this->gallery = $gallery;
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -25,18 +24,24 @@ class GalleryController extends Controller
     public function index($tourId)
     {
         $galleries = $this->gallery->getImagesByTourId($tourId);
-        return view('admin.galleries.view', compact('galleries'));
+        return view('admin.galleries.view', compact('galleries', 'tourId'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, $tourId)
     {
-        //
+        $request->validate($this->gallery->rule());
+        $notification = $this->gallery->storeGallery($request, $tourId);
+        if ($notification->isError()) {
+            return back()->with($notification->getMessage());
+        }
+
+        return redirect()->route('galleries.index', $tourId)->with($notification->getMessage());
     }
 
     /**

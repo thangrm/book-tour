@@ -8,9 +8,10 @@
         /* The Image */
         div.img img {
             width: 100%;
-            height: auto;
+            height: 200px;
             object-fit: cover;
             cursor: pointer;
+            margin: 1px;
         }
 
         /* The Modal (background) */
@@ -28,22 +29,12 @@
             background-color: rgba(0, 0, 0, 0.9);
         }
 
-
         /* Modal Content (image) */
         .modal-content {
             margin: auto;
             display: block;
             width: 80%;
             max-width: 700px;
-        }
-
-        @-webkit-keyframes zoom {
-            from {
-                transform: scale(0)
-            }
-            to {
-                transform: scale(1)
-            }
         }
 
         @keyframes zoom {
@@ -94,63 +85,51 @@
     </div>
 
     <div class="container-fluid">
-        <form class="form-horizontal">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Add New Image</h4>
-                        <form class="m-t-20" id="formAddNewImage">
-                            <fieldset class="form-group">
-                                <input type="file" class="form-control-file" name="image" id="image">
-                            </fieldset>
-                            <div>
-                                <img id="showImg" style="max-height: 150px; margin: 10px 2px">
-                            </div>
-                            @error('image')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
-                            <button type="submit" class="btn btn-info mb-3">
-                                Add Image
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Image Gallery</h4>
-                        <div class="row">
-                            <div class="img col-3">
-                                <img src="https://www.w3schools.com/css/img_lights.jpg" alt="Trolltunga Norway">
-                            </div>
-
-                            <div class="img col-3">
-                                <img src="https://www.w3schools.com/css/img_lights.jpg" alt="Trolltunga Norway">
-
-                            </div>
-
-                            <div class="img col-3">
-                                <img src="https://www.w3schools.com/css/img_lights.jpg" alt="Trolltunga Norway">
-
-                            </div>
-
-                            <div class="img col-3">
-                                <img src="https://www.w3schools.com/css/img_lights.jpg" alt="Trolltunga Norway">
-                            </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add New Image</h4>
+                    <form href="{{ route('galleries.store',$tourId) }}" class="m-t-20" id="formAddNewImage"
+                          method="post" enctype="multipart/form-data">
+                        @csrf
+                        <fieldset class="form-group">
+                            <input type="file" class="form-control-file" name="image" id="image" required>
+                        </fieldset>
+                        <div>
+                            <img id="showImg" style="max-height: 150px; margin: 10px 2px">
                         </div>
-
-                    </div>
+                        @error('image')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                        <button type="submit" class="btn btn-info mb-3">
+                            Add Image
+                        </button>
+                    </form>
                 </div>
             </div>
-            <!-- The Modal -->
-            <div id="myModal" class="modal">
-                <span class="close">×</span>
-                <img class="modal-content" id="imgModal">
-                <div id="caption"></div>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Image Gallery</h4>
+                    <div class="row">
+                        @foreach($galleries as $gallery)
+                            <div class="img col-3">
+                                <img src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
+                            </div>
+                        @endforeach
+                    </div>
+
+                </div>
             </div>
-        </form>
+        </div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <span class="close">×</span>
+            <img class="modal-content" id="imgModal">
+            <div id="caption"></div>
+        </div>
     </div>
 @endsection
 @section('js')
@@ -166,12 +145,8 @@
 
             disableSubmitButton('#formAddNewImage');
 
-            //
-
-            // Get the modal
+            // Modal view image
             let modal = document.getElementById('myModal');
-
-            // Get the <span> element that closes the modal
             let span = document.getElementsByClassName("close")[0];
 
             // When the user clicks on <span> (x), close the modal
@@ -180,17 +155,14 @@
             }
 
             // Get all images and insert the clicked image inside the modal
-            // Get the content of the image description and insert it inside the modal image caption
             let images = document.getElementsByTagName('img');
             let modalImg = document.getElementById("imgModal");
-            let captionText = document.getElementById("caption");
             let i;
             for (i = 0; i < images.length; i++) {
                 images[i].onclick = function () {
                     modal.style.display = "block";
                     modalImg.src = this.src;
                     modalImg.alt = this.alt;
-                    captionText.innerHTML = this.nextElementSibling.innerHTML;
                 }
             }
         });
