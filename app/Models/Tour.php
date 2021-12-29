@@ -46,12 +46,14 @@ class Tour extends Model
     }
 
     /**
+     * Validate rules for tour
+     *
      * @param $id
      * @return string[]
      */
     public function rule($id = null)
     {
-        $rule = array(
+        $rule = [
             'name' => 'required|max:50|string|unique:tours',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
             'destination_id' => 'required|exists:destinations,id',
@@ -60,7 +62,7 @@ class Tour extends Model
             'price' => 'required|numeric|min:0',
             'status' => 'required|integer|between:1,2',
             'trending' => 'required|integer|between:1,2',
-        );
+        ];
 
         if ($id != null) {
             $rule['name'] = 'required|max:50|string|unique:tours,name,' . $id;
@@ -133,12 +135,12 @@ class Tour extends Model
     }
 
     /**
-     * Get a list of tour
+     * Get a list of tours
      *
      * @param Request $request
      * @return mixed
      */
-    public function getListTour(Request $request)
+    public function getListTours(Request $request)
     {
         $search = $request->search;
         $destinationId = $request->destination_id;
@@ -210,8 +212,9 @@ class Tour extends Model
                 }
             })
             ->addColumn('detail', function ($data) {
+                $routerGallery = route('images.index', $data->id);
                 return '<a class="btn btn-info text-white mt-1" style="width: 80px">Info</a>
-                        <a class="btn btn-info text-white mt-1" style="width: 80px">Gallery</a>
+                        <a href="' . $routerGallery . '" class="btn btn-info text-white mt-1" style="width: 80px">Gallery</a>
                         <a class="btn btn-info text-white mt-1" style="width: 80px">Itinerary</a>
                         <a class="btn btn-info text-white mt-1" style="width: 80px">Faqs</a>
                         <a class="btn btn-info text-white mt-1" style="width: 80px">Review</a>

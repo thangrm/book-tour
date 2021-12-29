@@ -49,7 +49,7 @@ class DestinationController extends Controller
         if ($notification->isError()) {
             return redirect()->back()->with($notification->getMessage());
         }
-        
+
         return redirect()->route('destinations.index')->with($notification->getMessage());
     }
 
@@ -114,7 +114,7 @@ class DestinationController extends Controller
     public function getData(Request $request)
     {
         //if ($request->ajax()) {
-        $data = $this->destination->getListDestination($request);
+        $data = $this->destination->getListDestinations($request);
         return $this->destination->getDataTable($data);
         //}
     }

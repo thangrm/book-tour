@@ -35,32 +35,24 @@ class Destination extends Model
     }
 
     /**
-     * Validate rules for store
+     * Validate rules for destination
      *
      * @return array[]
      */
-    public function rule(): array
+    public function rule($id = null): array
     {
-        return [
+        $rule = [
             'name' => 'required|max:100|string|unique:destinations',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
             'status' => 'required|integer|between:1,2'
         ];
-    }
 
-    /**
-     * Validate rules for update
-     *
-     * @param $id
-     * @return array[]
-     */
-    public function ruleUpdate($id): array
-    {
-        return [
-            'name' => "required|max:100|string|unique:destinations,name,$id",
-            'image' => "image|mimes:jpeg,jpg,png,gif|max:5000",
-            'status' => "required|integer|between:1,2"
-        ];
+        if ($id != null) {
+            $rule['name'] = "required|max:100|string|unique:destinations,name,$id";
+            $rule['image'] = 'image|mimes:jpeg,jpg,png,gif|max:5000';
+        }
+
+        return $rule;
     }
 
     /**
@@ -139,7 +131,7 @@ class Destination extends Model
      * @param Request $request
      * @return mixed
      */
-    public function getListDestination(Request $request)
+    public function getListDestinations(Request $request)
     {
         $search = $request->search;
         $status = $request->status;

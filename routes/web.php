@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\TypeOfTourController;
 use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\GalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('tours', TourController::class)->except(['show']);
         Route::group(['prefix' => 'tours'], function () {
             Route::get('data', [TourController::class, 'getData'])->name('tours.data');
+
+            // List image (Gallery)
+            Route::prefix('/{tour_id}/galleries')->group(function () {
+                Route::get('/', [GalleryController::class, 'index'])->name('images.index');
+                Route::post('/', [GalleryController::class, 'index'])->name('images.store');
+                Route::delete('/{id}', [GalleryController::class, 'index'])->name('images.destroy');
+            });
         });
+
+
     });
 });
