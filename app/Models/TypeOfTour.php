@@ -34,30 +34,22 @@ class TypeOfTour extends Model
     }
 
     /**
-     * Validate rules for store
+     * Validate rules for type
      *
      * @return array[]
      */
-    public function rule(): array
+    public function rule($id = null): array
     {
-        return [
+        $rule = [
             'name' => 'required|max:50|string|unique:tour_types',
             'status' => 'required|integer|between:1,2'
         ];
-    }
 
-    /**
-     * Validate rules for update
-     *
-     * @param $id
-     * @return array[]
-     */
-    public function ruleUpdate($id): array
-    {
-        return [
-            'name' => "required|max:50|string|unique:tour_types,name,$id",
-            'status' => "required|integer|between:1,2"
-        ];
+        if ($id != null) {
+            $rule['name'] = "required|max:50|string|unique:tour_types,name,$id";
+        }
+
+        return $rule;
     }
 
     /**
@@ -118,12 +110,12 @@ class TypeOfTour extends Model
     }
 
     /**
-     * Get a list of type of tour
+     * Get a list of types
      *
      * @param Request $request
      * @return mixed
      */
-    public function getListType(Request $request)
+    public function getListTypes(Request $request)
     {
         $search = $request->search;
         $status = $request->status;

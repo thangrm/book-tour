@@ -91,7 +91,7 @@ class TypeOfTourController extends Controller
         if ($notification->isError()) {
             return redirect()->back()->with($notification->getMessage());
         }
-        
+
         return redirect()->route('types.index')->with($notification->getMessage());
     }
 
@@ -114,7 +114,7 @@ class TypeOfTourController extends Controller
     public function getData(Request $request)
     {
         if ($request->ajax()) {
-            $data = $this->typeTour->getListType($request);
+            $data = $this->typeTour->getListTypes($request);
             return $this->typeTour->getDataTable($data);
         }
     }

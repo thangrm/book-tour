@@ -122,7 +122,7 @@ class TourController extends Controller
     public function getData(Request $request)
     {
         if ($request->ajax()) {
-            $data = $this->tour->getListTour($request);
+            $data = $this->tour->getListTours($request);
             return $this->tour->getDataTable($data);
         }
     }
