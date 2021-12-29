@@ -67,9 +67,9 @@ class Destination extends Model
         $data['name'] = $nameDestination;
         $data['slug'] = Str::slug($nameDestination);
         $data['status'] = $request->status;
-
         $image = Utilities::storeImage($request, 'image', $this->pathDestination);
         $data['image'] = $image;
+
         if ($this->create($data)->exists) {
             $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
         } else {
@@ -144,7 +144,7 @@ class Destination extends Model
         }
 
         if (!empty($status)) {
-            $query->where('status', '=', $status);
+            $query->where('status', $status);
         }
 
         return $query->get();

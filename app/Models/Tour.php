@@ -212,7 +212,7 @@ class Tour extends Model
                 }
             })
             ->addColumn('detail', function ($data) {
-                $routerGallery = route('images.index', $data->id);
+                $routerGallery = route('galleries.index', $data->id);
                 return '<a class="btn btn-info text-white mt-1" style="width: 80px">Info</a>
                         <a href="' . $routerGallery . '" class="btn btn-info text-white mt-1" style="width: 80px">Gallery</a>
                         <a class="btn btn-info text-white mt-1" style="width: 80px">Itinerary</a>

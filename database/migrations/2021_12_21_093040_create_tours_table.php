@@ -17,8 +17,8 @@ class CreateToursTable extends Migration
             $table->integer('id', true);
             $table->integer('type_id')->nullable()->index('type_id');
             $table->integer('destination_id')->nullable()->index('destination_id');
-            $table->string('name', 50)->unique();
-            $table->string('slug', 50);
+            $table->string('name', 255)->unique();
+            $table->string('slug', 255);
             $table->string('image', 100);
             $table->string('paronamic_image', 100)->nullable();
             $table->string('video', 100)->nullable();

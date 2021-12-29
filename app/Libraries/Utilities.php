@@ -83,7 +83,7 @@ class Utilities
         $file = $request->file($nameFile)->getClientOriginalName();
         $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
         $extension = pathinfo($file, PATHINFO_EXTENSION);
-        $imageName = date('YmdHis') . uniqid() . $file_name . '.' . $extension;
+        $imageName = date('YmdHis') . '-' . uniqid() . $file_name . '.' . $extension;
         $request->file($nameFile)->storeAs($path, $imageName);
 
         return $imageName;

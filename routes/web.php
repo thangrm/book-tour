@@ -63,9 +63,9 @@ Route::group(['prefix' => 'admin'], function () {
 
             // List image (Gallery)
             Route::prefix('/{tour_id}/galleries')->group(function () {
-                Route::get('/', [GalleryController::class, 'index'])->name('images.index');
-                Route::post('/', [GalleryController::class, 'index'])->name('images.store');
-                Route::delete('/{id}', [GalleryController::class, 'index'])->name('images.destroy');
+                Route::get('/', [GalleryController::class, 'index'])->name('galleries.index');
+                Route::post('/', [GalleryController::class, 'store'])->name('galleries.store');
+                Route::delete('/{id}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
             });
         });
 
