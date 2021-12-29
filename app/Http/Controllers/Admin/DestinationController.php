@@ -113,9 +113,9 @@ class DestinationController extends Controller
      */
     public function getData(Request $request)
     {
-        //if ($request->ajax()) {
-        $data = $this->destination->getListDestinations($request);
-        return $this->destination->getDataTable($data);
-        //}
+        if ($request->ajax()) {
+            $data = $this->destination->getListDestinations($request);
+            return $this->destination->getDataTable($data);
+        }
     }
 }

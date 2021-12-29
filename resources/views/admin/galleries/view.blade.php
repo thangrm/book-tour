@@ -1,8 +1,8 @@
 @extends('admin.master')
 @section('style')
     <style>
-        div.img:hover {
-            border: 1px solid #ccc;
+        div.img img:hover {
+            transform: scale(1.01);
         }
 
         /* The Image */
@@ -11,7 +11,7 @@
             height: 200px;
             object-fit: cover;
             cursor: pointer;
-            margin: 1px;
+            margin-bottom: 50px;
         }
 
         /* The Modal (background) */
@@ -64,6 +64,11 @@
             cursor: pointer;
         }
 
+        .delete {
+            position: absolute;
+            top: 0;
+            right: 10px;
+        }
     </style>
 @endsection
 @section('admin')
@@ -115,8 +120,14 @@
                     <h4 class="card-title">Image Gallery</h4>
                     <div class="row">
                         @foreach($galleries as $gallery)
-                            <div class="img col-3">
+                            <div class="img col-6 col-md-4 col-lg-3" id="image{{ $gallery->id }}">
                                 <img src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
+                                <a href="{{ route("galleries.destroy", [$tourId, $gallery->id]) }}"
+                                   class="btn btn-danger btn-sm rounded-0 text-white delete" types="button"
+                                   data-toggle="tooltip" title="Delete"
+                                   data-id="{{ $gallery->id }}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
                             </div>
                         @endforeach
                     </div>
@@ -165,6 +176,58 @@
                     modalImg.alt = this.alt;
                 }
             }
+
+            // Modal Delete
+            $(document).on('click', '.delete', function (e) {
+                e.preventDefault();
+                let link = $(this).attr("href");
+                let id = $(this).data('id');
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success m-2',
+                        cancelButton: 'btn btn-danger m-2'
+                    },
+                    buttonsStyling: false
+                })
+                swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax(
+                            {
+                                url: link,
+                                type: 'delete',
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (response) {
+                                        $("#image" + id).remove();
+                                        toastr.success('The image has been deleted');
+                                    } else {
+                                        toastr.error('Delete failed');
+                                    }
+                                },
+                                error: function (response) {
+                                    toastr.error('Delete failed');
+                                }
+                            });
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            })
         });
     </script>
 @endsection

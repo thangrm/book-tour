@@ -48,10 +48,10 @@ class GalleryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return false|\Illuminate\Http\Response|string
      */
-    public function destroy($id)
+    public function destroy($tour_id, $id)
     {
-        //
+        return json_encode($this->gallery->remove($id));
     }
 }
