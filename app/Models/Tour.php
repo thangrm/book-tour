@@ -213,13 +213,12 @@ class Tour extends Model
             })
             ->addColumn('detail', function ($data) {
                 $routerGallery = route('galleries.index', $data->id);
+                $routerItinery = route('itineraries.index', $data->id);
                 return '<a class="btn btn-info text-white mt-1" style="width: 80px">Info</a>
                         <a href="' . $routerGallery . '" class="btn btn-info text-white mt-1" style="width: 80px">Gallery</a>
-                        <a class="btn btn-info text-white mt-1" style="width: 80px">Itinerary</a>
+                        <a href="' . $routerItinery . '" class="btn btn-info text-white mt-1" style="width: 80px">Itineraries</a>
                         <a class="btn btn-info text-white mt-1" style="width: 80px">Faqs</a>
                         <a class="btn btn-info text-white mt-1" style="width: 80px">Review</a>
-                        <a class="btn btn-info text-white mt-1" style="width: 80px">Bookings</a>
-                        <a class="btn btn-info text-white mt-1" style="width: 80px">Contact</a>
                         ';
             })
             ->addColumn('action', function ($data) {

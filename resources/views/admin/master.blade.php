@@ -129,35 +129,48 @@
 <!--datatable -->
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    @if(Session::has('message'))
-    let type = "{{ Session::get('alert-type','info') }}"
-    switch (type) {
-        case 'info':
-            toastr.info("{{ Session::get('message') }}");
-            break;
-        case 'success':
-            toastr.success("{{ Session::get('message') }}");
-            break;
-        case 'warning':
-            toastr.warning("{{ Session::get('message') }}");
-            break;
-        case 'error':
-            toastr.error("{{ Session::get('message') }}");
-            break;
-    }
-    @endif
-
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
+    function toastrMessage(type, message) {
+        switch (type) {
+            case 'info':
+                toastr.info(message);
+                break;
+            case 'success':
+                toastr.success(message);
+                break;
+            case 'warning':
+                toastr.warning(message);
+                break;
+            case 'error':
+                toastr.error(message);
+                break;
+        }
+    }
+
     function disableSubmitButton(idForm) {
         $(idForm).submit(function () {
             $(this).find("button[type='submit']").prop('disabled', true);
         });
     }
+
+    function enableSubmitButton(idForm, delay = 0) {
+        setTimeout(function () {
+            $(idForm).find("button[type='submit']").prop('disabled', false);
+        }, delay);
+    }
+
+    @if(Session::has('message'))
+    let
+
+        type = "{{ Session::get('alert-type','info') }}";
+    let message = "{{ Session::get('message') }}";
+    toastrMessage(type, message);
+    @endif
 
 </script>
 @yield('js')

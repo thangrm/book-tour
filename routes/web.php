@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\TypeOfTourController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\GalleryController;
+use \App\Http\Controllers\Admin\ItineraryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,16 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::post('/', [GalleryController::class, 'store'])->name('galleries.store');
                 Route::delete('/{id}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
             });
+
+            // Itinerary
+            Route::prefix('/{tour_id}/itineraries')->group(function () {
+                Route::get('/', [ItineraryController::class, 'index'])->name('itineraries.index');
+                Route::post('/', [ItineraryController::class, 'store'])->name('itineraries.store');
+                Route::post('/update', [ItineraryController::class, 'update'])->name('itineraries.update');
+                Route::delete('/{id}', [ItineraryController::class, 'destroy'])->name('itineraries.destroy');
+                Route::get('/data', [ItineraryController::class, 'getData'])->name('itineraries.data');
+            });
+
         });
 
 
