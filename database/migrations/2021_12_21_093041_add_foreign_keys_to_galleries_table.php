@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeysToImagesTable extends Migration
+class AddForeignKeysToGalleriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -26,8 +26,8 @@ class AddForeignKeysToImagesTable extends Migration
      */
     public function down()
     {
-        Schema::table('images', function (Blueprint $table) {
-            $table->dropForeign('images_ibfk_1');
+        Schema::table('galleries', function (Blueprint $table) {
+            $table->dropForeign('galleries_ibfk_1');
         });
     }
 }

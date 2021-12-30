@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use phpDocumentor\Reflection\Types\Collection;
-use Yajra\DataTables\DataTables;
 
 class Gallery extends Model
 {
@@ -87,7 +85,7 @@ class Gallery extends Model
      */
     public function remove($id)
     {
-        $gallery = $this->find($id);
+        $gallery = $this->findOrFail($id);
         Storage::delete($this->pathGallery . $gallery->image);
         return $gallery->delete();
     }
