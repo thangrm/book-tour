@@ -160,6 +160,10 @@ class Itinerary extends Model
             ->editColumn('name', function ($data) {
                 return '<span id="name' . $data->id . '">' . $data->name . '</span>';
             })
+            ->addColumn('place', function ($data) {
+                $routerPlace = route('places.index', $data->id);
+                return ' <a href="' . $routerPlace . '" class="btn btn-info text-white mt-1" style="width: 100px">List Place</a>';
+            })
             ->addColumn('action', function ($data) {
                 return '<button data-id="' . $data->id . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit" data-toggle="modal" data-target="#editModal">
                             <i class="fa fa-edit"></i>
@@ -168,7 +172,7 @@ class Itinerary extends Model
                             <i class="fa fa-trash"></i>
                         </a>';
             })
-            ->rawColumns(['name', 'action'])
+            ->rawColumns(['name', 'place','action'])
             ->make(true);
     }
 }

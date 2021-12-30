@@ -55,6 +55,7 @@
                         <tr>
                             <th>Day</th>
                             <th>Name</th>
+                            <th>Place</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -118,6 +119,7 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
+                    {data: 'place', name: 'place'},
                     {data: 'action', name: 'action'},
                 ],
                 drawCallback: function () {

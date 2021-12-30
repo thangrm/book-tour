@@ -15,9 +15,9 @@ class CreatePlacesTable extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('itinerary_id')->nullable()->index('itinerary_id');
+            $table->integer('itinerary_id')->index('itinerary_id');
             $table->string('name', 150)->unique();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->tinyInteger('status')->default(0)->comment('1: active, 0: inactive');
             $table->timestamps();
         });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PlaceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
@@ -76,6 +77,15 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::post('/update', [ItineraryController::class, 'update'])->name('itineraries.update');
                 Route::delete('/{id}', [ItineraryController::class, 'destroy'])->name('itineraries.destroy');
                 Route::get('/data', [ItineraryController::class, 'getData'])->name('itineraries.data');
+
+            });
+
+            // Place
+            Route::prefix('/itineraries/{itinerary_id}/')->group(function () {
+                Route::resource('places', PlaceController::class)->except(['show']);
+                Route::group(['prefix' => 'places'], function () {
+                    Route::get('data', [PlaceController::class, 'getData'])->name('places.data');
+                });
             });
 
         });
