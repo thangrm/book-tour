@@ -94,6 +94,13 @@ class Tour extends Model
         return $this->notification;
     }
 
+    /**
+     * Update tour in database.
+     *
+     * @param Request $request
+     * @param $id
+     * @return Notification
+     */
     public function updateTour(Request $request, $id)
     {
         $tour = $this->findOrFail($id);
