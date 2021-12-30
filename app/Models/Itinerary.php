@@ -29,7 +29,7 @@ class Itinerary extends Model
      *
      * @return string[]
      */
-    public function rule($isUpdate = false)
+    public function rule($isUpdate = false): array
     {
         $rule = [
             'name' => 'required|string|max:150'
@@ -43,9 +43,10 @@ class Itinerary extends Model
     }
 
     /**
-     * Store image for itinerary
+     * Store itinerary
      *
      * @param Request $request
+     * @param $tourId
      * @return Notification
      */
     public function storeItinerary(Request $request, $tourId)
@@ -87,6 +88,13 @@ class Itinerary extends Model
         return $this->notification;
     }
 
+    /**
+     * Update itinerary in database.
+     *
+     * @param Request $request
+     * @param $tourId
+     * @return Notification
+     */
     public function updateItinerary(Request $request, $tourId)
     {
         $this->notification->setMessage('Itinerary update failed', Notification::ERROR);
@@ -116,9 +124,21 @@ class Itinerary extends Model
     }
 
     /**
+     * Delete the itinerary by id in database.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function remove($id)
+    {
+        $itinerary = $this->findOrFail($id);
+        return $itinerary->delete();
+    }
+
+    /**
      * Get a list of itinerary
      *
-     * @param Request $request
+     * @param $tour_id
      * @return mixed
      */
     public function getListItineraries($tour_id)
@@ -144,7 +164,7 @@ class Itinerary extends Model
                 return '<button data-id="' . $data->id . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit" data-toggle="modal" data-target="#editModal">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <a href="' . route("tours.destroy", $data->id) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                        <a href="' . route("itineraries.destroy",[$data->tour_id, $data->id]) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
                             <i class="fa fa-trash"></i>
                         </a>';
             })

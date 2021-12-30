@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Itinerary;
 use App\Models\Tour;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ItineraryController extends Controller
 {
@@ -19,7 +23,7 @@ class ItineraryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return View|Response
      */
     public function index($tourId)
     {
@@ -29,8 +33,9 @@ class ItineraryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @param $tourId
+     * @return RedirectResponse
      */
     public function store(Request $request, $tourId)
     {
@@ -46,9 +51,9 @@ class ItineraryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return false|\Illuminate\Http\Response|string
+     * @param Request $request
+     * @param $tourId
+     * @return false|string
      */
     public function update(Request $request, $tourId)
     {
@@ -62,17 +67,20 @@ class ItineraryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy($tour_id, $id)
     {
-        //
+        return $this->itinerary->remove($id);
     }
 
     /**
      * Process datatables ajax request.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @param $tour_id
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function getData(Request $request, $tour_id)
     {
