@@ -29,22 +29,29 @@ class FAQController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function create()
+    public function create($tourId)
     {
-        //
+        return view('admin.faqs.create',compact('tourId'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, $tourId)
     {
-        //
+        $request->validate($this->faq->rule());
+        $notification = $this->faq->storeFAQ($request, $tourId);
+
+        if ($notification->isError()) {
+            return back()->with($notification->getMessage())->withInput();
+        }
+
+        return redirect()->route('faqs.index', $tourId)->with($notification->getMessage());
     }
 
     /**

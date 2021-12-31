@@ -44,6 +44,13 @@ class Place extends Model
         return $rule;
     }
 
+    /**
+     * Store a new place for the itinerary.
+     *
+     * @param Request $request
+     * @param $itineraryId
+     * @return Notification
+     */
     public function storePlace(Request $request, $itineraryId)
     {
         $input = $request->only('name', 'description',);
@@ -59,6 +66,14 @@ class Place extends Model
         return $this->notification;
     }
 
+    /**
+     * Update place in database
+     *
+     * @param Request $request
+     * @param $itineraryId
+     * @param $id
+     * @return Notification
+     */
     public function updatePlace(Request $request, $itineraryId, $id)
     {
         $this->notification->setMessage('Itinerary update failed', Notification::ERROR);
@@ -88,7 +103,7 @@ class Place extends Model
     }
 
     /**
-     * Format data according to Datatables
+     * Format data according to Datatable
      *
      * @param Collection $data
      * @return mixed
