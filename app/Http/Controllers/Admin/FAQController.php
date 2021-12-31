@@ -23,7 +23,7 @@ class FAQController extends Controller
      */
     public function index($tourId)
     {
-        return view('admin.faqs.index',compact('tourId'));
+        return view('admin.faqs.index', compact('tourId'));
     }
 
     /**
@@ -33,13 +33,13 @@ class FAQController extends Controller
      */
     public function create($tourId)
     {
-        return view('admin.faqs.create',compact('tourId'));
+        return view('admin.faqs.create', compact('tourId'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request, $tourId)
@@ -57,30 +57,39 @@ class FAQController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $tourId
+     * @param $id
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit($id)
+    public function edit($tourId, $id)
     {
-        //
+        $faq = FAQ::findOrFail($id);
+        return view('admin.faqs.edit', compact('faq'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $tourId, $id)
     {
-        //
+        $request->validate($this->faq->rule());
+        $notification = $this->faq->updateFAQ($request, $tourId, $id);
+
+        if ($notification->isError()) {
+            return back()->with($notification->getMessage())->withInput();
+        }
+
+        return redirect()->route('faqs.index', $tourId)->with($notification->getMessage());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
