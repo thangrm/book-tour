@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\PlaceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
@@ -60,36 +61,41 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Tour
         Route::resource('tours', TourController::class)->except(['show']);
-        Route::group(['prefix' => 'tours'], function () {
-            Route::get('data', [TourController::class, 'getData'])->name('tours.data');
+        Route::get('tours/data', [TourController::class, 'getData'])->name('tours.data');
 
+        Route::group(['prefix' => 'tours/{tour_id}'], function () {
             // List image (Gallery)
-            Route::prefix('/{tour_id}/galleries')->group(function () {
-                Route::get('/', [GalleryController::class, 'index'])->name('galleries.index');
-                Route::post('/', [GalleryController::class, 'store'])->name('galleries.store');
+            Route::prefix('galleries')->group(function () {
+                Route::get('', [GalleryController::class, 'index'])->name('galleries.index');
+                Route::post('', [GalleryController::class, 'store'])->name('galleries.store');
                 Route::delete('/{id}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
             });
 
             // Itinerary
-            Route::prefix('/{tour_id}/itineraries')->group(function () {
-                Route::get('/', [ItineraryController::class, 'index'])->name('itineraries.index');
-                Route::post('/', [ItineraryController::class, 'store'])->name('itineraries.store');
+            Route::prefix('itineraries')->group(function () {
+                Route::get('', [ItineraryController::class, 'index'])->name('itineraries.index');
+                Route::post('', [ItineraryController::class, 'store'])->name('itineraries.store');
                 Route::post('/update', [ItineraryController::class, 'update'])->name('itineraries.update');
                 Route::delete('/{id}', [ItineraryController::class, 'destroy'])->name('itineraries.destroy');
                 Route::get('/data', [ItineraryController::class, 'getData'])->name('itineraries.data');
 
             });
 
-            // Place
-            Route::prefix('/itineraries/{itinerary_id}/')->group(function () {
-                Route::resource('places', PlaceController::class)->except(['show']);
-                Route::group(['prefix' => 'places'], function () {
-                    Route::get('data', [PlaceController::class, 'getData'])->name('places.data');
-                });
+            // FAQ
+            Route::resource('faqs', FAQController::class)->except(['show']);
+            Route::prefix('faqs')->group(function () {
+                Route::get('/data', [FAQController::class, 'getData'])->name('faqs.data');
             });
 
         });
 
+        // Place
+        Route::prefix('tours/itineraries/{itinerary_id}/')->group(function () {
+            Route::resource('places', PlaceController::class)->except(['show']);
+            Route::prefix('/places')->group(function () {
+                Route::get('/data', [PlaceController::class, 'getData'])->name('places.data');
+            });
+        });
 
     });
 });

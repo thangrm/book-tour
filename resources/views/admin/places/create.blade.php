@@ -31,7 +31,7 @@
                         Name place <span class="text-danger">*</span>
                     </label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Name place">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Name place" value="{{ old('name') }}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
