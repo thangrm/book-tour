@@ -78,6 +78,14 @@ class FAQ extends Model
         return $this->notification;
     }
 
+    /**
+     * Store the FAQ
+     *
+     * @param Request $request
+     * @param $tourId
+     * @param $id
+     * @return Notification
+     */
     public function updateFAQ(Request $request, $tourId, $id)
     {
         $this->notification->setMessage('FAQ update failed', Notification::ERROR);
@@ -100,6 +108,12 @@ class FAQ extends Model
         }
 
         return $this->notification;
+    }
+
+    public function remove($id)
+    {
+        $faq = $this->findOrFail($id);
+        return $faq->delete();
     }
 
     /**

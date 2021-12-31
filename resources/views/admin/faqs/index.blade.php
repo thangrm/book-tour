@@ -92,7 +92,7 @@
                                 url: link,
                                 type: 'delete',
                                 success: function (response) {
-                                    toastr.success('Place deleted successfully');
+                                    toastr.success('FAQ deleted successfully');
                                     datatable.ajax.reload();
                                 },
                                 error: function (response) {
