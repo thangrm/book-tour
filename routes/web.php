@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\PlaceController;
+use App\Http\Controllers\Admin\ReviewContrller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
@@ -85,6 +86,14 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('faqs', FAQController::class)->except(['show']);
             Route::prefix('faqs')->group(function () {
                 Route::get('/data', [FAQController::class, 'getData'])->name('faqs.data');
+            });
+
+            // Review
+            Route::prefix('reviews')->group(function () {
+                Route::get('', [ReviewContrller::class, 'index'])->name('reviews.index');
+                Route::get('/data', [ReviewContrller::class, 'getData'])->name('reviews.data');
+                Route::put('/{review_id}/public', [ReviewContrller::class, 'public'])->name('reviews.public');
+                Route::put('/{review_id}/block', [ReviewContrller::class, 'block'])->name('reviews.block');
             });
 
         });
