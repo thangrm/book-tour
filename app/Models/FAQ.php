@@ -6,6 +6,7 @@ use App\Libraries\Notification;
 use App\Libraries\Utilities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
@@ -15,7 +16,7 @@ class FAQ extends Model
     use HasFactory;
 
     protected $table = 'faqs';
-    protected $fillable = ['tour_id', 'question','answer','status'];
+    protected $fillable = ['tour_id', 'question', 'answer', 'status'];
     protected $notification;
 
     public function __construct(array $attributes = array())
@@ -30,7 +31,8 @@ class FAQ extends Model
      * @param $id
      * @return string[]
      */
-    public function rule($id = null){
+    public function rule($id = null)
+    {
         $rule = [
             'question' => 'required|string',
             'answer' => 'required|string',
@@ -49,7 +51,7 @@ class FAQ extends Model
      */
     public function storeFAQ(Request $request, $tourId)
     {
-        $input = $request->only('question','answer','status');
+        $input = $request->only('question', 'answer', 'status');
         $input['tour_id'] = $tourId;
         $input = Utilities::clearAllXSS($input);
 
@@ -71,6 +73,30 @@ class FAQ extends Model
             $this->notification->setMessage('New faq added successfully', Notification::SUCCESS);
         } else {
             $this->notification->setMessage('FAQ addition failed', Notification::ERROR);
+        }
+
+        return $this->notification;
+    }
+
+    public function updateFAQ(Request $request, $tourId, $id)
+    {
+        $this->notification->setMessage('FAQ update failed', Notification::ERROR);
+
+        try {
+            $faq = $this->findOrFail($id);
+            $input = $request->only('question', 'answer', 'status');
+            $input = Utilities::clearAllXSS($input);
+            $faq->fill($input);
+
+            if ($faq->save()) {
+                $this->notification->setMessage('FAQ updated successfully', Notification::SUCCESS);
+            }
+
+        } catch (QueryException $ex) {
+            $errorCode = $ex->errorInfo[1];
+            if ($errorCode == '1062') {
+                $this->notification->setMessage('The question already exists', Notification::ERROR);
+            }
         }
 
         return $this->notification;
@@ -106,14 +132,14 @@ class FAQ extends Model
                 }
             })
             ->addColumn('action', function ($data) {
-                return '<button data-id="' . $data->id . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit" data-toggle="modal" data-target="#editModal">
+                return '<a href="' . route("faqs.edit", [$data->tour_id, $data->id]) . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit" >
                             <i class="fa fa-edit"></i>
-                        </button>
-                        <a href="' . route("itineraries.destroy",[$data->tour_id, $data->id]) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                        </a>
+                        <a href="' . route("faqs.destroy", [$data->tour_id, $data->id]) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
                             <i class="fa fa-trash"></i>
                         </a>';
             })
-            ->rawColumns(['name', 'place','action'])
+            ->rawColumns(['name', 'place', 'action'])
             ->make(true);
     }
 }
