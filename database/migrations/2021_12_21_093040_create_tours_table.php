@@ -28,8 +28,8 @@ class CreateToursTable extends Migration
             $table->text('included')->nullable();
             $table->text('additional')->nullable();
             $table->text('departure')->nullable();
-            $table->tinyInteger('status')->default(1)->comment('1: active, 0: inactive');
-            $table->tinyInteger('trending')->default(1)->comment('1: active, 0: inactive');
+            $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
+            $table->tinyInteger('trending')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });
     }

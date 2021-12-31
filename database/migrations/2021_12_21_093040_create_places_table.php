@@ -18,7 +18,7 @@ class CreatePlacesTable extends Migration
             $table->integer('itinerary_id')->index('itinerary_id');
             $table->string('name', 150)->unique();
             $table->text('description')->nullable();
-            $table->tinyInteger('status')->default(0)->comment('1: active, 0: inactive');
+            $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });
     }

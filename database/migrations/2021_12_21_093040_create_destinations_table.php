@@ -18,7 +18,7 @@ class CreateDestinationsTable extends Migration
             $table->string('name', 100)->unique();;
             $table->string('slug', 100);
             $table->string('image', 100);
-            $table->tinyInteger('status')->default(1)->comment('1: active, 0: inactive');
+            $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });
     }

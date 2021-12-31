@@ -18,7 +18,7 @@ class CreateFaqsTable extends Migration
             $table->integer('tour_id')->nullable()->index('tour_id');
             $table->string('question')->unique();
             $table->string('answer');
-            $table->tinyInteger('status')->default(1)->comment('1: active, 0: inactive');
+            $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });
     }

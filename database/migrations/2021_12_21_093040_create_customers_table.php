@@ -24,7 +24,7 @@ class CreateCustomersTable extends Migration
             $table->string('province', 50)->nullable();
             $table->integer('zipcode')->nullable();
             $table->string('country', 25)->nullable();
-            $table->tinyInteger('status')->default(1)->comment('1: active, 0: inactive');
+            $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });
     }
