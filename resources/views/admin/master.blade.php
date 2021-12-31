@@ -128,6 +128,8 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--datatable -->
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<!--CK editor-->
+<script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {

@@ -19,7 +19,7 @@ class CreateContactsTable extends Migration
             $table->string('email', 100);
             $table->string('phone', 20);
             $table->text('message');
-            $table->tinyInteger('status')->default(0)->comment('0: Chưa đọc, 1: Quản trị viên đã đọc');
+            $table->tinyInteger('status')->default(1)->comment('1: Chưa đọc, 2: Quản trị viên đã đọc');
             $table->timestamps();
         });
     }

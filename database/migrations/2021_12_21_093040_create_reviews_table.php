@@ -18,7 +18,7 @@ class CreateReviewsTable extends Migration
             $table->integer('tour_id')->nullable()->index('tour_id');
             $table->tinyInteger('rate')->comment('Từ 1-5 tương ứng với 1-5 sao');
             $table->text('comment');
-            $table->tinyInteger('status')->default(1)->comment('1: active, 0: inactive');
+            $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });
     }

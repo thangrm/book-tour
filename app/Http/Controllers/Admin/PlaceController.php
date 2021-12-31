@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Itinerary;
 use App\Models\Place;
+use App\Models\Tour;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,43 +20,54 @@ class PlaceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index($itineraryId)
     {
-        return view('admin.places.view', compact('itineraryId'));
+        $itinerary = Itinerary::findOrFail($itineraryId);
+        return view('admin.places.view', compact('itinerary'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function create()
+    public function create($itineraryId)
     {
-        //
+        $itinerary = Itinerary::findOrFail($itineraryId);
+        return view('admin.places.create', compact('itinerary'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, $itineraryId)
     {
-        //
+        $request->validate($this->place->rule());
+        $notification = $this->place->storePlace($request, $itineraryId);
+
+        if ($notification->isError()) {
+            return redirect()->back()->with($notification->getMessage());
+        }
+
+        return redirect()->route('places.index', $itineraryId)->with($notification->getMessage());
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($itineraryId, $id)
     {
-        //
+        $itinerary = Itinerary::findOrFail($itineraryId);
+        $place = Place::findOrFail($id);
+        return view('admin.places.edit', compact(['itinerary','place']));
     }
 
     /**
@@ -62,11 +75,18 @@ class PlaceController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $itineraryId, $id)
     {
-        //
+        $request->validate($this->place->rule($id));
+        $notification = $this->place->updatePlace($request, $itineraryId, $id);
+
+        if ($notification->isError()) {
+            return redirect()->back()->with($notification->getMessage());
+        }
+
+        return redirect()->route('places.index', $itineraryId)->with($notification->getMessage());
     }
 
     /**
