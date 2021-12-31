@@ -14,6 +14,7 @@ use Yajra\DataTables\DataTables;
 class Place extends Model
 {
     use HasFactory;
+
     protected $fillable = ['itinerary_id', 'name', 'description', 'status'];
     protected $notification;
 
@@ -38,7 +39,7 @@ class Place extends Model
         $rule = [
             'name' => 'required|max:150|string|unique:places',
         ];
-        if($id != null){
+        if ($id != null) {
             $rule['name'] = 'required|max:150|string|unique:places,name,' . $id;
         }
         return $rule;
@@ -78,7 +79,7 @@ class Place extends Model
     {
         $this->notification->setMessage('Itinerary update failed', Notification::ERROR);
 
-        try{
+        try {
             $place = $this->findOrFail($id);
             $place->name = Utilities::clearXSS($request->name);
             $place->description = $request->description;
@@ -86,7 +87,7 @@ class Place extends Model
             if ($place->save()) {
                 $this->notification->setMessage('Place updated successfully', Notification::SUCCESS);
             }
-        }catch (QueryException $ex) {
+        } catch (QueryException $ex) {
             $errorCode = $ex->errorInfo[1];
             if ($errorCode == '1062') {
                 $this->notification->setMessage('The place name already exists', Notification::ERROR);
@@ -98,8 +99,8 @@ class Place extends Model
 
     public function remove($id)
     {
-        $itinerary = $this->findOrFail($id);
-        return $itinerary->delete();
+        $place = $this->findOrFail($id);
+        return $place->delete();
     }
 
     /**
@@ -117,14 +118,15 @@ class Place extends Model
                 return '<span id="name' . $data->id . '">' . $data->name . '</span>';
             })
             ->addColumn('action', function ($data) {
-                return '<a  href="'.route('places.edit', [$data->itinerary_id,$data->id]).'" data-id="' . $data->id . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit">
+                return '<a  href="' . route('places.edit',
+                        [$data->itinerary_id, $data->id]) . '" data-id="' . $data->id . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <a href="'.route('places.destroy', [$data->itinerary_id,$data->id]).'" class="btn btn-danger btn-sm rounded-0 text-white delete m-l-5" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                        <a href="' . route('places.destroy', [$data->itinerary_id, $data->id]) . '" class="btn btn-danger btn-sm rounded-0 text-white delete m-l-5" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
                             <i class="fa fa-trash"></i>
                         </a>';
             })
-            ->rawColumns(['name','description','action'])
+            ->rawColumns(['name', 'description', 'action'])
             ->make(true);
     }
 }
