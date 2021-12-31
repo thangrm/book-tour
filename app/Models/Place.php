@@ -81,6 +81,12 @@ class Place extends Model
         return $this->notification;
     }
 
+    public function remove($id)
+    {
+        $itinerary = $this->findOrFail($id);
+        return $itinerary->delete();
+    }
+
     /**
      * Format data according to Datatables
      *
@@ -99,7 +105,7 @@ class Place extends Model
                 return '<a  href="'.route('places.edit', [$data->itinerary_id,$data->id]).'" data-id="' . $data->id . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <a class="btn btn-danger btn-sm rounded-0 text-white delete m-l-5" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                        <a href="'.route('places.destroy', [$data->itinerary_id,$data->id]).'" class="btn btn-danger btn-sm rounded-0 text-white delete m-l-5" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
                             <i class="fa fa-trash"></i>
                         </a>';
             })
