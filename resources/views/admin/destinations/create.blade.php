@@ -59,8 +59,8 @@
                     <div class="col-sm-9">
                         <div class="input-group mb-3" style="width: 150px">
                             <select class="form-control" name="status" id="status">
-                                <option value="1">Active</option>
-                                <option value="2">Inactive</option>
+                                <option value="1" {{ old('status') == 1 ? "selected" : "" }}>Active</option>
+                                <option value="2" {{ old('status') == 2 ? "selected" : "" }}>Inactive</option>
                             </select>
                         </div>
                         @error('status')
@@ -68,7 +68,7 @@
                         @enderror
                     </div>
                 </div>
-                
+
             </div>
             <div class="card-body">
                 <div class="form-group m-b-0 text-right row">

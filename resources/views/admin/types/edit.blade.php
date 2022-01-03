@@ -32,7 +32,7 @@
                             class="text-danger">*</span> </label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name Destination"
-                               value="{{ $type->name }}">
+                               value="{{  empty(old('name')) ? $type->name : old('name') }}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -45,8 +45,14 @@
                     <div class="col-sm-9">
                         <div class="input-group mb-3" style="width: 150px">
                             <select class="form-control" name="status" id="status">
-                                <option value="1" {{ $type->status == 1 ? "selected" : "" }}>Active</option>
-                                <option value="2" {{ $type->status == 2 ? "selected" : "" }}>Inactive</option>
+                                <option
+                                    value="1" {{  (empty(old('status')) ? $type->status : old('status')) == 1 ? "selected" : "" }}>
+                                    Active
+                                </option>
+                                <option
+                                    value="2" {{  (empty(old('status')) ? $type->status : old('status')) == 2 ? "selected" : "" }}>
+                                    Inactive
+                                </option>
                             </select>
                         </div>
                         @error('status')

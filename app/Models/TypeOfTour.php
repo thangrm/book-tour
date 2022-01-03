@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class TypeOfTour extends Model
@@ -30,7 +31,7 @@ class TypeOfTour extends Model
      */
     public function tours()
     {
-        return $this->hasMany(Tour::class);
+        return $this->hasMany(Tour::class, 'type_id', 'id');
     }
 
     /**
@@ -105,8 +106,20 @@ class TypeOfTour extends Model
     public function remove($id)
     {
         $type = $this->findOrFail($id);
+        $numberTours = $type->tours()->count();
+        if ($numberTours > 0) {
+            $this->notification->setMessage('The type has tours that cannot be deleted',
+                Notification::ERROR);
+            return $this->notification;
+        }
 
-        return $type->delete();
+        if ($type->delete()) {
+            $this->notification->setMessage('Type deleted successfully', Notification::SUCCESS);
+        } else {
+            $this->notification->setMessage('Type delete failed', Notification::ERROR);
+        }
+
+        return $this->notification;
     }
 
     /**

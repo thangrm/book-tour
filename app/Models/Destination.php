@@ -124,10 +124,22 @@ class Destination extends Model
     public function remove($id)
     {
         $destination = $this->findOrFail($id);
-        $image = $destination->image;
-        Storage::delete($this->pathDestination . $image);
-        
-        return $destination->delete();
+        $numberTours = $destination->tours()->count();
+        if ($numberTours > 0) {
+            $this->notification->setMessage('The destination has tours that cannot be deleted',
+                Notification::ERROR);
+            return $this->notification;
+        }
+
+        if ($destination->delete()) {
+            $this->notification->setMessage('Destination deleted successfully', Notification::SUCCESS);
+            $image = $destination->image;
+            Storage::delete($this->pathDestination . $image);
+        } else {
+            $this->notification->setMessage('Destination delete failed', Notification::ERROR);
+        }
+
+        return $this->notification;
     }
 
     /**

@@ -14,7 +14,8 @@ class AddForeignKeysToPlacesTable extends Migration
     public function up()
     {
         Schema::table('places', function (Blueprint $table) {
-            $table->foreign(['itinerary_id'], 'places_ibfk_1')->references(['id'])->on('itineraries')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['itinerary_id'],
+                'places_ibfk_1')->references(['id'])->on('itineraries')->onUpdate('NO ACTION')->onDelete('cascade');
         });
     }
 

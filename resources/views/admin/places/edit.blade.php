@@ -1,5 +1,4 @@
 @extends('admin.master')
-
 @section('admin')
     <div class="page-breadcrumb">
         <div class="row">
@@ -10,9 +9,11 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tour</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('itineraries.index', $itinerary->tour_id) }}">Itinerary</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('places.index', $itinerary->id) }}">Place</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Edit </li>
+                            <li class="breadcrumb-item"><a href="{{ route('itineraries.index', $itinerary->tour_id) }}">Itinerary</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="{{ route('places.index', $itinerary->id) }}">Place</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit</li>
                         </ol>
                     </nav>
                 </div>
@@ -21,7 +22,8 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('places.update', [$itinerary->id,$place->id]) }}" class="form-horizontal" id="formEditPlace" method="post">
+        <form action="{{ route('places.update', [$itinerary->id,$place->id]) }}" class="form-horizontal"
+              id="formEditPlace" method="post">
             @method('PUT')
             @csrf
             <div class="card-body">
@@ -31,7 +33,7 @@
                     </label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name place"
-                               value="{{ $place->name }}">
+                               value="{{  empty(old('name')) ? $place->name : old('name')}}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -70,16 +72,16 @@
             disableSubmitButton('#formEditPlace');
 
             ClassicEditor
-                .create( document.querySelector( '#description' ))
-                .then( editor => {
+                .create(document.querySelector('#description'))
+                .then(editor => {
                     descriptionEditor = editor;
-                    editor.setData( `{!! $place->description !!} ` );
-                } )
-                .catch( error => {
-                    console.error( error );
-                } );
+                    editor.setData(`{!!  empty(old('description')) ? $place->description : old('description')  !!}`);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
 
-            $('#formEditPlace').submit(function (e){
+            $('#formEditPlace').submit(function (e) {
                 e.preventDefault();
                 descriptionEditor.updateSourceElement();
                 e.currentTarget.submit();

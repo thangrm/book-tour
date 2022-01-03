@@ -73,6 +73,7 @@ class TypeOfTourController extends Controller
     public function edit($id)
     {
         $type = TypeOfTour::findOrFail($id);
+        $type->tours;
         return view('admin.types.edit', compact('type'));
     }
 
@@ -99,11 +100,11 @@ class TypeOfTourController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return String
      */
     public function destroy($id)
     {
-        return $this->typeTour->remove($id);
+        return json_encode($this->typeTour->remove($id)->getMessage());
     }
 
     /**
