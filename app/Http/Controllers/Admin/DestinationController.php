@@ -85,7 +85,7 @@ class DestinationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate($this->destination->ruleUpdate($id));
+        $request->validate($this->destination->rule($id));
         $notification = $this->destination->updateDestination($request, $id);
 
         if ($notification->isError()) {

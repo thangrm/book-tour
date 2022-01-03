@@ -85,7 +85,7 @@ class TypeOfTourController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate($this->typeTour->ruleUpdate($id));
+        $request->validate($this->typeTour->rule($id));
         $notification = $this->typeTour->updateType($request, $id);
 
         if ($notification->isError()) {

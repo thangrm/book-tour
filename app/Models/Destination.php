@@ -63,14 +63,18 @@ class Destination extends Model
      */
     public function storeDestination(Request $request)
     {
-        $nameDestination = Utilities::clearXSS($request->name);
-        $data['name'] = $nameDestination;
-        $data['slug'] = Str::slug($nameDestination);
-        $data['status'] = $request->status;
-        $image = Utilities::storeImage($request, 'image', $this->pathDestination);
-        $data['image'] = $image;
+        $input = $request->only('name', 'status');
+        $input['slug'] = Str::slug($input['name']);
+        $input = Utilities::clearAllXSS($input);
 
-        if ($this->create($data)->exists) {
+        if ($request->hasFile('image')) {
+            $input['image'] = Utilities::storeImage($request, 'image', $this->pathDestination);
+        } else {
+            $this->notification->setMessage('No image to upload', Notification::ERROR);
+            return $this->notification;
+        }
+
+        if ($this->create($input)->exists) {
             $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
         } else {
             $this->notification->setMessage('Destination creation failed', Notification::ERROR);
@@ -90,19 +94,18 @@ class Destination extends Model
     {
         $destination = $this->findOrFail($id);
 
-        $nameDestination = Utilities::clearXSS($request->name);
-        $destination->name = $nameDestination;
-        $destination->slug = Str::slug($nameDestination);
-        $destination->status = $request->status;
+        $input = $request->only('name', 'status');
+        $input['slug'] = Str::slug($input['name']);
+        $input = Utilities::clearAllXSS($input);
 
         // Upload Image
         if ($request->hasFile('image')) {
             $oldImage = $destination->image;
-            $image = Utilities::storeImage($request, 'image', $this->pathDestination);
+            $input['image'] = Utilities::storeImage($request, 'image', $this->pathDestination);
             Storage::delete($this->pathDestination . $oldImage);
-            $destination->image = $image;
         }
 
+        $destination->fill($input);
         if ($destination->save()) {
             $this->notification->setMessage('Destination updated successfully', Notification::SUCCESS);
         } else {
@@ -121,7 +124,9 @@ class Destination extends Model
     public function remove($id)
     {
         $destination = $this->findOrFail($id);
-
+        $image = $destination->image;
+        Storage::delete($this->pathDestination . $image);
+        
         return $destination->delete();
     }
 

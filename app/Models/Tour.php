@@ -81,9 +81,15 @@ class Tour extends Model
     public function storeTour(Request $request)
     {
         $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
-        $input = Utilities::clearAllXSS($input);
-        $input['image'] = Utilities::storeImage($request, 'image', $this->pathTour);
         $input['slug'] = Str::slug($input['name']);
+        $input = Utilities::clearAllXSS($input);
+
+        if ($request->hasFile('image')) {
+            $input['image'] = Utilities::storeImage($request, 'image', $this->pathTour);
+        } else {
+            $this->notification->setMessage('No image to upload', Notification::ERROR);
+            return $this->notification;
+        }
 
         if ($this->create($input)->exists) {
             $this->notification->setMessage('New tour added successfully', Notification::SUCCESS);
@@ -107,16 +113,15 @@ class Tour extends Model
         $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
         $input = Utilities::clearAllXSS($input);
         $input['slug'] = Str::slug($input['name']);
-        $tour->fill($input);
 
         // Upload Image
         if ($request->hasFile('image')) {
             $oldImage = $tour->image;
-            $image = Utilities::storeImage($request, 'image', $this->pathTour);
+            $input['image'] = Utilities::storeImage($request, 'image', $this->pathTour);
             Storage::delete($this->pathTour . $oldImage);
-            $tour->image = $image;
         }
 
+        $tour->fill($input);
         if ($tour->save()) {
             $this->notification->setMessage('Tour updated successfully', Notification::SUCCESS);
         } else {
@@ -127,7 +132,7 @@ class Tour extends Model
     }
 
     /**
-     * Delete the type by id in database.
+     * Delete the tour by id in database.
      *
      * @param $id
      * @return mixed
