@@ -98,24 +98,18 @@ class Review extends Model
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {
-                if ($data->status == 1) {
-                    return 'Public';
-                } else {
-                    return 'Block';
-                }
+                return ($data->status == 1) ? 'Public' : 'Block';
             })
             ->addColumn('action', function ($data) {
                 if ($data->status == 1) {
-                    $url = route('reviews.block', [$data->tour_id, $data->id]);
-                    return '<a onclick="changeStatus(\'' . $url . '\')" class="btn btn-danger btn-sm rounded-0 text-white block" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-arrow-down"></i>
-                            </a>';
+                    $link = route('reviews.block', [$data->tour_id, $data->id]);
+                    $isBlock = true;
                 } else {
-                    $url = route('reviews.public', [$data->tour_id, $data->id]);
-                    return '<a onclick="changeStatus(\'' . $url . '\')" class="btn btn-success btn-sm rounded-0 text-white public" types="button" data-toggle="tooltip" data-placement="top" title="Edit">
-                            <i class="fa fa-arrow-up"></i>
-                            </a>';
+                    $link = route('reviews.public', [$data->tour_id, $data->id]);
+                    $isBlock = false;
                 }
+
+                return view('admin.components.button_change_status', compact(['link', 'isBlock']));
             })
             ->rawColumns(['action'])
             ->make(true);

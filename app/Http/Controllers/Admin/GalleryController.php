@@ -24,7 +24,7 @@ class GalleryController extends Controller
     public function index($tourId)
     {
         $galleries = $this->gallery->getImagesByTourId($tourId);
-        return view('admin.galleries.view', compact('galleries', 'tourId'));
+        return view('admin.galleries.index', compact('galleries', 'tourId'));
     }
 
     /**

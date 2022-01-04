@@ -135,19 +135,14 @@ class Place extends Model
     {
         return DataTables::of($data)
             ->addIndexColumn()
-            ->editColumn('name', function ($data) {
-                return '<span id="name' . $data->id . '">' . $data->name . '</span>';
-            })
             ->addColumn('action', function ($data) {
-                return '<a  href="' . route('places.edit',
-                        [$data->itinerary_id, $data->id]) . '" data-id="' . $data->id . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                        <a href="' . route('places.destroy', [$data->itinerary_id, $data->id]) . '" class="btn btn-danger btn-sm rounded-0 text-white delete m-l-5" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>';
+                $id = $data->id;
+                $linkEdit = route('places.edit', [$data->itinerary_id, $data->id]);
+                $linkDelete = route('places.destroy', [$data->itinerary_id, $data->id]);
+
+                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
-            ->rawColumns(['name', 'description', 'action'])
+            ->rawColumns(['description', 'action'])
             ->make(true);
     }
 }

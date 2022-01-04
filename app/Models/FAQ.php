@@ -27,18 +27,15 @@ class FAQ extends Model
     /**
      * Validate rules for FAQ
      *
-     * @param $id
      * @return string[]
      */
-    public function rule($id = null)
+    public function rule(): array
     {
-        $rule = [
+        return [
             'question' => 'required|string',
             'answer' => 'required|string',
             'status' => 'required|integer|between:1,2',
         ];
-
-        return $rule;
     }
 
     /**
@@ -144,19 +141,14 @@ class FAQ extends Model
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {
-                if ($data->status == 1) {
-                    return 'Active';
-                } else {
-                    return 'Inactive';
-                }
+                return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->addColumn('action', function ($data) {
-                return '<a href="' . route("faqs.edit", [$data->tour_id, $data->id]) . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit" >
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <a href="' . route("faqs.destroy", [$data->tour_id, $data->id]) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>';
+                $id = $data->id;
+                $linkEdit = route("faqs.edit", [$data->tour_id, $data->id]);
+                $linkDelete = route("faqs.destroy", [$data->tour_id, $data->id]);
+                
+                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['name', 'place', 'action'])
             ->make(true);

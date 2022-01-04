@@ -22,7 +22,7 @@ class DestinationController extends Controller
      */
     public function index()
     {
-        return view('admin.destinations.view');
+        return view('admin.destinations.index');
     }
 
     /**

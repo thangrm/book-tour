@@ -132,7 +132,7 @@
                     {data: 'price', name: 'price'},
                     {data: 'status', name: 'status'},
                     {data: 'trending', name: 'trending'},
-                    {data: 'detail', name: 'detail', width: '20%'},
+                    {data: 'detail', name: 'detail', width: '180px'},
                     {data: 'action', name: 'action'},
                 ]
             });

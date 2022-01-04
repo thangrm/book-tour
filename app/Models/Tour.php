@@ -57,7 +57,7 @@ class Tour extends Model
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
             'destination_id' => 'required|exists:destinations,id',
             'type_id' => 'required|exists:tour_types,id',
-            'duration' => 'required|integer|min:1',
+            'duration' => 'required|integer|between:1,127',
             'price' => 'required|numeric|min:0',
             'status' => 'required|integer|between:1,2',
             'trending' => 'required|integer|between:1,2',
@@ -79,7 +79,16 @@ class Tour extends Model
      */
     public function storeTour(Request $request)
     {
-        $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
+        $input = $request->only([
+            'name',
+            'destination_id',
+            'type_id',
+            'duration',
+            'price',
+            'overview',
+            'status',
+            'trending'
+        ]);
         $input['slug'] = Str::slug($input['name']);
         $input = Utilities::clearAllXSS($input);
 
@@ -109,7 +118,16 @@ class Tour extends Model
     public function updateTour(Request $request, $id)
     {
         $tour = $this->findOrFail($id);
-        $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
+        $input = $request->only([
+            'name',
+            'destination_id',
+            'type_id',
+            'duration',
+            'price',
+            'overview',
+            'status',
+            'trending'
+        ]);
         $input = Utilities::clearAllXSS($input);
         $input['slug'] = Str::slug($input['name']);
 
@@ -197,51 +215,54 @@ class Tour extends Model
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('name', function ($data) {
-                $durationString = Utilities::durationToString($data->duration);
-                return "<b>$data->name </b> <br>
-                        $data->destination_name  ($data->type_name)<br>
-                        <span style='font-size: smaller; color: #636567'> $durationString </span>";
+                $name = $data->name;
+                $destination = $data->destination_name;
+                $type = $data->type_name;
+                $duration = Utilities::durationToString($data->duration);
+
+                return view('admin.components.title_tour', compact(['name', 'destination', 'type', 'duration']));
             })
             ->editColumn('image', function ($data) {
-                return '<img src="' . asset("storage/images/tours/" . $data->image) . '" width="80" height="80">';
+                $pathImage = asset("storage/images/tours/" . $data->image);
+
+                return view('admin.components.image', compact('pathImage'));
             })
             ->editColumn('price', function ($data) {
                 return number_format($data->price, 2) . ' $';;
             })
             ->editColumn('status', function ($data) {
-                if ($data->status == 1) {
-                    return 'Active';
-                } else {
-                    return 'Inactive';
-                }
+                return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->editColumn('trending', function ($data) {
-                if ($data->status == 1) {
-                    return 'Active';
-                } else {
-                    return 'Inactive';
-                }
+                return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->addColumn('detail', function ($data) {
                 $routerGallery = route('galleries.index', $data->id);
                 $routerItinerary = route('itineraries.index', $data->id);
                 $routerFAQ = route('faqs.index', $data->id);
                 $routerReview = route('reviews.index', $data->id);
+                $width = 90;
 
-                return '<a class="btn btn-info text-white mt-1" style="width: 80px">Info</a>
-                        <a href="' . $routerGallery . '" class="btn btn-info text-white mt-1" style="width: 80px">Gallery</a>
-                        <a href="' . $routerItinerary . '" class="btn btn-info text-white mt-1" style="width: 80px">Itineraries</a>
-                        <a href="' . $routerFAQ . '" class="btn btn-info text-white mt-1" style="width: 80px">Faqs</a>
-                        <a href="' . $routerReview . '" class="btn btn-info text-white mt-1" style="width: 80px">Review</a>
-                        ';
+                $view = view('admin.components.button_link_info',
+                    ['link' => $routerGallery, 'title' => 'Galleries', 'width' => $width])->render();
+
+                $view .= view('admin.components.button_link_info',
+                    ['link' => $routerItinerary, 'title' => 'Itineraries', 'width' => $width])->render();
+
+                $view .= view('admin.components.button_link_info',
+                    ['link' => $routerFAQ, 'title' => 'Faqs', 'width' => $width])->render();
+
+                $view .= view('admin.components.button_link_info',
+                    ['link' => $routerReview, 'title' => 'Reviews', 'width' => $width])->render();
+
+                return $view;
             })
             ->addColumn('action', function ($data) {
-                return '<a href="' . route("tours.edit", $data->id) . '" class="btn btn-success btn-sm rounded-0 text-white edit" types="button" data-toggle="tooltip" data-placement="top" title="Edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <a href="' . route("tours.destroy", $data->id) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>';
+                $id = $data->id;
+                $linkEdit = route("tours.edit", $data->id);
+                $linkDelete = route("tours.destroy", $data->id);
+
+                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['name', 'image', 'status', 'detail', 'action'])
             ->make(true);

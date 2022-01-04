@@ -125,7 +125,7 @@
                 drawCallback: function () {
                     $('.edit').click(function () {
                         itinerariesId = $(this).data('id');
-                        let nameItineray = $('#name' + itinerariesId).text();
+                        let nameItineray = $('#itinerary-' + itinerariesId).children().eq(1).text();
                         $('#nameEdit').val(nameItineray);
                     });
                 }

@@ -26,7 +26,7 @@ class TourController extends Controller
     {
         $destinations = Destination::latest()->get();
         $types = Type::latest()->get();
-        return view('admin.tours.view', compact(['destinations', 'types']));
+        return view('admin.tours.index', compact(['destinations', 'types']));
     }
 
     /**

@@ -178,24 +178,21 @@ class Destination extends Model
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {
-                if ($data->status == 1) {
-                    return 'Active';
-                } else {
-                    return 'Inactive';
-                }
+                return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->editColumn('image', function ($data) {
-                return '<img src="' . asset("storage/images/destinations/" . $data->image) . '" width="80" height="80">';
+                $pathImage = asset("storage/images/destinations/" . $data->image);
+
+                return view('admin.components.image', compact('pathImage'));
             })
             ->addColumn('action', function ($data) {
-                return '<a href="' . route("destinations.edit", $data->id) . '" class="btn btn-success btn-sm rounded-0 text-white edit" types="button" data-toggle="tooltip" data-placement="top" title="Edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <a href="' . route("destinations.destroy", $data->id) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>';
+                $id = $data->id;
+                $linkEdit = route("destinations.edit", $data->id);
+                $linkDelete = route("destinations.destroy", $data->id);
+
+                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
-            ->rawColumns(['image', 'status', 'action'])
+            ->rawColumns(['image', 'action'])
             ->make(true);
     }
 }

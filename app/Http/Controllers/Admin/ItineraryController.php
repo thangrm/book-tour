@@ -26,7 +26,7 @@ class ItineraryController extends Controller
      */
     public function index($tourId)
     {
-        return view('admin.itineraries.view', compact('tourId'));
+        return view('admin.itineraries.index', compact('tourId'));
     }
 
     /**

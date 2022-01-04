@@ -28,7 +28,7 @@ class PlaceController extends Controller
     public function index($itineraryId)
     {
         $itinerary = Itinerary::findOrFail($itineraryId);
-        return view('admin.places.view', compact('itinerary'));
+        return view('admin.places.index', compact('itinerary'));
     }
 
     /**
