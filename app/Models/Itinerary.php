@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class Itinerary extends Model
@@ -147,9 +146,9 @@ class Itinerary extends Model
     }
 
     /**
-     * Format data according to Datatables
+     * Format data to Datatables
      *
-     * @param Collection $data
+     * @param $data
      * @return mixed
      * @throws \Exception
      */
@@ -168,11 +167,11 @@ class Itinerary extends Model
                 return '<button data-id="' . $data->id . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit" data-toggle="modal" data-target="#editModal">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <a href="' . route("itineraries.destroy",[$data->tour_id, $data->id]) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                        <a href="' . route("itineraries.destroy", [$data->tour_id, $data->id]) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
                             <i class="fa fa-trash"></i>
                         </a>';
             })
-            ->rawColumns(['name', 'place','action'])
+            ->rawColumns(['name', 'place', 'action'])
             ->make(true);
     }
 }

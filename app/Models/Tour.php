@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class Tour extends Model
@@ -33,7 +32,7 @@ class Tour extends Model
      */
     public function destination()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Destination::class);
     }
 
     /**
@@ -42,7 +41,7 @@ class Tour extends Model
      */
     public function type()
     {
-        return $this->belongsTo(TypeOfTour::class);
+        return $this->belongsTo(Type::class);
     }
 
     /**
@@ -182,14 +181,14 @@ class Tour extends Model
             $query->where('tours.status', '=', $status);
         }
         $query->select('tours.*', 'destinations.name AS destination_name', 'tour_types.name AS type_name');
-        return $query->latest()->get();
 
+        return $query->latest()->get();
     }
 
     /**
-     * Format data according to Datatables
+     * Format data to Datatables
      *
-     * @param Collection $data
+     * @param $data
      * @return mixed
      * @throws \Exception
      */

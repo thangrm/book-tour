@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class FAQ extends Model
@@ -79,7 +78,7 @@ class FAQ extends Model
     }
 
     /**
-     * Store the FAQ
+     * Update the FAQ
      *
      * @param Request $request
      * @param $tourId
@@ -110,6 +109,12 @@ class FAQ extends Model
         return $this->notification;
     }
 
+    /**
+     * Delete the FAQ by id.
+     *
+     * @param $id
+     * @return mixed
+     */
     public function remove($id)
     {
         $faq = $this->findOrFail($id);
@@ -128,9 +133,9 @@ class FAQ extends Model
     }
 
     /**
-     * Format data according to Datatable
+     * Format data to Datatable
      *
-     * @param Collection $data
+     * @param $data
      * @return mixed
      * @throws \Exception
      */

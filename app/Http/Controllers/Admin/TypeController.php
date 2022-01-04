@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\TypeOfTour;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
-class TypeOfTourController extends Controller
+class TypeController extends Controller
 {
     protected $typeTour;
 
-    public function __construct(TypeOfTour $typeTour)
+    public function __construct(Type $typeTour)
     {
         $this->typeTour = $typeTour;
     }
@@ -54,17 +54,6 @@ class TypeOfTourController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
@@ -72,7 +61,7 @@ class TypeOfTourController extends Controller
      */
     public function edit($id)
     {
-        $type = TypeOfTour::findOrFail($id);
+        $type = Type::findOrFail($id);
         $type->tours;
         return view('admin.types.edit', compact('type'));
     }

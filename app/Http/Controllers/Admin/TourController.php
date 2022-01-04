@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use App\Models\Tour;
-use App\Models\TypeOfTour;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class TourController extends Controller
@@ -25,7 +25,7 @@ class TourController extends Controller
     public function index()
     {
         $destinations = Destination::latest()->get();
-        $types = TypeOfTour::latest()->get();
+        $types = Type::latest()->get();
         return view('admin.tours.view', compact(['destinations', 'types']));
     }
 
@@ -37,7 +37,7 @@ class TourController extends Controller
     public function create()
     {
         $destinations = Destination::latest()->get();
-        $types = TypeOfTour::latest()->get();
+        $types = Type::latest()->get();
         return view('admin.tours.create', compact(['destinations', 'types']));
     }
 
@@ -80,7 +80,7 @@ class TourController extends Controller
     {
         $tour = Tour::findorFail($id);
         $destinations = Destination::latest()->get();
-        $types = TypeOfTour::latest()->get();
+        $types = Type::latest()->get();
         return view('admin.tours.edit', compact(['tour', 'destinations', 'types']));
     }
 

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Itinerary;
 use App\Models\Place;
-use App\Models\Tour;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PlaceController extends Controller
 {
@@ -17,10 +19,11 @@ class PlaceController extends Controller
     {
         $this->place = $place;
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return View|Response
      */
     public function index($itineraryId)
     {
@@ -31,7 +34,7 @@ class PlaceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return View|Response
      */
     public function create($itineraryId)
     {
@@ -42,8 +45,9 @@ class PlaceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @param $itineraryId
+     * @return RedirectResponse
      */
     public function store(Request $request, $itineraryId)
     {
@@ -51,7 +55,7 @@ class PlaceController extends Controller
         $notification = $this->place->storePlace($request, $itineraryId);
 
         if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage());
+            return back()->with($notification->getMessage())->withInput();
         }
 
         return redirect()->route('places.index', $itineraryId)->with($notification->getMessage());
@@ -60,30 +64,31 @@ class PlaceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param int $id
+     * @return View|Response
      */
     public function edit($itineraryId, $id)
     {
         $itinerary = Itinerary::findOrFail($itineraryId);
         $place = Place::findOrFail($id);
-        return view('admin.places.edit', compact(['itinerary','place']));
+        return view('admin.places.edit', compact(['itinerary', 'place']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @param $itineraryId
+     * @param int $id
+     * @return RedirectResponse
      */
     public function update(Request $request, $itineraryId, $id)
     {
-        $request->validate($this->place->rule($id));
+        $request->validate($this->place->rule());
         $notification = $this->place->updatePlace($request, $itineraryId, $id);
 
         if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage());
+            return redirect()->back()->with($notification->getMessage())->withInput();
         }
 
         return redirect()->route('places.index', $itineraryId)->with($notification->getMessage());
@@ -92,10 +97,10 @@ class PlaceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
-    public function destroy($itinerary,$id)
+    public function destroy($itinerary, $id)
     {
         return $this->place->remove($id);
     }
@@ -104,7 +109,7 @@ class PlaceController extends Controller
      * Process datatables ajax request.
      *
      * @param Request $request
-     * @param $tour_id
+     * @param $itineraryId
      * @return JsonResponse
      * @throws \Exception
      */

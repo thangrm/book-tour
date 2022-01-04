@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\ChangePasswordController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
-use App\Http\Controllers\Admin\TypeOfTourController;
+use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\GalleryController;
 use \App\Http\Controllers\Admin\ItineraryController;
@@ -55,9 +55,9 @@ Route::group(['prefix' => 'admin'], function () {
         });
 
         // Type of tour
-        Route::resource('types', TypeOfTourController::class)->except(['show']);
+        Route::resource('types', TypeController::class)->except(['show']);
         Route::group(['prefix' => 'types'], function () {
-            Route::get('data', [TypeOfTourController::class, 'getData'])->name('types.data');
+            Route::get('data', [TypeController::class, 'getData'])->name('types.data');
         });
 
         // Tour

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class Destination extends Model
@@ -168,9 +167,9 @@ class Destination extends Model
     }
 
     /**
-     * Format data according to Datatables
+     * Format data to Datatables
      *
-     * @param Collection $data
+     * @param $data
      * @return mixed
      * @throws \Exception
      */
