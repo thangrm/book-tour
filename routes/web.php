@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\PlaceController;
 use App\Http\Controllers\Admin\ReviewContrller;
@@ -41,12 +42,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('admin.password.update');
 
     Route::middleware(['auth:admin'])->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::get('/change-password', [ChangePasswordController::class, 'create'])->name('admin.password.change');
         Route::post('/change-password', [ChangePasswordController::class, 'store'])->name('admin.password.store');
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         // Destination
         Route::resource('destinations', DestinationController::class)->except(['show']);
@@ -106,5 +104,11 @@ Route::group(['prefix' => 'admin'], function () {
             });
         });
 
+        // Booking
+        Route::prefix('bookings')->group(function () {
+            Route::get('/', [BookingController::class, 'index'])->name('bookings.index');
+            Route::get('/show/{id}', [BookingController::class, 'show'])->name('bookings.show');
+            Route::get('/data', [BookingController::class, 'getData'])->name('bookings.data');
+        });
     });
 });

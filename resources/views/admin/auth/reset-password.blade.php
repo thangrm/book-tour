@@ -8,10 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }} ">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admins/assets/images/favicon.png') }} ">
     <title>Forgot Password Admin | Ngao Du</title>
     <!-- Custom CSS -->
-    <link href="{{ asset('admin/dist/css/style.min.css') }}  " rel="stylesheet">
+    <link href="{{ asset('admins/dist/css/style.min.css') }}  " rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -37,32 +37,36 @@
     <!-- ============================================================== -->
     <!-- Login box.scss -->
     <!-- ============================================================== -->
-    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url({{ asset('admin/assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
+         style="background:url({{ asset('admins/assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
         <div class="auth-box">
             <div>
                 <div class="logo">
-                    <span class="db"><img src="{{ asset('admin/assets/images/logo-icon.png') }}" alt="logo" /></span>
+                    <span class="db"><img src="{{ asset('admins/assets/images/logo-icon.png') }}" alt="logo"/></span>
                     <h5 class="font-medium m-b-20">Reset Password</h5>
                 </div>
                 <!-- Form -->
                 <div class="row">
                     <div class="col-12">
-                        <form class="form-horizontal m-t-20" action="{{ route('admin.password.update') }}" method="post">
+                        <form class="form-horizontal m-t-20" action="{{ route('admin.password.update') }}"
+                              method="post">
                             @csrf
                             <input type="hidden" name="token" value="{{ $request->route('token') }}">
                             <div class="form-group row">
                                 <div class="col-12 ">
-                                    <input class="form-control form-control-lg" name="email" type="text" required="" placeholder="Email" value="{{ $request->email }}" readonly>
+                                    <input class="form-control form-control-lg" name="email" type="text" required=""
+                                           placeholder="Email" value="{{ $request->email }}" readonly>
                                 </div>
                                 @error ('email')
-                                    <div class="col-12 ">
-                                        <span class="text-danger">{{ $message }}</span>
-                                    </div>
+                                <div class="col-12 ">
+                                    <span class="text-danger">{{ $message }}</span>
+                                </div>
                                 @enderror
                             </div>
                             <div class="form-group row">
                                 <div class="col-12 ">
-                                    <input class="form-control form-control-lg"  name="password" type="password" required=" " placeholder="Password">
+                                    <input class="form-control form-control-lg" name="password" type="password"
+                                           required=" " placeholder="Password">
                                 </div>
                                 @error ('password')
                                 <div class="col-12 ">
@@ -72,7 +76,8 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-12 ">
-                                    <input class="form-control form-control-lg" name="password_confirmation" type="password" required=" " placeholder="Confirm Password">
+                                    <input class="form-control form-control-lg" name="password_confirmation"
+                                           type="password" required=" " placeholder="Confirm Password">
                                 </div>
                                 @error ('password_confirmation')
                                 <div class="col-12 ">
@@ -82,7 +87,8 @@
                             </div>
                             <div class="form-group text-center ">
                                 <div class="col-xs-12 p-b-20 ">
-                                    <button class="btn btn-block btn-lg btn-info " type="submit ">Reset Password</button>
+                                    <button class="btn btn-block btn-lg btn-info " type="submit ">Reset Password
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -110,10 +116,10 @@
 <!-- ============================================================== -->
 <!-- All Required js -->
 <!-- ============================================================== -->
-<script src="{{ asset('admin/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap tether Core JavaScript -->
-<script src="{{ asset('admin/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- ============================================================== -->
 <!-- This page plugin js -->
 <!-- ============================================================== -->

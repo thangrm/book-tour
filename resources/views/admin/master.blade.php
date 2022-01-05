@@ -11,19 +11,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
 
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admins/assets/images/favicon.png') }}">
     <title>Dashboard</title>
     <!-- Datatable -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <!--Bootstrap switch -->
     <link rel="stylesheet" type="text/css"
-          href=" {{ asset('admin/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }} ">
+          href=" {{ asset('admins/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }} ">
     <!-- Custom CSS -->
-    <link href="{{ asset('admin/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admins/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admins/assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href=" {{ asset('admin/assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet">
-    <link href=" {{ asset('admin/dist/css/style.min.css') }}" rel="stylesheet">
+    <link href=" {{ asset('admins/assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet">
+    <link href=" {{ asset('admins/dist/css/style.min.css') }}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -98,37 +98,37 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<script src="{{ asset('admin/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap tether Core JavaScript -->
-<script src="{{ asset('admin/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- apps -->
-<script src="{{ asset('admin/dist/js/app.min.js') }}"></script>
-<script src="{{ asset('admin/dist/js/app.init.js') }}"></script>
-<script src="{{ asset('admin/dist/js/app-style-switcher.js') }}"></script>
+<script src="{{ asset('admins/dist/js/app.min.js') }}"></script>
+<script src="{{ asset('admins/dist/js/app.init.js') }}"></script>
+<script src="{{ asset('admins/dist/js/app-style-switcher.js') }}"></script>
 <!-- slimscrollbar scrollbar JavaScript -->
-<script src="{{ asset('admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
-<script src="{{ asset('admin/assets/extra-libs/sparkline/sparkline.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
+<script src="{{ asset('admins/assets/extra-libs/sparkline/sparkline.js') }}"></script>
 <!--Wave Effects -->
-<script src="{{ asset('admin/dist/js/waves.js') }}"></script>
+<script src="{{ asset('admins/dist/js/waves.js') }}"></script>
 <!--Menu sidebar -->
-<script src="{{ asset('admin/dist/js/sidebarmenu.js') }}"></script>
+<script src="{{ asset('admins/dist/js/sidebarmenu.js') }}"></script>
 <!--Custom JavaScript -->
-<script src="{{ asset('admin/dist/js/custom.min.js') }}"></script>
+<script src="{{ asset('admins/dist/js/custom.min.js') }}"></script>
 <!--Bootstrap switch -->
-<script src="{{asset('admin/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
+<script src="{{asset('admins/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
 <!--This page JavaScript -->
 <!--chartis chart-->
-{{--<script src="{{ asset('admin/assets/libs/chartist/dist/chartist.min.js') }}"></script>--}}
+{{--<script src="{{ asset('admins/assets/libs/chartist/dist/chartist.min.js') }}"></script>--}}
 <!--c3 charts -->
-{{--<script src="{{ asset('admin/assets/extra-libs/c3/d3.min.js') }}"></script>--}}
-{{--<script src="{{ asset('admin/assets/extra-libs/c3/c3.min.js') }}"></script>--}}
+{{--<script src="{{ asset('admins/assets/extra-libs/c3/d3.min.js') }}"></script>--}}
+{{--<script src="{{ asset('admins/assets/extra-libs/c3/c3.min.js') }}"></script>--}}
 <!--chartjs -->
-{{--<script src="{{ asset('admin/assets/libs/chart.js/dist/Chart.min.js') }}"></script>--}}
-{{--<script src="{{ asset('admin/dist/js/pages/dashboards/dashboard1.js') }}"></script>--}}
+{{--<script src="{{ asset('admins/assets/libs/chart.js/dist/Chart.min.js') }}"></script>--}}
+{{--<script src="{{ asset('admins/dist/js/pages/dashboards/dashboard1.js') }}"></script>--}}
 <!-- toastr -->
-<script src=" {{ asset('admin/assets/libs/toastr/build/toastr.min.js') }} "></script>
-<script src=" {{ asset('admin/assets/extra-libs/toastr/toastr-init.js') }} "></script>
+<script src=" {{ asset('admins/assets/libs/toastr/build/toastr.min.js') }} "></script>
+<script src=" {{ asset('admins/assets/extra-libs/toastr/toastr-init.js') }} "></script>
 <!-- sweetalert -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--datatable -->
