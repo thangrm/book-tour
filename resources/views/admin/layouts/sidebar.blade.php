@@ -6,7 +6,7 @@
             <li>
                 <!-- User Profile-->
                 <div class="user-profile d-flex no-block dropdown mt-3">
-                    <div class="user-pic"><img src="{{ asset('admin/assets/images/users/1.jpg') }}" alt="users"
+                    <div class="user-pic"><img src="{{ asset('admins/assets/images/users/1.jpg') }}" alt="users"
                                                class="rounded-circle" width="40"/></div>
                     <div class="user-content hide-menu ml-2">
                         <a href="javascript:void(0)" class="" id="Userdd" role="button" data-toggle="dropdown"
@@ -64,7 +64,7 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link waves-effect waves-dark"
-                   href="javascript:void(0)" aria-expanded="false">
+                   href="{{ route('bookings.index') }}" aria-expanded="false">
                     <i class="mdi mdi-calendar"></i>
                     <span class="hide-menu">Bookings</span>
                 </a>

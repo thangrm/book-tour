@@ -8,10 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }} ">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admins/assets/images/favicon.png') }} ">
     <title>Login Admin | Ngao Du</title>
     <!-- Custom CSS -->
-    <link href="{{ asset('admin/dist/css/style.min.css') }}  " rel="stylesheet">
+    <link href="{{ asset('admins/dist/css/style.min.css') }}  " rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -37,23 +37,26 @@
     <!-- ============================================================== -->
     <!-- Login box.scss -->
     <!-- ============================================================== -->
-    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background:url({{ asset('admin/assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center"
+         style="background:url({{ asset('admins/assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
         <div class="auth-box">
             <div id="loginform">
                 <div class="logo">
-                    <span class="db"><img src="{{ asset('admin/assets/images/logo-icon.png') }}" alt="logo" /></span>
+                    <span class="db"><img src="{{ asset('admins/assets/images/logo-icon.png') }}" alt="logo"/></span>
                     <h5 class="font-medium m-b-20">Sign In to Admin</h5>
                 </div>
                 <!-- Form -->
                 <div class="row">
                     <div class="col-12">
-                        <form class="form-horizontal m-t-20" id="loginform" method="POST" action="{{ route('admin.login.post') }}">
+                        <form class="form-horizontal m-t-20" id="loginform" method="POST"
+                              action="{{ route('admin.login.post') }}">
                             @csrf
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
                                 </div>
-                                <input type="text" class="form-control form-control-lg" name="email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required>
+                                <input type="text" class="form-control form-control-lg" name="email" placeholder="Email"
+                                       aria-label="Email" aria-describedby="basic-addon1" required>
                             </div>
                             @error('email')
                             <div class="col-12 ">
@@ -64,7 +67,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
                                 </div>
-                                <input type="password" class="form-control form-control-lg" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
+                                <input type="password" class="form-control form-control-lg" name="password"
+                                       placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"
+                                       required>
                             </div>
                             @error('password')
                             <div class="col-12 ">
@@ -77,7 +82,9 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="customCheck1">
                                         <label class="custom-control-label" for="customCheck1">Remember me</label>
-                                        <a href="{{ route('admin.password.request') }}" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
+                                        <a href="{{ route('admin.password.request') }}" id="to-recover"
+                                           class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot
+                                            pwd?</a>
                                     </div>
                                 </div>
                             </div>
@@ -94,8 +101,8 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
                                     <div class="social">
-{{--                                        <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fab  fa-facebook"></i> </a>--}}
-{{--                                        <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fab  fa-google-plus"></i> </a>--}}
+                                        {{--                                        <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="" data-original-title="Login with Facebook"> <i aria-hidden="true" class="fab  fa-facebook"></i> </a>--}}
+                                        {{--                                        <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="" data-original-title="Login with Google"> <i aria-hidden="true" class="fab  fa-google-plus"></i> </a>--}}
                                     </div>
                                 </div>
                             </div>
@@ -124,10 +131,10 @@
 <!-- ============================================================== -->
 <!-- All Required js -->
 <!-- ============================================================== -->
-<script src="{{ asset('admin/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap tether Core JavaScript -->
-<script src="{{ asset('admin/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
-<script src="{{ asset('admin/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
+<script src="{{ asset('admins/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- ============================================================== -->
 <!-- This page plugin js -->
 <!-- ============================================================== -->
@@ -137,7 +144,7 @@
     // ==============================================================
     // Login and Recover Password
     // ==============================================================
-    $('#to-recover').on("click", function() {
+    $('#to-recover').on("click", function () {
         $("#loginform").slideUp();
         $("#recoverform").fadeIn();
     });
