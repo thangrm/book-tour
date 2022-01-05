@@ -43,9 +43,6 @@ class Booking extends Model
         $data = $this->latest()->with('tour.type', 'tour.destination', 'customer')->get();
         return DataTables::of($data)
             ->addIndexColumn()
-//            ->addColumn('tour_title', function ($data) {
-//                return view('admin.components.title_tour', compact(['name', 'destination', 'type', 'duration']));
-//            })
             ->editColumn('customer_name', function ($data) {
                 return $data->customer->first_name . ' ' . $data->customer->last_name;
             })
@@ -54,6 +51,18 @@ class Booking extends Model
             })
             ->editColumn('payment_method', function ($data) {
                 switch ($data->payment_method) {
+                    case 1:
+                        return 'Cash';
+                    case 2:
+                        return 'CreditCard';
+                    case 3:
+                        return 'Paypal';
+                    default:
+                        return null;
+                }
+            })
+            ->editColumn('status', function ($data) {
+                switch ($data->status) {
                     case 1:
                         return 'New';
                     case 2:
@@ -66,8 +75,8 @@ class Booking extends Model
                         return null;
                 }
             })
-            ->editColumn('status', function ($data) {
-                return ($data->status == 1) ? 'Active' : 'Inactive';
+            ->addColumn('total', function ($data) {
+                return number_format($data->price * $data->people, 2) . ' $';
             })
             ->addColumn('action', function ($data) {
                 $link = route('bookings.show', $data->id);
