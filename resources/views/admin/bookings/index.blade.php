@@ -19,52 +19,16 @@
 
     <div class="container-fluid">
         <table class="table table-bordered" id="bookingTable">
-
-            <form class="form-horizontal">
-                <div class="card-body pl-0 pt-0">
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-4">
-                            <div class="form-group row">
-                                <label for="filterDestination"
-                                       class="col-sm-3 control-label col-form-label">Rate</label>
-                                <div class="col-9 col-lg-6">
-                                    <select class="form-control" name="rate" id="filterRate">
-                                        <option value="">All</option>
-                                        <option value="5">5 Star</option>
-                                        <option value="4">4 Star</option>
-                                        <option value="3">3 Star</option>
-                                        <option value="2">2 Star</option>
-                                        <option value="1">1 Star</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 col-lg-4">
-                            <div class="form-group row">
-                                <label for="filterStatus"
-                                       class="col-sm-3 control-label col-form-label">Status:</label>
-                                <div class="col-9 col-lg-6">
-                                    <select class="form-control" name="status" id="filterStatus">
-                                        <option value="">All</option>
-                                        <option value="1">Public</option>
-                                        <option value="2">Block</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
             <thead>
             <tr>
                 <th>#</th>
                 <th>Tour</th>
                 <th>Customer</th>
-                <th>Price</th>
+                <th>Email</th>
+                <th>Phone</th>
                 <th>People</th>
-                <th>Payment</th>
                 <th>Status</th>
+                <th>Total</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -94,10 +58,11 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'tour.name', name: 'tour'},
                     {data: 'customer_name', name: 'customer_name'},
-                    {data: 'price', name: 'price'},
+                    {data: 'customer.email', name: 'customer.email'},
+                    {data: 'customer.phone', name: 'customer.phone'},
                     {data: 'people', name: 'people'},
-                    {data: 'payment_method', name: 'payment_method'},
                     {data: 'status', name: 'status'},
+                    {data: 'total', name: 'total'},
                     {data: 'action', name: 'action'},
                 ]
             });
@@ -106,25 +71,5 @@
                 datatable.draw();
             });
         });
-
-        function changeStatus(url) {
-            $.ajax({
-                url: url,
-                method: 'PUT',
-                dataType: 'json',
-                success: function (response) {
-                    let type = response['alert-type'];
-                    let message = response['message'];
-                    toastrMessage(type, message);
-
-                    if (type === 'success') {
-                        datatable.draw();
-                    }
-                },
-                error: function () {
-                    toastrMessage('error', 'Change status failed');
-                },
-            });
-        }
     </script>
 @endsection
