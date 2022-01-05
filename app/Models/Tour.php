@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class Tour extends Model
@@ -33,7 +32,7 @@ class Tour extends Model
      */
     public function destination()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Destination::class);
     }
 
     /**
@@ -42,7 +41,7 @@ class Tour extends Model
      */
     public function type()
     {
-        return $this->belongsTo(TypeOfTour::class);
+        return $this->belongsTo(Type::class);
     }
 
     /**
@@ -58,7 +57,7 @@ class Tour extends Model
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
             'destination_id' => 'required|exists:destinations,id',
             'type_id' => 'required|exists:tour_types,id',
-            'duration' => 'required|integer|min:1',
+            'duration' => 'required|integer|between:1,127',
             'price' => 'required|numeric|min:0',
             'status' => 'required|integer|between:1,2',
             'trending' => 'required|integer|between:1,2',
@@ -80,10 +79,25 @@ class Tour extends Model
      */
     public function storeTour(Request $request)
     {
-        $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
-        $input = Utilities::clearAllXSS($input);
-        $input['image'] = Utilities::storeImage($request, 'image', $this->pathTour);
+        $input = $request->only([
+            'name',
+            'destination_id',
+            'type_id',
+            'duration',
+            'price',
+            'overview',
+            'status',
+            'trending'
+        ]);
         $input['slug'] = Str::slug($input['name']);
+        $input = Utilities::clearAllXSS($input);
+
+        if ($request->hasFile('image')) {
+            $input['image'] = Utilities::storeImage($request, 'image', $this->pathTour);
+        } else {
+            $this->notification->setMessage('No image to upload', Notification::ERROR);
+            return $this->notification;
+        }
 
         if ($this->create($input)->exists) {
             $this->notification->setMessage('New tour added successfully', Notification::SUCCESS);
@@ -104,19 +118,27 @@ class Tour extends Model
     public function updateTour(Request $request, $id)
     {
         $tour = $this->findOrFail($id);
-        $input = $request->only('name', 'destination_id', 'type_id', 'duration', 'price', 'status', 'trending');
+        $input = $request->only([
+            'name',
+            'destination_id',
+            'type_id',
+            'duration',
+            'price',
+            'overview',
+            'status',
+            'trending'
+        ]);
         $input = Utilities::clearAllXSS($input);
         $input['slug'] = Str::slug($input['name']);
-        $tour->fill($input);
 
         // Upload Image
         if ($request->hasFile('image')) {
             $oldImage = $tour->image;
-            $image = Utilities::storeImage($request, 'image', $this->pathTour);
+            $input['image'] = Utilities::storeImage($request, 'image', $this->pathTour);
             Storage::delete($this->pathTour . $oldImage);
-            $tour->image = $image;
         }
 
+        $tour->fill($input);
         if ($tour->save()) {
             $this->notification->setMessage('Tour updated successfully', Notification::SUCCESS);
         } else {
@@ -127,7 +149,7 @@ class Tour extends Model
     }
 
     /**
-     * Delete the type by id in database.
+     * Delete the tour by id in database.
      *
      * @param $id
      * @return mixed
@@ -177,14 +199,14 @@ class Tour extends Model
             $query->where('tours.status', '=', $status);
         }
         $query->select('tours.*', 'destinations.name AS destination_name', 'tour_types.name AS type_name');
-        return $query->latest()->get();
 
+        return $query->latest()->get();
     }
 
     /**
-     * Format data according to Datatables
+     * Format data to Datatables
      *
-     * @param Collection $data
+     * @param $data
      * @return mixed
      * @throws \Exception
      */
@@ -193,51 +215,54 @@ class Tour extends Model
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('name', function ($data) {
-                $durationString = Utilities::durationToString($data->duration);
-                return "<b>$data->name </b> <br>
-                        $data->destination_name  ($data->type_name)<br>
-                        <span style='font-size: smaller; color: #636567'> $durationString </span>";
+                $name = $data->name;
+                $destination = $data->destination_name;
+                $type = $data->type_name;
+                $duration = Utilities::durationToString($data->duration);
+
+                return view('admin.components.title_tour', compact(['name', 'destination', 'type', 'duration']));
             })
             ->editColumn('image', function ($data) {
-                return '<img src="' . asset("storage/images/tours/" . $data->image) . '" width="80" height="80">';
+                $pathImage = asset("storage/images/tours/" . $data->image);
+
+                return view('admin.components.image', compact('pathImage'));
             })
             ->editColumn('price', function ($data) {
                 return number_format($data->price, 2) . ' $';;
             })
             ->editColumn('status', function ($data) {
-                if ($data->status == 1) {
-                    return 'Active';
-                } else {
-                    return 'Inactive';
-                }
+                return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->editColumn('trending', function ($data) {
-                if ($data->status == 1) {
-                    return 'Active';
-                } else {
-                    return 'Inactive';
-                }
+                return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->addColumn('detail', function ($data) {
                 $routerGallery = route('galleries.index', $data->id);
                 $routerItinerary = route('itineraries.index', $data->id);
                 $routerFAQ = route('faqs.index', $data->id);
                 $routerReview = route('reviews.index', $data->id);
+                $width = 90;
 
-                return '<a class="btn btn-info text-white mt-1" style="width: 80px">Info</a>
-                        <a href="' . $routerGallery . '" class="btn btn-info text-white mt-1" style="width: 80px">Gallery</a>
-                        <a href="' . $routerItinerary . '" class="btn btn-info text-white mt-1" style="width: 80px">Itineraries</a>
-                        <a href="' . $routerFAQ . '" class="btn btn-info text-white mt-1" style="width: 80px">Faqs</a>
-                        <a href="' . $routerReview . '" class="btn btn-info text-white mt-1" style="width: 80px">Review</a>
-                        ';
+                $view = view('admin.components.button_link_info',
+                    ['link' => $routerGallery, 'title' => 'Galleries', 'width' => $width])->render();
+
+                $view .= view('admin.components.button_link_info',
+                    ['link' => $routerItinerary, 'title' => 'Itineraries', 'width' => $width])->render();
+
+                $view .= view('admin.components.button_link_info',
+                    ['link' => $routerFAQ, 'title' => 'Faqs', 'width' => $width])->render();
+
+                $view .= view('admin.components.button_link_info',
+                    ['link' => $routerReview, 'title' => 'Reviews', 'width' => $width])->render();
+
+                return $view;
             })
             ->addColumn('action', function ($data) {
-                return '<a href="' . route("tours.edit", $data->id) . '" class="btn btn-success btn-sm rounded-0 text-white edit" types="button" data-toggle="tooltip" data-placement="top" title="Edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <a href="' . route("tours.destroy", $data->id) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>';
+                $id = $data->id;
+                $linkEdit = route("tours.edit", $data->id);
+                $linkDelete = route("tours.destroy", $data->id);
+
+                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['name', 'image', 'status', 'detail', 'action'])
             ->make(true);

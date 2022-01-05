@@ -124,9 +124,14 @@
                             {
                                 url: link,
                                 type: 'delete',
+                                dataType: 'json',
                                 success: function (response) {
-                                    toastr.success('Destination deleted successfully');
-                                    datatable.ajax.reload();
+                                    let type = response['alert-type'];
+                                    let message = response['message'];
+                                    toastrMessage(type, message);
+                                    if (type === 'success') {
+                                        datatable.draw();
+                                    }
                                 },
                                 error: function (response) {
                                     toastr.error('Delete failed')

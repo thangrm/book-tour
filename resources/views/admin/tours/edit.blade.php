@@ -31,7 +31,7 @@
                     </label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name tour"
-                               value="{{ $tour->name }}">
+                               value="{{ empty(old('name')) ? $tour->name : old('name') }}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -48,7 +48,7 @@
                             @isset($destinations)
                                 @foreach($destinations as $destination)
                                     <option value="{{ $destination->id }}"
-                                        {{ $tour->destination_id == $destination->id ? "selected" : "" }}>
+                                        {{ (empty(old('destination_id')) ? $tour->destination_id : old('destination_id')) == $destination->id ? "selected" : "" }}>
                                         {{ $destination->name }}
                                     </option>
                                 @endforeach
@@ -67,7 +67,8 @@
                         <select class="form-control" name="type_id" id="typeId">
                             @isset($types)
                                 @foreach($types as $type)
-                                    <option value="{{ $type->id }}" {{ $tour->type_id == $type->id ? "selected" : "" }}>
+                                    <option value="{{ $type->id }}"
+                                        {{ (empty(old('type_id')) ? $tour->type_id : old('type_id')) == $type->id ? "selected" : "" }}>
                                         {{ $type->name }}
                                     </option>
                                 @endforeach
@@ -80,10 +81,34 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="duration" class="col-sm-2 text-lg-right control-label col-form-label">Duration <span
+                            class="text-danger">*</span> </label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" name="duration" id="duration" placeholder="Duration"
+                               value="{{ empty(old('duration')) ? $tour->duration : old('duration') }}" step="1">
+                        @error('duration')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="col-1"></div>
+
+                    <label for="price" class="col-sm-2 text-lg-right control-label col-form-label">Price<span
+                            class="text-danger">*</span> </label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" name="price" id="price" placeholder="Price"
+                               value="{{ empty(old('price')) ? $tour->price : old('price') }}" step="0.01">
+                        @error('price')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <label for="image" class="col-sm-2 text-lg-right control-label col-form-label">Select Image</label>
                     <div class="col-sm-9">
                         <div class="input-group mb-3">
-                            <input type="file" id="image" name="image" value="{{old('image')}}">
+                            <input type="file" id="image" name="image">
                         </div>
                         <div>
                             <img id="showImg" src="{{ asset('storage/images/tours/'.$tour->image) }}"
@@ -96,24 +121,13 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="duration" class="col-sm-2 text-lg-right control-label col-form-label">Duration <span
-                            class="text-danger">*</span> </label>
+                    <label for="description"
+                           class="col-sm-2 text-lg-right control-label col-form-label">
+                        Overview
+                    </label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control" name="duration" id="duration" placeholder="Duration"
-                               value="{{ $tour->duration }}" step="1">
-                        @error('duration')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="price" class="col-sm-2 text-lg-right control-label col-form-label">Price<span
-                            class="text-danger">*</span> </label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control" name="price" id="price" placeholder="Price"
-                               value="{{ $tour->price }}" step="0.01">
-                        @error('price')
+                        <textarea name="overview" id="overview" cols="30" rows="10"></textarea>
+                        @error('overview')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -125,8 +139,14 @@
                     <div class="col-sm-9">
                         <div class="input-group mb-3" style="width: 150px">
                             <select class="form-control" name="status" id="status">
-                                <option value="1" {{ $tour->status == 1 ? "selected" : "" }}>Active</option>
-                                <option value="2" {{ $tour->status == 2 ? "selected" : "" }}>Inactive</option>
+                                <option
+                                    value="1" {{  (empty(old('status')) ? $tour->status : old('status')) == 1 ? "selected" : "" }}>
+                                    Active
+                                </option>
+                                <option
+                                    value="2" {{  (empty(old('status')) ? $tour->status : old('status')) == 2 ? "selected" : "" }}>
+                                    Inactive
+                                </option>
                             </select>
                         </div>
                         @error('status')
@@ -141,8 +161,14 @@
                     <div class="col-sm-9">
                         <div class="input-group mb-3" style="width: 150px">
                             <select class="form-control" name="trending" id="trending">
-                                <option value="1" {{ $tour->trending == 1 ? "selected" : "" }}>Active</option>
-                                <option value="2" {{ $tour->trending == 2 ? "selected" : "" }}>Inactive</option>
+                                <option
+                                    value="1" {{  (empty(old('trending')) ? $tour->trending : old('trending')) == 1 ? "selected" : "" }}>
+                                    Active
+                                </option>
+                                <option
+                                    value="2" {{  (empty(old('trending')) ? $tour->trending : old('trending')) == 2 ? "selected" : "" }}>
+                                    Inactive
+                                </option>
                             </select>
                         </div>
                         @error('trending')
@@ -165,6 +191,8 @@
 @section('js')
     <script>
         $(document).ready(function () {
+            let overviewEditor = null;
+
             $('#image').change(function (e) {
                 let reader = new FileReader();
                 reader.onload = function (e) {
@@ -174,6 +202,22 @@
             });
 
             disableSubmitButton('#formEditTour');
+
+            ClassicEditor
+                .create(document.querySelector('#overview'))
+                .then(editor => {
+                    overviewEditor = editor;
+                    editor.setData('{!!  empty(old('overview')) ? $tour->overview : old('overview') !!}');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+            $('#formEditTour').submit(function (e) {
+                e.preventDefault();
+                overviewEditor.updateSourceElement();
+                e.currentTarget.submit();
+            });
         });
     </script>
 @endsection

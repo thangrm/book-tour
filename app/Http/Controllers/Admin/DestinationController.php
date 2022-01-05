@@ -22,7 +22,7 @@ class DestinationController extends Controller
      */
     public function index()
     {
-        return view('admin.destinations.view');
+        return view('admin.destinations.index');
     }
 
     /**
@@ -38,7 +38,7 @@ class DestinationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -51,17 +51,6 @@ class DestinationController extends Controller
         }
 
         return redirect()->route('destinations.index')->with($notification->getMessage());
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -85,7 +74,7 @@ class DestinationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate($this->destination->ruleUpdate($id));
+        $request->validate($this->destination->rule($id));
         $notification = $this->destination->updateDestination($request, $id);
 
         if ($notification->isError()) {
@@ -99,17 +88,18 @@ class DestinationController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function destroy($id)
     {
-        return $this->destination->remove($id);
+        return json_encode($this->destination->remove($id)->getMessage());
     }
 
     /**
      * Process datatables ajax request.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function getData(Request $request)
     {

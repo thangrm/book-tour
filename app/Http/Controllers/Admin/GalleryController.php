@@ -24,13 +24,14 @@ class GalleryController extends Controller
     public function index($tourId)
     {
         $galleries = $this->gallery->getImagesByTourId($tourId);
-        return view('admin.galleries.view', compact('galleries', 'tourId'));
+        return view('admin.galleries.index', compact('galleries', 'tourId'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     * @param $tourId
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request, $tourId)
@@ -48,7 +49,7 @@ class GalleryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return false|\Illuminate\Http\Response|string
+     * @return string
      */
     public function destroy($tour_id, $id)
     {

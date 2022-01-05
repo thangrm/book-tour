@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class Itinerary extends Model
@@ -147,9 +146,9 @@ class Itinerary extends Model
     }
 
     /**
-     * Format data according to Datatables
+     * Format data to Datatables
      *
-     * @param Collection $data
+     * @param $data
      * @return mixed
      * @throws \Exception
      */
@@ -157,22 +156,22 @@ class Itinerary extends Model
     {
         return DataTables::of($data)
             ->addIndexColumn()
-            ->editColumn('name', function ($data) {
-                return '<span id="name' . $data->id . '">' . $data->name . '</span>';
+            ->setRowId(function ($data) {
+                return 'itinerary-' . $data->id;
             })
             ->addColumn('place', function ($data) {
-                $routerPlace = route('places.index', $data->id);
-                return ' <a href="' . $routerPlace . '" class="btn btn-info text-white mt-1" style="width: 100px">List Place</a>';
+                $link = route('places.index', $data->id);
+                $title = 'List Places';
+
+                return view('admin.components.button_link_info', compact(['link', 'title']));
             })
             ->addColumn('action', function ($data) {
-                return '<button data-id="' . $data->id . '" type="button" class="btn btn-success btn-sm rounded-0 text-white edit" data-toggle="modal" data-target="#editModal">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                        <a href="' . route("itineraries.destroy",[$data->tour_id, $data->id]) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>';
+                $id = $data->id;
+                $linkDelete = route("itineraries.destroy", [$data->tour_id, $data->id]);
+
+                return view('admin.components.action_model', compact(['id', 'linkDelete']));
             })
-            ->rawColumns(['name', 'place','action'])
+            ->rawColumns(['place', 'action'])
             ->make(true);
     }
 }

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\TypeOfTour;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
-class TypeOfTourController extends Controller
+class TypeController extends Controller
 {
     protected $typeTour;
 
-    public function __construct(TypeOfTour $typeTour)
+    public function __construct(Type $typeTour)
     {
         $this->typeTour = $typeTour;
     }
@@ -22,7 +22,7 @@ class TypeOfTourController extends Controller
      */
     public function index()
     {
-        return view('admin.types.view');
+        return view('admin.types.index');
     }
 
     /**
@@ -54,17 +54,6 @@ class TypeOfTourController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
@@ -72,7 +61,8 @@ class TypeOfTourController extends Controller
      */
     public function edit($id)
     {
-        $type = TypeOfTour::findOrFail($id);
+        $type = Type::findOrFail($id);
+        $type->tours;
         return view('admin.types.edit', compact('type'));
     }
 
@@ -85,7 +75,7 @@ class TypeOfTourController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate($this->typeTour->ruleUpdate($id));
+        $request->validate($this->typeTour->rule($id));
         $notification = $this->typeTour->updateType($request, $id);
 
         if ($notification->isError()) {
@@ -99,11 +89,11 @@ class TypeOfTourController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return String
      */
     public function destroy($id)
     {
-        return $this->typeTour->remove($id);
+        return json_encode($this->typeTour->remove($id)->getMessage());
     }
 
     /**

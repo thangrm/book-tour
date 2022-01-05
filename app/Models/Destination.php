@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class Destination extends Model
@@ -63,14 +62,18 @@ class Destination extends Model
      */
     public function storeDestination(Request $request)
     {
-        $nameDestination = Utilities::clearXSS($request->name);
-        $data['name'] = $nameDestination;
-        $data['slug'] = Str::slug($nameDestination);
-        $data['status'] = $request->status;
-        $image = Utilities::storeImage($request, 'image', $this->pathDestination);
-        $data['image'] = $image;
+        $input = $request->only('name', 'status');
+        $input['slug'] = Str::slug($input['name']);
+        $input = Utilities::clearAllXSS($input);
 
-        if ($this->create($data)->exists) {
+        if ($request->hasFile('image')) {
+            $input['image'] = Utilities::storeImage($request, 'image', $this->pathDestination);
+        } else {
+            $this->notification->setMessage('No image to upload', Notification::ERROR);
+            return $this->notification;
+        }
+
+        if ($this->create($input)->exists) {
             $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
         } else {
             $this->notification->setMessage('Destination creation failed', Notification::ERROR);
@@ -90,19 +93,18 @@ class Destination extends Model
     {
         $destination = $this->findOrFail($id);
 
-        $nameDestination = Utilities::clearXSS($request->name);
-        $destination->name = $nameDestination;
-        $destination->slug = Str::slug($nameDestination);
-        $destination->status = $request->status;
+        $input = $request->only('name', 'status');
+        $input['slug'] = Str::slug($input['name']);
+        $input = Utilities::clearAllXSS($input);
 
         // Upload Image
         if ($request->hasFile('image')) {
             $oldImage = $destination->image;
-            $image = Utilities::storeImage($request, 'image', $this->pathDestination);
+            $input['image'] = Utilities::storeImage($request, 'image', $this->pathDestination);
             Storage::delete($this->pathDestination . $oldImage);
-            $destination->image = $image;
         }
 
+        $destination->fill($input);
         if ($destination->save()) {
             $this->notification->setMessage('Destination updated successfully', Notification::SUCCESS);
         } else {
@@ -121,8 +123,22 @@ class Destination extends Model
     public function remove($id)
     {
         $destination = $this->findOrFail($id);
+        $numberTours = $destination->tours()->count();
+        if ($numberTours > 0) {
+            $this->notification->setMessage('The destination has tours that cannot be deleted',
+                Notification::ERROR);
+            return $this->notification;
+        }
 
-        return $destination->delete();
+        if ($destination->delete()) {
+            $this->notification->setMessage('Destination deleted successfully', Notification::SUCCESS);
+            $image = $destination->image;
+            Storage::delete($this->pathDestination . $image);
+        } else {
+            $this->notification->setMessage('Destination delete failed', Notification::ERROR);
+        }
+
+        return $this->notification;
     }
 
     /**
@@ -151,9 +167,9 @@ class Destination extends Model
     }
 
     /**
-     * Format data according to Datatables
+     * Format data to Datatables
      *
-     * @param Collection $data
+     * @param $data
      * @return mixed
      * @throws \Exception
      */
@@ -162,24 +178,21 @@ class Destination extends Model
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {
-                if ($data->status == 1) {
-                    return 'Active';
-                } else {
-                    return 'Inactive';
-                }
+                return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->editColumn('image', function ($data) {
-                return '<img src="' . asset("storage/images/destinations/" . $data->image) . '" width="80" height="80">';
+                $pathImage = asset("storage/images/destinations/" . $data->image);
+
+                return view('admin.components.image', compact('pathImage'));
             })
             ->addColumn('action', function ($data) {
-                return '<a href="' . route("destinations.edit", $data->id) . '" class="btn btn-success btn-sm rounded-0 text-white edit" types="button" data-toggle="tooltip" data-placement="top" title="Edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <a href="' . route("destinations.destroy", $data->id) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>';
+                $id = $data->id;
+                $linkEdit = route("destinations.edit", $data->id);
+                $linkDelete = route("destinations.destroy", $data->id);
+
+                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
-            ->rawColumns(['image', 'status', 'action'])
+            ->rawColumns(['image', 'action'])
             ->make(true);
     }
 }

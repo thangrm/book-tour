@@ -19,6 +19,7 @@ class FAQController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $tourId
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index($tourId)
@@ -40,6 +41,7 @@ class FAQController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     * @param $tourId
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request, $tourId)
@@ -71,7 +73,8 @@ class FAQController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param $tourId
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $tourId, $id)
@@ -89,7 +92,8 @@ class FAQController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param $tourId
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($tourId, $id)

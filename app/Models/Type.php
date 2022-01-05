@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
-class TypeOfTour extends Model
+class Type extends Model
 {
     use HasFactory;
 
@@ -30,7 +30,7 @@ class TypeOfTour extends Model
      */
     public function tours()
     {
-        return $this->hasMany(Tour::class);
+        return $this->hasMany(Tour::class, 'type_id', 'id');
     }
 
     /**
@@ -105,8 +105,20 @@ class TypeOfTour extends Model
     public function remove($id)
     {
         $type = $this->findOrFail($id);
+        $numberTours = $type->tours()->count();
+        if ($numberTours > 0) {
+            $this->notification->setMessage('The type has tours that cannot be deleted',
+                Notification::ERROR);
+            return $this->notification;
+        }
 
-        return $type->delete();
+        if ($type->delete()) {
+            $this->notification->setMessage('Type deleted successfully', Notification::SUCCESS);
+        } else {
+            $this->notification->setMessage('Type delete failed', Notification::ERROR);
+        }
+
+        return $this->notification;
     }
 
     /**
@@ -126,7 +138,7 @@ class TypeOfTour extends Model
         }
 
         if (!empty($status)) {
-            $query->where('status', '=', $status);
+            $query->where('status', $status);
         }
 
         return $query->get();
@@ -144,19 +156,14 @@ class TypeOfTour extends Model
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {
-                if ($data->status == 1) {
-                    return 'Active';
-                } else {
-                    return 'Inactive';
-                }
+                return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->addColumn('action', function ($data) {
-                return '<a href="' . route("types.edit", $data->id) . '" class="btn btn-success btn-sm rounded-0 text-white edit" types="button" data-toggle="tooltip" data-placement="top" title="Edit">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <a href="' . route("types.destroy", $data->id) . '" class="btn btn-danger btn-sm rounded-0 text-white delete" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </a>';
+                $id = $data->id;
+                $linkEdit = route("types.edit", $data->id);
+                $linkDelete = route("types.destroy", $data->id);
+
+                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['status', 'action'])
             ->make(true);

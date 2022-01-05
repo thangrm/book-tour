@@ -4,12 +4,12 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">Type of tour</h4>
+                <h4 class="page-title">Tour</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Type of tour</li>
+                            <li class="breadcrumb-item active" aria-current="page">Tour</li>
                         </ol>
                     </nav>
                 </div>
@@ -22,8 +22,8 @@
 
             <form class="form-horizontal">
                 <div class="card-body pl-0 pt-0">
-                    <a class="btn btn-info mb-3" href="{{ route('types.create') }}" class="text-white">
-                        New type
+                    <a class="btn btn-info mb-3" href="{{ route('tours.create') }}" class="text-white">
+                        New Tour
                     </a>
                     <div class="row">
                         <div class="col-sm-12 col-lg-6">
@@ -32,16 +32,53 @@
                                        class="col-sm-2 control-label col-form-label">Search:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="search" id="searchName"
-                                           aria-describedby="emailHelp"
-                                           placeholder="Name of type">
+                                           placeholder="Search by name">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-lg-6">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="form-group row">
+                                <label for="filterDestination"
+                                       class="col-sm-3 control-label col-form-label">Destination</label>
+                                <div class="col-9 col-lg-6">
+                                    <select class="form-control" name="destination_id" id="filterDestination">
+                                        <option value="">All</option>
+                                        @isset($destinations)
+                                            @foreach($destinations as $destination)
+                                                <option
+                                                    value="{{ $destination->id }}"> {{ $destination->name }} </option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="form-group row">
+                                <label for="filterType"
+                                       class="col-sm-3 control-label col-form-label">Type of tour:</label>
+                                <div class="col-9 col-lg-6">
+                                    <select class="form-control" name="type_id" id="filterType">
+                                        <option value="">All</option>
+                                        @isset($types)
+                                            @foreach($types as $type)
+                                                <option value="{{ $type->id }}"> {{ $type->name }} </option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-lg-4">
                             <div class="form-group row">
                                 <label for="filterStatus"
-                                       class="col-sm-2 control-label col-form-label">Status:</label>
-                                <div class="col-10 col-lg-6">
+                                       class="col-sm-3 control-label col-form-label">Status:</label>
+                                <div class="col-9 col-lg-6">
                                     <select class="form-control" name="status" id="filterStatus">
                                         <option value="">All</option>
                                         <option value="1">Active</option>
@@ -57,7 +94,11 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Image</th>
+                <th>Price</th>
                 <th>Status</th>
+                <th>Trending</th>
+                <th>Detail</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -75,9 +116,11 @@
                 stateSave: true,
                 ordering: false,
                 ajax: {
-                    url: "{!! route('types.data') !!}",
+                    url: "{!! route('tours.data') !!}",
                     data: function (d) {
                         d.search = $('#searchName').val();
+                        d.destination_id = $('#filterDestination').val();
+                        d.type_id = $('#filterType').val();
                         d.status = $('#filterStatus').val();
                     }
                 },
@@ -85,7 +128,11 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
+                    {data: 'image', name: 'image'},
+                    {data: 'price', name: 'price'},
                     {data: 'status', name: 'status'},
+                    {data: 'trending', name: 'trending'},
+                    {data: 'detail', name: 'detail', width: '180px'},
                     {data: 'action', name: 'action'},
                 ]
             });
@@ -94,7 +141,7 @@
                 datatable.draw();
             });
 
-            $('#filterStatus').on('change', function () {
+            $('#filterDestination, #filterType, #filterStatus').on('change', function () {
                 datatable.draw();
             });
 
@@ -123,7 +170,7 @@
                                 url: link,
                                 type: 'delete',
                                 success: function (response) {
-                                    toastr.success('Type of tour deleted successfully');
+                                    toastr.success('Tour deleted successfully');
                                     datatable.ajax.reload();
                                 },
                                 error: function (response) {

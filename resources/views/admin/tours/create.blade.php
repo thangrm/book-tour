@@ -57,7 +57,9 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+
                     <div class="col-1"></div>
+
                     <label for="typeId"
                            class="col-sm-2 text-lg-right control-label col-form-label">
                         Type <span class="text-danger">*</span>
@@ -73,6 +75,30 @@
                             @endisset
                         </select>
                         @error('type_id')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="duration" class="col-sm-2 text-lg-right control-label col-form-label">Duration <span
+                            class="text-danger">*</span> </label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" name="duration" id="duration" placeholder="Duration"
+                               value="{{old('duration')}}" step="1">
+                        @error('duration')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="col-1"></div>
+
+                    <label for="price" class="col-sm-2 text-lg-right control-label col-form-label">Price<span
+                            class="text-danger">*</span> </label>
+                    <div class="col-sm-3">
+                        <input type="number" class="form-control" name="price" id="price" placeholder="Price"
+                               value="{{old('price')}}" step="0.01">
+                        @error('price')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -95,24 +121,13 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="duration" class="col-sm-2 text-lg-right control-label col-form-label">Duration <span
-                            class="text-danger">*</span> </label>
+                    <label for="description"
+                           class="col-sm-2 text-lg-right control-label col-form-label">
+                        Overview
+                    </label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control" name="duration" id="duration" placeholder="Duration"
-                               value="{{old('duration')}}" step="1">
-                        @error('duration')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="price" class="col-sm-2 text-lg-right control-label col-form-label">Price<span
-                            class="text-danger">*</span> </label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control" name="price" id="price" placeholder="Price"
-                               value="{{old('price')}}" step="0.01">
-                        @error('price')
+                        <textarea name="overview" id="overview" cols="30" rows="10"></textarea>
+                        @error('overview')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -164,6 +179,8 @@
 @section('js')
     <script>
         $(document).ready(function () {
+            let overviewEditor = null;
+
             $('#image').change(function (e) {
                 let reader = new FileReader();
                 reader.onload = function (e) {
@@ -173,6 +190,22 @@
             });
 
             disableSubmitButton('#formCreateTour');
+
+            ClassicEditor
+                .create(document.querySelector('#overview'))
+                .then(editor => {
+                    overviewEditor = editor;
+                    editor.setData('{!! old('overview') !!}');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+            $('#formCreateTour').submit(function (e) {
+                e.preventDefault();
+                overviewEditor.updateSourceElement();
+                e.currentTarget.submit();
+            });
         });
     </script>
 @endsection

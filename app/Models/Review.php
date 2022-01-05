@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use App\Libraries\Notification;
-use App\Libraries\Utilities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Collection;
 use Yajra\DataTables\DataTables;
 
 class Review extends Model
@@ -27,14 +24,20 @@ class Review extends Model
     /**
      * Validate rules for review
      *
-     * @param $id
      * @return string[]
      */
     public function rule()
     {
-        return ['status' => 'required|integer|between:1,2',];
+        return ['status' => 'required|integer|between:1,2'];
     }
 
+    /**
+     * Change the status of the review to public or block
+     *
+     * @param $id
+     * @param $isBlock
+     * @return Notification
+     */
     public function changeStatus($id, $isBlock = false)
     {
         $review = $this->find($id);
@@ -60,9 +63,10 @@ class Review extends Model
     }
 
     /**
-     * Get a list of tours
+     * Get a list of reviews
      *
      * @param Request $request
+     * @param $tourId
      * @return mixed
      */
     public function getListReviews(Request $request, $tourId)
@@ -83,9 +87,9 @@ class Review extends Model
     }
 
     /**
-     * Format data according to Datatables
+     * Format data to Datatables
      *
-     * @param Collection $data
+     * @param $data
      * @return mixed
      * @throws \Exception
      */
@@ -94,24 +98,18 @@ class Review extends Model
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {
-                if ($data->status == 1) {
-                    return 'Public';
-                } else {
-                    return 'Block';
-                }
+                return ($data->status == 1) ? 'Public' : 'Block';
             })
             ->addColumn('action', function ($data) {
                 if ($data->status == 1) {
-                    $url = route('reviews.block', [$data->tour_id, $data->id]);
-                    return '<a onclick="changeStatus(\'' . $url . '\')" class="btn btn-danger btn-sm rounded-0 text-white block" types="button" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-arrow-down"></i>
-                            </a>';
+                    $link = route('reviews.block', [$data->tour_id, $data->id]);
+                    $isBlock = true;
                 } else {
-                    $url = route('reviews.public', [$data->tour_id, $data->id]);
-                    return '<a onclick="changeStatus(\'' . $url . '\')" class="btn btn-success btn-sm rounded-0 text-white public" types="button" data-toggle="tooltip" data-placement="top" title="Edit">
-                            <i class="fa fa-arrow-up"></i>
-                            </a>';
+                    $link = route('reviews.public', [$data->tour_id, $data->id]);
+                    $isBlock = false;
                 }
+
+                return view('admin.components.button_change_status', compact(['link', 'isBlock']));
             })
             ->rawColumns(['action'])
             ->make(true);

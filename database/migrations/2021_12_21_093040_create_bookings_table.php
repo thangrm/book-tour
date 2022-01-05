@@ -15,8 +15,8 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('tour_id')->nullable()->index('tour_id');
-            $table->integer('customer_id')->nullable()->index('customer_id');
+            $table->integer('tour_id')->index('tour_id');
+            $table->integer('customer_id')->index('customer_id');
             $table->float('price', 10, 0);
             $table->mediumInteger('people');
             $table->tinyInteger('payment_method')->default(1)->comment('1: Cash, 2: CreditCard, 3: Paypal');
