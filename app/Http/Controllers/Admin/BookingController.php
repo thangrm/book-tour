@@ -38,6 +38,18 @@ class BookingController extends Controller
     }
 
     /**
+     * Change status booking
+     *
+     * @param int $id
+     * @return string
+     */
+    public function changeStatus(Request $request, $id)
+    {
+        $request->validate($this->booking->rule());
+        return json_encode($this->booking->updateStatus($request, $id));
+    }
+
+    /**
      * Process datatables ajax request.
      *
      * @return \Illuminate\Http\JsonResponse

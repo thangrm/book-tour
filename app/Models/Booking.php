@@ -21,7 +21,6 @@ class Booking extends Model
         return $this->belongsTo(Tour::class);
     }
 
-
     /**
      * Get the customer that owns the booking.
      *
@@ -29,6 +28,28 @@ class Booking extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Validate rules for booking
+     *
+     * @return array[]
+     */
+    public function rule(): array
+    {
+        return ['status' => 'required|integer|between:1,4'];
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $booking = $this->findOrFail($id);
+        $diffStatus = $request->status - $booking->status;
+        $booking->status = $request->status;
+        
+        if ($diffStatus != 1 && $request->status != 4) {
+            return false;
+        }
+        return $booking->save();
     }
 
     /**
