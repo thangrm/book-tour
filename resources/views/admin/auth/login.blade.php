@@ -56,7 +56,7 @@
                                     <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
                                 </div>
                                 <input type="text" class="form-control form-control-lg" name="email" placeholder="Email"
-                                       aria-label="Email" aria-describedby="basic-addon1" required>
+                                       aria-label="Email" aria-describedby="basic-addon1" value="{{ old('email') }}">
                             </div>
                             @error('email')
                             <div class="col-12 ">
@@ -68,11 +68,10 @@
                                     <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
                                 </div>
                                 <input type="password" class="form-control form-control-lg" name="password"
-                                       placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"
-                                       required>
+                                       placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" }}>
                             </div>
                             @error('password')
-                            <div class="col-12 ">
+                            <div class=" col-12 ">
                                 <p class="text-danger">{{ $message }}</p>
                             </div>
                             @enderror

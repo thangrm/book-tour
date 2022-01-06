@@ -1,20 +1,20 @@
 <?php
 
 use App\Http\Controllers\Admin\BookingController;
-use App\Http\Controllers\Admin\FAQController;
-use App\Http\Controllers\Admin\PlaceController;
-use App\Http\Controllers\Admin\ReviewContrller;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Admin\Auth\NewPasswordController;
-use App\Http\Controllers\Admin\Auth\ChangePasswordController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
-use App\Http\Controllers\Admin\TypeController;
-use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\GalleryController;
-use \App\Http\Controllers\Admin\ItineraryController;
+use App\Http\Controllers\Admin\ItineraryController;
+use App\Http\Controllers\Admin\PlaceController;
+use App\Http\Controllers\Admin\ReviewContrller;
+use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\TypeController;
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,15 +48,11 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Destination
         Route::resource('destinations', DestinationController::class)->except(['show']);
-        Route::group(['prefix' => 'destinations'], function () {
-            Route::get('data', [DestinationController::class, 'getData'])->name('destinations.data');
-        });
+        Route::get('destinations/data', [DestinationController::class, 'getData'])->name('destinations.data');
 
         // Type of tour
         Route::resource('types', TypeController::class)->except(['show']);
-        Route::group(['prefix' => 'types'], function () {
-            Route::get('data', [TypeController::class, 'getData'])->name('types.data');
-        });
+        Route::get('types/data', [TypeController::class, 'getData'])->name('types.data');
 
         // Tour
         Route::resource('tours', TourController::class)->except(['show']);
@@ -65,15 +61,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::group(['prefix' => 'tours/{tour_id}'], function () {
             // List image (Gallery)
             Route::prefix('galleries')->group(function () {
-                Route::get('', [GalleryController::class, 'index'])->name('galleries.index');
-                Route::post('', [GalleryController::class, 'store'])->name('galleries.store');
+                Route::get('/', [GalleryController::class, 'index'])->name('galleries.index');
+                Route::post('/', [GalleryController::class, 'store'])->name('galleries.store');
                 Route::delete('/{id}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
             });
 
             // Itinerary
             Route::prefix('itineraries')->group(function () {
-                Route::get('', [ItineraryController::class, 'index'])->name('itineraries.index');
-                Route::post('', [ItineraryController::class, 'store'])->name('itineraries.store');
+                Route::get('/', [ItineraryController::class, 'index'])->name('itineraries.index');
+                Route::post('/', [ItineraryController::class, 'store'])->name('itineraries.store');
                 Route::post('/update', [ItineraryController::class, 'update'])->name('itineraries.update');
                 Route::delete('/{id}', [ItineraryController::class, 'destroy'])->name('itineraries.destroy');
                 Route::get('/data', [ItineraryController::class, 'getData'])->name('itineraries.data');
@@ -82,13 +78,11 @@ Route::group(['prefix' => 'admin'], function () {
 
             // FAQ
             Route::resource('faqs', FAQController::class)->except(['show']);
-            Route::prefix('faqs')->group(function () {
-                Route::get('/data', [FAQController::class, 'getData'])->name('faqs.data');
-            });
+            Route::get('faqs/data', [FAQController::class, 'getData'])->name('faqs.data');
 
             // Review
             Route::prefix('reviews')->group(function () {
-                Route::get('', [ReviewContrller::class, 'index'])->name('reviews.index');
+                Route::get('/', [ReviewContrller::class, 'index'])->name('reviews.index');
                 Route::get('/data', [ReviewContrller::class, 'getData'])->name('reviews.data');
                 Route::put('/{review_id}/public', [ReviewContrller::class, 'public'])->name('reviews.public');
                 Route::put('/{review_id}/block', [ReviewContrller::class, 'block'])->name('reviews.block');
@@ -99,9 +93,7 @@ Route::group(['prefix' => 'admin'], function () {
         // Place
         Route::prefix('tours/itineraries/{itinerary_id}/')->group(function () {
             Route::resource('places', PlaceController::class)->except(['show']);
-            Route::prefix('/places')->group(function () {
-                Route::get('/data', [PlaceController::class, 'getData'])->name('places.data');
-            });
+            Route::get('places/data', [PlaceController::class, 'getData'])->name('places.data');
         });
 
         // Booking
