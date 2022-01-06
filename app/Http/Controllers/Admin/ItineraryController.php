@@ -41,7 +41,7 @@ class ItineraryController extends Controller
         $request->validate($this->itinerary->rule());
         $notification = $this->itinerary->storeItinerary($request, $tourId);
         if ($notification->isError()) {
-            return back()->with($notification->getMessage());
+            return back()->with($notification->getMessage())->withInput();
         }
 
         return redirect()->route('itineraries.index', $tourId)->with($notification->getMessage());
@@ -84,8 +84,7 @@ class ItineraryController extends Controller
     public function getData(Request $request, $tour_id)
     {
         if ($request->ajax()) {
-            $data = $this->itinerary->getListItineraries($tour_id);
-            return $this->itinerary->getDataTable($data);
+            return $this->itinerary->getList($tour_id);
         }
     }
 }

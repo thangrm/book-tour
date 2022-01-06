@@ -21,7 +21,7 @@
         <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <form href="{{ route('itineraries.store',$tourId) }}" id="formAddItinerary" method="post">
+                    <form href="{{ route('itineraries.store', $tourId) }}" id="formAddItinerary" method="post">
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-12">
@@ -29,7 +29,7 @@
                             </label>
                             <div class="col-12">
                                 <input type="text" class="form-control" name="name" id="name"
-                                       placeholder="Name itinerary">
+                                       placeholder="Name itinerary" value="{{ old('name') }}">
                                 @error('name')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -113,7 +113,7 @@
                 stateSave: true,
                 ordering: false,
                 ajax: {
-                    url: "{!! route('itineraries.data',$tourId) !!}",
+                    url: "{!! route('itineraries.data', $tourId) !!}",
                 },
 
                 columns: [

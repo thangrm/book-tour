@@ -11,7 +11,8 @@
                             <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tour</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('itineraries.index', $itinerary->tour_id) }}">Itinerary</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="{{ route('places.index', $itinerary->id) }}">Place</a>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('places.index', [$itinerary->tour_id, $itinerary->id]) }}">Place</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Edit</li>
                         </ol>
@@ -22,7 +23,8 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('places.update', [$itinerary->id,$place->id]) }}" class="form-horizontal"
+        <form action="{{ route('places.update', [$itinerary->tour_id, $itinerary->id, $place->id]) }}"
+              class="form-horizontal"
               id="formEditPlace" method="post">
             @method('PUT')
             @csrf

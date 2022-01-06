@@ -25,7 +25,7 @@ class PlaceController extends Controller
      *
      * @return View|Response
      */
-    public function index($itineraryId)
+    public function index($tourId, $itineraryId)
     {
         $itinerary = Itinerary::findOrFail($itineraryId);
         return view('admin.places.index', compact('itinerary'));
@@ -36,7 +36,7 @@ class PlaceController extends Controller
      *
      * @return View|Response
      */
-    public function create($itineraryId)
+    public function create($tourId, $itineraryId)
     {
         $itinerary = Itinerary::findOrFail($itineraryId);
         return view('admin.places.create', compact('itinerary'));
@@ -49,7 +49,7 @@ class PlaceController extends Controller
      * @param $itineraryId
      * @return RedirectResponse
      */
-    public function store(Request $request, $itineraryId)
+    public function store(Request $request, $tourId, $itineraryId)
     {
         $request->validate($this->place->rule());
         $notification = $this->place->storePlace($request, $itineraryId);
@@ -58,7 +58,7 @@ class PlaceController extends Controller
             return back()->with($notification->getMessage())->withInput();
         }
 
-        return redirect()->route('places.index', $itineraryId)->with($notification->getMessage());
+        return redirect()->route('places.index', [$tourId, $itineraryId])->with($notification->getMessage());
     }
 
     /**
@@ -67,7 +67,7 @@ class PlaceController extends Controller
      * @param int $id
      * @return View|Response
      */
-    public function edit($itineraryId, $id)
+    public function edit($itineraryId, $tourId, $id)
     {
         $itinerary = Itinerary::findOrFail($itineraryId);
         $place = Place::findOrFail($id);
@@ -82,7 +82,7 @@ class PlaceController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $itineraryId, $id)
+    public function update(Request $request, $tourId, $itineraryId, $id)
     {
         $request->validate($this->place->rule());
         $notification = $this->place->updatePlace($request, $itineraryId, $id);
@@ -91,7 +91,7 @@ class PlaceController extends Controller
             return redirect()->back()->with($notification->getMessage())->withInput();
         }
 
-        return redirect()->route('places.index', $itineraryId)->with($notification->getMessage());
+        return redirect()->route('places.index', [$tourId, $itineraryId])->with($notification->getMessage());
     }
 
     /**
@@ -100,7 +100,7 @@ class PlaceController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($itinerary, $id)
+    public function destroy($tourId, $itinerary, $id)
     {
         return $this->place->remove($id);
     }
@@ -113,11 +113,10 @@ class PlaceController extends Controller
      * @return JsonResponse
      * @throws \Exception
      */
-    public function getData(Request $request, $itineraryId)
+    public function getData(Request $request, $tourId, $itineraryId)
     {
         if ($request->ajax()) {
-            $data = $this->place->getListPlaces($itineraryId);
-            return $this->place->getDataTable($data);
+            return $this->place->getList($tourId, $itineraryId);
         }
     }
 }

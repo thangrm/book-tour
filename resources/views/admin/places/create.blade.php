@@ -10,9 +10,12 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tour</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('itineraries.index', $itinerary->tour_id) }}">Itinerary</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('places.index', $itinerary->id) }}">Place</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Create </li>
+                            <li class="breadcrumb-item"><a href="{{ route('itineraries.index', $itinerary->tour_id) }}">Itinerary</a>
+                            </li>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('places.index', [$itinerary->tour_id, $itinerary->id]) }}">Place</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Create</li>
                         </ol>
                     </nav>
                 </div>
@@ -21,7 +24,8 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('places.store', $itinerary->id) }}" class="form-horizontal" method="post"
+        <form action="{{ route('places.store', [$itinerary->tour_id, $itinerary->id]) }}" class="form-horizontal"
+              method="post"
               enctype="multipart/form-data"
               id="formCreatePlace">
             @csrf
@@ -31,7 +35,8 @@
                         Name place <span class="text-danger">*</span>
                     </label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Name place" value="{{ old('name') }}">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Name place"
+                               value="{{ old('name') }}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -70,16 +75,16 @@
             disableSubmitButton('#formCreatePlace');
 
             ClassicEditor
-                .create( document.querySelector( '#description' ))
-                .then( editor => {
+                .create(document.querySelector('#description'))
+                .then(editor => {
                     descriptionEditor = editor;
-                    editor.setData( '{!! old('description') !!}' );
-                } )
-                .catch( error => {
-                    console.error( error );
-                } );
+                    editor.setData('{!! old('description') !!}');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
 
-            $('#formCreatePlace').submit(function (e){
+            $('#formCreatePlace').submit(function (e) {
                 e.preventDefault();
                 descriptionEditor.updateSourceElement();
                 e.currentTarget.submit();
