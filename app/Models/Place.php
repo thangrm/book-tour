@@ -119,26 +119,16 @@ class Place extends Model
      * @param $itineraryId
      * @return mixed
      */
-    public function getListPlaces($itineraryId)
+    public function getList($tourId, $itineraryId)
     {
-        return $this->where('itinerary_id', $itineraryId)->oldest()->get();
-    }
+        $data = $this->where('itinerary_id', $itineraryId)->oldest()->get();
 
-    /**
-     * Format data to Datatable
-     *
-     * @param $data
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getDataTable($data)
-    {
         return DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('action', function ($data) {
+            ->addColumn('action', function ($data) use ($tourId) {
                 $id = $data->id;
-                $linkEdit = route('places.edit', [$data->itinerary_id, $data->id]);
-                $linkDelete = route('places.destroy', [$data->itinerary_id, $data->id]);
+                $linkEdit = route('places.edit', [$tourId, $data->itinerary_id, $data->id]);
+                $linkDelete = route('places.destroy', [$tourId, $data->itinerary_id, $data->id]);
 
                 return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })

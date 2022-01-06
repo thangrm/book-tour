@@ -9,7 +9,8 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tour</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('itineraries.index', $itinerary->tour_id) }}">Itinerary</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('itineraries.index', $itinerary->tour_id) }}">Itinerary</a>
+                            </li>
                             <li class="breadcrumb-item active" aria-current="page">Place</li>
                         </ol>
                     </nav>
@@ -22,7 +23,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a class="btn btn-info mb-3" href="{{ route('places.create',$itinerary->id) }}" class="text-white">
+                    <a class="btn btn-info mb-3"
+                       href="{{ route('places.create',[$itinerary->tour_id, $itinerary->id]) }}" class="text-white">
                         New Place
                     </a>
                     <table class="table table-bordered m-t-10" id="placeTable">
@@ -51,7 +53,7 @@
                 stateSave: true,
                 ordering: false,
                 ajax: {
-                    url: "{!! route('places.data',$itinerary->id) !!}",
+                    url: "{!! route('places.data',[$itinerary->tour_id, $itinerary->id]) !!}",
                 },
 
                 columns: [

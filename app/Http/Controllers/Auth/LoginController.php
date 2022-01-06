@@ -25,8 +25,8 @@ class LoginController extends Controller
             'password' => 'required'
         ], [
             'email.exists' => 'Email does not exist'
-
         ]);
+        
         $credentials = $request->only(['email', 'password']);
         if (Auth::guard('admin')->attempt($credentials)) {
             return redirect()->route('admin.dashboard');

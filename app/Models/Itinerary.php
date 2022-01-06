@@ -137,31 +137,21 @@ class Itinerary extends Model
     /**
      * Get a list of itinerary
      *
-     * @param $tour_id
+     * @param $tourId
      * @return mixed
      */
-    public function getListItineraries($tour_id)
+    public function getList($tourId)
     {
-        return $this->where('tour_id', $tour_id)->oldest()->get();
-    }
+        $data = $this->where('tour_id', $tourId)->oldest()->get();
 
-    /**
-     * Format data to Datatables
-     *
-     * @param $data
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getDataTable($data)
-    {
         return DataTables::of($data)
             ->addIndexColumn()
             ->setRowId(function ($data) {
                 return 'itinerary-' . $data->id;
             })
-            ->addColumn('place', function ($data) {
-                $link = route('places.index', $data->id);
+            ->addColumn('place', function ($data) use ($tourId) {
                 $title = 'List Places';
+                $link = route('places.index', [$tourId, $data->id]);
 
                 return view('admin.components.button_link_info', compact(['link', 'title']));
             })

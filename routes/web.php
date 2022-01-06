@@ -74,6 +74,12 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::delete('/{id}', [ItineraryController::class, 'destroy'])->name('itineraries.destroy');
                 Route::get('/data', [ItineraryController::class, 'getData'])->name('itineraries.data');
 
+                // Place
+                Route::prefix('/{itinerary_id}')->group(function () {
+                    Route::resource('places', PlaceController::class)->except(['show']);
+                    Route::get('places/data', [PlaceController::class, 'getData'])->name('places.data');
+                });
+
             });
 
             // FAQ
@@ -90,11 +96,6 @@ Route::group(['prefix' => 'admin'], function () {
 
         });
 
-        // Place
-        Route::prefix('tours/itineraries/{itinerary_id}/')->group(function () {
-            Route::resource('places', PlaceController::class)->except(['show']);
-            Route::get('places/data', [PlaceController::class, 'getData'])->name('places.data');
-        });
 
         // Booking
         Route::prefix('bookings')->group(function () {
