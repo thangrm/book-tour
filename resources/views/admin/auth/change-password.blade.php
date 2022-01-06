@@ -64,7 +64,7 @@
                     <div class="form-group text-center row">
                         <div class="col-0 col-lg-3"></div>
                         <div class="col-12 col-lg-6 p-b-20 ">
-                            <button class="btn btn-block btn-lg btn-info " type="submit ">Reset Password</button>
+                            <button class="btn btn-block btn-lg btn-info " type="submit ">Change Password</button>
                         </div>
                     </div>
                 </form>

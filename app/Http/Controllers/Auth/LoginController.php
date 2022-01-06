@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function redirect;
+use function view;
 
 class LoginController extends Controller
 {
@@ -19,14 +21,17 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:admins',
+            'email' => 'required|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|exists:admins',
             'password' => 'required'
+        ], [
+            'email.exists' => 'Email does not exist'
+
         ]);
         $credentials = $request->only(['email', 'password']);
         if (Auth::guard('admin')->attempt($credentials)) {
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->back()->withInput()->withErrors(['password' => 'Password is invalid.']);
+            return redirect()->back()->withInput()->withErrors(['password' => 'Incorrect password']);
         }
     }
 
