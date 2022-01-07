@@ -16,7 +16,7 @@ class Destination extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $pathDestination = 'public/images/destinations/';
+    protected $path = 'public/images/destinations/';
     protected $notification;
 
     public function __construct(array $attributes = array())
@@ -38,7 +38,7 @@ class Destination extends Model
      *
      * @return array[]
      */
-    public function rule($id = null): array
+    public function rules($id = null): array
     {
         $rule = [
             'name' => 'required|max:100|string|unique:destinations',
@@ -55,63 +55,32 @@ class Destination extends Model
     }
 
     /**
-     * Store a new destination in database.
+     * Save data for destination in database.
      *
      * @param Request $request
+     * @param int $id
      * @return Notification
      */
-    public function storeDestination(Request $request)
+    public function saveData(Request $request, int $id = 0)
     {
         $input = $request->only('name', 'status');
         $input['slug'] = Str::slug($input['name']);
         $input = Utilities::clearAllXSS($input);
+        $destination = $this->findOrNew($id);
+        $oldImage = $destination->image;
 
         if ($request->hasFile('image')) {
-            $input['image'] = Utilities::storeImage($request, 'image', $this->pathDestination);
-        } else {
-            $this->notification->setMessage('No image to upload', Notification::ERROR);
-            return $this->notification;
-        }
-
-        if ($this->create($input)->exists) {
-            $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
-        } else {
-            $this->notification->setMessage('Destination creation failed', Notification::ERROR);
-        }
-
-        return $this->notification;
-    }
-
-    /**
-     * Update the destination in database.
-     *
-     * @param Request $request
-     * @param $id
-     * @return Notification
-     */
-    public function updateDestination(Request $request, $id)
-    {
-        $destination = $this->findOrFail($id);
-
-        $input = $request->only('name', 'status');
-        $input['slug'] = Str::slug($input['name']);
-        $input = Utilities::clearAllXSS($input);
-
-        // Upload Image
-        if ($request->hasFile('image')) {
-            $oldImage = $destination->image;
-            $input['image'] = Utilities::storeImage($request, 'image', $this->pathDestination);
-            Storage::delete($this->pathDestination . $oldImage);
+            $input['image'] = Utilities::storeImage($request, 'image', $this->path);
         }
 
         $destination->fill($input);
         if ($destination->save()) {
-            $this->notification->setMessage('Destination updated successfully', Notification::SUCCESS);
+            if ($request->hasFile('image')) {
+                Storage::delete($this->path . $oldImage);
+            }
         } else {
-            $this->notification->setMessage('Destination update failed', Notification::ERROR);
+            Storage::delete($this->path . $destination->image);
         }
-
-        return $this->notification;
     }
 
     /**
@@ -133,7 +102,7 @@ class Destination extends Model
         if ($destination->delete()) {
             $this->notification->setMessage('Destination deleted successfully', Notification::SUCCESS);
             $image = $destination->image;
-            Storage::delete($this->pathDestination . $image);
+            Storage::delete($this->path . $image);
         } else {
             $this->notification->setMessage('Destination delete failed', Notification::ERROR);
         }
@@ -146,13 +115,16 @@ class Destination extends Model
      *
      * @param Request $request
      * @return mixed
+     * @throws \Exception
      */
-    public function getListDestinations(Request $request)
+    public function getList(Request $request)
     {
         $search = $request->search;
         $status = $request->status;
+
         $query = $this->latest();
         if (!empty($search)) {
+            $search = Utilities::clearXSS($search);
             $query->where(function ($sub) use ($search) {
                 $sub->where('name', 'like', '%' . $search . '%');
                 $sub->orwhere('slug', 'like', '%' . $search . '%');
@@ -163,18 +135,8 @@ class Destination extends Model
             $query->where('status', $status);
         }
 
-        return $query->get();
-    }
+        $data = $query->get();
 
-    /**
-     * Format data to Datatables
-     *
-     * @param $data
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getDataTable($data)
-    {
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {

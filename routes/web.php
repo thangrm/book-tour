@@ -95,8 +95,7 @@ Route::group(['prefix' => 'admin'], function () {
             });
 
         });
-
-
+        
         // Booking
         Route::prefix('bookings')->group(function () {
             Route::get('/', [BookingController::class, 'index'])->name('bookings.index');
