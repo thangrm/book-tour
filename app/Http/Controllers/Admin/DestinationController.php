@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Notification;
 use App\Models\Destination;
+use Exception;
 use Illuminate\Http\Request;
 
 class DestinationController extends Controller
 {
     protected $destination;
+    protected $notification;
 
-    public function __construct(Destination $destination)
+    public function __construct(Destination $destination, Notification $notification)
     {
         $this->destination = $destination;
+        $this->notification = $notification;
     }
 
     /**
@@ -43,14 +47,20 @@ class DestinationController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->destination->rule());
-        $notification = $this->destination->storeDestination($request);
+        $request->validate($this->destination->rules());
+        try {
+            $this->destination->saveData($request);
+            $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
 
-        if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage());
+            return redirect()->route('destinations.index')->with($this->notification->getMessage());
+        } catch (Exception $e) {
+            $this->notification->setMessage('Destination creation failed', Notification::ERROR);
+
+            return back()
+                ->with('exception', $e->getMessage())
+                ->with($this->notification->getMessage())
+                ->withInput();
         }
-
-        return redirect()->route('destinations.index')->with($notification->getMessage());
     }
 
     /**
@@ -74,14 +84,22 @@ class DestinationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate($this->destination->rule($id));
-        $notification = $this->destination->updateDestination($request, $id);
+        Destination::findOrFail($id);
+        $request->validate($this->destination->rules($id));
 
-        if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage());
+        try {
+            $this->destination->saveData($request, $id);
+            $this->notification->setMessage('Destination updated successfully', Notification::SUCCESS);
+
+            return redirect()->route('destinations.index')->with($this->notification->getMessage());
+        } catch (Exception $e) {
+            $this->notification->setMessage('The destination update failed', Notification::ERROR);
+
+            return back()
+                ->with('exception', $e->getMessage())
+                ->with($this->notification->getMessage())
+                ->withInput();
         }
-
-        return redirect()->route('destinations.index')->with($notification->getMessage());
     }
 
     /**
@@ -104,8 +122,7 @@ class DestinationController extends Controller
     public function getData(Request $request)
     {
         if ($request->ajax()) {
-            $data = $this->destination->getListDestinations($request);
-            return $this->destination->getDataTable($data);
+            return $this->destination->getList($request);
         }
     }
 }

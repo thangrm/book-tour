@@ -172,9 +172,7 @@
     }
 
     @if(Session::has('message'))
-    let
-
-        type = "{{ Session::get('alert-type','info') }}";
+    let type = "{{ Session::get('alert-type','info') }}";
     let message = "{{ Session::get('message') }}";
     toastrMessage(type, message);
     @endif
