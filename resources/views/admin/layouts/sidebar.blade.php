@@ -2,34 +2,6 @@
     <!-- Sidebar navigation-->
     <nav class="sidebar-nav">
         <ul id="sidebarnav">
-            <!-- User Profile-->
-            <li>
-                <!-- User Profile-->
-                <div class="user-profile d-flex no-block dropdown mt-3">
-                    <div class="user-pic"><img src="{{ asset('admins/assets/images/users/1.jpg') }}" alt="users"
-                                               class="rounded-circle" width="40"/></div>
-                    <div class="user-content hide-menu ml-2">
-                        <a href="javascript:void(0)" class="" id="Userdd" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <h5 class="mb-0 user-name font-medium">
-                                {{ \Illuminate\Support\Facades\Auth::user()->name }}
-                                <i class="fa fa-angle-down"></i>
-                            </h5>
-                            <span class="op-5 user-email">{{ \Illuminate\Support\Facades\Auth::user()->email }}</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="User">
-                            <a class="dropdown-item" href="{{ route('admin.password.change') }}">
-                                <i class="ti-user mr-1 ml-1"></i>Change Password
-                            </a>
-                            <a class="dropdown-item" href="{{ route('admin.logout') }}">
-                                <i class="fa fa-power-off mr-1 ml-1"></i> Logout
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- End User Profile-->
-            </li>
-            <!-- User Profile-->
             <li class="sidebar-item">
                 <a class="sidebar-link waves-effect waves-dark"
                    href="{{ route('admin.dashboard') }}" aria-expanded="false">

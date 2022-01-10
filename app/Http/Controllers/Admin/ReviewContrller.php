@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Notification;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Exception;
 
 class ReviewContrller extends Controller
 {
     protected $review;
+    protected $notification;
 
-    public function __construct(Review $review)
+    public function __construct(Review $review, Notification $notification)
     {
         $this->review = $review;
+        $this->notification = $notification;
     }
 
     /**
@@ -31,28 +35,28 @@ class ReviewContrller extends Controller
      * @param $id
      * @return string
      */
-    public function public(Request $request, $tourId, $id)
+    public function changeStatus(Request $request, $tourId, $id)
     {
-        return json_encode($this->review->changeStatus($id)->getMessage());
-    }
+        $request->validate($this->review->rules());
+        try {
+            $this->review->changeStatus($request, $id);
+            $this->notification->setMessage('Review change status successfully', Notification::SUCCESS);
 
-    /**
-     * @param Request $request
-     * @param $tourId
-     * @param $id
-     * @return string
-     */
-    public function block(Request $request, $tourId, $id)
-    {
-        return json_encode($this->review->changeStatus($id, true)->getMessage());
+            return json_encode($this->notification->getMessage());
+        } catch (Exception $e) {
+            $this->notification->setMessage('Review update failed', Notification::ERROR);
+
+            return json_encode($this->notification->getMessage());
+        }
     }
 
     /**
      *  Process datatable ajax request.
      *
      * @param Request $request
+     * @param $tourId
      * @return mixed|void
-     * @throws \Exception
+     * @throws Exception
      */
     public function getData(Request $request, $tourId)
     {

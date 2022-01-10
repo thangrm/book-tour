@@ -26,7 +26,7 @@ class Review extends Model
      *
      * @return string[]
      */
-    public function rule()
+    public function rules()
     {
         return ['status' => 'required|integer|between:1,2'];
     }
@@ -38,28 +38,11 @@ class Review extends Model
      * @param $isBlock
      * @return Notification
      */
-    public function changeStatus($id, $isBlock = false)
+    public function changeStatus(Request $request, $id)
     {
-        $review = $this->find($id);
-        if ($review == null) {
-            $this->notification->setMessage('Review id not found', Notification::ERROR);
-
-            return $this->notification;
-        }
-
-        if ($isBlock) {
-            $review->status = 2;
-        } else {
-            $review->status = 1;
-        }
-
-        if ($review->save()) {
-            $this->notification->setMessage('Review change status successfully', Notification::SUCCESS);
-        } else {
-            $this->notification->setMessage('Review update failed', Notification::ERROR);
-        }
-
-        return $this->notification;
+        $review = $this->findOrFail($id);
+        $review->status = $request->status;
+        $review->save();
     }
 
     /**
@@ -80,7 +63,7 @@ class Review extends Model
         }
 
         if (!empty($status)) {
-            $query->where('status', '=', $status);
+            $query->where('status', $status);
         }
 
         return $query->latest()->get();
@@ -101,15 +84,10 @@ class Review extends Model
                 return ($data->status == 1) ? 'Public' : 'Block';
             })
             ->addColumn('action', function ($data) {
-                if ($data->status == 1) {
-                    $link = route('reviews.block', [$data->tour_id, $data->id]);
-                    $isBlock = true;
-                } else {
-                    $link = route('reviews.public', [$data->tour_id, $data->id]);
-                    $isBlock = false;
-                }
+                $link = route('reviews.status', [$data->tour_id, $data->id]);
+                $status = ($data->status == 1) ? 2 : 1;
 
-                return view('admin.components.button_change_status', compact(['link', 'isBlock']));
+                return view('admin.components.button_change_status', compact(['link', 'status']));
             })
             ->rawColumns(['action'])
             ->make(true);

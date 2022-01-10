@@ -103,11 +103,12 @@
             });
         });
 
-        function changeStatus(url) {
+        function changeStatus(url, status) {
             $.ajax({
                 url: url,
                 method: 'PUT',
                 dataType: 'json',
+                data: {status: status},
                 success: function (response) {
                     let type = response['alert-type'];
                     let message = response['message'];
