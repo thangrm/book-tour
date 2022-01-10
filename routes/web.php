@@ -90,12 +90,11 @@ Route::group(['prefix' => 'admin'], function () {
             Route::prefix('reviews')->group(function () {
                 Route::get('/', [ReviewContrller::class, 'index'])->name('reviews.index');
                 Route::get('/data', [ReviewContrller::class, 'getData'])->name('reviews.data');
-                Route::put('/{review_id}/public', [ReviewContrller::class, 'public'])->name('reviews.public');
-                Route::put('/{review_id}/block', [ReviewContrller::class, 'block'])->name('reviews.block');
+                Route::put('/{review_id}/status', [ReviewContrller::class, 'changeStatus'])->name('reviews.status');
             });
 
         });
-        
+
         // Booking
         Route::prefix('bookings')->group(function () {
             Route::get('/', [BookingController::class, 'index'])->name('bookings.index');
