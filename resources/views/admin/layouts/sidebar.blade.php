@@ -44,7 +44,7 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link waves-effect waves-dark"
-                   href="javascript:void(0)" aria-expanded="false">
+                   href="{{ route('contacts.index') }}" aria-expanded="false">
                     <i class="mdi mdi-account-box"></i>
                     <span class="hide-menu">Contacts</span>
                 </a>

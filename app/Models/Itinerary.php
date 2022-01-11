@@ -159,7 +159,7 @@ class Itinerary extends Model
                 $id = $data->id;
                 $linkDelete = route("itineraries.destroy", [$data->tour_id, $data->id]);
 
-                return view('admin.components.action_model', compact(['id', 'linkDelete']));
+                return view('admin.components.action_modal', compact(['id', 'linkDelete']));
             })
             ->rawColumns(['place', 'action'])
             ->make(true);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\FAQController;
@@ -98,6 +99,13 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/show/{id}', [BookingController::class, 'show'])->name('bookings.show');
             Route::put('/{id}/change-status', [BookingController::class, 'changeStatus'])->name('bookings.status');
             Route::get('/data', [BookingController::class, 'getData'])->name('bookings.data');
+        });
+
+        // Contact
+        Route::prefix('contacts')->group(function () {
+            Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+            Route::get('/show/{id}', [ContactController::class, 'show'])->name('contacts.show');
+            Route::get('/data', [ContactController::class, 'getData'])->name('contacts.data');
         });
     });
 });

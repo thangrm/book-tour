@@ -52,10 +52,6 @@
                 ordering: false,
                 ajax: {
                     url: "{!! route('bookings.data') !!}",
-                    data: function (d) {
-                        d.rate = $('#filterRate').val();
-                        d.status = $('#filterStatus').val();
-                    }
                 },
 
                 columns: [
