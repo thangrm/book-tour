@@ -57,6 +57,8 @@ class BookingController extends Controller
      */
     public function getData(Request $request)
     {
-        return $this->booking->getList($request);
+        if ($request->ajax()) {
+            return $this->booking->getList($request);
+        }
     }
 }

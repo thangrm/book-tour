@@ -40,12 +40,19 @@ class Booking extends Model
         return ['status' => 'required|integer|between:1,4'];
     }
 
+    /**
+     * Update status for booking
+     *
+     * @param Request $request
+     * @param $id
+     * @return false
+     */
     public function updateStatus(Request $request, $id)
     {
         $booking = $this->findOrFail($id);
         $diffStatus = $request->status - $booking->status;
         $booking->status = $request->status;
-        
+
         if ($diffStatus != 1 && $request->status != 4) {
             return false;
         }
