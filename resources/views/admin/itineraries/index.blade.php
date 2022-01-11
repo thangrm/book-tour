@@ -50,7 +50,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">List of Itineraries</h4>
-                    <table class="table table-bordered" id="destinationTable">
+                    <table class="table table-striped table-bordered" id="destinationTable">
                         <thead>
                         <tr>
                             <th>Day</th>

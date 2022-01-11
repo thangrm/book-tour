@@ -18,40 +18,41 @@
     </div>
 
     <div class="container-fluid">
-        <table class="table table-bordered" id="destinationTable">
-
-            <form class="form-horizontal">
-                <div
-                    class="card-body p-0 d-flex justify-content-between align-items-start flex-column flex-sm-row w-100 m-b-10">
-                    <div class="row w-75">
-                        <div class="col-12 col-sm-6 col-md-5 mb-2">
-                            <input type="text" class="form-control" name="search" id="searchName"
-                                   placeholder="Search">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped table-bordered" id="destinationTable">
+                    <div
+                        class="p-0 d-flex justify-content-between align-items-start flex-column flex-sm-row w-100 m-b-10">
+                        <div class="row w-75">
+                            <div class="col-12 col-sm-6 col-md-5 mb-2">
+                                <input type="text" class="form-control" name="search" id="searchName"
+                                       placeholder="Search">
+                            </div>
+                            <div class="col-10 col-sm-6 col-md-5 mb-2">
+                                <select class="form-control" name="status" id="filterStatus">
+                                    <option value="">Choose status</option>
+                                    <option value="1">Active</option>
+                                    <option value="2">Inactive</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-10 col-sm-6 col-md-5 mb-2">
-                            <select class="form-control" name="status" id="filterStatus">
-                                <option value="">Choose status</option>
-                                <option value="1">Active</option>
-                                <option value="2">Inactive</option>
-                            </select>
-                        </div>
+                        <a class="btn btn-info mb-2" href="{{ route('destinations.create') }}"
+                           class="text-white">
+                            New Destination
+                        </a>
                     </div>
-                    <a class="btn btn-info mb-2" href="{{ route('destinations.create') }}"
-                       class="text-white">
-                        New Destination
-                    </a>
-                </div>
-            </form>
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-        </table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Image</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
 @section('js')

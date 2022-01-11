@@ -18,50 +18,40 @@
     </div>
 
     <div class="container-fluid">
-        <table class="table table-bordered" id="destinationTable">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped table-bordered" id="destinationTable">
+                    <div
+                        class="p-0 d-flex justify-content-between align-items-start flex-column flex-sm-row w-100 m-b-10">
+                        <div class="row w-75">
+                            <div class="col-12 col-sm-6 col-md-5 mb-2">
+                                <input type="text" class="form-control" name="search" id="searchName"
+                                       placeholder="Search">
+                            </div>
+                            <div class="col-10 col-sm-6 col-md-5 mb-2">
+                                <select class="form-control" name="status" id="filterStatus">
+                                    <option value="">Choose status</option>
+                                    <option value="1">Active</option>
+                                    <option value="2">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
 
-            <form class="form-horizontal">
-                <div class="card-body pl-0 pt-0">
-                    <a class="btn btn-info mb-3" href="{{ route('types.create') }}" class="text-white">
-                        New type
-                    </a>
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-6">
-                            <div class="form-group row">
-                                <label for="searchName"
-                                       class="col-sm-2 control-label col-form-label">Search:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="search" id="searchName"
-                                           aria-describedby="emailHelp"
-                                           placeholder="Name of type">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-lg-6">
-                            <div class="form-group row">
-                                <label for="filterStatus"
-                                       class="col-sm-2 control-label col-form-label">Status:</label>
-                                <div class="col-10 col-lg-6">
-                                    <select class="form-control" name="status" id="filterStatus">
-                                        <option value="">All</option>
-                                        <option value="1">Active</option>
-                                        <option value="2">Inactive</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        <a class="btn btn-info mb-2" href="{{ route('types.create') }}" class="text-white">
+                            New type
+                        </a>
                     </div>
-                </div>
-            </form>
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-        </table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
 @section('js')

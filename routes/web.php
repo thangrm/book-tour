@@ -57,7 +57,6 @@ Route::group(['prefix' => 'admin'], function () {
         // Tour
         Route::resource('tours', TourController::class)->except(['show']);
         Route::get('tours/data', [TourController::class, 'getData'])->name('tours.data');
-
         Route::group(['prefix' => 'tours/{tour_id}'], function () {
             // List image (Gallery)
             Route::prefix('galleries')->group(function () {
@@ -79,7 +78,6 @@ Route::group(['prefix' => 'admin'], function () {
                     Route::resource('places', PlaceController::class)->except(['show']);
                     Route::get('places/data', [PlaceController::class, 'getData'])->name('places.data');
                 });
-
             });
 
             // FAQ
@@ -92,7 +90,6 @@ Route::group(['prefix' => 'admin'], function () {
                 Route::get('/data', [ReviewContrller::class, 'getData'])->name('reviews.data');
                 Route::put('/{review_id}/status', [ReviewContrller::class, 'changeStatus'])->name('reviews.status');
             });
-
         });
 
         // Booking
