@@ -19,55 +19,56 @@
     </div>
 
     <div class="container-fluid">
-        <table class="table table-bordered" id="reviewTable">
-
-            <form class="form-horizontal">
-                <div class="card-body pl-0 pt-0">
-                    <h4>List of Reviews</h4>
-                    <div class="row">
-                        <div class="col-sm-12 col-lg-4">
-                            <div class="form-group row">
-                                <label for="filterDestination"
-                                       class="col-sm-3 control-label col-form-label">Rate</label>
-                                <div class="col-9 col-lg-6">
-                                    <select class="form-control" name="rate" id="filterRate">
-                                        <option value="">All</option>
-                                        <option value="5">5 Star</option>
-                                        <option value="4">4 Star</option>
-                                        <option value="3">3 Star</option>
-                                        <option value="2">2 Star</option>
-                                        <option value="1">1 Star</option>
-                                    </select>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped table-bordered" id="reviewTable">
+                    <div class="card-body pl-0 pt-0">
+                        <h4>List of Reviews</h4>
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-4">
+                                <div class="form-group row">
+                                    <label for="filterDestination"
+                                           class="col-sm-3 control-label col-form-label">Rate</label>
+                                    <div class="col-9 col-lg-6">
+                                        <select class="form-control" name="rate" id="filterRate">
+                                            <option value="">All</option>
+                                            <option value="5">5 Star</option>
+                                            <option value="4">4 Star</option>
+                                            <option value="3">3 Star</option>
+                                            <option value="2">2 Star</option>
+                                            <option value="1">1 Star</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-sm-12 col-lg-4">
-                            <div class="form-group row">
-                                <label for="filterStatus"
-                                       class="col-sm-3 control-label col-form-label">Status:</label>
-                                <div class="col-9 col-lg-6">
-                                    <select class="form-control" name="status" id="filterStatus">
-                                        <option value="">All</option>
-                                        <option value="1">Public</option>
-                                        <option value="2">Block</option>
-                                    </select>
+                            <div class="col-sm-12 col-lg-4">
+                                <div class="form-group row">
+                                    <label for="filterStatus"
+                                           class="col-sm-3 control-label col-form-label">Status:</label>
+                                    <div class="col-9 col-lg-6">
+                                        <select class="form-control" name="status" id="filterStatus">
+                                            <option value="">All</option>
+                                            <option value="1">Public</option>
+                                            <option value="2">Block</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Rate</th>
-                <th>Comment</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-        </table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Rate</th>
+                        <th>Comment</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
 @section('js')
@@ -94,7 +95,7 @@
                     {data: 'rate', name: 'rate'},
                     {data: 'comment', name: 'comment'},
                     {data: 'status', name: 'status'},
-                    {data: 'action', name: 'action'},
+                    {data: 'action', name: 'action', width: '30px'},
                 ]
             });
 

@@ -27,7 +27,7 @@
                        href="{{ route('places.create',[$itinerary->tour_id, $itinerary->id]) }}" class="text-white">
                         New Place
                     </a>
-                    <table class="table table-bordered m-t-10" id="placeTable">
+                    <table class="table table-striped table-bordered m-t-10" id="placeTable">
                         <thead>
                         <tr>
                             <th>#</th>

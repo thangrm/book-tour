@@ -14,16 +14,16 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admins/assets/images/favicon.png') }}">
     <title>Dashboard</title>
     <!-- Datatable -->
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+    <link href="{{ asset('admins/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
     <!--Bootstrap switch -->
     <link rel="stylesheet" type="text/css"
-          href=" {{ asset('admins/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }} ">
+          href="{{ asset('admins/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }} ">
     <!-- Custom CSS -->
     <link href="{{ asset('admins/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admins/assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href=" {{ asset('admins/assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet">
-    <link href=" {{ asset('admins/dist/css/style.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admins/assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admins/dist/css/style.min.css') }}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -132,7 +132,7 @@
 <!-- sweetalert -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--datatable -->
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('admins/assets/extra-libs/DataTables/datatables.min.js') }}"></script>
 <!--CK editor-->
 <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
 <script type="text/javascript">

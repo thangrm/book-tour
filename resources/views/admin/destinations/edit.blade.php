@@ -21,43 +21,28 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('destinations.update',$destination->id) }}" class="form-horizontal" method="post"
-              enctype="multipart/form-data"
-              id="formEditDestination">
-            @method('PUT')
-            @csrf
+        <div class="card">
             <div class="card-body">
-                <div class="form-group row">
-                    <label for="name" class="col-sm-2 text-lg-right control-label col-form-label">Name Destination <span
-                            class="text-danger">*</span> </label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Name Destination"
+                <form action="{{ route('destinations.update',$destination->id) }}" class="form-horizontal" method="post"
+                      enctype="multipart/form-data"
+                      id="formEditDestination">
+                    @method('PUT')
+                    @csrf
+                    <div class="form-group">
+                        <label for="name" class="text-lg-right control-label col-form-label">
+                            Name Destination <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" name="name" id="name"
+                               placeholder="Name Destination"
                                value="{{ empty(old('name')) ? $destination->name : old('name') }}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="image" class="col-sm-2 text-lg-right control-label col-form-label">Select Image
-                    </label>
-                    <div class="col-sm-9">
-                        <div class="input-group mb-3">
-                            <input type="file" id="image" name="image">
-                        </div>
-                        <div>
-                            <img id="showImg" src="{{ asset('storage/images/destinations/'.$destination->image) }}"
-                                 style="max-height: 150px; margin: 10px 2px">
-                        </div>
-                        @error('image')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="status" class="col-sm-2 text-lg-right control-label col-form-label">Status
-                    </label>
-                    <div class="col-sm-9">
+
+                    <div class="form-group">
+                        <label for="status" class="text-lg-right control-label col-form-label">Status
+                        </label>
                         <div class="input-group mb-3" style="width: 150px">
                             <select class="form-control" name="status" id="status">
                                 <option
@@ -74,16 +59,29 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="form-group m-b-0 text-right row">
-                    <div class="col-11">
-                        <button type="submit" class="btn btn-info waves-effect waves-light">Update</button>
+
+                    <div class="form-group">
+                        <label for="image" class="text-lg-right control-label col-form-label">Select Image
+                        </label>
+                        <div class="input-group mb-3">
+                            <input type="file" id="image" name="image">
+                        </div>
+                        <div>
+                            <img id="showImg"
+                                 src="{{ asset('storage/images/destinations/'.$destination->image) }}"
+                                 style="max-height: 150px; margin: 10px 2px">
+                        </div>
+                        @error('image')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
-                </div>
+
+                    <button type="submit" class="btn btn-info mr-2">Update</button>
+                    <a href="{{ route('destinations.index') }}" class="btn btn-dark">Cancel</a>
+                </form>
             </div>
-        </form>
+        </div>
+    </div>
     </div>
 @endsection
 @section('js')

@@ -18,21 +18,25 @@
     </div>
 
     <div class="container-fluid">
-        <table class="table table-bordered" id="bookingTable">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Tour</th>
-                <th>Customer</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>People</th>
-                <th>Status</th>
-                <th>Total</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-        </table>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped table-bordered" id="bookingTable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tour</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>People</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
 @section('js')
