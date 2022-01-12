@@ -26,16 +26,6 @@ class TypeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function create()
-    {
-        return view('admin.types.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -47,22 +37,10 @@ class TypeController extends Controller
         $notification = $this->typeTour->storeType($request);
 
         if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage());
+            return redirect()->back()->with($notification->getMessage())->withInput();
         }
 
         return redirect()->route('types.index')->with($notification->getMessage());
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function edit($id)
-    {
-        $type = Type::findOrFail($id);
-        return view('admin.types.edit', compact('type'));
     }
 
     /**
@@ -94,7 +72,9 @@ class TypeController extends Controller
     /**
      * Process datatables ajax request.
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function getData(Request $request)
     {

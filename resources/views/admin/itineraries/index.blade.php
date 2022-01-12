@@ -25,11 +25,11 @@
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-12">
-                                Name Itinerary<span class="text-danger">*</span>
+                                Itinerary<span class="text-danger">*</span>
                             </label>
                             <div class="col-12">
                                 <input type="text" class="form-control" name="name" id="name"
-                                       placeholder="Name itinerary" value="{{ old('name') }}">
+                                       placeholder="Title" value="{{ old('name') }}">
                                 @error('name')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror

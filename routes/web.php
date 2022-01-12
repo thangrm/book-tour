@@ -52,8 +52,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('destinations/data', [DestinationController::class, 'getData'])->name('destinations.data');
 
         // Type of tour
-        Route::resource('types', TypeController::class)->except(['show']);
-        Route::get('types/data', [TypeController::class, 'getData'])->name('types.data');
+        Route::group(['prefix' => 'types'], function () {
+            Route::get('/', [TypeController::class, 'index'])->name('types.index');
+            Route::post('/', [TypeController::class, 'store'])->name('types.store');
+            Route::put('/{id}', [TypeController::class, 'update'])->name('types.update');
+            Route::delete('/{id}', [TypeController::class, 'destroy'])->name('types.destroy');
+            Route::get('data', [TypeController::class, 'getData'])->name('types.data');
+        });
+
 
         // Tour
         Route::resource('tours', TourController::class)->except(['show']);
