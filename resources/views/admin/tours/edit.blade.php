@@ -19,96 +19,143 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('tours.update', $tour->id) }}" class="form-horizontal" method="post"
-              enctype="multipart/form-data"
-              id="formEditTour">
-            @method('PUT')
-            @csrf
+        <div class="card">
             <div class="card-body">
-                <div class="form-group row">
-                    <label for="name" class="col-sm-2 text-lg-right control-label col-form-label">
-                        Name tour <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-sm-9">
+                <form action="{{ route('tours.update', $tour->id) }}" class="form-horizontal" method="post"
+                      enctype="multipart/form-data"
+                      id="formEditTour">
+                    @method('PUT')
+                    @csrf
+
+                    <div class="form-group">
+                        <label for="name" class="text-lg-right control-label col-form-label">
+                            Title <span class="text-danger">*</span>
+                        </label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name tour"
                                value="{{ empty(old('name')) ? $tour->name : old('name') }}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label for="destinationId"
-                           class="col-sm-2 text-lg-right control-label col-form-label">
-                        Destination <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-3">
-                        <select class="form-control" name="destination_id" id="destinationId">
-                            @isset($destinations)
-                                @foreach($destinations as $destination)
-                                    <option value="{{ $destination->id }}"
-                                        {{ (empty(old('destination_id')) ? $tour->destination_id : old('destination_id')) == $destination->id ? "selected" : "" }}>
-                                        {{ $destination->name }}
-                                    </option>
-                                @endforeach
-                            @endisset
-                        </select>
-                        @error('destination_id')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="col-1"></div>
-                    <label for="typeId"
-                           class="col-sm-2 text-lg-right control-label col-form-label">
-                        Type <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-3">
-                        <select class="form-control" name="type_id" id="typeId">
-                            @isset($types)
-                                @foreach($types as $type)
-                                    <option value="{{ $type->id }}"
-                                        {{ (empty(old('type_id')) ? $tour->type_id : old('type_id')) == $type->id ? "selected" : "" }}>
-                                        {{ $type->name }}
-                                    </option>
-                                @endforeach
-                            @endisset
-                        </select>
-                        @error('type_id')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="duration" class="col-sm-2 text-lg-right control-label col-form-label">Duration <span
-                            class="text-danger">*</span> </label>
-                    <div class="col-sm-3">
-                        <input type="number" class="form-control" name="duration" id="duration" placeholder="Duration"
-                               value="{{ empty(old('duration')) ? $tour->duration : old('duration') }}" step="1">
-                        @error('duration')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="destinationId"
+                                       class="text-lg-right control-label col-form-label">
+                                    Destination <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="destination_id" id="destinationId">
+                                    @isset($destinations)
+                                        @foreach($destinations as $destination)
+                                            <option value="{{ $destination->id }}"
+                                                {{ (empty(old('destination_id')) ? $tour->destination_id : old('destination_id')) == $destination->id ? "selected" : "" }}>
+                                                {{ $destination->name }}
+                                            </option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                                @error('destination_id')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="col-6">
+                                <label for="typeId"
+                                       class="text-lg-right control-label col-form-label">
+                                    Type <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control" name="type_id" id="typeId">
+                                    @isset($types)
+                                        @foreach($types as $type)
+                                            <option value="{{ $type->id }}"
+                                                {{ (empty(old('type_id')) ? $tour->type_id : old('type_id')) == $type->id ? "selected" : "" }}>
+                                                {{ $type->name }}
+                                            </option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                                @error('type_id')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-1"></div>
-
-                    <label for="price" class="col-sm-2 text-lg-right control-label col-form-label">Price<span
-                            class="text-danger">*</span> </label>
-                    <div class="col-sm-3">
-                        <input type="number" class="form-control" name="price" id="price" placeholder="Price"
-                               value="{{ empty(old('price')) ? $tour->price : old('price') }}" step="0.01">
-                        @error('price')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="duration" class="text-lg-right control-label col-form-label">Duration
+                                    <span
+                                        class="text-danger">*</span> </label>
+                                <input type="number" class="form-control" name="duration" id="duration"
+                                       placeholder="Duration"
+                                       value="{{ empty(old('duration')) ? $tour->duration : old('duration') }}"
+                                       step="1">
+                                @error('duration')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="col-6">
+                                <label for="price" class="text-lg-right control-label col-form-label">Price<span
+                                        class="text-danger">*</span> </label>
+                                <input type="number" class="form-control" name="price" id="price" placeholder="Price"
+                                       value="{{ empty(old('price')) ? $tour->price : old('price') }}" step="0.01">
+                                @error('price')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label for="image" class="col-sm-2 text-lg-right control-label col-form-label">Select Image</label>
-                    <div class="col-sm-9">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="trending" class="text-lg-right control-label col-form-label">Trending
+                                </label>
+                                <div class="input-group mb-3" style="width: 150px">
+                                    <select class="form-control" name="trending" id="trending">
+                                        <option
+                                            value="1" {{  (empty(old('trending')) ? $tour->trending : old('trending')) == 1 ? "selected" : "" }}>
+                                            Active
+                                        </option>
+                                        <option
+                                            value="2" {{  (empty(old('trending')) ? $tour->trending : old('trending')) == 2 ? "selected" : "" }}>
+                                            Inactive
+                                        </option>
+                                    </select>
+                                </div>
+                                @error('trending')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="col-6">
+                                <label for="status" class="text-lg-right control-label col-form-label">Status
+                                </label>
+                                <div class="input-group mb-3" style="width: 150px">
+                                    <select class="form-control" name="status" id="status">
+                                        <option
+                                            value="1" {{  (empty(old('status')) ? $tour->status : old('status')) == 1 ? "selected" : "" }}>
+                                            Active
+                                        </option>
+                                        <option
+                                            value="2" {{  (empty(old('status')) ? $tour->status : old('status')) == 2 ? "selected" : "" }}>
+                                            Inactive
+                                        </option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image" class="text-lg-right control-label col-form-label">Select Image
+                            <span class="text-danger">*</span>
+                        </label>
                         <div class="input-group mb-3">
-                            <input type="file" id="image" name="image">
+                            <input type="file" id="image" name="image" value="{{old('image')}}">
                         </div>
                         <div>
                             <img id="showImg" src="{{ asset('storage/images/tours/'.$tour->image) }}"
@@ -118,74 +165,23 @@
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label for="description"
-                           class="col-sm-2 text-lg-right control-label col-form-label">
-                        Overview
-                    </label>
-                    <div class="col-sm-9">
+                    <div class="form-group">
+                        <label for="description"
+                               class="text-lg-right control-label col-form-label">
+                            Overview
+                        </label>
                         <textarea name="overview" id="overview" cols="30" rows="10"></textarea>
                         @error('overview')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label for="status" class="col-sm-2 text-lg-right control-label col-form-label">Status
-                    </label>
-                    <div class="col-sm-9">
-                        <div class="input-group mb-3" style="width: 150px">
-                            <select class="form-control" name="status" id="status">
-                                <option
-                                    value="1" {{  (empty(old('status')) ? $tour->status : old('status')) == 1 ? "selected" : "" }}>
-                                    Active
-                                </option>
-                                <option
-                                    value="2" {{  (empty(old('status')) ? $tour->status : old('status')) == 2 ? "selected" : "" }}>
-                                    Inactive
-                                </option>
-                            </select>
-                        </div>
-                        @error('status')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="trending" class="col-sm-2 text-lg-right control-label col-form-label">Trending
-                    </label>
-                    <div class="col-sm-9">
-                        <div class="input-group mb-3" style="width: 150px">
-                            <select class="form-control" name="trending" id="trending">
-                                <option
-                                    value="1" {{  (empty(old('trending')) ? $tour->trending : old('trending')) == 1 ? "selected" : "" }}>
-                                    Active
-                                </option>
-                                <option
-                                    value="2" {{  (empty(old('trending')) ? $tour->trending : old('trending')) == 2 ? "selected" : "" }}>
-                                    Inactive
-                                </option>
-                            </select>
-                        </div>
-                        @error('trending')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
+                    <button type="submit" class="btn btn-info mr-2">Update</button>
+                    <a href="{{ route('tours.index') }}" class="btn btn-dark">Cancel</a>
+                </form>
             </div>
-
-            <div class="card-body">
-                <div class="form-group m-b-0 text-lg-right row">
-                    <div class="col-11">
-                        <button type="submit" class="btn btn-info waves-effect waves-light">Update</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 @endsection
 @section('js')
@@ -207,7 +203,7 @@
                 .create(document.querySelector('#overview'))
                 .then(editor => {
                     overviewEditor = editor;
-                    editor.setData('{!!  empty(old('overview')) ? $tour->overview : old('overview') !!}');
+                    editor.setData(`{!!  empty(old('overview')) ? $tour->overview : old('overview') !!}`);
                 })
                 .catch(error => {
                     console.error(error);

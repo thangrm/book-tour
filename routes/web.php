@@ -59,6 +59,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('tours', TourController::class)->except(['show']);
         Route::get('tours/data', [TourController::class, 'getData'])->name('tours.data');
         Route::group(['prefix' => 'tours/{tour_id}'], function () {
+            //Addition Info
+            Route::get('addition-info', [TourController::class, 'info'])->name('tours.info');
+
             // List image (Gallery)
             Route::prefix('galleries')->group(function () {
                 Route::get('/', [GalleryController::class, 'index'])->name('galleries.index');
