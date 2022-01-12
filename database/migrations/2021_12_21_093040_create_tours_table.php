@@ -20,7 +20,7 @@ class CreateToursTable extends Migration
             $table->string('name', 255)->unique();
             $table->string('slug', 255);
             $table->string('image', 100);
-            $table->string('paronamic_image', 100)->nullable();
+            $table->string('panoramic_image', 255)->nullable();
             $table->string('video', 100)->nullable();
             $table->float('price', 10, 0);
             $table->tinyInteger('duration')->comment('1 đơn vị tương ứng với 1 phút ngày');

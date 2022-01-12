@@ -45,6 +45,43 @@ class Tour extends Model
     }
 
     /**
+     * Get the itineraries for the tour.
+     *
+     */
+    public function itineraries()
+    {
+        return $this->hasMany(Itinerary::class);
+    }
+
+    /**
+     * Get the galleries for the tour.
+     *
+     */
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class);
+    }
+
+    /**
+     * Get the FAQs for the tour.
+     *
+     */
+
+    public function faqs()
+    {
+        return $this->hasMany(FAQ::class);
+    }
+
+    /**
+     * Get the reviews for the tour.
+     *
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
      * Validate rules for tour
      *
      * @param $id
@@ -66,6 +103,8 @@ class Tour extends Model
         if ($id != null) {
             $rule['name'] = 'required|max:50|string|unique:tours,name,' . $id;
             $rule['image'] = 'image|mimes:jpeg,jpg,png,gif|max:5000';
+            $rule['panoramic_image'] = 'max:255';
+            $rule['video'] = 'max:100';
         }
 
         return $rule;
@@ -79,16 +118,7 @@ class Tour extends Model
      */
     public function storeTour(Request $request)
     {
-        $input = $request->only([
-            'name',
-            'destination_id',
-            'type_id',
-            'duration',
-            'price',
-            'overview',
-            'status',
-            'trending'
-        ]);
+        $input = $request->all();
         $input['slug'] = Str::slug($input['name']);
         $input = Utilities::clearAllXSS($input);
 
@@ -118,16 +148,15 @@ class Tour extends Model
     public function updateTour(Request $request, $id)
     {
         $tour = $this->findOrFail($id);
-        $input = $request->only([
-            'name',
-            'destination_id',
-            'type_id',
-            'duration',
-            'price',
-            'overview',
-            'status',
-            'trending'
-        ]);
+
+        if ($request->duration < $tour->itineraries()->count()) {
+            $this->notification->setMessage('Duration cannot be less than the number of itineraries',
+                Notification::ERROR);
+
+            return $this->notification;
+        }
+
+        $input = $request->all();
         $input = Utilities::clearAllXSS($input);
         $input['slug'] = Str::slug($input['name']);
 
@@ -159,6 +188,15 @@ class Tour extends Model
         $tour = $this->findOrFail($id);
         $image = $tour->image;
         Storage::delete($this->pathTour . $image);
+
+        foreach ($tour->galleries as $gallery) {
+            Storage::delete('public/images/galleries/' . $gallery->image);
+        }
+
+        $tour->galleries()->delete();
+        $tour->itineraries()->delete();
+        $tour->faqs()->delete();
+        $tour->reviews()->delete();
 
         return $tour->delete();
     }
@@ -237,6 +275,7 @@ class Tour extends Model
                 return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->addColumn('detail', function ($data) {
+                $routerInfo = route('tours.info', $data->id);
                 $routerGallery = route('galleries.index', $data->id);
                 $routerItinerary = route('itineraries.index', $data->id);
                 $routerFAQ = route('faqs.index', $data->id);
@@ -244,6 +283,9 @@ class Tour extends Model
                 $width = 90;
 
                 $view = view('admin.components.button_link_info',
+                    ['link' => $routerInfo, 'title' => 'Info', 'width' => $width])->render();
+
+                $view .= view('admin.components.button_link_info',
                     ['link' => $routerGallery, 'title' => 'Galleries', 'width' => $width])->render();
 
                 $view .= view('admin.components.button_link_info',

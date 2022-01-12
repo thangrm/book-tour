@@ -60,17 +60,6 @@ class TourController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
@@ -97,7 +86,7 @@ class TourController extends Controller
         $notification = $this->tour->updateTour($request, $id);
 
         if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage());
+            return redirect()->back()->with($notification->getMessage())->withInput();
         }
 
         return redirect()->route('tours.index')->with($notification->getMessage());
@@ -126,5 +115,16 @@ class TourController extends Controller
             $data = $this->tour->getListTours($request);
             return $this->tour->getDataTable($data);
         }
+    }
+
+    /**
+     * Edit info for tour.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function info(Request $request, $id)
+    {
+        $tour = Tour::findOrFail($id);
+        return view('admin.tours.info', compact('tour'));
     }
 }
