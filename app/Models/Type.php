@@ -38,7 +38,7 @@ class Type extends Model
      *
      * @return array[]
      */
-    public function rule($id = null): array
+    public function rules($id = null): array
     {
         $rule = [
             'name' => 'required|max:50|string|unique:tour_types',
@@ -47,6 +47,7 @@ class Type extends Model
 
         if ($id != null) {
             $rule['name'] = "required|max:50|string|unique:tour_types,name,$id";
+            $rule['status'] = 'integer|between:1,2';
         }
 
         return $rule;
@@ -83,12 +84,11 @@ class Type extends Model
     public function updateType(Request $request, $id)
     {
         $type = $this->findOrFail($id);
-        $nameType = Utilities::clearXSS($request->name);
-        $type->name = $nameType;
-        $type->status = $request->status;
+        $input = Utilities::clearAllXSS($request->all());
+        $type->fill($input);
 
         if ($type->save()) {
-            $this->notification->setMessage('Type updated successfull', Notification::SUCCESS);
+            $this->notification->setMessage('Type updated successfully', Notification::SUCCESS);
         } else {
             $this->notification->setMessage('Type update failed', Notification::ERROR);
         }
@@ -155,15 +155,18 @@ class Type extends Model
     {
         return DataTables::of($data)
             ->addIndexColumn()
+            ->setRowId(function ($data) {
+                return 'type-' . $data->id;
+            })
             ->editColumn('status', function ($data) {
                 return ($data->status == 1) ? 'Active' : 'Inactive';
             })
             ->addColumn('action', function ($data) {
                 $id = $data->id;
-                $linkEdit = route("types.edit", $data->id);
+                $linkEdit = route("types.update", $data->id);
                 $linkDelete = route("types.destroy", $data->id);
 
-                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
+                return view('admin.components.action_modal', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['status', 'action'])
             ->make(true);

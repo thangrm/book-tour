@@ -100,8 +100,7 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            var itinerariesId = null;
-            let tourId = $('#tourId').val();
+            let itinerariesId = null;
             disableSubmitButton('#formAddItinerary');
             disableSubmitButton('#formEditItinerary');
 
@@ -138,7 +137,7 @@
                 let name = $('#nameEdit').val();
                 $.ajax({
                     url: '{{ route('itineraries.update', $tourId) }}',
-                    method: "POST",
+                    method: "PUT",
                     dataType: 'json',
                     data: {id: itinerariesId, name: name},
                     success: function (response) {

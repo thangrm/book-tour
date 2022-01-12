@@ -43,7 +43,7 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->typeTour->rule());
+        $request->validate($this->typeTour->rules());
         $notification = $this->typeTour->storeType($request);
 
         if ($notification->isError()) {
@@ -62,7 +62,6 @@ class TypeController extends Controller
     public function edit($id)
     {
         $type = Type::findOrFail($id);
-        $type->tours;
         return view('admin.types.edit', compact('type'));
     }
 
@@ -71,18 +70,14 @@ class TypeController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return false|\Illuminate\Http\RedirectResponse|string
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        $request->validate($this->typeTour->rule($id));
+        $request->validate($this->typeTour->rules($id));
         $notification = $this->typeTour->updateType($request, $id);
 
-        if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage());
-        }
-
-        return redirect()->route('types.index')->with($notification->getMessage());
+        return json_encode($notification->getMessage());
     }
 
     /**
