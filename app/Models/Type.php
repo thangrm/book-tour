@@ -46,7 +46,7 @@ class Type extends Model
         ];
 
         if ($id != null) {
-            $rule['name'] = "required|max:50|string|unique:tour_types,name,$id";
+            $rule['name'] = "max:50|string|unique:tour_types,name,$id";
             $rule['status'] = 'integer|between:1,2';
         }
 
@@ -159,7 +159,8 @@ class Type extends Model
                 return 'type-' . $data->id;
             })
             ->editColumn('status', function ($data) {
-                return ($data->status == 1) ? 'Active' : 'Inactive';
+                $link = route('types.update', $data->id);
+                return view('admin.components.button_switch', ['status' => $data->status, 'link' => $link]);
             })
             ->addColumn('action', function ($data) {
                 $id = $data->id;

@@ -24,6 +24,7 @@
     <!-- Custom CSS -->
     <link href="{{ asset('admins/assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admins/dist/css/style.min.css') }}" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -78,7 +79,6 @@
     <div class="page-wrapper">
 
     @yield('admin')
-
     <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
@@ -115,18 +115,7 @@
 <script src="{{ asset('admins/dist/js/sidebarmenu.js') }}"></script>
 <!--Custom JavaScript -->
 <script src="{{ asset('admins/dist/js/custom.min.js') }}"></script>
-<!--Bootstrap switch -->
-<script src="{{asset('admins/assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js')}}"></script>
 <!--This page JavaScript -->
-<!--chartis chart-->
-{{--<script src="{{ asset('admins/assets/libs/chartist/dist/chartist.min.js') }}"></script>--}}
-<!--c3 charts -->
-{{--<script src="{{ asset('admins/assets/extra-libs/c3/d3.min.js') }}"></script>--}}
-{{--<script src="{{ asset('admins/assets/extra-libs/c3/c3.min.js') }}"></script>--}}
-<!--chartjs -->
-{{--<script src="{{ asset('admins/assets/libs/chart.js/dist/Chart.min.js') }}"></script>--}}
-{{--<script src="{{ asset('admins/dist/js/pages/dashboards/dashboard1.js') }}"></script>--}}
-<!-- toastr -->
 <script src=" {{ asset('admins/assets/libs/toastr/build/toastr.min.js') }} "></script>
 <script src=" {{ asset('admins/assets/extra-libs/toastr/toastr-init.js') }} "></script>
 <!-- sweetalert -->

@@ -21,14 +21,14 @@
         <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('types.store') }}" id="formAddItinerary" method="post">
+                    <form action="{{ route('types.store') }}" id="formAddType" method="post">
                         @csrf
 
                         <div class="form-group row">
                             <label for="name" class="col-sm-2 text-right control-label col-form-label">Title
                                 <span
                                     class="text-danger">*</span> </label>
-                            <div class="col-sm-9">
+                            <div class="col-sm-10">
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Title"
                                        value="{{old('name')}}">
                                 @error('name')
@@ -40,13 +40,19 @@
                         <div class="form-group row">
                             <label for="status" class="col-sm-2 text-lg-right control-label col-form-label">Status
                             </label>
-                            <div class="col-sm-9">
-                                <div class="input-group mb-3" style="width: 150px">
-                                    <select class="form-control" name="status" id="status">
-                                        <option value="1" {{ old('status') == 1 ? "selected" : "" }}>Active</option>
-                                        <option value="2" {{ old('status') == 2 ? "selected" : "" }}>Inactive</option>
-                                    </select>
+                            <div class="col-sm-10 d-flex align-items-center">
+                                <div>
+                                    <input type="hidden" name="status" id="status">
+                                    @include('admin.components.button_switch',
+                                    [
+                                        'status' => empty(old('status')) ? 1 : old('status'),
+                                        'id' => 'statusType'
+                                    ])
                                 </div>
+                            </div>
+
+                            <div class="col-2"></div>
+                            <div class="col-10">
                                 @error('status')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -83,10 +89,6 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <a class="btn btn-info mb-2" href="{{ route('types.create') }}" class="text-white">
-                                New type
-                            </a>
                         </div>
                         <thead>
                         <tr>
@@ -170,6 +172,7 @@
                 datatable.draw();
             });
 
+            // Event delete type
             $(document).on('click', '.delete', function (e) {
                 e.preventDefault();
                 let link = $(this).attr("href");
@@ -219,11 +222,56 @@
                 })
             })
 
-            $('#typeTable').on('click', '.edit', function (e) {
+            // Event edit type
+            $(document).on('click', '.edit', function (e) {
                 linkEditType = $(this).attr('href');
                 let typeId = $(this).data('id');
                 let titleType = $('#type-' + typeId).children().eq(1).text();
                 $('#titleEdit').val(titleType);
+            });
+
+            // Change status type
+            $('#typeTable').on('click', '.button-switch', function (e) {
+                let buttonSwitch = this;
+                let link = $(this).data('link');
+                let status = 2;
+
+                if ($(this).is(":checked")) {
+                    status = 1;
+                }
+
+                $.ajax({
+                    url: link,
+                    type: 'put',
+                    dataType: 'json',
+                    data: {status: status},
+                    success: function (response) {
+                        //toastr.success('Change status successfully')
+                    },
+                    error: function (response) {
+                        setTimeout(function () {
+                            if ($(buttonSwitch).is(":checked")) {
+                                $(buttonSwitch).prop('checked', false);
+                            } else {
+                                $(buttonSwitch).prop('checked', true);
+                            }
+                            toastr.error('Change status failed')
+                        }, 500);
+                    }
+                });
+            });
+
+            // Add new Type
+            $('#formAddType').submit(function (e) {
+                e.preventDefault();
+
+                if ($('#statusType').is(":checked")) {
+                    $('#status').val(1);
+                } else {
+                    $('#status').val(2);
+                }
+
+                this.submit();
             });
 
             // Edit Type
@@ -254,6 +302,7 @@
                     }
                 });
             });
+
         });
     </script>
 @endsection
