@@ -64,7 +64,7 @@
 
                                 @isset($tour->video)
                                     <iframe class="w-100 m-t-10" height="300"
-                                            src="https://www.youtube.com/embed/4Uwn_jgjqUM"
+                                            src="https://www.youtube.com/embed/{{ $tour->video }}"
                                             title="YouTube video player" frameborder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                             allowfullscreen></iframe>

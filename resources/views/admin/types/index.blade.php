@@ -17,39 +17,119 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-body">
-                <table class="table table-striped table-bordered" id="destinationTable">
-                    <div
-                        class="p-0 d-flex justify-content-between align-items-start flex-column flex-sm-row w-100 m-b-10">
-                        <div class="row w-75">
-                            <div class="col-12 col-sm-6 col-md-5 mb-2">
-                                <input type="text" class="form-control" name="search" id="searchName"
-                                       placeholder="Search">
-                            </div>
-                            <div class="col-10 col-sm-6 col-md-5 mb-2">
-                                <select class="form-control" name="status" id="filterStatus">
-                                    <option value="">Choose status</option>
-                                    <option value="1">Active</option>
-                                    <option value="2">Inactive</option>
-                                </select>
+    <div class="container-fluid row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('types.store') }}" id="formAddItinerary" method="post">
+                        @csrf
+
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-2 text-right control-label col-form-label">Title
+                                <span
+                                    class="text-danger">*</span> </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Title"
+                                       value="{{old('name')}}">
+                                @error('name')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-                        <a class="btn btn-info mb-2" href="{{ route('types.create') }}" class="text-white">
-                            New type
-                        </a>
-                    </div>
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                </table>
+                        <div class="form-group row">
+                            <label for="status" class="col-sm-2 text-lg-right control-label col-form-label">Status
+                            </label>
+                            <div class="col-sm-9">
+                                <div class="input-group mb-3" style="width: 150px">
+                                    <select class="form-control" name="status" id="status">
+                                        <option value="1" {{ old('status') == 1 ? "selected" : "" }}>Active</option>
+                                        <option value="2" {{ old('status') == 2 ? "selected" : "" }}>Inactive</option>
+                                    </select>
+                                </div>
+                                @error('status')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info mb-3">
+                                Add Type
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-striped table-bordered" id="typeTable">
+                        <div
+                            class="p-0 d-flex justify-content-between align-items-start flex-column flex-sm-row w-100 m-b-10">
+                            <div class="row w-75">
+                                <div class="col-12 col-sm-6 col-md-5 mb-2">
+                                    <input type="text" class="form-control" name="search" id="searchName"
+                                           placeholder="Search">
+                                </div>
+                                <div class="col-10 col-sm-6 col-md-5 mb-2">
+                                    <select class="form-control" name="status" id="filterStatus">
+                                        <option value="">Choose status</option>
+                                        <option value="1">Active</option>
+                                        <option value="2">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <a class="btn btn-info mb-2" href="{{ route('types.create') }}" class="text-white">
+                                New type
+                            </a>
+                        </div>
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form id="formEditType">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Edit type</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label for="name" class="col-12">
+                                    Title<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" name="name" id="titleEdit"
+                                           placeholder="Name itinerary">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info" id="btnSubmitEdit">Save changes</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -57,7 +137,9 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            let datatable = $('#destinationTable').DataTable({
+            let linkEditType;
+
+            let datatable = $('#typeTable').DataTable({
                 processing: true,
                 responsive: true,
                 serverSide: true,
@@ -136,6 +218,42 @@
                     }
                 })
             })
+
+            $('#typeTable').on('click', '.edit', function (e) {
+                linkEditType = $(this).attr('href');
+                let typeId = $(this).data('id');
+                let titleType = $('#type-' + typeId).children().eq(1).text();
+                $('#titleEdit').val(titleType);
+            });
+
+            // Edit Type
+            $('#formEditType').submit(function (e) {
+                e.preventDefault();
+
+                let name = $('#titleEdit').val();
+                $.ajax({
+                    url: linkEditType,
+                    method: "PUT",
+                    dataType: 'json',
+                    data: {name: name},
+                    success: function (response) {
+                        let type = response['alert-type'];
+                        let message = response['message'];
+                        toastrMessage(type, message);
+
+                        if (type === 'success') {
+                            datatable.draw();
+                            $('#editModal').modal('hide');
+                        }
+                    },
+                    error: function () {
+                        toastrMessage('error', 'Type update failed');
+                    },
+                    complete: function () {
+                        enableSubmitButton('#formEditType', 300);
+                    }
+                });
+            });
         });
     </script>
 @endsection

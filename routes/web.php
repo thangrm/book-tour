@@ -73,7 +73,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::prefix('itineraries')->group(function () {
                 Route::get('/', [ItineraryController::class, 'index'])->name('itineraries.index');
                 Route::post('/', [ItineraryController::class, 'store'])->name('itineraries.store');
-                Route::post('/update', [ItineraryController::class, 'update'])->name('itineraries.update');
+                Route::put('/update', [ItineraryController::class, 'update'])->name('itineraries.update');
                 Route::delete('/{id}', [ItineraryController::class, 'destroy'])->name('itineraries.destroy');
                 Route::get('/data', [ItineraryController::class, 'getData'])->name('itineraries.data');
 

@@ -21,6 +21,7 @@
     </div>
 
     <div class="container-fluid">
+
         <form action="{{ route('types.store') }}" class="form-horizontal" method="post"
               enctype="multipart/form-data"
               id="formCreateType">
