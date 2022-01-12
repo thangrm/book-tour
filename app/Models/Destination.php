@@ -66,6 +66,7 @@ class Destination extends Model
         $input = $request->only('name', 'status');
         $input['slug'] = Str::slug($input['name']);
         $input = Utilities::clearAllXSS($input);
+        
         $destination = $this->findOrNew($id);
         $oldImage = $destination->image;
 

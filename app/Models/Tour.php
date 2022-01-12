@@ -18,7 +18,7 @@ class Tour extends Model
 
     protected $guarded = [];
     protected $notification;
-    protected $pathTour = 'public/images/tours/';
+    protected $path = 'public/images/tours/';
 
     public function __construct(array $attributes = array())
     {
@@ -87,7 +87,7 @@ class Tour extends Model
      * @param $id
      * @return string[]
      */
-    public function rule($id = null)
+    public function rules($id = null)
     {
         $rule = [
             'name' => 'required|max:50|string|unique:tours',
@@ -114,67 +114,36 @@ class Tour extends Model
      * Store a new tour in database.
      *
      * @param Request $request
-     * @return Notification
+     * @param int $id
+     * @return integer
      */
-    public function storeTour(Request $request)
+    public function saveTour(Request $request, int $id = 0)
     {
         $input = $request->all();
         $input['slug'] = Str::slug($input['name']);
         $input = Utilities::clearAllXSS($input);
 
+        $tour = $this->findOrNew($id);
+        $oldImage = $tour->image;
+
         if ($request->hasFile('image')) {
-            $input['image'] = Utilities::storeImage($request, 'image', $this->pathTour);
-        } else {
-            $this->notification->setMessage('No image to upload', Notification::ERROR);
-            return $this->notification;
+            $input['image'] = Utilities::storeImage($request, 'image', $this->path);
         }
-
-        if ($this->create($input)->exists) {
-            $this->notification->setMessage('New tour added successfully', Notification::SUCCESS);
-        } else {
-            $this->notification->setMessage('Tour creation failed', Notification::ERROR);
-        }
-
-        return $this->notification;
-    }
-
-    /**
-     * Update tour in database.
-     *
-     * @param Request $request
-     * @param $id
-     * @return Notification
-     */
-    public function updateTour(Request $request, $id)
-    {
-        $tour = $this->findOrFail($id);
 
         if ($request->duration < $tour->itineraries()->count()) {
-            $this->notification->setMessage('Duration cannot be less than the number of itineraries',
-                Notification::ERROR);
-
-            return $this->notification;
-        }
-
-        $input = $request->all();
-        $input = Utilities::clearAllXSS($input);
-        $input['slug'] = Str::slug($input['name']);
-
-        // Upload Image
-        if ($request->hasFile('image')) {
-            $oldImage = $tour->image;
-            $input['image'] = Utilities::storeImage($request, 'image', $this->pathTour);
-            Storage::delete($this->pathTour . $oldImage);
+            return 2;
         }
 
         $tour->fill($input);
         if ($tour->save()) {
-            $this->notification->setMessage('Tour updated successfully', Notification::SUCCESS);
+            if ($request->hasFile('image')) {
+                Storage::delete($this->path . $oldImage);
+            }
         } else {
-            $this->notification->setMessage('Tour update failed', Notification::ERROR);
+            Storage::delete($this->path . $tour->image);
         }
-
-        return $this->notification;
+        
+        return 1;
     }
 
     /**
@@ -187,7 +156,7 @@ class Tour extends Model
     {
         $tour = $this->findOrFail($id);
         $image = $tour->image;
-        Storage::delete($this->pathTour . $image);
+        Storage::delete($this->path . $image);
 
         foreach ($tour->galleries as $gallery) {
             Storage::delete('public/images/galleries/' . $gallery->image);

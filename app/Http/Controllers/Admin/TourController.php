@@ -3,18 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Notification;
 use App\Models\Destination;
 use App\Models\Tour;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Exception;
 
 class TourController extends Controller
 {
     protected $tour;
+    protected $notification;
 
-    public function __construct(Tour $tour)
+    public function __construct(Tour $tour, Notification $notification)
     {
         $this->tour = $tour;
+        $this->notification = $notification;
     }
 
     /**
@@ -49,14 +53,20 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->tour->rule());
-        $notification = $this->tour->storeTour($request);
+        $request->validate($this->tour->rules());
+        try {
+            $this->tour->saveTour($request);
+            $this->notification->setMessage('New tour added successfully', Notification::SUCCESS);
 
-        if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage());
+            return redirect()->route('tours.index')->with($this->notification->getMessage());
+        } catch (Exception $e) {
+            $this->notification->setMessage('Tour creation failed', Notification::ERROR);
+
+            return back()
+                ->with('exception', $e->getMessage())
+                ->with($this->notification->getMessage())
+                ->withInput();
         }
-
-        return redirect()->route('tours.index')->with($notification->getMessage());
     }
 
     /**
@@ -80,16 +90,30 @@ class TourController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        $request->validate($this->tour->rule($id));
-        $notification = $this->tour->updateTour($request, $id);
+        Tour::findOrFail($id);
+        $request->validate($this->tour->rules($id));
 
-        if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage())->withInput();
+        try {
+            $messageCode = $this->tour->saveTour($request, $id);
+            $this->notification->setMessage('Tour updated successfully', Notification::SUCCESS);
+
+            if ($messageCode == 2) {
+                $this->notification->setMessage('The tour update failed', Notification::ERROR);
+
+                return back()->with($this->notification->getMessage());
+            }
+
+            return redirect()->route('tours.index')->with($this->notification->getMessage());
+        } catch (Exception $e) {
+            $this->notification->setMessage('The tour update failed', Notification::ERROR);
+
+            return back()
+                ->with('exception', $e->getMessage())
+                ->with($this->notification->getMessage())
+                ->withInput();
         }
-
-        return redirect()->route('tours.index')->with($notification->getMessage());
     }
 
     /**
