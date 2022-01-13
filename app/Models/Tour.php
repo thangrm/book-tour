@@ -195,6 +195,7 @@ class Tour extends Model
             ->join('tour_types', 'tours.type_id', '=', 'tour_types.id');
 
         if (!empty($search)) {
+            $search = Utilities::clearXSS($search);
             $query->where(function ($query) use ($search) {
                 $query->where('tours.name', 'like', '%' . $search . '%');
                 $query->orwhere('tours.slug', 'like', '%' . $search . '%');
