@@ -21,7 +21,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered" id="destinationTable">
+                    <table class="table table-striped table-bordered" id="tourTable">
                         <div
                             class="p-0 w-100 m-b-10 d-flex justify-content-between align-items-start flex-column align-items-sm-end flex-sm-row ">
 
@@ -93,7 +93,7 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            let datatable = $('#destinationTable').DataTable({
+            let datatable = $('#tourTable').DataTable({
                 processing: true,
                 responsive: true,
                 serverSide: true,
@@ -130,6 +130,71 @@
                 datatable.draw();
             });
 
+            // Change status tour
+            $('#tourTable').on('click', '.btn-switch-status', function (e) {
+                let buttonSwitch = this;
+                let link = $(this).data('link');
+                let status = 2;
+
+                if ($(this).is(":checked")) {
+                    status = 1;
+                }
+
+                $.ajax({
+                    url: link,
+                    type: 'put',
+                    dataType: 'json',
+                    data: {status: status},
+                    success: function (response) {
+                        toastr.clear();
+                        toastr.success('Change status successfully')
+                    },
+                    error: function (response) {
+                        setTimeout(function () {
+                            if ($(buttonSwitch).is(":checked")) {
+                                $(buttonSwitch).prop('checked', false);
+                            } else {
+                                $(buttonSwitch).prop('checked', true);
+                            }
+                            toastr.error('Change status failed')
+                        }, 500);
+                    }
+                });
+            });
+
+            // Change trending tour
+            $('#tourTable').on('click', '.btn-switch-trending', function (e) {
+                let buttonSwitch = this;
+                let link = $(this).data('link');
+                let trending = 2;
+
+                if ($(this).is(":checked")) {
+                    trending = 1;
+                }
+
+                $.ajax({
+                    url: link,
+                    type: 'put',
+                    dataType: 'json',
+                    data: {trending: trending},
+                    success: function (response) {
+                        toastr.clear();
+                        toastr.success('Change trending successfully')
+                    },
+                    error: function (response) {
+                        setTimeout(function () {
+                            if ($(buttonSwitch).is(":checked")) {
+                                $(buttonSwitch).prop('checked', false);
+                            } else {
+                                $(buttonSwitch).prop('checked', true);
+                            }
+                            toastr.error('Change trending failed')
+                        }, 500);
+                    }
+                });
+            });
+
+            // Delete tour
             $(document).on('click', '.delete', function (e) {
                 e.preventDefault();
                 let link = $(this).attr("href");

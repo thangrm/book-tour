@@ -98,13 +98,19 @@ class Tour extends Model
             'price' => 'required|numeric|min:0',
             'status' => 'required|integer|between:1,2',
             'trending' => 'required|integer|between:1,2',
+            'panoramic_image' => 'max:255',
+            'video' => 'max:100',
         ];
 
         if ($id != null) {
-            $rule['name'] = 'required|max:50|string|unique:tours,name,' . $id;
+            $rule['name'] = 'max:50|string|unique:tours,name,' . $id;
             $rule['image'] = 'image|mimes:jpeg,jpg,png,gif|max:5000';
-            $rule['panoramic_image'] = 'max:255';
-            $rule['video'] = 'max:100';
+            $rule['destination_id'] = 'exists:destinations,id';
+            $rule['type_id'] = 'exists:tour_types,id';
+            $rule['duration'] = 'integer|between:1,127';
+            $rule['price'] = 'numeric|min:0';
+            $rule['status'] = 'integer|between:1,2';
+            $rule['trending'] = 'integer|between:1,2';
         }
 
         return $rule;
@@ -120,17 +126,18 @@ class Tour extends Model
     public function saveTour(Request $request, int $id = 0)
     {
         $input = $request->all();
-        $input['slug'] = Str::slug($input['name']);
         $input = Utilities::clearAllXSS($input);
 
         $tour = $this->findOrNew($id);
+        $tour->slug = Str::slug($tour->name);
         $oldImage = $tour->image;
 
         if ($request->hasFile('image')) {
             $input['image'] = Utilities::storeImage($request, 'image', $this->path);
         }
 
-        if ($request->duration < $tour->itineraries()->count()) {
+        $duration = empty($request->duration) ? 128 : $request->duration;   //128 is max for duration
+        if ($duration < $tour->itineraries()->count()) {
             return 2;
         }
 
@@ -142,7 +149,7 @@ class Tour extends Model
         } else {
             Storage::delete($this->path . $tour->image);
         }
-        
+
         return 1;
     }
 
@@ -195,15 +202,15 @@ class Tour extends Model
         }
 
         if (!empty($destinationId)) {
-            $query->where('tours.destination_id', '=', $destinationId);
+            $query->where('tours.destination_id', $destinationId);
         }
 
         if (!empty($typeId)) {
-            $query->where('tours.type_id', '=', $typeId);
+            $query->where('tours.type_id', $typeId);
         }
 
         if (!empty($status)) {
-            $query->where('tours.status', '=', $status);
+            $query->where('tours.status', $status);
         }
         $query->select('tours.*', 'destinations.name AS destination_name', 'tour_types.name AS type_name');
 
@@ -238,10 +245,18 @@ class Tour extends Model
                 return number_format($data->price, 2) . ' $';;
             })
             ->editColumn('status', function ($data) {
-                return ($data->status == 1) ? 'Active' : 'Inactive';
+                $link = route('tours.update', $data->id);
+                $class = 'btn-switch-status';
+
+                return view('admin.components.button_switch',
+                    ['status' => $data->status, 'link' => $link, 'class' => $class,]);
             })
             ->editColumn('trending', function ($data) {
-                return ($data->status == 1) ? 'Active' : 'Inactive';
+                $link = route('tours.update', $data->id);
+                $class = 'btn-switch-trending';
+
+                return view('admin.components.button_switch',
+                    ['status' => $data->trending, 'link' => $link, 'class' => $class,]);
             })
             ->addColumn('detail', function ($data) {
                 $routerInfo = route('tours.info', $data->id);

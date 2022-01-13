@@ -1,5 +1,5 @@
 <label class="switch m-0">
-    <input class="button-switch"
+    <input class="button-switch {{ empty($class) ? '' : $class }}"
            name="{{ empty($name) ? '' : $name }}"
            id="{{ empty($id) ? '' : $id }}"
            data-link="{{ empty($link) ? '' : $link }}"
