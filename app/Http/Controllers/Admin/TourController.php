@@ -88,7 +88,7 @@ class TourController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return false|\Illuminate\Http\RedirectResponse|string
      */
     public function update(Request $request, int $id)
     {
@@ -103,6 +103,10 @@ class TourController extends Controller
                 $this->notification->setMessage('The tour update failed', Notification::ERROR);
 
                 return back()->with($this->notification->getMessage());
+            }
+
+            if ($request->ajax()) {
+                return json_encode($this->notification->getMessage());
             }
 
             return redirect()->route('tours.index')->with($this->notification->getMessage());
