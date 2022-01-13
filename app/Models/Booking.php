@@ -6,6 +6,7 @@ use App\Libraries\Utilities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class Booking extends Model
@@ -68,9 +69,43 @@ class Booking extends Model
      */
     public function getList(Request $request)
     {
-        $data = $this->latest()->with('tour.type', 'tour.destination', 'customer')->get();
+        $search = $request->search;
+        $status = $request->status;
+
+        $query = $this->latest()->with('tour.type', 'tour.destination', 'customer');
+
+        if (!empty($search)) {
+            $search = Utilities::clearXSS($search);
+            $query->whereHas('customer', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->orwhere('email', 'like', '%' . $search . '%');
+                    $query->orwhere('phone', 'like', '%' . $search . '%');
+                    $query->orWhere(DB::raw('concat(first_name," ",last_name)'), 'like',
+                        '%' . $search . '%');
+                });
+            });
+
+            $query->orWhereHas('tour', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            });
+        }
+
+        if (!empty($status)) {
+            $query->where('status', $status);
+        }
+
+        $data = $query->get();
+
         return DataTables::of($data)
             ->addIndexColumn()
+            ->editColumn('tour.name', function ($data) {
+                $name = $data->tour->name;
+                $destination = $data->tour->destination->name;
+                $type = $data->tour->type->name;
+                $duration = Utilities::durationToString($data->tour->duration);
+
+                return view('admin.components.title_tour', compact(['name', 'destination', 'type', 'duration']));
+            })
             ->editColumn('customer_name', function ($data) {
                 return $data->customer->first_name . ' ' . $data->customer->last_name;
             })
@@ -90,18 +125,7 @@ class Booking extends Model
                 }
             })
             ->editColumn('status', function ($data) {
-                switch ($data->status) {
-                    case 1:
-                        return 'New';
-                    case 2:
-                        return 'Confirmed';
-                    case 3:
-                        return 'Completed';
-                    case 4:
-                        return 'Cancel';
-                    default:
-                        return null;
-                }
+                return view('admin.components.status_booking', ['status' => $data->status]);
             })
             ->addColumn('total', function ($data) {
                 return number_format($data->price * $data->people, 2) . ' $';

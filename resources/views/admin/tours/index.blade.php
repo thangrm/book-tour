@@ -146,8 +146,8 @@
                     dataType: 'json',
                     data: {status: status},
                     success: function (response) {
-                        toastr.clear();
-                        toastr.success('Change status successfully')
+                        // toastr.clear();
+                        // toastr.success('Change status successfully')
                     },
                     error: function (response) {
                         setTimeout(function () {
@@ -178,8 +178,8 @@
                     dataType: 'json',
                     data: {trending: trending},
                     success: function (response) {
-                        toastr.clear();
-                        toastr.success('Change trending successfully')
+                        // toastr.clear();
+                        // toastr.success('Change trending successfully')
                     },
                     error: function (response) {
                         setTimeout(function () {

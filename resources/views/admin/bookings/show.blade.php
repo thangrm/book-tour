@@ -57,20 +57,7 @@
                             <tr>
                                 <td class="tb-title">Status:</td>
                                 <td>
-                                    @switch($booking->status)
-                                        @case(1)
-                                        New
-                                        @break
-                                        @case(2)
-                                        Confirmed
-                                        @break
-                                        @case(3)
-                                        Completed
-                                        @break
-                                        @case(4)
-                                        Cancel
-                                        @break
-                                    @endswitch
+                                    @include('admin.components.status_booking', ['status' => $booking->status])
                                 </td>
                             </tr>
                             <tr>
@@ -94,7 +81,7 @@
                                         </button>
                                     @elseif($booking->status == 2)
                                         <button onclick="changeStatusBooking(3)"
-                                                class="btn btn-info btn-status m-r-5 m-t-30">
+                                                class="btn btn-primary btn-status m-r-5 m-t-30">
                                             Complete
                                         </button>
                                     @endif
@@ -102,7 +89,7 @@
                                     @if($booking->status < 3 )
                                         <button onclick="changeStatusBooking(4)"
                                                 class="btn btn-danger btn-status m-t-30">
-                                            Cancel
+                                            Cancel booking
                                         </button>
                                     @endif
                                 </td>
