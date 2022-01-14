@@ -14,7 +14,7 @@ class Gallery extends Model
     use HasFactory;
 
     protected $fillable = ['tour_id', 'image'];
-    protected $pathGallery = 'public/images/galleries/';
+    protected $path = 'public/images/galleries/';
     protected $notification;
 
     public function __construct(array $attributes = array())
@@ -28,10 +28,11 @@ class Gallery extends Model
      *
      * @return string[]
      */
-    public function rule()
+    public function rules()
     {
         return [
-            'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000'
+            'images' => 'required',
+            'images.*' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000'
         ];
     }
 
@@ -39,7 +40,7 @@ class Gallery extends Model
      * @param $tourId
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getImagesByTourId($tourId)
+    public function getImages($tourId)
     {
         return $this->where('tour_id', $tourId)->get();
     }
@@ -53,29 +54,21 @@ class Gallery extends Model
      */
     public function storeGallery(Request $request, $tourId)
     {
-        $tour = Tour::find($tourId);
-        if ($tour == null) {
-            $this->notification->setMessage('Tour id not found', Notification::ERROR);
-            return $this->notification;
-        }
+        Tour::findOrFail($tourId);
 
-        if ($request->hasFile('image')) {
-            $image = Utilities::storeImage($request, 'image', $this->pathGallery);
+        $images = $request->file('images');
+        $files = Utilities::storeMultiImage($images, $this->path);
+        $data = [];
+
+        foreach ($files as $file) {
             $input = [
                 'tour_id' => $tourId,
-                'image' => $image
+                'image' => $file,
             ];
-
-            if ($this->create($input)->exists) {
-                $this->notification->setMessage('New image added successfully', Notification::SUCCESS);
-            } else {
-                $this->notification->setMessage('Image addition failed', Notification::ERROR);
-            }
-        } else {
-            $this->notification->setMessage('No file to upload', Notification::ERROR);
+            $data[] = $input;
         }
 
-        return $this->notification;
+        self::insert($data);
     }
 
     /**
@@ -87,7 +80,7 @@ class Gallery extends Model
     public function remove($id)
     {
         $gallery = $this->findOrFail($id);
-        Storage::delete($this->pathGallery . $gallery->image);
+        Storage::delete($this->path . $gallery->image);
         return $gallery->delete();
     }
 }

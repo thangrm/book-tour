@@ -98,16 +98,18 @@
                           method="post" enctype="multipart/form-data">
                         @csrf
                         <fieldset class="form-group">
-                            <input type="file" class="form-control-file" name="image" id="image" required>
+                            <input type="file" class="form-control-file" name="images[]" id="images" multiple>
                         </fieldset>
-                        <div>
-                            <img id="showImg" style="max-height: 150px; margin: 10px 2px">
+                        <div id="showListImg">
                         </div>
-                        @error('image')
+                        @error('images')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                        @error('images.*')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                         <button type="submit" class="btn btn-info mb-3">
-                            Add Image
+                            Add
                         </button>
                     </form>
                 </div>
@@ -148,12 +150,20 @@
         $(document).ready(function () {
             disableSubmitButton('#formAddNewImage');
 
-            $('#image').change(function (e) {
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#showImg').attr('src', e.target.result);
+            // Render image
+            function imageIsLoaded(e) {
+                $('#showListImg').append('<img style="max-height: 100px; margin: 10px 2px" src=' + e.target.result + '>');
+            };
+
+            $('#images').change(function (e) {
+                $('#showListImg').empty();
+                if (this.files && this.files[0]) {
+                    for (let i = 0; i < this.files.length; i++) {
+                        let reader = new FileReader();
+                        reader.onload = imageIsLoaded;
+                        reader.readAsDataURL(this.files[i]);
+                    }
                 }
-                reader.readAsDataURL(e.target.files['0']);
             });
 
             // Modal view image

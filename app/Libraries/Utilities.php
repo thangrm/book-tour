@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Utilities
@@ -73,6 +74,8 @@ class Utilities
     }
 
     /**
+     * Store a image
+     *
      * @param Request $request
      * @param string $nameFile
      * @param string $path
@@ -87,5 +90,29 @@ class Utilities
         $request->file($nameFile)->storeAs($path, $imageName);
 
         return $imageName;
+    }
+
+    /**
+     * Multiple store images
+     *
+     * @param Request $request
+     * @param string $nameFile
+     * @param string $path
+     * @return array
+     */
+    public static function storeMultiImage($images, string $path)
+    {
+        $listNameImages = [];
+        foreach ($images as $image) {
+            $file = $image->getClientOriginalName();
+            $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
+            $extension = pathinfo($file, PATHINFO_EXTENSION);
+            $imageName = date('YmdHis') . '-' . uniqid() . $file_name . '.' . $extension;
+            $image->storeAs($path, $imageName);
+
+            $listNameImages[] = $imageName;
+        }
+
+        return $listNameImages;
     }
 }
