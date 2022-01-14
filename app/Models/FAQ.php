@@ -29,13 +29,21 @@ class FAQ extends Model
      *
      * @return string[]
      */
-    public function rule(): array
+    public function rules(int $id = null): array
     {
-        return [
-            'question' => 'required|string',
+        $rule = [
+            'question' => 'required|string|max:255',
             'answer' => 'required|string',
             'status' => 'required|integer|between:1,2',
         ];
+
+        if ($id != null) {
+            $rule['question'] = 'string|max:255';
+            $rule['answer'] = 'string';
+            $rule['status'] = 'integer|between:1,2';
+        }
+
+        return $rule;
     }
 
     /**
@@ -141,7 +149,11 @@ class FAQ extends Model
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {
-                return ($data->status == 1) ? 'Active' : 'Inactive';
+                $link = route('faqs.update', [$data->tour_id, $data->id]);
+                $class = 'btn-switch-status';
+
+                return view('components.button_switch',
+                    ['status' => $data->status, 'link' => $link, 'class' => $class,]);
             })
             ->addColumn('action', function ($data) {
                 $id = $data->id;

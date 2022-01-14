@@ -59,7 +59,7 @@
                     {data: 'question', name: 'name'},
                     {data: 'answer', name: 'description'},
                     {data: 'status', name: 'description'},
-                    {data: 'action', name: 'action'},
+                    {data: 'action', name: 'action', width: 65},
                 ],
                 columnDefs: [
                     {className: 'align-middle', targets: '_all'},
@@ -112,6 +112,37 @@
                     }
                 })
             })
+
+            // Change status
+            $('#faqTable').on('click', '.btn-switch-status', function (e) {
+                let buttonSwitch = this;
+                let link = $(this).data('link');
+                let status = 2;
+
+                if ($(this).is(":checked")) {
+                    status = 1;
+                }
+
+                $.ajax({
+                    url: link,
+                    type: 'put',
+                    dataType: 'json',
+                    data: {status: status},
+                    success: function (response) {
+                        // toastr.success('Change status successfully')
+                    },
+                    error: function (response) {
+                        setTimeout(function () {
+                            if ($(buttonSwitch).is(":checked")) {
+                                $(buttonSwitch).prop('checked', false);
+                            } else {
+                                $(buttonSwitch).prop('checked', true);
+                            }
+                            toastr.error('Change status failed')
+                        }, 500);
+                    }
+                });
+            });
         });
     </script>
 @endsection

@@ -58,28 +58,6 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for="status" class="col-sm-2 text-lg-right control-label col-form-label">Status
-                    </label>
-                    <div class="col-sm-9">
-                        <div class="input-group mb-3" style="width: 150px">
-                            <select class="form-control" name="status" id="status">
-                                <option
-                                    value="1" {{ (empty(old('status')) ? $faq->status : old('status')) == 1 ? "selected" : "" }}>
-                                    Active
-                                </option>
-                                <option
-                                    value="2" {{ (empty(old('status')) ? $faq->status : old('status'))  == 2 ? "selected" : "" }}>
-                                    Inactive
-                                </option>
-                            </select>
-                        </div>
-                        @error('status')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
             </div>
 
             <div class="card-body">

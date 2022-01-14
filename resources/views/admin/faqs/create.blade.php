@@ -26,77 +26,78 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('faqs.store', $tourId) }}" class="form-horizontal" method="post"
-              enctype="multipart/form-data"
-              id="formCreateFAQ">
-            @csrf
+        <div class="card">
             <div class="card-body">
-                <div class="form-group row">
-                    <label for="name" class="col-sm-2 text-lg-right control-label col-form-label">
-                        Question <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-sm-9">
-                        <textarea type="text" class="form-control" name="question" id="question" placeholder="Question"
-                                  rows="3">{{old('question')}}</textarea>
-                        @error('question')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="name" class="col-sm-2 text-lg-right control-label col-form-label">
-                        Answer <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-sm-9">
-                        <textarea type="text" class="form-control" name="answer" id="answer" placeholder="Answer"
-                                  rows="5">{{old('answer')}}</textarea>
-                        @error('answer')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="status" class="col-sm-2 text-lg-right control-label col-form-label">Status
-                    </label>
-                    <div class="col-sm-9">
-                        <div class="input-group mb-3" style="width: 150px">
-                            <select class="form-control" name="status" id="status">
-                                <option value="1" {{ old('status') == 1 ? "selected" : "" }}>Active</option>
-                                <option value="2" {{ old('status') == 2 ? "selected" : "" }}>Inactive</option>
-                            </select>
+                <form action="{{ route('faqs.store', $tourId) }}" class="form-horizontal" method="post"
+                      enctype="multipart/form-data"
+                      id="formCreateFAQ">
+                    @csrf
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="question">Question <span class="text-danger">*</span></label>
+                            <textarea type="text" class="form-control" name="question" id="question"
+                                      placeholder="Question"
+                                      rows="3">{{old('question')}}</textarea>
+                            @error('question')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
-                        @error('status')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
 
-            </div>
+                        <div class="form-group">
+                            <label for="answer">Answer <span class="text-danger">*</span></label>
+                            <textarea type="text" class="form-control" name="answer" id="answer"
+                                      placeholder="Answer"
+                                      rows="5">{{old('answer')}}</textarea>
+                            @error('answer')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-            <div class="card-body">
-                <div class="form-group m-b-0 text-lg-right row">
-                    <div class="col-11">
+                        <div class="form-group">
+                            <div class="d-flex align-items-center">
+                                <input type="hidden" name="status" id="status">
+                                <label for="name" class="m-t-10">Status</label>
+                                <div class="m-l-10">
+                                    @include('components.button_switch',
+                                         [
+                                             'status' => empty(old('status')) ? 1 : old('status'),
+                                             'id' => 'statusFAQ'
+                                         ])
+                                </div>
+                            </div>
+
+                            <div>
+                                @error('status')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-info waves-effect waves-light">Add new FAQ</button>
+
                     </div>
-                </div>
+                </form>
+
             </div>
-        </form>
+        </div>
     </div>
 @endsection
 @section('js')
     <script>
         $(document).ready(function () {
-            $('#image').change(function (e) {
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#showImg').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(e.target.files['0']);
-            });
-
             disableSubmitButton('#formCreateFAQ');
+
+            $('#formCreateFAQ').submit(function (e) {
+                e.preventDefault();
+
+                if ($('#statusFAQ').is(":checked")) {
+                    $('#status').val(1);
+                } else {
+                    $('#status').val(2);
+                }
+
+                this.submit();
+            })
         });
     </script>
 @endsection
