@@ -153,13 +153,13 @@ class Itinerary extends Model
                 $title = 'List Places';
                 $link = route('places.index', [$tourId, $data->id]);
 
-                return view('admin.components.button_link_info', compact(['link', 'title']));
+                return view('components.button_link_info', compact(['link', 'title']));
             })
             ->addColumn('action', function ($data) {
                 $id = $data->id;
                 $linkDelete = route("itineraries.destroy", [$data->tour_id, $data->id]);
 
-                return view('admin.components.action_modal', compact(['id', 'linkDelete']));
+                return view('components.action_modal', compact(['id', 'linkDelete']));
             })
             ->rawColumns(['place', 'action'])
             ->make(true);

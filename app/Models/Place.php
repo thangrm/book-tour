@@ -130,7 +130,7 @@ class Place extends Model
                 $linkEdit = route('places.edit', [$tourId, $data->itinerary_id, $data->id]);
                 $linkDelete = route('places.destroy', [$tourId, $data->itinerary_id, $data->id]);
 
-                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
+                return view('components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['description', 'action'])
             ->make(true);

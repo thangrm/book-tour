@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends('layouts.admin')
 
 @section('admin')
     <div class="page-breadcrumb">
@@ -58,7 +58,7 @@
                                 <label for="status" class="m-0">Status</label>
                                 <div class="m-l-10">
                                     <input type="hidden" name="status" id="status">
-                                    @include('admin.components.button_switch',
+                                    @include('components.button_switch',
                                     [
                                         'status' => empty(old('status')) ? 1 : old('status'),
                                         'id' => 'statusDestination'

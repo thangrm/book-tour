@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends('layouts.admin')
 
 @section('admin')
     <div class="page-breadcrumb">

@@ -147,19 +147,19 @@ class Destination extends Model
             ->editColumn('status', function ($data) {
                 $link = route('destinations.update', $data->id);
 
-                return view('admin.components.button_switch', ['status' => $data->status, 'link' => $link]);
+                return view('components.button_switch', ['status' => $data->status, 'link' => $link]);
             })
             ->editColumn('image', function ($data) {
                 $pathImage = asset("storage/images/destinations/" . $data->image);
 
-                return view('admin.components.image', compact('pathImage'));
+                return view('components.image', compact('pathImage'));
             })
             ->addColumn('action', function ($data) {
                 $id = $data->id;
                 $linkEdit = route("destinations.update", $data->id);
                 $linkDelete = route("destinations.destroy", $data->id);
 
-                return view('admin.components.action_modal', compact(['id', 'linkEdit', 'linkDelete']));
+                return view('components.action_modal', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['image', 'action'])
             ->make(true);

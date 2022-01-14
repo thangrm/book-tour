@@ -147,8 +147,8 @@ class FAQ extends Model
                 $id = $data->id;
                 $linkEdit = route("faqs.edit", [$data->tour_id, $data->id]);
                 $linkDelete = route("faqs.destroy", [$data->tour_id, $data->id]);
-                
-                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
+
+                return view('components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['name', 'place', 'action'])
             ->make(true);
