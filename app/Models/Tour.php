@@ -129,7 +129,6 @@ class Tour extends Model
         $input = Utilities::clearAllXSS($input);
 
         $tour = $this->findOrNew($id);
-        $tour->slug = Str::slug($tour->name);
         $oldImage = $tour->image;
 
         if ($request->hasFile('image')) {
@@ -142,6 +141,7 @@ class Tour extends Model
         }
 
         $tour->fill($input);
+        $tour->slug = Str::slug($tour->name);
         if ($tour->save()) {
             if ($request->hasFile('image')) {
                 Storage::delete($this->path . $oldImage);

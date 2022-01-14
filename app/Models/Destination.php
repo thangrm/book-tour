@@ -47,8 +47,9 @@ class Destination extends Model
         ];
 
         if ($id != null) {
-            $rule['name'] = "required|max:100|string|unique:destinations,name,$id";
+            $rule['name'] = "max:100|string|unique:destinations,name,$id";
             $rule['image'] = 'image|mimes:jpeg,jpg,png,gif|max:5000';
+            $rule['status'] = 'integer|between:1,2';
         }
 
         return $rule;
@@ -64,9 +65,8 @@ class Destination extends Model
     public function saveData(Request $request, int $id = 0)
     {
         $input = $request->only('name', 'status');
-        $input['slug'] = Str::slug($input['name']);
         $input = Utilities::clearAllXSS($input);
-        
+
         $destination = $this->findOrNew($id);
         $oldImage = $destination->image;
 
@@ -75,6 +75,7 @@ class Destination extends Model
         }
 
         $destination->fill($input);
+        $destination->slug = Str::slug($destination->name);
         if ($destination->save()) {
             if ($request->hasFile('image')) {
                 Storage::delete($this->path . $oldImage);
@@ -140,8 +141,13 @@ class Destination extends Model
 
         return DataTables::of($data)
             ->addIndexColumn()
+            ->setRowId(function ($data) {
+                return 'destination-' . $data->id;
+            })
             ->editColumn('status', function ($data) {
-                return ($data->status == 1) ? 'Active' : 'Inactive';
+                $link = route('destinations.update', $data->id);
+
+                return view('admin.components.button_switch', ['status' => $data->status, 'link' => $link]);
             })
             ->editColumn('image', function ($data) {
                 $pathImage = asset("storage/images/destinations/" . $data->image);
@@ -150,10 +156,10 @@ class Destination extends Model
             })
             ->addColumn('action', function ($data) {
                 $id = $data->id;
-                $linkEdit = route("destinations.edit", $data->id);
+                $linkEdit = route("destinations.update", $data->id);
                 $linkDelete = route("destinations.destroy", $data->id);
 
-                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
+                return view('admin.components.action_modal', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['image', 'action'])
             ->make(true);
