@@ -30,6 +30,8 @@ class ReviewContrller extends Controller
     }
 
     /**
+     * Change status review
+     *
      * @param Request $request
      * @param $tourId
      * @param $id
@@ -61,8 +63,7 @@ class ReviewContrller extends Controller
     public function getData(Request $request, $tourId)
     {
         if ($request->ajax()) {
-            $data = $this->review->getListReviews($request, $tourId);
-            return $this->review->getDataTable($data);
+            return $this->review->getListReviews($request, $tourId);
         }
     }
 }

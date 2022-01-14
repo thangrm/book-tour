@@ -60,8 +60,8 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Rate</th>
                         <th>Comment</th>
+                        <th>Rate</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -92,8 +92,8 @@
 
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'rate', name: 'rate'},
                     {data: 'comment', name: 'comment'},
+                    {data: 'rate', name: 'rate'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action', width: '30px'},
                 ]

@@ -28,7 +28,8 @@ class Review extends Model
      */
     public function rules()
     {
-        return ['status' => 'required|integer|between:1,2'];
+        $rule = ['status' => 'required|integer|between:1,2'];
+        return $rule;
     }
 
     /**
@@ -51,6 +52,7 @@ class Review extends Model
      * @param Request $request
      * @param $tourId
      * @return mixed
+     * @throws \Exception
      */
     public function getListReviews(Request $request, $tourId)
     {
@@ -66,22 +68,12 @@ class Review extends Model
             $query->where('status', $status);
         }
 
-        return $query->latest()->get();
-    }
+        $data = $query->latest()->get();
 
-    /**
-     * Format data to Datatables
-     *
-     * @param $data
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getDataTable($data)
-    {
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('status', function ($data) {
-                return ($data->status == 1) ? 'Public' : 'Block';
+                return view('components.status', ['status' => $data->status]);
             })
             ->addColumn('action', function ($data) {
                 $link = route('reviews.status', [$data->tour_id, $data->id]);
