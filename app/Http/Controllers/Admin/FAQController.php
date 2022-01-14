@@ -46,7 +46,7 @@ class FAQController extends Controller
      */
     public function store(Request $request, $tourId)
     {
-        $request->validate($this->faq->rule());
+        $request->validate($this->faq->rules());
         $notification = $this->faq->storeFAQ($request, $tourId);
 
         if ($notification->isError()) {
@@ -75,17 +75,20 @@ class FAQController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param $tourId
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return false|\Illuminate\Http\RedirectResponse|string
      */
     public function update(Request $request, $tourId, $id)
     {
-        $request->validate($this->faq->rule());
+        $request->validate($this->faq->rules($id));
         $notification = $this->faq->updateFAQ($request, $tourId, $id);
 
         if ($notification->isError()) {
             return back()->with($notification->getMessage())->withInput();
         }
 
+        if ($request->ajax()) {
+            return json_encode($notification->getMessage());
+        }
         return redirect()->route('faqs.index', $tourId)->with($notification->getMessage());
     }
 
