@@ -119,8 +119,13 @@
                     {data: 'trending', name: 'trending'},
                     {data: 'detail', name: 'detail', width: '185px'},
                     {data: 'action', name: 'action'},
-                ]
+                ],
+                columnDefs: [
+                    {className: 'align-middle', targets: '_all'},
+                ],
             });
+
+            $('#tourTable thead th').removeClass('align-middle text-center');
 
             $('#searchName').on('keyup', function () {
                 datatable.draw();

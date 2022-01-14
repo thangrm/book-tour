@@ -108,49 +108,6 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="trending" class="text-lg-right control-label col-form-label">Trending
-                                </label>
-                                <div class="input-group mb-3" style="width: 150px">
-                                    <select class="form-control" name="trending" id="trending">
-                                        <option
-                                            value="1" {{  (empty(old('trending')) ? $tour->trending : old('trending')) == 1 ? "selected" : "" }}>
-                                            Active
-                                        </option>
-                                        <option
-                                            value="2" {{  (empty(old('trending')) ? $tour->trending : old('trending')) == 2 ? "selected" : "" }}>
-                                            Inactive
-                                        </option>
-                                    </select>
-                                </div>
-                                @error('trending')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="col-6">
-                                <label for="status" class="text-lg-right control-label col-form-label">Status
-                                </label>
-                                <div class="input-group mb-3" style="width: 150px">
-                                    <select class="form-control" name="status" id="status">
-                                        <option
-                                            value="1" {{  (empty(old('status')) ? $tour->status : old('status')) == 1 ? "selected" : "" }}>
-                                            Active
-                                        </option>
-                                        <option
-                                            value="2" {{  (empty(old('status')) ? $tour->status : old('status')) == 2 ? "selected" : "" }}>
-                                            Inactive
-                                        </option>
-                                    </select>
-                                </div>
-                                @error('status')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label for="image" class="text-lg-right control-label col-form-label">Select Image
                             <span class="text-danger">*</span>
                         </label>

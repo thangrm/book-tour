@@ -105,33 +105,36 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="trending" class="text-lg-right control-label col-form-label">Trending
-                                </label>
-                                <div class="input-group mb-3" style="width: 150px">
-                                    <select class="form-control" name="trending" id="trending">
-                                        <option value="1" {{ old('trending') == 1 ? "selected" : "" }}>Active</option>
-                                        <option value="2" {{ old('trending') == 2 ? "selected" : "" }}>Inactive</option>
-                                    </select>
-                                </div>
-                                @error('trending')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                        <div class="d-flex align-items-center">
+                            <div class="input-group m-r-5">
+                                <input type="hidden" name="status" id="status">
+                                @include('admin.components.button_switch',
+                                [
+                                    'status' => empty(old('trending')) ? 1 : old('trending'),
+                                    'id' => 'btnSwitchTrending'
+                                ])
                             </div>
-                            <div class="col-6">
-                                <label for="status" class="text-lg-right control-label col-form-label">Status
-                                </label>
-                                <div class="input-group mb-3" style="width: 150px">
-                                    <select class="form-control" name="status" id="status">
-                                        <option value="1" {{ old('status') == 1 ? "selected" : "" }}>Active</option>
-                                        <option value="2" {{ old('status') == 2 ? "selected" : "" }}>Inactive</option>
-                                    </select>
-                                </div>
-                                @error('status')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                            <label for="trending" class="m-0">Trending</label>
+                            @error('trending')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="">
+                            <div class="input-group m-r-5">
+                                <input type="hidden" name="status" id="status">
+                                @include('admin.components.button_switch',
+                                [
+                                    'status' => empty(old('status')) ? 1 : old('status'),
+                                    'id' => 'btnSwitchStatus'
+                                ])
+                                <label for="status" class="m-0">Status</label>
                             </div>
+                            @error('status')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 

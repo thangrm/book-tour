@@ -80,7 +80,7 @@ class DestinationController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return false|\Illuminate\Http\RedirectResponse|string
      */
     public function update(Request $request, $id)
     {
@@ -91,14 +91,11 @@ class DestinationController extends Controller
             $this->destination->saveData($request, $id);
             $this->notification->setMessage('Destination updated successfully', Notification::SUCCESS);
 
-            return redirect()->route('destinations.index')->with($this->notification->getMessage());
+            return json_encode($this->notification->getMessage());
         } catch (Exception $e) {
             $this->notification->setMessage('The destination update failed', Notification::ERROR);
 
-            return back()
-                ->with('exception', $e->getMessage())
-                ->with($this->notification->getMessage())
-                ->withInput();
+            return json_encode($this->notification->getMessage());
         }
     }
 

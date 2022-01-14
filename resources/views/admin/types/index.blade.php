@@ -18,17 +18,17 @@
     </div>
 
     <div class="container-fluid row">
-        <div class="col-4">
+        <div class="col-12 col-lg-5 col-xl-4">
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('types.store') }}" id="formAddType" method="post">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-sm-2 text-right control-label col-form-label">Title
+                            <label for="name" class="col-3 col-xl-2 control-label col-form-label">Title
                                 <span
                                     class="text-danger">*</span> </label>
-                            <div class="col-sm-10">
+                            <div class="col-9 col-xl-10">
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Title"
                                        value="{{old('name')}}">
                                 @error('name')
@@ -38,9 +38,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="status" class="col-sm-2 text-lg-right control-label col-form-label">Status
+                            <label for="status" class="col-3 col-xl-2 control-label col-form-label">Status
                             </label>
-                            <div class="col-sm-10 d-flex align-items-center">
+                            <div class="col-9 col-xl-10 d-flex align-items-center">
                                 <div>
                                     <input type="hidden" name="status" id="status">
                                     @include('admin.components.button_switch',
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="col-8">
+        <div class="col-12 col-lg-7 col-xl-8">
             <div class="card">
                 <div class="card-body">
                     <table class="table table-striped table-bordered" id="typeTable">
@@ -155,14 +155,18 @@
                         d.status = $('#filterStatus').val();
                     }
                 },
-
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action'},
-                ]
+                ],
+                columnDefs: [
+                    {className: 'align-middle', targets: '_all'},
+                ],
             });
+
+            $('#typeTable thead th').removeClass('align-middle text-center');
 
             $('#searchName').on('keyup', function () {
                 datatable.draw();
@@ -171,6 +175,9 @@
             $('#filterStatus').on('change', function () {
                 datatable.draw();
             });
+
+            // disable form submit
+            disableSubmitButton('#formAddType');
 
             // Event delete type
             $(document).on('click', '.delete', function (e) {
@@ -274,7 +281,7 @@
                 this.submit();
             });
 
-            // Edit Type
+            // Submit Edit Type
             $('#formEditType').submit(function (e) {
                 e.preventDefault();
 
