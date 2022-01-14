@@ -1,8 +1,8 @@
-@extends('admin.master')
+@extends('layouts.admin')
 @section('style')
     <style>
         #formCreateFAQ textarea {
-                resize: none;
+            resize: none;
         }
     </style>
 @endsection
@@ -36,7 +36,8 @@
                         Question <span class="text-danger">*</span>
                     </label>
                     <div class="col-sm-9">
-                        <textarea type="text" class="form-control" name="question" id="question" placeholder="Question" rows="3" >{{old('question')}}</textarea>
+                        <textarea type="text" class="form-control" name="question" id="question" placeholder="Question"
+                                  rows="3">{{old('question')}}</textarea>
                         @error('question')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -48,7 +49,8 @@
                         Answer <span class="text-danger">*</span>
                     </label>
                     <div class="col-sm-9">
-                        <textarea type="text" class="form-control" name="answer" id="answer" placeholder="Answer" rows="5">{{old('answer')}}</textarea>
+                        <textarea type="text" class="form-control" name="answer" id="answer" placeholder="Answer"
+                                  rows="5">{{old('answer')}}</textarea>
                         @error('answer')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror

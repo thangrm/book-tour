@@ -235,12 +235,12 @@ class Tour extends Model
                 $type = $data->type_name;
                 $duration = Utilities::durationToString($data->duration);
 
-                return view('admin.components.title_tour', compact(['name', 'destination', 'type', 'duration']));
+                return view('components.title_tour', compact(['name', 'destination', 'type', 'duration']));
             })
             ->editColumn('image', function ($data) {
                 $pathImage = asset("storage/images/tours/" . $data->image);
 
-                return view('admin.components.image', compact('pathImage'));
+                return view('components.image', compact('pathImage'));
             })
             ->editColumn('price', function ($data) {
                 return number_format($data->price, 2) . ' $';;
@@ -249,14 +249,14 @@ class Tour extends Model
                 $link = route('tours.update', $data->id);
                 $class = 'btn-switch-status';
 
-                return view('admin.components.button_switch',
+                return view('components.button_switch',
                     ['status' => $data->status, 'link' => $link, 'class' => $class,]);
             })
             ->editColumn('trending', function ($data) {
                 $link = route('tours.update', $data->id);
                 $class = 'btn-switch-trending';
 
-                return view('admin.components.button_switch',
+                return view('components.button_switch',
                     ['status' => $data->trending, 'link' => $link, 'class' => $class,]);
             })
             ->addColumn('detail', function ($data) {
@@ -267,19 +267,19 @@ class Tour extends Model
                 $routerReview = route('reviews.index', $data->id);
                 $width = 90;
 
-                $view = view('admin.components.button_link_info',
+                $view = view('components.button_link_info',
                     ['link' => $routerInfo, 'title' => 'Info', 'width' => $width])->render();
 
-                $view .= view('admin.components.button_link_info',
+                $view .= view('components.button_link_info',
                     ['link' => $routerGallery, 'title' => 'Galleries', 'width' => $width])->render();
 
-                $view .= view('admin.components.button_link_info',
+                $view .= view('components.button_link_info',
                     ['link' => $routerItinerary, 'title' => 'Itineraries', 'width' => $width])->render();
 
-                $view .= view('admin.components.button_link_info',
+                $view .= view('components.button_link_info',
                     ['link' => $routerFAQ, 'title' => 'Faqs', 'width' => $width])->render();
 
-                $view .= view('admin.components.button_link_info',
+                $view .= view('components.button_link_info',
                     ['link' => $routerReview, 'title' => 'Reviews', 'width' => $width])->render();
 
                 return $view;
@@ -289,7 +289,7 @@ class Tour extends Model
                 $linkEdit = route("tours.edit", $data->id);
                 $linkDelete = route("tours.destroy", $data->id);
 
-                return view('admin.components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
+                return view('components.action_link', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['name', 'image', 'status', 'detail', 'action'])
             ->make(true);

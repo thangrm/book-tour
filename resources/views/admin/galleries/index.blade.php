@@ -1,4 +1,4 @@
-@extends('admin.master')
+@extends('layouts.admin')
 @section('style')
     <style>
         div.img img:hover {

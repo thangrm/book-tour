@@ -104,7 +104,7 @@ class Booking extends Model
                 $type = $data->tour->type->name;
                 $duration = Utilities::durationToString($data->tour->duration);
 
-                return view('admin.components.title_tour', compact(['name', 'destination', 'type', 'duration']));
+                return view('components.title_tour', compact(['name', 'destination', 'type', 'duration']));
             })
             ->editColumn('customer_name', function ($data) {
                 return $data->customer->first_name . ' ' . $data->customer->last_name;
@@ -125,7 +125,7 @@ class Booking extends Model
                 }
             })
             ->editColumn('status', function ($data) {
-                return view('admin.components.status_booking', ['status' => $data->status]);
+                return view('components.status_booking', ['status' => $data->status]);
             })
             ->addColumn('total', function ($data) {
                 return number_format($data->price * $data->people, 2) . ' $';
@@ -133,7 +133,7 @@ class Booking extends Model
             ->addColumn('action', function ($data) {
                 $link = route('bookings.show', $data->id);
 
-                return view('admin.components.button_link_info', ['link' => $link, 'title' => 'Detail']);
+                return view('components.button_link_info', ['link' => $link, 'title' => 'Detail']);
             })
             ->make(true);
     }

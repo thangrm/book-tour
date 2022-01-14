@@ -160,14 +160,14 @@ class Type extends Model
             })
             ->editColumn('status', function ($data) {
                 $link = route('types.update', $data->id);
-                return view('admin.components.button_switch', ['status' => $data->status, 'link' => $link]);
+                return view('components.button_switch', ['status' => $data->status, 'link' => $link]);
             })
             ->addColumn('action', function ($data) {
                 $id = $data->id;
                 $linkEdit = route("types.update", $data->id);
                 $linkDelete = route("types.destroy", $data->id);
 
-                return view('admin.components.action_modal', compact(['id', 'linkEdit', 'linkDelete']));
+                return view('components.action_modal', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['status', 'action'])
             ->make(true);

@@ -87,7 +87,7 @@ class Review extends Model
                 $link = route('reviews.status', [$data->tour_id, $data->id]);
                 $status = ($data->status == 1) ? 2 : 1;
 
-                return view('admin.components.button_change_status', compact(['link', 'status']));
+                return view('components.button_change_status', compact(['link', 'status']));
             })
             ->rawColumns(['action'])
             ->make(true);
