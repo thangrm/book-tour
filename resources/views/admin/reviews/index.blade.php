@@ -116,7 +116,7 @@
                     toastrMessage(type, message);
 
                     if (type === 'success') {
-                        datatable.draw();
+                        datatable.ajax.reload(null, false);
                     }
                 },
                 error: function () {

@@ -146,6 +146,8 @@
 @section('js')
     <script>
         $(document).ready(function () {
+            disableSubmitButton('#formAddNewImage');
+
             $('#image').change(function (e) {
                 let reader = new FileReader();
                 reader.onload = function (e) {
@@ -153,8 +155,6 @@
                 }
                 reader.readAsDataURL(e.target.files['0']);
             });
-
-            disableSubmitButton('#formAddNewImage');
 
             // Modal view image
             let modal = document.getElementById('myModal');

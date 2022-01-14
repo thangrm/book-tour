@@ -51,8 +51,8 @@ class Contact extends Model
         $data = $query->get();
         return DataTables::of($data)
             ->addIndexColumn()
-            ->editColumn('status', function ($data) {
-                return ($data->status == 1) ? 'Unread' : 'Read';
+            ->setRowClass(function ($data) {
+                return ($data->status == 1) ? 'font-weight-bold' : '';
             })
             ->addColumn('action', function ($data) {
                 $link = route('contacts.show', $data->id);

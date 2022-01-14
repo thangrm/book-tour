@@ -60,7 +60,6 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -133,10 +132,14 @@
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
-                    {data: 'status', name: 'status'},
                     {data: 'action', name: 'action'},
-                ]
+                ],
+                columnDefs: [
+                    {className: 'align-middle', targets: '_all'},
+                ],
             });
+
+            $('#contactTable thead th').removeClass('align-middle text-center');
 
             $('#searchContact').on('keyup', function () {
                 datatable.draw();
@@ -158,7 +161,7 @@
                         $('#emailContact').text(response.email);
                         $('#phoneContact').text(response.phone);
                         $('#messageContact').text(response.message);
-                        datatable.draw();
+                        datatable.ajax.reload(null, false);
                     },
                 });
             });

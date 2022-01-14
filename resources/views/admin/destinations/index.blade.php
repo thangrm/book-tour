@@ -176,6 +176,8 @@
     <script>
         $(document).ready(function () {
             let linkEditDestination;
+            disableSubmitButton('#formAddDestination');
+            disableSubmitButton('#formEditDestination');
 
             // Datatable
             let datatable = $('#destinationTable').DataTable({
@@ -231,9 +233,6 @@
                 readImage(e, '#showImgEdit')
             });
 
-            // disable form submit
-            disableSubmitButton('#formAddDestination');
-
             // Delete
             $(document).on('click', '.delete', function (e) {
                 e.preventDefault();
@@ -264,7 +263,7 @@
                                 let message = response['message'];
                                 toastrMessage(type, message);
                                 if (type === 'success') {
-                                    datatable.draw();
+                                    datatable.ajax.reload(null, false);
                                 }
                             },
                             error: function (response) {
@@ -348,7 +347,7 @@
                 let formData = new FormData();
                 formData.append("_method", 'PUT');
                 formData.append("name", name);
-             
+
                 if (image !== undefined) {
                     formData.append("image", image);
                 }
@@ -366,7 +365,7 @@
                         toastrMessage(type, message);
 
                         if (type === 'success') {
-                            datatable.draw();
+                            datatable.ajax.reload(null, false);
                             $('#editModal').modal('hide');
                         }
                     },

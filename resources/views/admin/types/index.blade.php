@@ -140,6 +140,8 @@
     <script>
         $(document).ready(function () {
             let linkEditType;
+            disableSubmitButton('#formAddType');
+            disableSubmitButton('#formEditType');
 
             let datatable = $('#typeTable').DataTable({
                 processing: true,
@@ -175,9 +177,6 @@
             $('#filterStatus').on('change', function () {
                 datatable.draw();
             });
-
-            // disable form submit
-            disableSubmitButton('#formAddType');
 
             // Event delete type
             $(document).on('click', '.delete', function (e) {
