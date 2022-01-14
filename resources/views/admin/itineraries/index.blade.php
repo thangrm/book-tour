@@ -146,7 +146,7 @@
                         toastrMessage(type, message);
 
                         if (type === 'success') {
-                            datatable.draw();
+                            datatable.ajax.reload(null, false);
                             $('#editModal').modal('hide');
                         }
                     },
@@ -186,7 +186,7 @@
                                 type: 'delete',
                                 success: function (response) {
                                     toastr.success('Itinerary deleted successfully');
-                                    datatable.ajax.reload();
+                                    datatable.ajax.reload(null, false);
                                 },
                                 error: function (response) {
                                     toastr.error('Delete failed')

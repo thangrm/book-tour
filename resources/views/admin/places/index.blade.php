@@ -94,7 +94,7 @@
                                 type: 'delete',
                                 success: function (response) {
                                     toastr.success('Place deleted successfully');
-                                    datatable.ajax.reload();
+                                    datatable.ajax.reload(null, false);
                                 },
                                 error: function (response) {
                                     toastr.error('Delete failed')

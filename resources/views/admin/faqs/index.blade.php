@@ -61,12 +61,14 @@
                     {data: 'status', name: 'description'},
                     {data: 'action', name: 'action'},
                 ],
-                drawCallback: function () {
-
-                }
+                columnDefs: [
+                    {className: 'align-middle', targets: '_all'},
+                ],
             });
 
-            // Evenet Delete Itinerary
+            $('#faqTable thead th').removeClass('align-middle text-center');
+
+            // Evenet Delete FAQ
             $(document).on('click', '.delete', function (e) {
                 e.preventDefault();
                 let link = $(this).attr("href");
@@ -93,7 +95,7 @@
                                 type: 'delete',
                                 success: function (response) {
                                     toastr.success('FAQ deleted successfully');
-                                    datatable.ajax.reload();
+                                    datatable.ajax.reload(null, false);
                                 },
                                 error: function (response) {
                                     toastr.error('Delete failed')
