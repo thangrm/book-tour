@@ -43,7 +43,7 @@ class DestinationController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return false|\Illuminate\Http\RedirectResponse|string
      */
     public function store(Request $request)
     {
@@ -52,7 +52,7 @@ class DestinationController extends Controller
             $this->destination->saveData($request);
             $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
 
-            return redirect()->route('destinations.index')->with($this->notification->getMessage());
+            return json_encode($this->notification->getMessage());
         } catch (Exception $e) {
             $this->notification->setMessage('Destination creation failed', Notification::ERROR);
 

@@ -19,6 +19,7 @@ class Contact extends Model
             $contact->status = 2;
             $contact->save();
         }
+        
         return $contact;
     }
 

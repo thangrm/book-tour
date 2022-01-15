@@ -65,7 +65,7 @@ class Type extends Model
         $data['name'] = $nameType;
         $data['status'] = $request->status;
 
-        if ($this->create($data)->exists) {
+        if ($this->create($data)) {
             $this->notification->setMessage('New type added successfully', Notification::SUCCESS);
         } else {
             $this->notification->setMessage('Type creation failed', Notification::ERROR);

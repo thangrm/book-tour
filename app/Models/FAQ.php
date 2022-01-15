@@ -95,6 +95,7 @@ class FAQ extends Model
         $this->notification->setMessage('FAQ update failed', Notification::ERROR);
 
         try {
+            Tour::findOrFail($tourId);
             $faq = $this->findOrFail($id);
             $input = $request->only('question', 'answer', 'status');
             $input = Utilities::clearAllXSS($input);

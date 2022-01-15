@@ -63,7 +63,7 @@ class ReviewContrller extends Controller
     public function getData(Request $request, $tourId)
     {
         if ($request->ajax()) {
-            return $this->review->getListReviews($request, $tourId);
+            return $this->review->getList($request, $tourId);
         }
     }
 }

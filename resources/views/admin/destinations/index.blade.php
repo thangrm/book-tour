@@ -33,9 +33,7 @@
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Title"
                                        value="{{old('name')}}">
                             </div>
-                            @error('name')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
+                            <p class="text-danger" id="errorName"></p>
                         </div>
 
                         <div class="form-group">
@@ -48,9 +46,7 @@
                             <div>
                                 <img id="showImg" style="max-height: 150px; margin: 10px 2px">
                             </div>
-                            @error('image')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
+                            <p class="text-danger" id="errorImage"></p>
                         </div>
 
                         <div class="form-group">
@@ -199,7 +195,7 @@
                     {data: 'image', name: 'image'},
                     {data: 'name', name: 'name'},
                     {data: 'status', name: 'status'},
-                    {data: 'action', name: 'action', className: 'align-middle text-center'},
+                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
                 ],
                 columnDefs: [
                     {className: 'align-middle', targets: '_all'},
@@ -327,14 +323,59 @@
             // Add new destination
             $('#formAddDestination').submit(function (e) {
                 e.preventDefault();
+                $('#errorName').text('');
+                $('#errorImage').text('');
+
+                let link = $(this).attr('action');
+                let name = $('#name').val();
+                let image = $("#image").prop('files')[0];
+                let status = 2;
 
                 if ($('#statusDestination').is(":checked")) {
-                    $('#status').val(1);
-                } else {
-                    $('#status').val(2);
+                    status = 1;
                 }
 
-                this.submit();
+                let formData = new FormData();
+                formData.append("name", name);
+                formData.append("status", status);
+                if (image !== undefined) {
+                    formData.append("image", image);
+                }
+
+                $.ajax({
+                    url: link,
+                    method: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (response) {
+                        response = JSON.parse(response);
+                        let type = response['alert-type'];
+                        let message = response['message'];
+                        toastrMessage(type, message);
+
+                        if (type === 'success') {
+                            datatable.draw();
+                            $('#formAddDestination')[0].reset();
+                            $('#showImg').attr('src', '');
+                        }
+                    },
+                    error: function (jqXHR) {
+                        let response = jqXHR.responseJSON;
+                        toastrMessage('error', 'Destination creation failed');
+                        if (response?.errors?.name !== undefined) {
+                            $('#errorName').text(response.errors.name[0]);
+                        }
+
+                        if (response?.errors?.image !== undefined) {
+                            $('#errorImage').text(response.errors.image[0]);
+                        }
+                    },
+                    complete: function () {
+                        enableSubmitButton('#formAddDestination', 300);
+                    }
+                });
+
             });
 
             // Submit Edit

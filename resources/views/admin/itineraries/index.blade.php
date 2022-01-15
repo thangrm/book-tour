@@ -18,7 +18,7 @@
     </div>
 
     <div class="container-fluid row">
-        <div class="col-4">
+        <div class="col-12 col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <form href="{{ route('itineraries.store', $tourId) }}" id="formAddItinerary" method="post">
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <div class="col-8">
+        <div class="col-12 col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">List of Itineraries</h4>
@@ -119,7 +119,7 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'place', name: 'place'},
-                    {data: 'action', name: 'action'},
+                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
                 ],
                 drawCallback: function () {
                     $('.edit').click(function () {

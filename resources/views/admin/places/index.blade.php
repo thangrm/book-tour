@@ -60,12 +60,14 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'description', name: 'description', width: '65%'},
-                    {data: 'action', name: 'action'},
+                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
                 ],
-                drawCallback: function () {
-
-                }
+                columnDefs: [
+                    {className: 'align-middle', targets: '_all'},
+                ],
             });
+
+            $('#placeTable thead th').removeClass('align-middle text-center');
 
             // Evenet Delete Itinerary
             $(document).on('click', '.delete', function (e) {

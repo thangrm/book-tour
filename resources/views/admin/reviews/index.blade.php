@@ -93,10 +93,13 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'comment', name: 'comment'},
-                    {data: 'rate', name: 'rate'},
+                    {data: 'rate', name: 'rate', width: 125},
                     {data: 'status', name: 'status'},
-                    {data: 'action', name: 'action', width: '30px'},
-                ]
+                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 30},
+                ],
+                columnDefs: [
+                    {className: 'align-middle', targets: '_all'},
+                ],
             });
 
             $('#filterRate, #filterStatus').on('change', function () {

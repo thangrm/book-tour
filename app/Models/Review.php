@@ -13,13 +13,6 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = ['status'];
-    protected $notification;
-
-    public function __construct(array $attributes = array())
-    {
-        parent::__construct($attributes);
-        $this->notification = new Notification();
-    }
 
     /**
      * Validate rules for review
@@ -28,16 +21,15 @@ class Review extends Model
      */
     public function rules()
     {
-        $rule = ['status' => 'required|integer|between:1,2'];
-        return $rule;
+        return ['status' => 'required|integer|between:1,2'];
     }
 
     /**
      * Change the status of the review to public or block
      *
+     * @param Request $request
      * @param $id
-     * @param $isBlock
-     * @return Notification
+     * @return void
      */
     public function changeStatus(Request $request, $id)
     {
@@ -54,7 +46,7 @@ class Review extends Model
      * @return mixed
      * @throws \Exception
      */
-    public function getListReviews(Request $request, $tourId)
+    public function getList(Request $request, $tourId)
     {
         $query = $this->where('tour_id', $tourId);
         $rate = $request->rate;
@@ -72,6 +64,9 @@ class Review extends Model
 
         return DataTables::of($data)
             ->addIndexColumn()
+            ->editColumn('rate', function ($data) {
+                return view('components.rate', ['rate' => $data->rate]);
+            })
             ->editColumn('status', function ($data) {
                 return view('components.status', ['status' => $data->status]);
             })
