@@ -53,12 +53,7 @@
                             <div class="d-flex align-items-center">
                                 <label for="status" class="m-0">Status</label>
                                 <div class="m-l-10">
-                                    <input type="hidden" name="status" id="status">
-                                    @include('components.button_switch',
-                                    [
-                                        'status' => empty(old('status')) ? 1 : old('status'),
-                                        'id' => 'statusDestination'
-                                    ])
+                                    @include('components.button_switch', ['status' => 1,'id' => 'statusDestination'])
                                 </div>
                             </div>
 
@@ -278,6 +273,18 @@
                 })
             })
 
+            // Edit
+            $(document).on('click', '.edit', function (e) {
+                linkEditDestination = $(this).attr('href');
+                let id = $(this).data('id');
+                let nameDestination = $('#destination-' + id).children().eq(2).text();
+                let srcImage = $('#destination-' + id).children().eq(1).children().eq(0).attr('src');
+
+                $('#nameEdit').val(nameDestination);
+                $('#showImgEdit').attr('src', srcImage);
+            });
+
+
             // Change status
             $('#destinationTable').on('click', '.button-switch', function (e) {
                 let buttonSwitch = this;
@@ -307,17 +314,6 @@
                         }, 500);
                     }
                 });
-            });
-
-            // Edit
-            $(document).on('click', '.edit', function (e) {
-                linkEditDestination = $(this).attr('href');
-                let id = $(this).data('id');
-                let nameDestination = $('#destination-' + id).children().eq(2).text();
-                let srcImage = $('#destination-' + id).children().eq(1).children().eq(0).attr('src');
-
-                $('#nameEdit').val(nameDestination);
-                $('#showImgEdit').attr('src', srcImage);
             });
 
             // Add new destination

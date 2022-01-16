@@ -29,11 +29,8 @@
                                 <span
                                     class="text-danger">*</span> </label>
                             <div class="col-9 col-xl-10">
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Title"
-                                       value="{{old('name')}}">
-                                @error('name')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Title">
+                                <p class="text-danger" id="errorName"></p>
                             </div>
                         </div>
 
@@ -42,20 +39,12 @@
                             </label>
                             <div class="col-9 col-xl-10 d-flex align-items-center">
                                 <div>
-                                    <input type="hidden" name="status" id="status">
-                                    @include('components.button_switch',
-                                    [
-                                        'status' => empty(old('status')) ? 1 : old('status'),
-                                        'id' => 'statusType'
-                                    ])
+                                    @include('components.button_switch',['status' => 1,'id' => 'statusType'])
                                 </div>
                             </div>
-
-                            <div class="col-2"></div>
-                            <div class="col-10">
-                                @error('status')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                            <div class="col-3 col-xl-2"></div>
+                            <div class="col-9">
+                                <p class="text-danger" id="errorStatus"></p>
                             </div>
                         </div>
 
@@ -271,13 +260,53 @@
             $('#formAddType').submit(function (e) {
                 e.preventDefault();
 
+                $('#errorName').text('');
+                $('#errorStatus').text('');
+
+                let link = $(this).attr('action');
+                let name = $('#name').val();
+                let status = 2;
+
                 if ($('#statusType').is(":checked")) {
-                    $('#status').val(1);
-                } else {
-                    $('#status').val(2);
+                    status = 1;
                 }
 
-                this.submit();
+                let formData = new FormData();
+                formData.append("name", name);
+                formData.append("status", status);
+
+                $.ajax({
+                    url: link,
+                    method: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (response) {
+                        response = JSON.parse(response);
+                        let type = response['alert-type'];
+                        let message = response['message'];
+                        toastrMessage(type, message);
+
+                        if (type === 'success') {
+                            datatable.draw();
+                            $('#formAddType')[0].reset();
+                        }
+                    },
+                    error: function (jqXHR) {
+                        let response = jqXHR.responseJSON;
+                        toastrMessage('error', 'Type creation failed');
+                        if (response?.errors?.name !== undefined) {
+                            $('#errorName').text(response.errors.name[0]);
+                        }
+
+                        if (response?.errors?.status !== undefined) {
+                            $('#errorStatus').text(response.errors.image[0]);
+                        }
+                    },
+                    complete: function () {
+                        enableSubmitButton('#formAddType', 300);
+                    }
+                });
             });
 
             // Submit Edit Type

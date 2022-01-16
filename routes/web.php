@@ -60,7 +60,6 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('data', [TypeController::class, 'getData'])->name('types.data');
         });
 
-
         // Tour
         Route::resource('tours', TourController::class)->except(['show']);
         Route::get('tours/data', [TourController::class, 'getData'])->name('tours.data');
@@ -79,7 +78,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::prefix('itineraries')->group(function () {
                 Route::get('/', [ItineraryController::class, 'index'])->name('itineraries.index');
                 Route::post('/', [ItineraryController::class, 'store'])->name('itineraries.store');
-                Route::put('/update', [ItineraryController::class, 'update'])->name('itineraries.update');
+                Route::put('/{id}', [ItineraryController::class, 'update'])->name('itineraries.update');
                 Route::delete('/{id}', [ItineraryController::class, 'destroy'])->name('itineraries.destroy');
                 Route::get('/data', [ItineraryController::class, 'getData'])->name('itineraries.data');
 

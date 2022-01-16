@@ -23,7 +23,7 @@
             <div class="card-body">
                 <table class="table table-striped table-bordered" id="reviewTable">
                     <div class="card-body pl-0 pt-0">
-                        <h4>List of Reviews</h4>
+                        <h4 class="m-b-20">List of Reviews</h4>
                         <div class="row">
                             <div class="col-sm-12 col-lg-4">
                                 <div class="form-group row">

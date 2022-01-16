@@ -34,17 +34,14 @@ class ItineraryController extends Controller
      *
      * @param Request $request
      * @param $tourId
-     * @return RedirectResponse
+     * @return false|RedirectResponse|string
      */
     public function store(Request $request, $tourId)
     {
-        $request->validate($this->itinerary->rule());
+        $request->validate($this->itinerary->rules());
         $notification = $this->itinerary->storeItinerary($request, $tourId);
-        if ($notification->isError()) {
-            return back()->with($notification->getMessage())->withInput();
-        }
 
-        return redirect()->route('itineraries.index', $tourId)->with($notification->getMessage());
+        return json_encode($notification->getMessage());
     }
 
     /**
@@ -52,12 +49,13 @@ class ItineraryController extends Controller
      *
      * @param Request $request
      * @param $tourId
+     * @param $id
      * @return false|string
      */
-    public function update(Request $request, $tourId)
+    public function update(Request $request, $tourId, $id)
     {
-        $request->validate($this->itinerary->rule(true));
-        $notification = $this->itinerary->updateItinerary($request, $tourId);
+        $request->validate($this->itinerary->rules(true));
+        $notification = $this->itinerary->updateItinerary($request, $tourId, $id);
 
         return json_encode($notification->getMessage());
     }
@@ -65,7 +63,8 @@ class ItineraryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param $tour_id
+     * @param $id
      * @return Response
      */
     public function destroy($tour_id, $id)
