@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Notification;
 use App\Models\Itinerary;
+use App\Models\Tour;
+use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,10 +17,12 @@ use Illuminate\Http\Response;
 class ItineraryController extends Controller
 {
     protected $itinerary;
+    protected $notification;
 
-    public function __construct(Itinerary $itinerary)
+    public function __construct(Itinerary $itinerary, Notification $notification)
     {
         $this->itinerary = $itinerary;
+        $this->notification = $notification;
     }
 
     /**
@@ -39,9 +45,26 @@ class ItineraryController extends Controller
     public function store(Request $request, $tourId)
     {
         $request->validate($this->itinerary->rules());
-        $notification = $this->itinerary->storeItinerary($request, $tourId);
 
-        return json_encode($notification->getMessage());
+        try {
+            $this->notification->setMessage('New itinerary added successfully', Notification::SUCCESS);
+            $codeMessage = $this->itinerary->saveData($request, $tourId);
+
+            if ($codeMessage == 2) {
+                $this->notification->setMessage('The tour is only ' . Tour::findOrFail($tourId)->duration);
+            }
+
+        } catch (QueryException $e) {
+            $this->notification->setMessage('Itinerary addition failed', Notification::ERROR);
+
+            if ($e->errorInfo[1] == '1062') {
+                $this->notification->setMessage('The itinerary already exists', Notification::ERROR);
+            }
+        } catch (Exception $e) {
+            $this->notification->setMessage('Itinerary addition failed', Notification::ERROR);
+        }
+
+        return response()->json($this->notification->getMessage());
     }
 
     /**
@@ -54,10 +77,23 @@ class ItineraryController extends Controller
      */
     public function update(Request $request, $tourId, $id)
     {
-        $request->validate($this->itinerary->rules(true));
-        $notification = $this->itinerary->updateItinerary($request, $tourId, $id);
+        $request->validate($this->itinerary->rules($id));
 
-        return json_encode($notification->getMessage());
+        try {
+            $this->notification->setMessage('Itinerary updated successfully', Notification::SUCCESS);
+            $this->itinerary->saveData($request, $tourId, $id);
+
+        } catch (QueryException $e) {
+            $this->notification->setMessage('Itinerary update failed', Notification::ERROR);
+
+            if ($e->errorInfo[1] == '1062') {
+                $this->notification->setMessage('The itinerary already exists', Notification::ERROR);
+            }
+        } catch (Exception $e) {
+            $this->notification->setMessage('Itinerary addition failed', Notification::ERROR);
+        }
+
+        return response()->json($this->notification->getMessage());
     }
 
     /**
