@@ -191,7 +191,6 @@
                     contentType: false,
                     data: formData,
                     success: function (response) {
-                        response = JSON.parse(response);
                         let type = response['alert-type'];
                         let message = response['message'];
                         toastrMessage(type, message);

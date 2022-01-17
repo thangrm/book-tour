@@ -17,10 +17,13 @@ class Itinerary extends Model
     protected $fillable = ['tour_id', 'name'];
     protected $notification;
 
-    public function __construct(array $attributes = array())
+    /**
+     * Get the tour that owns the itinerary.
+     *
+     */
+    public function tour()
     {
-        parent::__construct($attributes);
-        $this->notification = new Notification();
+        return $this->belongsTo(Tour::class);
     }
 
     /**
@@ -28,13 +31,9 @@ class Itinerary extends Model
      *
      * @return string[]
      */
-    public function rules($isUpdate = false): array
+    public function rules(int $id = null): array
     {
-        $rule = [
-            'name' => 'required|string|max:150'
-        ];
-
-        return $rule;
+        return ['name' => 'required|string|max:150'];
     }
 
     /**
@@ -42,75 +41,29 @@ class Itinerary extends Model
      *
      * @param Request $request
      * @param $tourId
-     * @return Notification
+     * @param int $id
+     * @return int
      */
-    public function storeItinerary(Request $request, $tourId)
+    public function saveData(Request $request, $tourId, int $id = 0)
     {
         $name = Utilities::clearXSS($request->name);
+        $tour = Tour::findOrFail($tourId);
+        $itinerary = $this->findOrNew($id);
 
-        $tour = Tour::find($tourId);
-        if ($tour == null) {
-            $this->notification->setMessage('Tour id not found', Notification::ERROR);
-
-            return $this->notification;
+        if ($id == 0) {
+            $input['tour_id'] = $tourId;
         }
 
-        $itinerary = $this->where('tour_id', $tourId)->where('name', $name)->first();
-        if ($itinerary != null) {
-            $this->notification->setMessage('The itinerary already exists', Notification::ERROR);
-
-            return $this->notification;
+        $numberItineraries = $tour->itineraries()->count();
+        if ($numberItineraries >= $tour->duration && $id == 0) {
+            return 2;
         }
 
-        $countItineraries = $this->where('tour_id', $tourId)->count();
-        if ($countItineraries >= $tour->duration) {
-            $this->notification->setMessage('The tour is only ' . Utilities::durationToString($tour->duration),
-                Notification::ERROR);
+        $input['name'] = $name;
+        $itinerary->fill($input);
+        $itinerary->save();
 
-            return $this->notification;
-        }
-
-        $input = [
-            'tour_id' => $tourId,
-            'name' => $name
-        ];
-        if ($this->create($input)->exists) {
-            $this->notification->setMessage('New itinerary added successfully', Notification::SUCCESS);
-        } else {
-            $this->notification->setMessage('Itinerary addition failed', Notification::ERROR);
-        }
-
-        return $this->notification;
-    }
-
-    /**
-     * Update itinerary in database.
-     *
-     * @param Request $request
-     * @param $tourId
-     * @return Notification
-     */
-    public function updateItinerary(Request $request, $tourId, $id)
-    {
-        $this->notification->setMessage('Itinerary update failed', Notification::ERROR);
-
-        try {
-            $itinerary = $this->findOrFail($id);
-            $itinerary->name = Utilities::clearXSS($request->name);
-
-            Tour::findOrFail($tourId);
-
-            if ($itinerary->save()) {
-                $this->notification->setMessage('Itinerary updated successfully', Notification::SUCCESS);
-            }
-        } catch (QueryException $ex) {
-            $errorCode = $ex->errorInfo[1];
-            if ($errorCode == '1062') {
-                $this->notification->setMessage('The itinerary name already exists', Notification::ERROR);
-            }
-        }
-
-        return $this->notification;
+        return 1;
     }
 
     /**
@@ -130,6 +83,7 @@ class Itinerary extends Model
      *
      * @param $tourId
      * @return mixed
+     * @throws \Exception
      */
     public function getList($tourId)
     {

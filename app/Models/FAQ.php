@@ -16,13 +16,6 @@ class FAQ extends Model
 
     protected $table = 'faqs';
     protected $fillable = ['tour_id', 'question', 'answer', 'status'];
-    protected $notification;
-
-    public function __construct(array $attributes = array())
-    {
-        parent::__construct($attributes);
-        $this->notification = new Notification();
-    }
 
     /**
      * Validate rules for FAQ
