@@ -54,46 +54,19 @@ class Type extends Model
     }
 
     /**
-     * Store a new type in database.
+     * Save data type in database.
      *
      * @param Request $request
-     * @return Notification
+     * @param int $id
      */
-    public function storeType(Request $request)
+    public function saveData(Request $request, int $id = 0)
     {
-        $nameType = Utilities::clearXSS($request->name);
-        $data['name'] = $nameType;
-        $data['status'] = $request->status;
+        $input = $request->only('name', 'status');
+        $input = Utilities::clearAllXSS($input);
+        $type = $this->findOrNew($id);
 
-        if ($this->create($data)) {
-            $this->notification->setMessage('New type added successfully', Notification::SUCCESS);
-        } else {
-            $this->notification->setMessage('Type creation failed', Notification::ERROR);
-        }
-
-        return $this->notification;
-    }
-
-    /**
-     * Update the type in database.
-     *
-     * @param Request $request
-     * @param $id
-     * @return Notification
-     */
-    public function updateType(Request $request, $id)
-    {
-        $type = $this->findOrFail($id);
-        $input = Utilities::clearAllXSS($request->all());
         $type->fill($input);
-
-        if ($type->save()) {
-            $this->notification->setMessage('Type updated successfully', Notification::SUCCESS);
-        } else {
-            $this->notification->setMessage('Type update failed', Notification::ERROR);
-        }
-
-        return $this->notification;
+        $type->save();
     }
 
     /**
@@ -107,18 +80,11 @@ class Type extends Model
         $type = $this->findOrFail($id);
         $numberTours = $type->tours()->count();
         if ($numberTours > 0) {
-            $this->notification->setMessage('The type has tours that cannot be deleted',
-                Notification::ERROR);
-            return $this->notification;
+            return 2;
         }
+        $type->delete();
 
-        if ($type->delete()) {
-            $this->notification->setMessage('Type deleted successfully', Notification::SUCCESS);
-        } else {
-            $this->notification->setMessage('Type delete failed', Notification::ERROR);
-        }
-
-        return $this->notification;
+        return 1;
     }
 
     /**

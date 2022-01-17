@@ -112,6 +112,7 @@
                                 <div class="col-12">
                                     <input type="text" class="form-control" name="name" id="titleEdit"
                                            placeholder="Name itinerary">
+                                    <p class="text-danger" id="errorNameEdit"></p>
                                 </div>
                             </div>
                         </div>
@@ -329,8 +330,12 @@
                             $('#editModal').modal('hide');
                         }
                     },
-                    error: function () {
-                        toastrMessage('error', 'Type update failed');
+                    error: function (jqXHR) {
+                        let response = jqXHR.responseJSON;
+                        toastrMessage('error', 'Type creation failed');
+                        if (response?.errors?.name !== undefined) {
+                            $('#errorNameEdit').text(response.errors.name[0]);
+                        }
                     },
                     complete: function () {
                         enableSubmitButton('#formEditType', 300);
