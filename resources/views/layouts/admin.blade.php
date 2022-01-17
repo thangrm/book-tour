@@ -10,17 +10,18 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
-
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admins/assets/images/favicon.png') }}">
     <title>Dashboard</title>
     <!-- Datatable -->
     <link href="{{ asset('admins/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
     <!--Bootstrap switch -->
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('admins/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }} ">
-    <!-- Custom CSS -->
+    <link href="{{ asset('admins/assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css') }}"
+          rel="stylesheet">
+    <!-- Chart -->
     <link href="{{ asset('admins/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admins/assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
+    <!-- Select 2 -->
+    <link href="{{ asset('admins/assets/libs/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('admins/assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admins/dist/css/style.min.css') }}" rel="stylesheet">
@@ -114,17 +115,20 @@
 <!--Menu sidebar -->
 <script src="{{ asset('admins/dist/js/sidebarmenu.js') }}"></script>
 <!--Custom JavaScript -->
-<script src="{{ asset('admins/dist/js/custom.min.js') }}"></script>
-<!--This page JavaScript -->
+<script src="{{ asset('admins/dist/js/custom.js') }}"></script>
+<!--This toastr -->
 <script src=" {{ asset('admins/assets/libs/toastr/build/toastr.min.js') }} "></script>
 <script src=" {{ asset('admins/assets/extra-libs/toastr/toastr-init.js') }} "></script>
 <!-- sweetalert -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--datatable -->
 <script src="{{ asset('admins/assets/extra-libs/DataTables/datatables.min.js') }}"></script>
+<!-- select2 -->
+<script src="{{ asset('admins/assets/libs/select2/dist/js/select2.min.js') }}"></script>
 <!--CK editor-->
 {{--<script src="{{ asset('/admins/assets/libs/ckeditor/ckeditor.js') }}"></script>--}}
 <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
+
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {
@@ -169,6 +173,7 @@
 
 </script>
 @yield('js')
+
 </body>
 
 </html>

@@ -34,7 +34,7 @@
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-10 col-sm-6 col-lg-4 mb-2">
-                                            <select class="form-control" name="type_id" id="filterType">
+                                            <select class="form-control select2" name="type_id" id="filterType">
                                                 <option value="">Choose type</option>
                                                 @isset($types)
                                                     @foreach($types as $type)
@@ -57,7 +57,7 @@
                                         </div>
 
                                         <div class="col-10 col-sm-6 col-lg-3 mb-2">
-                                            <select class="form-control" name="status" id="filterStatus">
+                                            <select class="form-control h-100" name="status" id="filterStatus">
                                                 <option value="">Choose status</option>
                                                 <option value="1">Active</option>
                                                 <option value="2">Inactive</option>
@@ -93,6 +93,9 @@
 @section('js')
     <script>
         $(document).ready(function () {
+            $('#filterType').select2();
+            $('#filterDestination').select2();
+
             let datatable = $('#tourTable').DataTable({
                 processing: true,
                 responsive: true,
