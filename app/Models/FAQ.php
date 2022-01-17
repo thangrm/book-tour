@@ -47,72 +47,23 @@ class FAQ extends Model
     }
 
     /**
-     * Store a new FAQ for the tour
+     * Save FAQ for the tour
      *
      * @param Request $request
      * @param $tourId
+     * @param int $id
      * @return Notification
      */
-    public function storeFAQ(Request $request, $tourId)
+    public function saveData(Request $request, $tourId, int $id = 0)
     {
+        Tour::findOrFail($tourId);
         $input = $request->only('question', 'answer', 'status');
         $input['tour_id'] = $tourId;
         $input = Utilities::clearAllXSS($input);
+        $faq = $this->findOrNew($id);
 
-        $tour = Tour::find($tourId);
-        if ($tour == null) {
-            $this->notification->setMessage('Tour id not found', Notification::ERROR);
-
-            return $this->notification;
-        }
-
-        $faq = $this->where('tour_id', $tourId)->where('question', $input['question'])->first();
-        if ($faq != null) {
-            $this->notification->setMessage('The question already exists', Notification::ERROR);
-
-            return $this->notification;
-        }
-
-        if ($this->create($input)->exists) {
-            $this->notification->setMessage('New faq added successfully', Notification::SUCCESS);
-        } else {
-            $this->notification->setMessage('FAQ addition failed', Notification::ERROR);
-        }
-
-        return $this->notification;
-    }
-
-    /**
-     * Update the FAQ
-     *
-     * @param Request $request
-     * @param $tourId
-     * @param $id
-     * @return Notification
-     */
-    public function updateFAQ(Request $request, $tourId, $id)
-    {
-        $this->notification->setMessage('FAQ update failed', Notification::ERROR);
-
-        try {
-            Tour::findOrFail($tourId);
-            $faq = $this->findOrFail($id);
-            $input = $request->only('question', 'answer', 'status');
-            $input = Utilities::clearAllXSS($input);
-            $faq->fill($input);
-
-            if ($faq->save()) {
-                $this->notification->setMessage('FAQ updated successfully', Notification::SUCCESS);
-            }
-
-        } catch (QueryException $ex) {
-            $errorCode = $ex->errorInfo[1];
-            if ($errorCode == '1062') {
-                $this->notification->setMessage('The question already exists', Notification::ERROR);
-            }
-        }
-
-        return $this->notification;
+        $faq->fill($input);
+        $faq->save();
     }
 
     /**
@@ -135,7 +86,7 @@ class FAQ extends Model
      */
     public function getListFAQs($tourId)
     {
-        return $this->where('tour_id', $tourId)->oldest()->get();
+        return $this->where('tour_id', $tourId)->latest()->get();
     }
 
     /**

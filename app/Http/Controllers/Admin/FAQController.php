@@ -3,17 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Notification;
 use App\Models\FAQ;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Exception;
 
 class FAQController extends Controller
 {
     protected $faq;
+    protected $notification;
 
-    public function __construct(FAQ $faq)
+    public function __construct(FAQ $faq, Notification $notification)
     {
         $this->faq = $faq;
+        $this->notification = $notification;
     }
 
     /**
@@ -47,13 +52,27 @@ class FAQController extends Controller
     public function store(Request $request, $tourId)
     {
         $request->validate($this->faq->rules());
-        $notification = $this->faq->storeFAQ($request, $tourId);
+        $this->notification->setMessage('FAQ creation failed', Notification::ERROR);
 
-        if ($notification->isError()) {
-            return back()->with($notification->getMessage())->withInput();
+        try {
+            $this->faq->saveData($request, $tourId);
+            $this->notification->setMessage('New faq added successfully', Notification::SUCCESS);
+
+            return redirect()->route('faqs.index', $tourId)->with($this->notification->getMessage());
+        } catch (QueryException $e) {
+            $exMessage = $e->getMessage();
+
+            if ($e->errorInfo[1] == '1062') {
+                return back()->withErrors(['question' => 'The question already exists'])->withInput();
+            }
+        } catch (Exception $e) {
+            $exMessage = $e->getMessage();
         }
 
-        return redirect()->route('faqs.index', $tourId)->with($notification->getMessage());
+        return back()
+            ->with('exception', $exMessage)
+            ->with($this->notification->getMessage())
+            ->withInput();
     }
 
     /**
@@ -80,16 +99,27 @@ class FAQController extends Controller
     public function update(Request $request, $tourId, $id)
     {
         $request->validate($this->faq->rules($id));
-        $notification = $this->faq->updateFAQ($request, $tourId, $id);
+        $this->notification->setMessage('FAQ update failed', Notification::ERROR);
 
-        if ($notification->isError()) {
-            return back()->with($notification->getMessage())->withInput();
+        try {
+            $this->faq->saveData($request, $tourId, $id);
+            $this->notification->setMessage('FAQ updated successfully', Notification::SUCCESS);
+
+            return redirect()->route('faqs.index', $tourId)->with($this->notification->getMessage());
+        } catch (QueryException $e) {
+            $exMessage = $e->getMessage();
+
+            if ($e->errorInfo[1] == '1062') {
+                return back()->withErrors(['question' => 'The question already exists'])->withInput();
+            }
+        } catch (Exception $e) {
+            $exMessage = $e->getMessage();
         }
 
-        if ($request->ajax()) {
-            return json_encode($notification->getMessage());
-        }
-        return redirect()->route('faqs.index', $tourId)->with($notification->getMessage());
+        return back()
+            ->with('exception', $exMessage)
+            ->with($this->notification->getMessage())
+            ->withInput();
     }
 
     /**
