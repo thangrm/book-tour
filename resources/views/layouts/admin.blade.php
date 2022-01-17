@@ -108,7 +108,7 @@
 <script src="{{ asset('admins/dist/js/app-style-switcher.js') }}"></script>
 <!-- slimscrollbar scrollbar JavaScript -->
 <script src="{{ asset('admins/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
-<script src="{{ asset('admins/assets/extra-libs/sparkline/sparkline.js') }}"></script>
+{{--<script src="{{ asset('admins/assets/extra-libs/sparkline/sparkline.js') }}"></script>--}}
 <!--Wave Effects -->
 <script src="{{ asset('admins/dist/js/waves.js') }}"></script>
 <!--Menu sidebar -->

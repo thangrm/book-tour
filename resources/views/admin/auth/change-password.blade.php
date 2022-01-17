@@ -21,8 +21,8 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body row">
-                <div class="col-3"></div>
-                <div class="col-6">
+                <div class="col-12 col-lg-3"></div>
+                <div class="col-12 col-lg-6">
                     <form class="form pt-3" action="{{ route('admin.password.store') }}" method="post">
                         @csrf
                         <div class="form-group">
