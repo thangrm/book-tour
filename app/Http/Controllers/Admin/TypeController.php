@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Notification;
 use App\Models\Type;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class TypeController extends Controller
 {
     protected $typeTour;
+    protected $notification;
 
-    public function __construct(Type $typeTour)
+    public function __construct(Type $typeTour, Notification $notification)
     {
         $this->typeTour = $typeTour;
+        $this->notification = $notification;
     }
 
     /**
@@ -34,9 +39,14 @@ class TypeController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->typeTour->rules());
-        $notification = $this->typeTour->storeType($request);
+        try {
+            $this->typeTour->saveData($request);
+            $this->notification->setMessage('New type added successfully', Notification::SUCCESS);
+        } catch (Exception $e) {
+            $this->notification->setMessage('Type creation failed', Notification::ERROR);
+        }
 
-        return json_encode($notification->getMessage());
+        return json_encode($this->notification->getMessage());
     }
 
     /**
@@ -49,9 +59,14 @@ class TypeController extends Controller
     public function update(Request $request, int $id)
     {
         $request->validate($this->typeTour->rules($id));
-        $notification = $this->typeTour->updateType($request, $id);
+        try {
+            $this->typeTour->saveData($request, $id);
+            $this->notification->setMessage('Type updated successfully', Notification::SUCCESS);
+        } catch (Exception $e) {
+            $this->notification->setMessage('Type creation failed', Notification::ERROR);
+        }
 
-        return json_encode($notification->getMessage());
+        return response()->json($this->notification->getMessage());
     }
 
     /**
@@ -62,7 +77,18 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        return json_encode($this->typeTour->remove($id)->getMessage());
+        try {
+            $codeMessage = $this->typeTour->remove($id);
+            $this->notification->setMessage('Type deleted successfully', Notification::SUCCESS);
+
+            if ($codeMessage == 2) {
+                $this->notification->setMessage('The type has tours that cannot be deleted', Notification::ERROR);
+            }
+        } catch (Exception $e) {
+            $this->notification->setMessage('Type delete failed', Notification::ERROR);
+        }
+
+        return response()->json($this->notification->getMessage());
     }
 
     /**

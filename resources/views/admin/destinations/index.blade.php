@@ -57,11 +57,7 @@
                                 </div>
                             </div>
 
-                            <div>
-                                @error('status')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
+                            <p class="text-danger" id="errorStatus"></p>
                         </div>
 
 
@@ -131,10 +127,8 @@
                                     <input type="text" class="form-control" name="name" id="nameEdit"
                                            placeholder="Title"
                                            value="{{old('name')}}">
-                                    @error('name')
-                                    <p class="text-danger">{{ $message }}</p>
-                                    @enderror
                                 </div>
+                                <p class="text-danger" id="errorNameEdit"></p>
                             </div>
 
                             <div class="form-group">
@@ -147,9 +141,7 @@
                                 <div>
                                     <img id="showImgEdit" style="max-height: 150px; margin: 10px 2px">
                                 </div>
-                                @error('image')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                                <p class="text-danger" id="errorImageEdit"></p>
                             </div>
 
                         </div>
@@ -366,6 +358,10 @@
                         if (response?.errors?.image !== undefined) {
                             $('#errorImage').text(response.errors.image[0]);
                         }
+
+                        if (response?.errors?.status !== undefined) {
+                            $('#errorStatus').text(response.errors.status[0]);
+                        }
                     },
                     complete: function () {
                         enableSubmitButton('#formAddDestination', 300);
@@ -406,8 +402,16 @@
                             $('#editModal').modal('hide');
                         }
                     },
-                    error: function () {
-                        toastrMessage('error', 'Destination update failed');
+                    error: function (jqXHR) {
+                        let response = jqXHR.responseJSON;
+                        toastrMessage('error', 'Destination creation failed');
+                        if (response?.errors?.name !== undefined) {
+                            $('#errorNameEdit').text(response.errors.name[0]);
+                        }
+
+                        if (response?.errors?.image !== undefined) {
+                            $('#errorImageEdit').text(response.errors.image[0]);
+                        }
                     },
                     complete: function () {
                         enableSubmitButton('#formEditDestination', 300);
