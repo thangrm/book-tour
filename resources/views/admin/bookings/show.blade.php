@@ -57,7 +57,7 @@
                             <tr>
                                 <td class="tb-title">Status:</td>
                                 <td>
-                                    @include('admin.components.status_booking', ['status' => $booking->status])
+                                    @include('components.status_booking', ['status' => $booking->status])
                                 </td>
                             </tr>
                             <tr>

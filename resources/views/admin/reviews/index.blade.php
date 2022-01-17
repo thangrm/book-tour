@@ -23,7 +23,7 @@
             <div class="card-body">
                 <table class="table table-striped table-bordered" id="reviewTable">
                     <div class="card-body pl-0 pt-0">
-                        <h4>List of Reviews</h4>
+                        <h4 class="m-b-20">List of Reviews</h4>
                         <div class="row">
                             <div class="col-sm-12 col-lg-4">
                                 <div class="form-group row">
@@ -93,10 +93,13 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'comment', name: 'comment'},
-                    {data: 'rate', name: 'rate'},
+                    {data: 'rate', name: 'rate', width: 125},
                     {data: 'status', name: 'status'},
-                    {data: 'action', name: 'action', width: '30px'},
-                ]
+                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 30},
+                ],
+                columnDefs: [
+                    {className: 'align-middle', targets: '_all'},
+                ],
             });
 
             $('#filterRate, #filterStatus').on('change', function () {

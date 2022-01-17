@@ -132,7 +132,7 @@
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
-                    {data: 'action', name: 'action'},
+                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
                 ],
                 columnDefs: [
                     {className: 'align-middle', targets: '_all'},

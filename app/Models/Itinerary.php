@@ -28,15 +28,11 @@ class Itinerary extends Model
      *
      * @return string[]
      */
-    public function rule($isUpdate = false): array
+    public function rules($isUpdate = false): array
     {
         $rule = [
             'name' => 'required|string|max:150'
         ];
-
-        if ($isUpdate) {
-            $rule['id'] = 'required|integer|exists:itineraries,id';
-        }
 
         return $rule;
     }
@@ -94,20 +90,15 @@ class Itinerary extends Model
      * @param $tourId
      * @return Notification
      */
-    public function updateItinerary(Request $request, $tourId)
+    public function updateItinerary(Request $request, $tourId, $id)
     {
         $this->notification->setMessage('Itinerary update failed', Notification::ERROR);
 
         try {
-            $itinerary = $this->findOrFail($request->id);
+            $itinerary = $this->findOrFail($id);
             $itinerary->name = Utilities::clearXSS($request->name);
 
-            $tour = Tour::find($tourId);
-            if ($tour == null) {
-                $this->notification->setMessage('Tour id not found', Notification::ERROR);
-
-                return $this->notification;
-            }
+            Tour::findOrFail($tourId);
 
             if ($itinerary->save()) {
                 $this->notification->setMessage('Itinerary updated successfully', Notification::SUCCESS);
@@ -157,9 +148,10 @@ class Itinerary extends Model
             })
             ->addColumn('action', function ($data) {
                 $id = $data->id;
+                $linkEdit = route("itineraries.update", [$data->tour_id, $data->id]);
                 $linkDelete = route("itineraries.destroy", [$data->tour_id, $data->id]);
 
-                return view('components.action_modal', compact(['id', 'linkDelete']));
+                return view('components.action_modal', compact(['id', 'linkEdit', 'linkDelete']));
             })
             ->rawColumns(['place', 'action'])
             ->make(true);

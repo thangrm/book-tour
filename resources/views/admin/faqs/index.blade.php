@@ -56,7 +56,7 @@
 
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'question', name: 'name'},
+                    {data: 'question', name: 'name', className: 'align-middle font-weight-bold', width: '30%'},
                     {data: 'answer', name: 'description'},
                     {data: 'status', name: 'description'},
                     {data: 'action', name: 'action', width: 65},
@@ -66,7 +66,7 @@
                 ],
             });
 
-            $('#faqTable thead th').removeClass('align-middle text-center');
+            $('#faqTable thead th').removeClass('align-middle text-center font-weight-bold');
 
             // Evenet Delete FAQ
             $(document).on('click', '.delete', function (e) {

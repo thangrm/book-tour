@@ -18,23 +18,17 @@
     </div>
 
     <div class="container-fluid row">
-        <div class="col-4">
+        <div class="col-12 col-lg-4">
             <div class="card">
                 <div class="card-body">
                     <form href="{{ route('itineraries.store', $tourId) }}" id="formAddItinerary" method="post">
                         @csrf
-                        <div class="form-group row">
-                            <label for="name" class="col-12">
-                                Itinerary<span class="text-danger">*</span>
-                            </label>
-                            <div class="col-12">
-                                <input type="text" class="form-control" name="name" id="name"
-                                       placeholder="Title" value="{{ old('name') }}">
-                                @error('name')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
+                        <div class="form-group">
+                            Title<span class="text-danger">*</span>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Title">
+                            <p class="text-danger" id="errorName"></p>
                         </div>
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-info mb-3">
                                 Add Itinerary
@@ -46,7 +40,7 @@
             </div>
         </div>
 
-        <div class="col-8">
+        <div class="col-12 col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">List of Itineraries</h4>
@@ -84,6 +78,7 @@
                                 <div class="col-12">
                                     <input type="text" class="form-control" name="name" id="nameEdit"
                                            placeholder="Name itinerary">
+                                    <p class="text-danger" id="errorNameEdit"></p>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +95,7 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            let itinerariesId = null;
+            let linkEditItinerary;
             disableSubmitButton('#formAddItinerary');
             disableSubmitButton('#formEditItinerary');
 
@@ -119,44 +114,8 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'place', name: 'place'},
-                    {data: 'action', name: 'action'},
+                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
                 ],
-                drawCallback: function () {
-                    $('.edit').click(function () {
-                        itinerariesId = $(this).data('id');
-                        let nameItineray = $('#itinerary-' + itinerariesId).children().eq(1).text();
-                        $('#nameEdit').val(nameItineray);
-                    });
-                }
-            });
-
-            // Edit Itinerary
-            $('#formEditItinerary').submit(function (e) {
-                e.preventDefault();
-
-                let name = $('#nameEdit').val();
-                $.ajax({
-                    url: '{{ route('itineraries.update', $tourId) }}',
-                    method: "PUT",
-                    dataType: 'json',
-                    data: {id: itinerariesId, name: name},
-                    success: function (response) {
-                        let type = response['alert-type'];
-                        let message = response['message'];
-                        toastrMessage(type, message);
-
-                        if (type === 'success') {
-                            datatable.ajax.reload(null, false);
-                            $('#editModal').modal('hide');
-                        }
-                    },
-                    error: function () {
-                        toastrMessage('error', 'Itinerary update failed');
-                    },
-                    complete: function () {
-                        enableSubmitButton('#formEditItinerary', 300);
-                    }
-                });
             });
 
             // Evenet Delete Itinerary
@@ -203,6 +162,91 @@
                     }
                 })
             })
+
+            // Edit
+            $(document).on('click', '.edit', function (e) {
+                linkEditItinerary = $(this).attr('href');
+                let id = $(this).data('id');
+                let nameItineray = $('#itinerary-' + id).children().eq(1).text();
+
+                $('#nameEdit').val(nameItineray);
+            });
+
+            // Add New Itinerary
+            $('#formAddItinerary').submit(function (e) {
+                e.preventDefault();
+
+                $('#errorName').text('');
+
+                let link = $(this).attr('action');
+                let name = $('#name').val();
+
+                let formData = new FormData();
+                formData.append("name", name);
+
+                $.ajax({
+                    url: link,
+                    method: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (response) {
+                        response = JSON.parse(response);
+                        let type = response['alert-type'];
+                        let message = response['message'];
+                        toastrMessage(type, message);
+
+                        if (type === 'success') {
+                            datatable.draw();
+                            $('#formAddItinerary')[0].reset();
+                        }
+                    },
+                    error: function (jqXHR) {
+                        let response = jqXHR.responseJSON;
+                        toastrMessage('error', 'Itinerary creation failed');
+                        if (response?.errors?.name !== undefined) {
+                            $('#errorName').text(response.errors.name[0]);
+                        }
+                    },
+                    complete: function () {
+                        enableSubmitButton('#formAddItinerary', 300);
+                    }
+                });
+            });
+
+            // Edit Itinerary
+            $('#formEditItinerary').submit(function (e) {
+                e.preventDefault();
+
+                $('#errorNameEdit').text('');
+                let name = $('#nameEdit').val();
+                $.ajax({
+                    url: linkEditItinerary,
+                    method: "PUT",
+                    dataType: 'json',
+                    data: {name: name},
+                    success: function (response) {
+                        let type = response['alert-type'];
+                        let message = response['message'];
+                        toastrMessage(type, message);
+
+                        if (type === 'success') {
+                            datatable.ajax.reload(null, false);
+                            $('#editModal').modal('hide');
+                        }
+                    },
+                    error: function (jqXHR) {
+                        let response = jqXHR.responseJSON;
+                        toastrMessage('error', 'Itinerary update failed');
+                        if (response?.errors?.name !== undefined) {
+                            $('#errorNameEdit').text(response.errors.name[0]);
+                        }
+                    },
+                    complete: function () {
+                        enableSubmitButton('#formEditItinerary', 300);
+                    }
+                });
+            });
         });
     </script>
 @endsection

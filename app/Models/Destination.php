@@ -60,7 +60,7 @@ class Destination extends Model
      *
      * @param Request $request
      * @param int $id
-     * @return Notification
+     * @return void
      */
     public function saveData(Request $request, int $id = 0)
     {

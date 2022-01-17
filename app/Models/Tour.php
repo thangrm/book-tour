@@ -17,14 +17,7 @@ class Tour extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $notification;
     protected $path = 'public/images/tours/';
-
-    public function __construct(array $attributes = array())
-    {
-        parent::__construct($attributes);
-        $this->notification = new Notification();
-    }
 
     /**
      * Get the destination that owns the tour.

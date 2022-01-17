@@ -105,37 +105,33 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="d-flex align-items-center">
-                            <div class="input-group m-r-5">
-                                <input type="hidden" name="status" id="status">
-                                @include('admin.components.button_switch',
-                                [
-                                    'status' => empty(old('trending')) ? 1 : old('trending'),
-                                    'id' => 'btnSwitchTrending'
-                                ])
-                            </div>
-                            <label for="trending" class="m-0">Trending</label>
-                            @error('trending')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
+                        <div class="input-group">
+                            <input type="hidden" name="trending" id="trending">
+                            @include('components.button_switch',
+                                        [
+                                            'status' => empty(old('trending')) ? 1 : old('trending'),
+                                            'id' => 'btnTrending'
+                                        ])
+                            <label for="trending" class="m-l-5 m-t-5">Trending</label>
                         </div>
+                        @error('trending')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="form-group">
-                        <div class="">
-                            <div class="input-group m-r-5">
-                                <input type="hidden" name="status" id="status">
-                                @include('admin.components.button_switch',
-                                [
-                                    'status' => empty(old('status')) ? 1 : old('status'),
-                                    'id' => 'btnSwitchStatus'
-                                ])
-                                <label for="status" class="m-0">Status</label>
-                            </div>
-                            @error('status')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
+                        <div class="input-group m-r-5">
+                            <input type="hidden" name="status" id="status">
+                            @include('components.button_switch',
+                            [
+                                'status' => empty(old('status')) ? 1 : old('status'),
+                                'id' => 'btnStatus'
+                            ])
+                            <label for="status" class="m-l-5 m-t-5">Status</label>
                         </div>
+                        @error('status')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="form-group">
@@ -201,6 +197,25 @@
                 e.preventDefault();
                 overviewEditor.updateSourceElement();
                 e.currentTarget.submit();
+            });
+
+            // Add new Tour
+            $('#formCreateTour').submit(function (e) {
+                e.preventDefault();
+
+                if ($('#btnStatus').is(":checked")) {
+                    $('#status').val(1);
+                } else {
+                    $('#status').val(2);
+                }
+
+                if ($('#btnTrending').is(":checked")) {
+                    $('#trending').val(1);
+                } else {
+                    $('#trending').val(2);
+                }
+
+                this.submit();
             });
         });
     </script>

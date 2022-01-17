@@ -86,7 +86,7 @@
                     {data: 'people', name: 'people', className: 'align-middle text-center'},
                     {data: 'status', name: 'status', className: 'align-middle text-center'},
                     {data: 'total', name: 'total'},
-                    {data: 'action', name: 'action', className: 'align-middle text-center'},
+                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
                 ],
                 columnDefs: [
                     {className: 'align-middle', targets: '_all'},

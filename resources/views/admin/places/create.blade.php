@@ -24,48 +24,39 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('places.store', [$itinerary->tour_id, $itinerary->id]) }}" class="form-horizontal"
-              method="post"
-              enctype="multipart/form-data"
-              id="formCreatePlace">
-            @csrf
+        <div class="card">
             <div class="card-body">
-                <div class="form-group row">
-                    <label for="name" class="col-sm-2 text-lg-right control-label col-form-label">
-                        Name place <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-sm-9">
+                <form action="{{ route('places.store', [$itinerary->tour_id, $itinerary->id]) }}"
+                      class="form-horizontal"
+                      method="post"
+                      enctype="multipart/form-data"
+                      id="formCreatePlace">
+                    @csrf
+                    <div class="form-group">
+                        <label for="name">
+                            Name place <span class="text-danger">*</span>
+                        </label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name place"
                                value="{{ old('name') }}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label for="description"
-                           class="col-sm-2 text-lg-right control-label col-form-label">
-                        Description
-                    </label>
-                    <div class="col-sm-9">
+                    <div class="form-group">
+                        <label for="description">
+                            Description
+                        </label>
                         <textarea name="description" id="description" cols="30" rows="10"></textarea>
                         @error('description')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
 
+                    <button type="submit" class="btn btn-info waves-effect waves-light">Add new place</button>
+                </form>
             </div>
-
-            <div class="card-body">
-                <div class="form-group m-b-0 text-lg-right row">
-                    <div class="col-11">
-                        <button type="submit" class="btn btn-info waves-effect waves-light">Add new place</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 @endsection
 @section('js')

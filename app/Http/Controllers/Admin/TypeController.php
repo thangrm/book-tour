@@ -29,18 +29,14 @@ class TypeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return false|\Illuminate\Http\RedirectResponse|string
      */
     public function store(Request $request)
     {
         $request->validate($this->typeTour->rules());
         $notification = $this->typeTour->storeType($request);
 
-        if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage())->withInput();
-        }
-
-        return redirect()->route('types.index')->with($notification->getMessage());
+        return json_encode($notification->getMessage());
     }
 
     /**
