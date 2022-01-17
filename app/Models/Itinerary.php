@@ -37,7 +37,7 @@ class Itinerary extends Model
     }
 
     /**
-     * Store itinerary
+     * Save itinerary
      *
      * @param Request $request
      * @param $tourId

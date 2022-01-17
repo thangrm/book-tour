@@ -90,7 +90,7 @@ class ItineraryController extends Controller
                 $this->notification->setMessage('The itinerary already exists', Notification::ERROR);
             }
         } catch (Exception $e) {
-            $this->notification->setMessage('Itinerary addition failed', Notification::ERROR);
+            $this->notification->setMessage('Itinerary update failed', Notification::ERROR);
         }
 
         return response()->json($this->notification->getMessage());
