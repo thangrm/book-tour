@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Notification;
 use App\Models\Itinerary;
 use App\Models\Place;
+use Exception;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,10 +17,12 @@ use Illuminate\Http\Response;
 class PlaceController extends Controller
 {
     protected $place;
+    protected $notification;
 
-    public function __construct(Place $place)
+    public function __construct(Place $place, Notification $notification)
     {
         $this->place = $place;
+        $this->notification = $notification;
     }
 
     /**
@@ -46,19 +51,35 @@ class PlaceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @param $tourId
      * @param $itineraryId
      * @return RedirectResponse
      */
     public function store(Request $request, $tourId, $itineraryId)
     {
-        $request->validate($this->place->rule());
-        $notification = $this->place->storePlace($request, $itineraryId);
+        $request->validate($this->place->rules());
 
-        if ($notification->isError()) {
-            return back()->with($notification->getMessage())->withInput();
+        try {
+            $this->notification->setMessage('New place added successfully', Notification::SUCCESS);
+            $this->place->saveData($request, $itineraryId);
+
+            return redirect()->route('places.index', [$tourId, $itineraryId])->with($this->notification->getMessage());
+        } catch (QueryException $e) {
+            $exMessage = $e->getMessage();
+
+            if ($e->errorInfo[1] == '1062') {
+                return back()->withErrors(['name' => 'The place already exists'])->withInput();
+            }
+        } catch (Exception $e) {
+            $exMessage = $e->getMessage();
         }
 
-        return redirect()->route('places.index', [$tourId, $itineraryId])->with($notification->getMessage());
+        $this->notification->setMessage('Place addition failed', Notification::ERROR);
+
+        return back()
+            ->with('exception', $exMessage)
+            ->with($this->notification->getMessage())
+            ->withInput();
     }
 
     /**
@@ -78,20 +99,35 @@ class PlaceController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
+     * @param $tourId
      * @param $itineraryId
      * @param int $id
      * @return RedirectResponse
      */
     public function update(Request $request, $tourId, $itineraryId, $id)
     {
-        $request->validate($this->place->rule());
-        $notification = $this->place->updatePlace($request, $itineraryId, $id);
+        $request->validate($this->place->rules($id));
+        try {
+            $this->notification->setMessage('Place updated successfully', Notification::SUCCESS);
+            $this->place->saveData($request, $itineraryId, $id);
 
-        if ($notification->isError()) {
-            return redirect()->back()->with($notification->getMessage())->withInput();
+            return redirect()->route('places.index', [$tourId, $itineraryId])->with($this->notification->getMessage());
+        } catch (QueryException $e) {
+            $exMessage = $e->getMessage();
+
+            if ($e->errorInfo[1] == '1062') {
+                return back()->withErrors(['name' => 'The place already exists'])->withInput();
+            }
+        } catch (Exception $e) {
+            $exMessage = $e->getMessage();
         }
 
-        return redirect()->route('places.index', [$tourId, $itineraryId])->with($notification->getMessage());
+        $this->notification->setMessage('Place update failed', Notification::ERROR);
+
+        return back()
+            ->with('exception', $exMessage)
+            ->with($this->notification->getMessage())
+            ->withInput();
     }
 
     /**
@@ -109,9 +145,10 @@ class PlaceController extends Controller
      * Process datatables ajax request.
      *
      * @param Request $request
+     * @param $tourId
      * @param $itineraryId
      * @return JsonResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function getData(Request $request, $tourId, $itineraryId)
     {
