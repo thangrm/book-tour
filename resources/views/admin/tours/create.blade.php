@@ -172,6 +172,8 @@
     <script>
         $(document).ready(function () {
             let overviewEditor = null;
+            $('#destinationId').select2();
+            $('#typeId').select2();
 
             $('#image').change(function (e) {
                 let reader = new FileReader();
