@@ -1,0 +1,139 @@
+.header-contact {
+    background-image: url('/images/background-contact.png');
+    height: 568px;
+    @media only screen and (max-width: 992px) {
+        height: 420px;
+    }
+}
+
+.box-contact {
+    .contact-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: black;
+    }
+    .contact-text {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.8);
+    }
+    .form-contact {
+        input,
+        textarea {
+            margin-bottom: 15px;
+            background: #F5F5F5;
+            border: none;
+            border-radius: 0;
+        }
+        input {
+            height: 50px;
+        }
+        textarea {
+            resize: none;
+        }
+         ::placeholder {
+            color: #747474;
+        }
+        button {
+            width: 200px;
+            height: 44px !important;
+            border: none;
+            background: #FF7B42;
+            color: white;
+            height: 18px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        button:hover {
+            transform: scale(1.01, 1.01);
+            transition: 0.3s;
+        }
+    }
+    .office {
+        height: 488px;
+        position: relative;
+        .office-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .info-office {
+            position: absolute;
+            width: 422px;
+            height: 324px;
+            bottom: 0;
+            left: 0;
+            background: #1C1C1E;
+            padding-left: 40px;
+            .office-title {
+                margin-top: 30px;
+                font-size: 32px;
+                font-weight: 700;
+                color: white;
+            }
+            .info-office-item {
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                margin-bottom: 30px;
+                img {
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 15px;
+                }
+                .text-item {
+                    p {
+                        margin-bottom: 0;
+                    }
+                    .text-title {
+                        font-weight: bold;
+                        font-size: 18px;
+                        color: $orange_primary;
+                    }
+                    .text-content {
+                        font-weight: 500;
+                        font-size: 14px;
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 992px) {
+        .office {
+            margin-top: 80px;
+        }
+    }
+    @media only screen and (max-width: 576px) {
+        .contact-title {
+            font-size: 26px;
+        }
+        .contact-text {
+            font-size: 12px;
+        }
+        .office {
+            .info-office {
+                width: 100%;
+                top: 50%;
+                transform: translateY(-50%);
+                padding: 0 10px;
+            }
+        }
+    }
+}
+
+.box-map-contact {
+    width: 100%;
+    margin-top: 100px;
+    iframe {
+        width: 100%;
+        height: 500px;
+    }
+}
+
+.footer {
+    margin-top: 0;
+}

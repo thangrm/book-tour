@@ -11,8 +11,14 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'public/css', [
-    require('postcss-import'),
-    require('tailwindcss'),
-    require('autoprefixer'),
-]).sass('resources/scss/toggle-switch.scss', 'public/css/app.css');
+mix.options({processCssUrls: false})
+    .js('resources/js/app.js', 'public/js')
+    .postCss('resources/css/app.css', 'public/css', [
+        require('postcss-import'),
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ])
+    .sass('resources/scss/main.scss', 'public/css/app.css')
+    .sass('resources/scss/admin.scss', 'public/css')
+    .sourceMaps();
+
