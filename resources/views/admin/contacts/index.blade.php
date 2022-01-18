@@ -60,6 +60,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
+                        <th>Date</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -132,6 +133,7 @@
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
+                    {data: 'date', name: 'date'},
                     {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
                 ],
                 columnDefs: [

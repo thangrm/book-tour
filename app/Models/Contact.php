@@ -19,7 +19,7 @@ class Contact extends Model
             $contact->status = 2;
             $contact->save();
         }
-        
+
         return $contact;
     }
 
@@ -54,6 +54,9 @@ class Contact extends Model
             ->addIndexColumn()
             ->setRowClass(function ($data) {
                 return ($data->status == 1) ? 'font-weight-bold' : '';
+            })
+            ->addColumn('date', function ($data) {
+                return date("Y/m/d h:m", strtotime($data->created_at));
             })
             ->addColumn('action', function ($data) {
                 $link = route('contacts.show', $data->id);
