@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,11 +29,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Client
+Route::get('/', [ClientController::class, 'index'])->name('index');
+Route::get('/list-tour', [ClientController::class, 'listTour'])->name('list_tour');
 
 
+// Admin
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [LoginController::class, 'index'])->name('admin.login');
     Route::post('/login', [LoginController::class, 'login'])->name('admin.login.post');
