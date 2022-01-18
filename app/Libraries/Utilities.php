@@ -3,22 +3,19 @@
 namespace App\Libraries;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Utilities
 {
     /**
-     * @param string $string
+     * @param string|null $string
      * @return string
      */
-    public static function clearXSS(string $string)
+    public static function clearXSS(?string $string): string
     {
         $string = nl2br($string);
         $string = trim(strip_tags($string));
-        $string = self::removeScripts($string);
-
-        return $string;
+        return self::removeScripts($string);
     }
 
     /**
@@ -28,10 +25,7 @@ class Utilities
     public static function clearAllXSS(array $rawData)
     {
         foreach ($rawData as $key => $value) {
-            $value = nl2br($value);
-            $value = trim(strip_tags($value));
-            $value = self::removeScripts($value);
-            $string[$key] = self::clearXSS($value);
+            $rawData[$key] = self::clearXSS($value);
         }
 
         return $rawData;
@@ -81,13 +75,13 @@ class Utilities
      * @param string $path
      * @return string
      */
-    public static function storeImage(Request $request, string $nameFile, string $path)
+    public static function storeImage($image, string $path)
     {
-        $file = $request->file($nameFile)->getClientOriginalName();
+        $file = $image->getClientOriginalName();
         $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
         $extension = pathinfo($file, PATHINFO_EXTENSION);
         $imageName = date('YmdHis') . '-' . uniqid() . $file_name . '.' . $extension;
-        $request->file($nameFile)->storeAs($path, $imageName);
+        $image->storeAs($path, $imageName);
 
         return $imageName;
     }
@@ -95,8 +89,7 @@ class Utilities
     /**
      * Multiple store images
      *
-     * @param Request $request
-     * @param string $nameFile
+     * @param $images
      * @param string $path
      * @return array
      */

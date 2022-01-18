@@ -125,7 +125,7 @@ class Tour extends Model
         $oldImage = $tour->image;
 
         if ($request->hasFile('image')) {
-            $input['image'] = Utilities::storeImage($request, 'image', $this->path);
+            $input['image'] = Utilities::storeImage($request->file('image'), $this->path);
         }
 
         $duration = empty($request->duration) ? 128 : $request->duration;   //128 is max for duration
