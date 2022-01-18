@@ -50,7 +50,6 @@ class Gallery extends Model
      *
      * @param Request $request
      * @param $tourId
-     * @return Notification
      */
     public function storeGallery(Request $request, $tourId)
     {

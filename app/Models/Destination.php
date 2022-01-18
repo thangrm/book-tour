@@ -71,7 +71,7 @@ class Destination extends Model
         $oldImage = $destination->image;
 
         if ($request->hasFile('image')) {
-            $input['image'] = Utilities::storeImage($request, 'image', $this->path);
+            $input['image'] = Utilities::storeImage($request->file('image'), $this->path);
         }
 
         $destination->fill($input);

@@ -56,10 +56,7 @@ class DestinationController extends Controller
         } catch (Exception $e) {
             $this->notification->setMessage('Destination creation failed', Notification::ERROR);
 
-            return back()
-                ->with('exception', $e->getMessage())
-                ->with($this->notification->getMessage())
-                ->withInput();
+            return json_encode($this->notification->getMessage());
         }
     }
 
