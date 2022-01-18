@@ -25,7 +25,7 @@
     <!-- Custom CSS -->
     <link href="{{ asset('admins/assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admins/dist/css/style.min.css') }}" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -58,7 +58,7 @@
     <!-- Topbar header - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <header class="topbar">
-        @include('components.nav');
+        @include('components.nav_admin');
     </header>
     <!-- ============================================================== -->
     <!-- End Topbar header -->
@@ -68,7 +68,7 @@
     <!-- ============================================================== -->
     <aside class="left-sidebar">
         <!-- Sidebar scroll-->
-    @include('components.sidebar')
+    @include('components.sidebar_admin')
     <!-- End Sidebar scroll-->
     </aside>
     <!-- ============================================================== -->
@@ -83,7 +83,7 @@
     <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
-    @include('components.footer')
+    @include('components.footer_admin')
     <!-- ============================================================== -->
         <!-- End footer -->
         <!-- ============================================================== -->

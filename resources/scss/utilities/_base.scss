@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+body {
+    font-family: 'DM Sans', sans-serif;
+}
+
+.fill-white {
+    filter: brightness(0) invert(1);
+}
+
+.fill-orange {
+    filter: invert(57%) sepia(74%) saturate(2141%) hue-rotate(333deg) brightness(107%) contrast(102%);
+}
+
+.fill-yellow {
+    filter: invert(64%) sepia(98%) saturate(425%) hue-rotate(350deg) brightness(100%) contrast(103%);
+}
+
+.fill-gray {
+    filter: invert(69%) sepia(54%) saturate(0%) hue-rotate(198deg) brightness(106%) contrast(87%);
+}
+
+.ribbon {
+    position: absolute;
+    top: -2px;
+    right: 8%;
+    height: 35px;
+    width: 20px;
+}
+
+.card-title {
+    font-size: 18px;
+}
+
+.card-text {
+    font-size: 14px;
+    padding: 9px 0;
+    margin: 0;
+    img {
+        width: 16px;
+        height: 18px;
+        display: inline-block;
+        margin-right: 14px;
+    }
+}

@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 class Utilities
 {
     /**
+     * Clear XSS for a string
+     *
      * @param string|null $string
      * @return string
      */
@@ -19,6 +21,8 @@ class Utilities
     }
 
     /**
+     * Clear XSS for array
+     *
      * @param array $rawData
      * @return array
      */
@@ -32,6 +36,8 @@ class Utilities
     }
 
     /**
+     * Remove tag script
+     *
      * @param string $str
      * @return string
      */
@@ -47,6 +53,8 @@ class Utilities
     }
 
     /**
+     * render duration string
+     *
      * @param int $duration
      * @return string
      */
@@ -70,8 +78,7 @@ class Utilities
     /**
      * Store a image
      *
-     * @param Request $request
-     * @param string $nameFile
+     * @param $image
      * @param string $path
      * @return string
      */
@@ -97,13 +104,7 @@ class Utilities
     {
         $listNameImages = [];
         foreach ($images as $image) {
-            $file = $image->getClientOriginalName();
-            $file_name = Str::slug(pathinfo($file, PATHINFO_FILENAME));
-            $extension = pathinfo($file, PATHINFO_EXTENSION);
-            $imageName = date('YmdHis') . '-' . uniqid() . $file_name . '.' . $extension;
-            $image->storeAs($path, $imageName);
-
-            $listNameImages[] = $imageName;
+            $listNameImages[] = self::storeImage($image, $path);
         }
 
         return $listNameImages;
