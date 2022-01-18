@@ -34,16 +34,39 @@
             margin: auto;
             display: block;
             width: 80%;
-            max-width: 700px;
+            max-width: 60vw;
+            max-height: 80vh;
+            object-fit: cover;
+            object-position: center;
         }
 
-        @keyframes zoom {
-            from {
-                transform: scale(0.1)
-            }
-            to {
-                transform: scale(1)
-            }
+        /* Nav slider image */
+        .nav {
+            position: absolute;
+            color: #bbb;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .nav:hover {
+            color: white;
+            cursor: pointer;
+        }
+
+        .nav-left {
+            left: 30px;
+        }
+
+        .nav-right {
+            right: 30px;
+        }
+
+        .nav-disabled {
+            color: #333;
+        }
+
+        .nav-disabled:hover {
+            color: #333;
         }
 
         /* The Close Button */
@@ -64,6 +87,7 @@
             cursor: pointer;
         }
 
+        /* The Delete Button */
         .delete {
             position: absolute;
             top: 0;
@@ -120,10 +144,10 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Image Gallery</h4>
-                    <div class="row">
+                    <div class="row" id="listImages">
                         @foreach($galleries as $gallery)
                             <div class="img col-6 col-md-4 col-lg-3" id="image{{ $gallery->id }}">
-                                <img src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
+                                <img class="image-item" src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
                                 <a href="{{ route("galleries.destroy", [$tourId, $gallery->id]) }}"
                                    class="btn btn-danger btn-sm rounded-0 text-white delete" types="button"
                                    data-toggle="tooltip" title="Delete"
@@ -140,8 +164,13 @@
         <!-- The Modal -->
         <div id="myModal" class="modal">
             <span class="close">×</span>
-            <img class="modal-content" id="imgModal">
-            <div id="caption"></div>
+            <img class="modal-content animated zoomIn" id="imgModal">
+            <div class="nav nav-left nav-disabled" id="navLeftGallery">
+                <i class="fa fa-arrow-left fa-2x"></i>
+            </div>
+            <div class="nav nav-right" id="navRightGallery">
+                <i class=" fa fa-arrow-right fa-2x"></i>
+            </div>
         </div>
     </div>
 @endsection
@@ -168,24 +197,79 @@
 
             // Modal view image
             let modal = document.getElementById('myModal');
-            let span = document.getElementsByClassName("close")[0];
 
             // When the user clicks on <span> (x), close the modal
-            span.onclick = function () {
+            $('.close').on('click', function () {
                 modal.style.display = "none";
-            }
+            });
+
+            // When the user press esc
+            $(document).keyup(function (e) {
+                if (e.key === "Escape") {
+                    modal.style.display = "none";
+                }
+            });
 
             // Get all images and insert the clicked image inside the modal
-            let images = document.getElementsByTagName('img');
+            let listImages = [];
+            $("#listImages img").each(function () {
+                listImages.push($(this).attr('src'))
+            });
+
+            let imageTarget;
             let modalImg = document.getElementById("imgModal");
-            let i;
-            for (i = 0; i < images.length; i++) {
-                images[i].onclick = function () {
-                    modal.style.display = "block";
-                    modalImg.src = this.src;
-                    modalImg.alt = this.alt;
+            $('.image-item').on('click', function (e) {
+                imageTarget = $(this).attr('src')
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                checkDisabledNav(getCurrentIndex());
+            });
+
+            // Get index slider
+            function getCurrentIndex() {
+                let i = 0;
+                for (i; i < listImages.length; i++) {
+                    if (imageTarget === listImages[i]) {
+                        return i;
+                    }
                 }
             }
+
+            // Check disabled nav
+            function checkDisabledNav(index) {
+                $('#navLeftGallery').removeClass('nav-disabled');
+                $('#navRightGallery').removeClass('nav-disabled');
+
+                if (index === 0) {
+                    $('#navLeftGallery').addClass('nav-disabled');
+                }
+
+                if (index === listImages.length - 1) {
+                    $('#navRightGallery').addClass('nav-disabled');
+                }
+            }
+
+            // Nav image
+            function navImage(step) {
+                let i = getCurrentIndex();
+                checkDisabledNav(i);
+                let nextIndex = i + step;
+                if (nextIndex < 0 || nextIndex >= listImages.length) {
+                    return;
+                }
+                modalImg.src = listImages[nextIndex];
+                imageTarget = listImages[nextIndex];
+            }
+
+            // Nav left slider
+            $('#navLeftGallery').on('click', function () {
+                navImage(-1)
+            });
+
+            // Nav right slider
+            $('#navRightGallery').on('click', function () {
+                navImage(1);
+            });
 
             // Modal Delete
             $(document).on('click', '.delete', function (e) {
