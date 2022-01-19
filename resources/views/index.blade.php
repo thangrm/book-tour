@@ -154,53 +154,18 @@
             </div>
             <div class="body-slide">
                 <div class="owl-carousel" id="slideDestinations">
-                    <div class="card card-destination">
-                        <img src="images/sapa.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href=""> Sapa, Laocai </a></h5>
-                            <p class="card-text">24 experiences</p>
+                    @foreach($destinations as $destination)
+                        <div class="card card-destination">
+                            <img src="{{ asset('storage/images/destinations/'.$destination->image) }}"
+                                 class="card-img-top"
+                                 alt="{{ $destination->name }}">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href=""> {{ $destination->name }} </a></h5>
+                                <p class="card-text">{{ $destination->tours()->count() }} experiences</p>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
 
-                    <div class="card card-destination">
-                        <img src="images/hoian.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href=""> Hoian, Quangnam </a></h5>
-                            <p class="card-text">12 experiences</p>
-                        </div>
-                    </div>
-
-                    <div class="card card-destination">
-                        <img src="images/banahill.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="">Ba Na Hill, Danang</a></h5>
-                            <p class="card-text">28 experiences</p>
-                        </div>
-                    </div>
-
-                    <div class="card card-destination">
-                        <img src="images/muine.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="">Muine, Binhthuan</a></h5>
-                            <p class="card-text">11 experiences</p>
-                        </div>
-                    </div>
-
-                    <div class="card card-destination">
-                        <img src="images/cultural1.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="">Hoian, Quangnam</a></h5>
-                            <p class="card-text">52 experiences</p>
-                        </div>
-                    </div>
-
-                    <div class="card card-destination">
-                        <img src="images/cultural2.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="">Ba Na Hill, Danang</a></h5>
-                            <p class="card-text">36 experiences</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -217,139 +182,36 @@
             </div>
             <div class="body-slide">
                 <div class="owl-carousel" id="slideTours">
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon fill-white" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
+                    @foreach($trendingTours as $tour)
+                        <div class="card card-tour">
+                            <div class="card-image">
+                                <img class="ribbon" src="{{ asset('/images/icon/ribbon.svg') }}"
+                                     alt="bookmark">
+                                <div class="rate">
+                                    <img src="{{ asset('images/icon/star.svg') }}" alt="star">
+                                    <span class="text-rate">4.5</span>
+                                </div>
+                                <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
+                                     alt="tour-image">
                             </div>
-                            <img src="images/sapa-tour.png" class="card-img-top" alt="tour-image">
-                        </div>
 
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Sapa, Laocai</span>
-                            </p>
-                            <h5 class="card-title"><a href="">Discover interesting things in the romantic coastal city
-                                    of
-                                    Vungtau</a></h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
+                            <div class="card-body">
                                 <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>3 days - 2 night</span>
+                                    <img src="{{ asset('images/icon/location.svg') }}" alt="location">
+                                    <span>{{ $tour->type->name }}</span>
                                 </p>
-                                <p class="card-text">from <span class="card-title">$146.00</span></p>
+                                <h5 class="card-title"><a href="#">{{ $tour->name }}</a>
+                                </h5>
+                                <div class="d-inline-flex justify-content-between align-items-center w-100">
+                                    <p class="card-text">
+                                        <img src="{{ asset('images/icon/schedule.svg') }}" alt="location">
+                                        <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span>
+                                    </p>
+                                    <p class="card-text">from <span class="card-title">${{ $tour->price }}</span></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
-                            </div>
-                            <img src="images/tour2.png" class="card-img-top" alt="tour-image">
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Sapa, Laocai</span>
-                            </p>
-                            <h5 class="card-title"><a href="">Discover the most majestic Fansipan peak in Vietnam - the
-                                    roof
-                                    of Indochina</a></h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>3 days - 2 night</span>
-                                </p>
-                                <p class="card-text">from <span class="card-title">$234.00</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon fill-white" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
-                            </div>
-                            <img src="images/tour3.png" class="card-img-top" alt="tour-image">
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Sapa, Laocai</span>
-                            </p>
-                            <h5 class="card-title"><a href="">Experience sea tourism on Phuquoc golden pearl</a></h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>3 days - 2 night</span>
-                                </p>
-                                <p class="card-text">from <span class="card-title">$334.00</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon fill-white" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
-                            </div>
-                            <img src="images/tour3.png" class="card-img-top" alt="tour-image">
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Sapa, Laocai</span>
-                            </p>
-                            <h5 class="card-title"><a href="">Experience sea tourism on Phuquoc golden pearl</a></h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>3 days - 2 night</span>
-                                </p>
-                                <p class="card-text">from <span class="card-title">$334.00</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon fill-white" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
-                            </div>
-                            <img src="images/tour3.png" class="card-img-top" alt="tour-image">
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Sapa, Laocai</span>
-                            </p>
-                            <h5 class="card-title"><a href="">Experience sea tourism on Phuquoc golden pearl</a></h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>3 days - 2 night</span>
-                                </p>
-                                <p class="card-text">from <span class="card-title">$334.00</span></p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -366,148 +228,36 @@
             </div>
             <div class="body-slide">
                 <div class="owl-carousel" id="slideCultural">
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
+                    @foreach($tours as $tour)
+                        <div class="card card-tour">
+                            <div class="card-image">
+                                <img class="ribbon" src="{{ asset('/images/icon/ribbon.svg') }}"
+                                     alt="bookmark">
+                                <div class="rate">
+                                    <img src="{{ asset('images/icon/star.svg') }}" alt="star">
+                                    <span class="text-rate">4.5</span>
+                                </div>
+                                <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
+                                     alt="tour-image">
                             </div>
-                            <img src="images/cultural1.png" class="card-img-top" alt="tour-image">
-                        </div>
 
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Lang Vong, Hanoi</span>
-                            </p>
-                            <h5 class="card-title"><a href="">“ Com lang Vong “ - Traditional culinary features of the
-                                    old
-                                    Hanoi people</a>
-                            </h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
+                            <div class="card-body">
                                 <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>6 hours</span>
+                                    <img src="{{ asset('images/icon/location.svg') }}" alt="location">
+                                    <span>{{ $tour->type->name }}</span>
                                 </p>
-                                <p class="card-text">from <span class="card-title">$146.00</span></p>
+                                <h5 class="card-title"><a href="#">{{ $tour->name }}</a>
+                                </h5>
+                                <div class="d-inline-flex justify-content-between align-items-center w-100">
+                                    <p class="card-text">
+                                        <img src="{{ asset('images/icon/schedule.svg') }}" alt="location">
+                                        <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span>
+                                    </p>
+                                    <p class="card-text">from <span class="card-title">${{ $tour->price }}</span></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
-                            </div>
-                            <img src="images/cultural2.png" class="card-img-top" alt="tour-image">
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Hue City, Thuathienhue</span>
-                            </p>
-                            <h5 class="card-title"><a href="">“ Bun bo Hue “ - culinary specialties in the ancient
-                                    capital
-                                    of Hue</a>
-
-                            </h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>6 hours</span>
-                                </p>
-                                <p class="card-text">from <span class="card-title">$234.00</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
-                            </div>
-                            <img src="images/cultural3.png" class="card-img-top" alt="tour-image">
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Tiendu, Bacninh</span>
-                            </p>
-                            <h5 class="card-title"><a href="">Heritage of Quan Ho Bac Ninh - Singing passionate
-                                    hearts</a>
-                            </h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>6 hours</span>
-                                </p>
-                                <p class="card-text">from <span class="card-title">$334.00</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
-                            </div>
-                            <img src="images/cultural3.png" class="card-img-top" alt="tour-image">
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Tiendu, Bacninh</span>
-                            </p>
-                            <h5 class="card-title"><a href="">Heritage of Quan Ho Bac Ninh - Singing passionate
-                                    hearts</a>
-                            </h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>6 hours</span>
-                                </p>
-                                <p class="card-text">from <span class="card-title">$334.00</span></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card card-tour">
-                        <div class="card-image">
-                            <img class="ribbon" src="images/icon/ribbon.svg" alt="bookmark">
-                            <div class="rate">
-                                <img src="images/icon/star.svg" alt="star">
-                                <span class="text-rate">4.5</span>
-                            </div>
-                            <img src="images/cultural3.png" class="card-img-top" alt="tour-image">
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text">
-                                <img src="images/icon/location.svg" alt="location">
-                                <span>Tiendu, Bacninh</span>
-                            </p>
-                            <h5 class="card-title"><a href="">Heritage of Quan Ho Bac Ninh - Singing passionate
-                                    hearts </a>
-                            </h5>
-                            <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                <p class="card-text">
-                                    <img src="images/icon/schedule.svg" alt="location">
-                                    <span>6 hours</span>
-                                </p>
-                                <p class="card-text">from <span class="card-title">$334.00</span></p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -529,7 +279,7 @@
                 <div class="col-12 col-lg-5">
                     <div class="form-input-mail mt-2 mt-md-5 m-lg-0 d-flex justify-content-between align-items-center">
                         <div class="input-mail input-inner-icon flex-grow-1 flex-shrink-1">
-                            <img src="images/icon/location.svg">
+                            <img src="{{ asset('images/icon/location.svg') }}">
                             <input class="form-control" type="text" placeholder="example@gmail.com">
                         </div>
                         <button class="flex-grow-0 flex-shrink-0 btn-send-mail">Send</button>
