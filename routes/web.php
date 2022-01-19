@@ -31,7 +31,8 @@ use Illuminate\Support\Facades\Route;
 
 // Client
 Route::get('/', [ClientController::class, 'index'])->name('index');
-Route::get('/list-tour', [ClientController::class, 'listTour'])->name('list_tour');
+Route::get('/list-tours', [ClientController::class, 'listTour'])->name('tour.list');
+Route::get('/tours', [ClientController::class, 'showTour'])->name('tour.detail');
 
 
 // Admin

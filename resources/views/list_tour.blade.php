@@ -16,7 +16,7 @@
                     <div class="collapse navbar-collapse" id="navbarToggler">
                         <ul class="nav navbar-header flex-column flex-sm-row">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
+                                <a class="nav-link" href="{{ route('index') }}">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">About</a>

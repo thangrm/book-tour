@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $("#slideDestinations").owlCarousel({
         loop: false,
         margin: 30,
@@ -86,7 +86,7 @@ $(document).ready(function() {
         }
     });
 
-    $('.next-slide').click(function(event) {
+    $('.next-slide').click(function (event) {
         let slideID = event.target.getAttribute('data-target');
         $(slideID).trigger('next.owl.carousel');
     })
@@ -95,7 +95,7 @@ $(document).ready(function() {
 
     // left: 37, up: 38, right: 39, down: 40,
     // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-    var keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
+    var keys = {37: 1, 38: 1, 39: 1, 40: 1};
 
     function preventDefault(e) {
         e.preventDefault();
@@ -112,11 +112,14 @@ $(document).ready(function() {
     var supportsPassive = false;
     try {
         window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
-            get: function() { supportsPassive = true; }
+            get: function () {
+                supportsPassive = true;
+            }
         }));
-    } catch (e) {}
+    } catch (e) {
+    }
 
-    var wheelOpt = supportsPassive ? { passive: false } : false;
+    var wheelOpt = supportsPassive ? {passive: false} : false;
     var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
 
     // call this to Disable
@@ -135,7 +138,7 @@ $(document).ready(function() {
         window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
     }
 
-    $('#navbarBtn').on('click', function() {
+    $('#navbarBtn').on('click', function () {
         $('#navbarBtn').toggleClass('navbar-active-btn');
         if ($('#navbarBtn').hasClass('navbar-active-btn')) {
             disableScroll();
@@ -145,17 +148,17 @@ $(document).ready(function() {
     });
 
     // Chang icon Filter - List Tour Page
-    $('#btnFilterTours').on('click', function() {
+    $('#btnFilterTours').on('click', function () {
         $('.iconBtnFilter').toggleClass('d-none');
     });
 
     // Clear form filter
-    $('#clearFormFilter').on('click', function() {
+    $('#clearFormFilter').on('click', function () {
         $('#formSelectFilter')[0].reset();
     })
 
     // Choose thumbnail image
-    $('.thumbnailItem').on('click', function(e) {
+    $('.thumbnailItem').on('click', function (e) {
         $('.thumbnailItem').removeClass("target");
         e.target.classList.add("target");
         linkSrc = e.target.getAttribute('src');
@@ -163,9 +166,9 @@ $(document).ready(function() {
     })
 
     // Rate review{
-    $('.rate-star').hover(function(e) {
+    $('.rate-star').hover(function (e) {
         let currentRate = e.target.dataset.rate;
-        $('#rateReview').children().each(function() {
+        $('#rateReview').children().each(function () {
             if (this.dataset.rate <= currentRate) {
                 this.classList.remove('bi-star');
                 this.classList.add('bi-star-fill');
@@ -174,7 +177,7 @@ $(document).ready(function() {
                 this.classList.add('bi-star');
             }
         });
-    }, function() {
+    }, function () {
         // out
     });
 
@@ -187,12 +190,13 @@ $(document).ready(function() {
         });
     }
 
-    $('#imagePanoramic').on('click', function() {
+    $('#imagePanoramic').on('click', function () {
         $('.wrap-panoramic').hide();
     });
 
     //Video
-    $('#videoTour, .wrap-video').on('click', function() {;
+    $('#videoTour, .wrap-video').on('click', function () {
+        ;
         let video = $('#videoTour').get(0);
         if (video.paused) {
             video.play();
@@ -203,20 +207,20 @@ $(document).ready(function() {
     });
 
     //Date Range Picker
-    $(function() {
+    $(function () {
         $('input[name="daterange"]').daterangepicker({
             locale: {
                 format: 'DD/MM/YYYY',
             },
             opens: 'left'
-        }, function(start, end, label) {
+        }, function (start, end, label) {
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
 
     // Calculate Price
     var PRICE_DEFAULT = 146;
-    $('#selectNumberPeople').on('change', function() {
+    $('#selectNumberPeople').on('change', function () {
         caculatePrice();
     });
 
@@ -225,6 +229,7 @@ $(document).ready(function() {
         let price = (numberPeople * PRICE_DEFAULT).toFixed(2);
         $('#totalPrice').text('$' + price);
     }
+
     caculatePrice();
 
     // Function validate
@@ -268,7 +273,7 @@ $(document).ready(function() {
     }
 
     // Form checkout
-    $("#btnSubmitCheckout").click(function(e) {
+    $("#btnSubmitCheckout").click(function (e) {
         e.preventDefault();
         let firstName = getValue('#firstName');
         let lastName = getValue('#lastName');
@@ -340,7 +345,6 @@ $(document).ready(function() {
         }
 
         if (flag) {
-            //$('#formCheckout').submit();
             $('#thanksModal').modal('show');
         } else {
             document.getElementById("formCheckout").scrollIntoView();
@@ -348,7 +352,7 @@ $(document).ready(function() {
     });
 
     // Form contact
-    $("#formContact").submit(function(e) {
+    $("#formContact").submit(function (e) {
         e.preventDefault();
         let name = getValue('#name');
         let email = getValue('#email');

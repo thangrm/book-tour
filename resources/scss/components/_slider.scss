@@ -3,6 +3,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+
         .title-slide {
             font-size: 40px;
             font-weight: 500;
@@ -11,6 +12,7 @@
             width: 551px;
             margin-bottom: 0;
         }
+
         .btn-view-all {
             width: 92px;
             height: 38px;
@@ -21,38 +23,48 @@
             font-weight: 700;
         }
     }
+
     .body-slide {
         position: relative;
         margin-top: 60px;
+
         .owl-nav {
             .disabled {
                 display: none;
             }
+
             button {
                 position: absolute;
                 top: 30%;
             }
+
             .owl-prev {
                 left: -35px;
+
                 img {
                     transform: rotate(180deg);
                 }
             }
+
             .owl-next {
                 right: -35px;
             }
+
             .button:hover {
                 cursor: pointer;
                 z-index: 1;
             }
         }
+
         .card {
             border: none;
             width: 100%;
+
             .card-image {
                 width: 100%;
                 padding-bottom: 80%;
                 position: relative;
+
                 .card-img-top {
                     position: absolute;
                     width: 100%;
@@ -62,15 +74,19 @@
                     object-fit: cover;
                 }
             }
+
             .card-body {
                 padding: 12px 0;
+
                 h5 {
                     min-height: 45px;
+
                     a {
                         color: $black-title;
                         text-decoration: none;
                     }
                 }
+
                 .card-title {
                     color: $black-title;
                     font-style: normal;
@@ -81,9 +97,15 @@
                     text-overflow: ellipsis;
                     -webkit-box-orient: vertical;
                 }
+
+                .card-title a:hover {
+                    color: $orange-primary;
+                }
+
                 .card-text {
                     color: $subcolor;
                     font-weight: 400;
+
                     .card-title {
                         display: inline;
                     }
@@ -91,15 +113,18 @@
             }
         }
     }
+
     @media only screen and (max-width: 1200px) {
         .body-slide {
             .owl-nav {
                 button {
                     top: -35px;
                 }
+
                 .owl-prev {
                     left: 2%;
                 }
+
                 .owl-next {
                     right: 2%;
                 }
@@ -119,6 +144,7 @@
                     flex-direction: column;
                     align-items: flex-start !important;
                     text-align: left;
+
                     p {
                         padding: 0;
                     }

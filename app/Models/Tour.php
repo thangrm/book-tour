@@ -258,21 +258,21 @@ class Tour extends Model
                 $routerItinerary = route('itineraries.index', $data->id);
                 $routerFAQ = route('faqs.index', $data->id);
                 $routerReview = route('reviews.index', $data->id);
-                $width = 90;
+                $width = 65;
 
-                $view = view('components.button_link_info',
-                    ['link' => $routerInfo, 'title' => 'Info', 'width' => $width])->render();
+                $view = view('components.action',
+                    ['link' => $routerInfo, 'title' => 'More Info', 'width' => $width])->render();
 
-                $view .= view('components.button_link_info',
+                $view .= view('components.action',
                     ['link' => $routerGallery, 'title' => 'Galleries', 'width' => $width])->render();
 
-                $view .= view('components.button_link_info',
+                $view .= view('components.action',
                     ['link' => $routerItinerary, 'title' => 'Itineraries', 'width' => $width])->render();
 
-                $view .= view('components.button_link_info',
+                $view .= view('components.action',
                     ['link' => $routerFAQ, 'title' => 'Faqs', 'width' => $width])->render();
 
-                $view .= view('components.button_link_info',
+                $view .= view('components.action',
                     ['link' => $routerReview, 'title' => 'Reviews', 'width' => $width])->render();
 
                 return $view;

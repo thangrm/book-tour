@@ -179,6 +179,9 @@ body {
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
 }
+.box-slide .body-slide .card .card-body .card-title a:hover {
+  color: #FF7B42;
+}
 .box-slide .body-slide .card .card-body .card-text {
   color: #636567;
   font-weight: 400;

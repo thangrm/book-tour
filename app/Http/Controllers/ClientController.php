@@ -27,6 +27,16 @@ class ClientController extends Controller
     }
 
     /**
+     * Show list tour of destination.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     */
+    public function showTour()
+    {
+        return view('tour_detail');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
