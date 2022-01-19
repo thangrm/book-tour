@@ -1,5 +1,12 @@
 @extends('layouts.admin')
-
+@section('style')
+    <style>
+        .box-map iframe {
+            width: 100%;
+            height: 350px;
+        }
+    </style>
+@endsection
 @section('admin')
     <div class="page-breadcrumb">
         <div class="row">
@@ -71,6 +78,19 @@
                                 @endisset
                             </div>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price" class="text-lg-right control-label col-form-label">Map</label>
+                        <input type="text" class="form-control" name="map" id="map" placeholder="Map"
+                               value="{{ empty(old('map')) ? $tour->map : old('map') }}">
+                        @error('map')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                        <div class="box-map m-t-15">
+                            {!! $tour->map !!}
+                        </div>
+
                     </div>
 
                     <div class="form-group">

@@ -153,6 +153,7 @@ class TourController extends Controller
     public function info(Request $request, $id)
     {
         $tour = Tour::findOrFail($id);
+//        dd($tour);
         return view('admin.tours.info', compact('tour'));
     }
 }

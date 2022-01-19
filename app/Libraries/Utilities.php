@@ -26,10 +26,12 @@ class Utilities
      * @param array $rawData
      * @return array
      */
-    public static function clearAllXSS(array $rawData)
+    public static function clearAllXSS(array $rawData, $except = [])
     {
         foreach ($rawData as $key => $value) {
-            $rawData[$key] = self::clearXSS($value);
+            if (!in_array($key, $except)) {
+                $rawData[$key] = self::clearXSS($value);
+            }
         }
 
         return $rawData;

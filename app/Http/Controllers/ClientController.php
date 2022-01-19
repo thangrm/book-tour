@@ -27,7 +27,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Show list tour of destination.
+     * Show tour detail.
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
@@ -37,12 +37,22 @@ class ClientController extends Controller
     }
 
     /**
-     * Show list tour of destination.
+     * Show booking page.
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function booking()
     {
         return view('booking');
+    }
+
+    /**
+     * Display contact page.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     */
+    public function contact()
+    {
+        return view('contact');
     }
 }

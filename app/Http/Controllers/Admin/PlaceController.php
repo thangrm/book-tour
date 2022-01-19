@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Libraries\Notification;
 use App\Models\Itinerary;
 use App\Models\Place;
+use App\Models\Tour;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\QueryException;
@@ -88,11 +89,12 @@ class PlaceController extends Controller
      * @param int $id
      * @return View|Response
      */
-    public function edit($itineraryId, $tourId, $id)
+    public function edit($tourId, $itineraryId, $id)
     {
+        $tour = Tour::findOrFail($tourId);
         $itinerary = Itinerary::findOrFail($itineraryId);
         $place = Place::findOrFail($id);
-        return view('admin.places.edit', compact(['itinerary', 'place']));
+        return view('admin.places.edit', compact(['tour', 'itinerary', 'place']));
     }
 
     /**
