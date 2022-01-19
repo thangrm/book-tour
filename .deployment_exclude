@@ -1,0 +1,11 @@
+- .vscode/
+- .git/
+- node_modules/
+- tests/
+- phpunit.xml
+- build/
+- storage/
+- docker/
+- vendor/bin/*
+- public/uploads
+- public/storage
