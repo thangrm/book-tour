@@ -302,49 +302,50 @@ $(document).ready(function () {
 
         // validate first name
         if (firstName == '') {
-            $('#errorFirstName').text('Tên không được để trống');
+            $('#errorFirstName').text('The first name field is required.');
             flag = false;
         } else if (stringContainsNumber(firstName)) {
-            $('#errorFirstName').text('Tên không được chứa số');
+            $('#errorFirstName').text('The first name format is invalid.');
             flag = false;
         }
 
         // validate last name
         if (lastName == '') {
-            $('#errorLastName').text('Tên không được để trống');
+            $('#errorLastName').text('The last name field is required.');
             flag = false;
         } else if (stringContainsNumber(lastName)) {
-            $('#errorLastName').text('Tên không được chứa số');
+            $('#errorLastName').text('The last name format is invalid.');
             flag = false;
         }
 
         // validate email
         if (email == '') {
-            $('#errorEmail').text('Email không được để trống');
+            $('#errorEmail').text('The email field is required.');
             flag = false;
         } else if (!checkMail(email)) {
-            $('#errorEmail').text('Email không đúng định dạng');
+            $('#errorEmail').text('The email format is invalid.');
             flag = false;
         }
 
         // validate phone
         if (phone == '') {
-            $('#errorPhone').text('Số  điện thoại không được để trống');
+            $('#errorPhone').text('The phone field is required.');
             flag = false;
         } else if (!checkPhone(phone)) {
-            $('#errorPhone').text('Số  điện thoại hợp lệ');
+            $('#errorPhone').text('The phone format is invalid.');
             flag = false;
         }
 
         // validate zipcode
         if (zipCode != '') {
             if (!stringOnlyNumber(zipCode)) {
-                $('#errorZipCode').text('Zipcode không hợp lệ');
+                $('#errorZipCode').text('The zipcode format is invalid.');
                 flag = false;
             }
         }
 
         if (flag) {
+            //$('#formCheckout').submit();
             $('#thanksModal').modal('show');
         } else {
             document.getElementById("formCheckout").scrollIntoView();
@@ -365,28 +366,28 @@ $(document).ready(function () {
 
         // validate name
         if (name == '') {
-            $('#errorName').text('Tên không được để trống');
+            $('#errorName').text('The name field is required.');
         } else if (stringContainsNumber(name)) {
-            $('#errorName').text('Tên không được chứa số');
+            $('#errorName').text('The name format is invalid.');
         }
 
         // validate email
         if (email == '') {
-            $('#errorEmail').text('Email không được để trống');
+            $('#errorEmail').text('The email field is required.');
         } else if (!checkMail(email)) {
-            $('#errorEmail').text('Email không đúng định dạng');
+            $('#errorEmail').text('The email format is invalid.');
         }
 
         // validate phone
         if (phone == '') {
-            $('#errorPhone').text('Số  điện thoại không được để trống');
+            $('#errorPhone').text('The phone field is required.');
         } else if (!checkPhone(phone)) {
-            $('#errorPhone').text('Số  điện thoại hợp lệ');
+            $('#errorPhone').text('The phone format is invalid.');
         }
 
         // validate message
         if (message == '') {
-            $('#errorMessage').text('Lời nhắn không được để trống');
+            $('#errorMessage').text('The message field is required.');
         }
 
     });

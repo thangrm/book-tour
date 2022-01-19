@@ -22,8 +22,9 @@
     <link href="{{ asset('admins/assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
     <!-- Select 2 -->
     <link href="{{ asset('admins/assets/libs/select2/dist/css/select2.min.css') }}" rel="stylesheet">
-    <!-- Custom CSS -->
+    <!-- Toastr CSS -->
     <link href="{{ asset('admins/assets/libs/toastr/build/toastr.min.css') }}" rel="stylesheet">
+    <!-- Custom CSS -->
     <link href="{{ asset('admins/dist/css/style.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
