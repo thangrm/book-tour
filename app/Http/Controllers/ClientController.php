@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Destination;
+use App\Models\Tour;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -13,7 +15,11 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $destinations = Destination::where('status', 1)->latest()->limit(8)->get();
+        $trendingTours = Tour::where('status', 1)->where('trending', 1)->limit(8)->get();
+        $tours = Tour::where('status', 1)->latest()->limit(8)->get();
+
+        return view('index', compact(['destinations', 'trendingTours', 'tours']));
     }
 
     /**
