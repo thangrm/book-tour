@@ -39,7 +39,7 @@ class Place extends Model
     {
         Itinerary::findOrFail($itineraryId);
         $input = $request->only('name', 'description');
-        $input = Utilities::clearAllXSS($input);
+        $input = Utilities::clearAllXSS($input, ['description']);
         $place = $this->findOrNew($id);
 
         if ($id == 0) {

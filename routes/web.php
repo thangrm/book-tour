@@ -34,7 +34,7 @@ Route::get('/', [ClientController::class, 'index'])->name('index');
 Route::get('/list-tours', [ClientController::class, 'listTour'])->name('client.tours.list');
 Route::get('/tours', [ClientController::class, 'showTour'])->name('client.tours.detail');
 Route::get('/booking', [ClientController::class, 'booking'])->name('client.tours.booking');
-
+Route::get('/contact', [ClientController::class, 'contact'])->name('client.contact');
 
 // Admin
 Route::group(['prefix' => 'admin'], function () {

@@ -119,7 +119,7 @@ class Tour extends Model
     public function saveTour(Request $request, int $id = 0)
     {
         $input = $request->all();
-        $input = Utilities::clearAllXSS($input);
+        $input = Utilities::clearAllXSS($input, ['map', 'overview', 'included', 'additional', 'departure']);
 
         $tour = $this->findOrNew($id);
         $oldImage = $tour->image;

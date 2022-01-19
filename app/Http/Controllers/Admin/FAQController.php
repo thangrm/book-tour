@@ -105,6 +105,9 @@ class FAQController extends Controller
             $this->faq->saveData($request, $tourId, $id);
             $this->notification->setMessage('FAQ updated successfully', Notification::SUCCESS);
 
+            if ($request->ajax()) {
+                return response()->json($this->notification->getMessage());
+            }
             return redirect()->route('faqs.index', $tourId)->with($this->notification->getMessage());
         } catch (QueryException $e) {
             $exMessage = $e->getMessage();
@@ -116,6 +119,10 @@ class FAQController extends Controller
             $exMessage = $e->getMessage();
         }
 
+        if ($request->ajax()) {
+            return response()->json($this->notification->getMessage());
+        }
+        
         return back()
             ->with('exception', $exMessage)
             ->with($this->notification->getMessage())

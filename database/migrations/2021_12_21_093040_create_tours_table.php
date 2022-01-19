@@ -20,6 +20,7 @@ class CreateToursTable extends Migration
             $table->string('name', 255)->unique();
             $table->string('slug', 255);
             $table->string('image', 100);
+            $table->text('map')->nullable();
             $table->string('panoramic_image', 255)->nullable();
             $table->string('video', 100)->nullable();
             $table->float('price', 10, 0);
