@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('css/owl.theme.default.css') }}">
     <!-- date-range-picker -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <!-- pannellum -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
     <!-- custom css -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
 </head>
@@ -43,6 +45,9 @@
 <!-- date-ranger-picker -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<!-- panellum -->
+<script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
 
 <!-- custom js -->
 <script src="{{ asset('js/script.js') }}"></script>
