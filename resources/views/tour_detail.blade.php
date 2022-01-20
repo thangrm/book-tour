@@ -121,7 +121,8 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" href="#" id="pills-review-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-review" type="button" role="tab"
-                                            aria-controls="pills-review" aria-selected="false">Reviews(54)
+                                            aria-controls="pills-review" aria-selected="false">
+                                        Reviews({{ $tour->reviews->count()  }})
                                     </button>
                                 </li>
                             </ul>
@@ -259,92 +260,39 @@
                                 <div class="tab-pane panel-info fade" id="pills-info" role="tabpanel"
                                      aria-labelledby="pills-info-tab">
                                     <div class="box-text">
-                                        <ul>
-                                            <li>Confirmation will be received at time of booking</li>
-                                            <li>Not recommended for travelers with back problems</li>
-                                            <li>Not recommended for pregnant travelers Infant seats available</li>
-                                            <li>Not wheelchair accessible</li>
-                                            <li>Children must be accompanied by an adult</li>
-                                            <li>Vegetarian option is available, please advise at time of booking if
-                                                required
-                                            </li>
-                                            <li>Minimum numbers apply.</li>
-                                            <li>There is a possibility of cancellation after confirmation if the
-                                                meteorological
-                                            </li>
-                                            <li>conditions do not allow it</li>
-                                            <li>Stroller accessible</li>
-                                            <li>Service animals allowed</li>
-                                            <li>Near public transportation</li>
-                                            <li>Most travelers can participate</li>
-                                            <li>This tour/activity will have a maximum of 17 travelers</li>
-                                        </ul>
+                                        {!! $tour->additional !!}
                                     </div>
 
                                     <div class="box-text">
                                         <p class="panel-title">FAQs</p>
                                         <!-- Accordion FAQs -->
                                         <div class="accordion" id="accordionFAQs">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsFAQsHeadingOne">
-                                                    <button class="accordion-button d-flex align-items-start"
+                                            @foreach($tour->faqs as $faq)
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header"
+                                                        id="panelsFAQsHeading{{ $loop->index }}">
+                                                        <button
+                                                            class="accordion-button d-flex align-items-start {{ $loop->first ?: 'collapsed'  }}"
                                                             type="button" data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsFAQsCollapseOne" aria-expanded="true"
-                                                            aria-controls="panelsFAQsCollapseOne">
-                                                        <img src="images/icon/help-circle.svg" alt="help">
-                                                        <p>What is the maximum group size during 2 Days 1 Night To
-                                                            Zagora Desert From Marrakech?
-                                                        </p>
-                                                    </button>
-                                                </h2>
-                                                <div id="panelsFAQsCollapseOne" class="accordion-collapse collapse show"
-                                                     aria-labelledby="panelsFAQsHeadingOne">
-                                                    <div class="accordion-body">
-                                                        <p class="text-item">
-                                                            This activity will have a maximum of 17 travelers.
-                                                        </p>
+                                                            data-bs-target="#panelsFAQsCollapse{{ $loop->index }}"
+                                                            aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
+                                                            aria-controls="panelsFAQsCollapse{{ $loop->index }}">
+                                                            <img src="{{ asset('images/icon/help-circle.svg') }}"
+                                                                 alt="help">
+                                                            <p class="m-0">{{ $faq->question }}</p>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="panelsFAQsCollapse{{ $loop->index }}"
+                                                         class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}"
+                                                         aria-labelledby="panelsFAQsHeading{{ $loop->index }}">
+                                                        <div class="accordion-body">
+                                                            <p class="text-item">
+                                                                {{ $faq->answer }}
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsFAQsHeadingTwo">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsFAQsCollapseTwo"
-                                                            aria-expanded="false" aria-controls="panelsFAQsCollapseTwo">
-                                                        <img src="images/icon/help-circle.svg" alt="help">
-                                                        When and where does the tour start?
-                                                    </button>
-                                                </h2>
-                                                <div id="panelsFAQsCollapseTwo" class="accordion-collapse collapse"
-                                                     aria-labelledby="panelsFAQsHeadingTwo">
-                                                    <div class="accordion-body">
-                                                        <p class="text-item">
-                                                            Tour will start at 8:00 AM in Hanoi.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsFAQsHeadingThree">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsFAQsCollapseThree"
-                                                            aria-expanded="false"
-                                                            aria-controls="panelsFAQsCollapseThree">
-                                                        <img src="images/icon/help-circle.svg" alt="help">
-                                                        Do you arrange airport transfers?
-                                                    </button>
-                                                </h2>
-                                                <div id="panelsFAQsCollapseThree" class="accordion-collapse collapse"
-                                                     aria-labelledby="panelsFAQsHeadingThree">
-                                                    <div class="accordion-body">
-                                                        <p class="text-item">
-                                                            Yes, we will arrange for you.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +312,8 @@
                                                         <i class="bi bi-star-fill fill-yellow"></i>
                                                         <i class="bi bi-star fill-yellow"></i>
                                                     </div>
-                                                    <p class="rate-text">Based on <span>150 reviews</span></p>
+                                                    <p class="rate-text">Based on <span>{{ $tour->reviews->count() }} reviews</span>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-7">
