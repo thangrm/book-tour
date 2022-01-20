@@ -16,8 +16,8 @@ class ClientController extends Controller
     public function index()
     {
         $destinations = Destination::where('status', 1)->latest()->limit(8)->get();
-        $trendingTours = Tour::where('status', 1)->where('trending', 1)->limit(8)->get();
-        $tours = Tour::where('status', 1)->latest()->limit(8)->get();
+        $trendingTours = Tour::where('status', 1)->with('type', 'destination')->where('trending', 1)->limit(8)->get();
+        $tours = Tour::where('status', 1)->with('type', 'destination')->latest()->limit(8)->get();
 
         return view('index', compact(['destinations', 'trendingTours', 'tours']));
     }
@@ -27,9 +27,11 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function listTour()
+    public function listTour($slug)
     {
-        return view('list_tour');
+        $destination = Destination::where('slug', $slug)->first();
+        $tours = Tour::with('destination', 'type')->where('destination_id', $destination->id)->paginate(12);
+        return view('list_tour', compact(['tours']));
     }
 
     /**

@@ -4,11 +4,11 @@
             <div class="row">
                 <div class="col-12 col-md-4 col-xxl-5">
                     <div class="footer-logo">
-                        <img class="pb-5" src="images/logo.png" alt="ngaodu">
+                        <img class="pb-5" src="{{ asset('images/logo.png') }}" alt="ngaodu">
                         <div class="footer-social">
-                            <img src="images/icon/facebook.svg" alt="facebook">
-                            <img src="images/icon/instagram.svg" alt="instagram">
-                            <img src="images/icon/twitter.svg" alt="twitter">
+                            <img src="{{ asset('images/icon/facebook.svg') }}" alt="facebook">
+                            <img src="{{ asset('images/icon/instagram.svg') }}" alt="instagram">
+                            <img src="{{ asset('images/icon/twitter.svg') }}" alt="twitter">
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                     <div class="footer-contact">
                         <div class="contact-item d-flex align-items-start">
                             <div class="icon-contact">
-                                <img class="fill-white" src="images/icon/location.svg" alt="address">
+                                <img class="fill-white" src="{{ asset('images/icon/location.svg') }}" alt="address">
                             </div>
                             <p style="margin-left: 5px;">
                                 <a>Lilama 10 Tower, 56 To Huu, Trung Van, Nam Tu Liem, Ha Noi</a>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="contact-item">
                             <div class="icon-contact">
-                                <img class="fill-white" src="images/icon/mail.svg" alt="email">
+                                <img class="fill-white" src="{{ asset('images/icon/mail.svg') }}" alt="email">
                             </div>
                             <p><a>hello@adamotravel.com</a></p>
                         </div>
