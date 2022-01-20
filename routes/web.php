@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 // Client
 Route::get('/', [ClientController::class, 'index'])->name('index');
 Route::get('/list-tours/{slug}', [ClientController::class, 'listTour'])->name('client.tours.list');
-Route::get('/tours', [ClientController::class, 'showTour'])->name('client.tours.detail');
+Route::get('/tours/{slug}', [ClientController::class, 'showTour'])->name('client.tours.detail');
 Route::get('/booking', [ClientController::class, 'booking'])->name('client.tours.booking');
 Route::get('/contact', [ClientController::class, 'contact'])->name('client.contact');
 

@@ -210,7 +210,8 @@
                                         <img src="{{ asset('images/icon/location.svg') }}" alt="location">
                                         <span>{{ $tour->type->name }}</span>
                                     </p>
-                                    <h5 class="card-title"><a href="#">{{ $tour->name }}</a>
+                                    <h5 class="card-title"><a
+                                            href="{{ route('client.tours.detail', $tour->slug) }}">{{ $tour->name }}</a>
                                     </h5>
                                     <div class="d-inline-flex justify-content-between align-items-center w-100">
                                         <p class="card-text">

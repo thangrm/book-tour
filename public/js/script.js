@@ -219,7 +219,7 @@ $(document).ready(function () {
     });
 
     // Calculate Price
-    var PRICE_DEFAULT = 146;
+    let PRICE_DEFAULT = $('#price').val();
     $('#selectNumberPeople').on('change', function () {
         caculatePrice();
     });
@@ -227,6 +227,12 @@ $(document).ready(function () {
     function caculatePrice() {
         let numberPeople = $('#selectNumberPeople').val();
         let price = (numberPeople * PRICE_DEFAULT).toFixed(2);
+        if (isNaN(price)) {
+            $('#totalPrice').text('$');
+
+            return;
+        }
+
         $('#totalPrice').text('$' + price);
     }
 

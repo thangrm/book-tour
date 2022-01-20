@@ -43,7 +43,7 @@ class Tour extends Model
      */
     public function itineraries()
     {
-        return $this->hasMany(Itinerary::class);
+        return $this->hasMany(Itinerary::class)->oldest();
     }
 
     /**
