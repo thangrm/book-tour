@@ -31,7 +31,11 @@ class ClientController extends Controller
     public function listTour($slug)
     {
         $destination = Destination::where('slug', $slug)->first();
-        $tours = Tour::with('destination', 'type')->where('destination_id', $destination->id)->paginate(12);
+        $tours = Tour::with('destination', 'type')
+            ->where('status', 1)
+            ->where('destination_id', $destination->id)
+            ->paginate(12);
+
         return view('list_tour', compact(['tours']));
     }
 
@@ -44,7 +48,9 @@ class ClientController extends Controller
     {
         $tour = Tour::with('destination', 'type', 'reviews', 'itineraries.places')
             ->where('slug', $slug)->firstOrFail();
+        $tour->faqs = $tour->faqs()->where('status', 1)->get();
         $relateTours = Tour::with('destination', 'type')
+            ->where('status', 1)
             ->where('destination_id', $tour->destination_id)
             ->limit(6)->get();
 
