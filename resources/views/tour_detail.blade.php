@@ -67,11 +67,14 @@
                         <img src="{{ asset('images/icon/location.svg') }}" alt="location">
                         <span>{{ $tour->destination->name }}</span>
                     </p>
-                    <div class="rate">
-                        <img src="{{ asset('images/icon/star.svg') }}" alt="star">
-                        <span class="text-rate">4.5</span>
+                    <div class="d-flex align-items-center">
+                        <div class="rate">
+                            <img src="{{ asset('images/icon/star.svg') }}" alt="star">
+                            <span class="text-rate">{{ $rateReview['total'] }}</span>
+                        </div>
+
+                        <span class="text-content">{{ $tour->reviews->count() }} reviews</span>
                     </div>
-                    <span class="text-content">{{ $tour->reviews->count() }} reviews</span>
                 </div>
             </div>
             <div class="row box-detail-content">
@@ -82,18 +85,16 @@
                             <div class="main-image-tour">
                                 <img class="ribbon" src="{{ asset('images/icon/ribbon.svg') }}" alt="bookmark">
                                 <div class="main-image">
-                                    <img src="{{ asset('images/vungtau.png') }}" alt="" id="mainImageTour">
+                                    <img src="{{ asset('storage/images/tours/'.$tour->image) }}" alt="{{ $tour->name }}"
+                                         id="mainImageTour">
                                 </div>
                                 <div class="list-image-thumbnail">
                                     <div class="owl-carousel" id="slideImageThumnail">
+                                        <img class="thumbnailItem target"
+                                             src="{{ asset('storage/images/tours/'.$tour->image) }}">
                                         @foreach($tour->galleries as $gallery)
-                                            @if ($loop->first)
-                                                <img class="thumbnailItem target"
-                                                     src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
-                                            @else
-                                                <img class="thumbnailItem"
-                                                     src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
-                                            @endif
+                                            <img class="thumbnailItem"
+                                                 src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
                                         @endforeach
                                     </div>
                                 </div>
@@ -139,16 +140,6 @@
                                         <p class="panel-text">
                                             {!! $tour->overview !!}
                                         </p>
-                                        {{--                                        <ul>--}}
-                                        {{--                                            <li>Full-day tour of Capri island from Naples or Sorrento Admire views along--}}
-                                        {{--                                                the coast as you cruise to the island by jetfoil--}}
-                                        {{--                                            </li>--}}
-                                        {{--                                            <li> Visit the lively island towns of Anacapri and Capri Ride</li>--}}
-                                        {{--                                            <li>The funicular from La Piazzetta to Marina Grande Marvel at natural--}}
-                                        {{--                                                wonders like the Blue Grotto Small-group tour ensures a personalized--}}
-                                        {{--                                                experience--}}
-                                        {{--                                            </li>--}}
-                                        {{--                                        </ul>--}}
                                     </div>
                                     <hr>
                                     <div class="box-text">
@@ -156,14 +147,6 @@
                                             What's Included
                                         </p>
                                         {!! $tour->included !!}
-                                        {{--                                        <ul class="tick-vert">--}}
-                                        {{--                                            <li>Port pickup and drop-off</li>--}}
-                                        {{--                                            <li>Local guide</li>--}}
-                                        {{--                                            <li>Round-trip shared transfer</li>--}}
-                                        {{--                                            <li>Transport by minibus</li>--}}
-                                        {{--                                            <li>Blue Grotto admission tickets</li>--}}
-                                        {{--                                            <li>Shared boat ride tour around the island ( if Blue grotto is closed)</li>--}}
-                                        {{--                                        </ul>--}}
                                     </div>
                                     <hr>
                                     <div class="box-text">
@@ -203,15 +186,6 @@
                                                                     <li class="list-accordion-item">
                                                                         <p class="title-item"> {{ $place->name }}</p>
                                                                         {!! $place->description !!}
-                                                                        {{--                                                                        <p class="text-item"> We start our trip from the--}}
-                                                                        {{--                                                                            famouse--}}
-                                                                        {{--                                                                            place Jemaa Lefna in center of Marrakech,--}}
-                                                                        {{--                                                                            Crossed--}}
-                                                                        {{--                                                                            the highest Atlas Through pass (Tizi N--}}
-                                                                        {{--                                                                            Tichka)</p>--}}
-                                                                        {{--                                                                        <p class="duration-item">Duration:--}}
-                                                                        {{--                                                                            <span>5 minutes</span></p>--}}
-                                                                        {{--                                                                        <p class="text-item">Admission Ticket Free</p>--}}
                                                                     </li>
                                                                 @endforeach
                                                             </ul>
@@ -233,11 +207,6 @@
                                         <p class="panel-title">
                                             360° Panoramic Images and Videos
                                         </p>
-                                        {{--                                        <div class="box-images-panoramic" id="imagePanoramic">--}}
-                                        {{--                                            <div class="wrap-panoramic">--}}
-                                        {{--                                                <img src="images/icon/360.svg" alt="">--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </div>--}}
                                         @isset($tour->panoramic_image)
                                             <iframe class="w-100 m-t-10" height="400" src="{{$tour->panoramic_image}}"
                                                     frameborder="0">
@@ -304,15 +273,12 @@
                                         <div class="row">
                                             <div class="col-12 col-md-5">
                                                 <div class="box-rate d-flex flex-column align-items-center">
-                                                    <p class="rate-title">4/5</p>
+                                                    <p class="rate-title">{{ $rateReview['total'] }}/5</p>
                                                     <div class="list-rate-star">
-                                                        <i class="bi bi-star-fill fill-yellow"></i>
-                                                        <i class="bi bi-star-fill fill-yellow"></i>
-                                                        <i class="bi bi-star-fill fill-yellow"></i>
-                                                        <i class="bi bi-star-fill fill-yellow"></i>
-                                                        <i class="bi bi-star fill-yellow"></i>
+                                                        @include('components.rate_review', ['rate'=>$rateReview['total']])
                                                     </div>
-                                                    <p class="rate-text">Based on <span>{{ $tour->reviews->count() }} reviews</span>
+                                                    <p class="rate-text">Based on
+                                                        <span>{{ $tour->reviews->count() }} reviews</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -325,11 +291,13 @@
                                                             <i class="bi bi-star-fill fill-gray"></i>
                                                         </p>
                                                         <div class="progress">
-                                                            <div class="progress-bar bg-warning" style="width: 75%;"
+                                                            <div class="progress-bar bg-warning"
+                                                                 style="width: {{ $rateReview['fiveStar'] / $tour->reviews->count() * 100 }}%;"
                                                                  role="progressbar" aria-valuenow="75" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
-                                                        <span class="text-review">42 reviews</span>
+                                                        <span
+                                                            class="text-review">{{ $rateReview['fiveStar'] }} reviews</span>
                                                     </div>
 
                                                     <div
@@ -339,11 +307,13 @@
                                                             <i class="bi bi-star-fill fill-gray"></i>
                                                         </p>
                                                         <div class="progress">
-                                                            <div class="progress-bar bg-warning" style="width: 30%;"
+                                                            <div class="progress-bar bg-warning"
+                                                                 style="width: {{ $rateReview['fourStar'] / $tour->reviews->count() * 100 }}%;"
                                                                  role="progressbar" aria-valuenow="30" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
-                                                        <span class="text-review">21 reviews</span>
+                                                        <span
+                                                            class="text-review">{{ $rateReview['fourStar'] }} reviews</span>
                                                     </div>
 
                                                     <div
@@ -353,11 +323,13 @@
                                                             <i class="bi bi-star-fill fill-gray"></i>
                                                         </p>
                                                         <div class="progress">
-                                                            <div class="progress-bar bg-warning" style="width: 60%;"
+                                                            <div class="progress-bar bg-warning"
+                                                                 style="width: {{ $rateReview['threeStar'] / $tour->reviews->count() * 100 }}%;"
                                                                  role="progressbar" aria-valuenow="60" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
-                                                        <span class="text-review">36 reviews</span>
+                                                        <span
+                                                            class="text-review">{{ $rateReview['threeStar'] }} reviews</span>
                                                     </div>
 
                                                     <div
@@ -367,11 +339,13 @@
                                                             <i class="bi bi-star-fill fill-gray"></i>
                                                         </p>
                                                         <div class="progress">
-                                                            <div class="progress-bar bg-warning" style="width: 0%;"
+                                                            <div class="progress-bar bg-warning"
+                                                                 style="width: {{ $rateReview['twoStar'] / $tour->reviews->count() * 100 }}%;"
                                                                  role="progressbar" aria-valuenow="0" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
-                                                        <span class="text-review">0 reviews</span>
+                                                        <span
+                                                            class="text-review">{{ $rateReview['twoStar'] }} reviews</span>
                                                     </div>
 
                                                     <div
@@ -381,11 +355,13 @@
                                                             <i class="bi bi-star-fill fill-gray"></i>
                                                         </p>
                                                         <div class="progress">
-                                                            <div class="progress-bar bg-warning" style="width: 0;"
+                                                            <div class="progress-bar bg-warning"
+                                                                 style="width: {{ $rateReview['oneStar'] / $tour->reviews->count() * 100 }}%;"
                                                                  role="progressbar" aria-valuenow="0" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
-                                                        <span class="text-review">43 reviews</span>
+                                                        <span
+                                                            class="text-review">{{ $rateReview['oneStar'] }} reviews</span>
                                                     </div>
 
                                                 </div>
@@ -393,14 +369,15 @@
                                         </div>
                                     </div>
                                     <hr>
+
                                     <div class="box-review d-flex align-items-start">
-                                        <img src="images/icon/user.svg" alt="" width="56">
+                                        <img src="{{ asset('images/icon/user.svg') }}" alt="" width="56">
                                         <form class="form-review w-100">
                                             <textarea class="form-control" rows="5"
                                                       placeholder="Type anything"></textarea>
                                             <input type="hidden" id="inputRateReview" value="4">
                                             <div class="d-flex justify-content-between mt-4">
-                                                <div class="rate-review" id="rateReview1">
+                                                <div class="rate-review" id="rateReview">
                                                     <i class="rate-star bi bi-star-fill fill-yellow" data-rate="1"></i>
                                                     <i class="rate-star bi bi-star-fill fill-yellow" data-rate="2"></i>
                                                     <i class="rate-star bi bi-star-fill fill-yellow" data-rate="3"></i>
@@ -412,92 +389,37 @@
                                         </form>
                                     </div>
                                     <hr>
+
                                     <div class="box-list-review">
-                                        <div class="review-item">
-                                            <div class="title-review d-flex justify-content-start w-100">
-                                                <img src="images/user-avatar.png" alt="">
-                                                <div class="info-review">
-                                                    <div class="rate-review" id="rateReview2">
-                                                        <i class="rate-star bi bi-star-fill fill-yellow"
-                                                           data-rate="1"></i>
-                                                        <i class="rate-star bi bi-star-fill fill-yellow"
-                                                           data-rate="2"></i>
-                                                        <i class="rate-star bi bi-star-fill fill-yellow"
-                                                           data-rate="3"></i>
-                                                        <i class="rate-star bi bi-star-fill fill-yellow"
-                                                           data-rate="4"></i>
-                                                        <i class="rate-star bi bi-star fill-yellow" data-rate="5"></i>
-                                                    </div>
-                                                    <p class="text-title">The best experience ever! </p>
-                                                    <span>Nevermind</span>
-                                                    <i class="bi bi-dot"></i>
-                                                    <span>Sep 2020</span>
-                                                </div>
 
-                                            </div>
-                                            <p class="review-text">
-                                                It was excellent! The trip is long but the vans are comfortable and have
-                                                wi-fi. The driver very friendly as well as Ahmed our guide to the
-                                                dromedaries. The camp was beautiful, comfortable beds, clean bathroom
-                                                and delicious food!
-                                            </p>
-                                        </div>
-                                        <hr>
-                                        <div class="review-item">
-                                            <div class="title-review d-flex justify-content-start w-100">
-                                                <img src="images/user-avatar.png" alt="">
-                                                <div class="info-review">
-                                                    <div class="rate-review" id="rateReview3">
-                                                        <i class="rate-star bi bi-star-fill fill-yellow"
-                                                           data-rate="1"></i>
-                                                        <i class="rate-star bi bi-star-fill fill-yellow"
-                                                           data-rate="2"></i>
-                                                        <i class="rate-star bi bi-star-fill fill-yellow"
-                                                           data-rate="3"></i>
-                                                        <i class="rate-star bi bi-star-fill fill-yellow"
-                                                           data-rate="4"></i>
-                                                        <i class="rate-star bi bi-star fill-yellow" data-rate="5"></i>
+                                        @foreach($reviews as $review)
+                                            <div class="review-item">
+                                                <div class="title-review d-flex justify-content-start w-100">
+                                                    <img src="{{ asset('images/user-avatar.png') }}" alt="review">
+                                                    <div class="info-review">
+                                                        <div class="rate-review" id="rateReview{{ $loop->index }}">
+                                                            @include('components.rate_review', ['rate'=>$review->rate])
+                                                        </div>
+                                                        <p class="text-title">The best experience ever! </p>
+                                                        <span>Nevermind</span>
+                                                        <i class="bi bi-dot"></i>
+                                                        <span>{{ (new DateTime($review->created_at))->format("M Y") }}</span>
                                                     </div>
-                                                    <p class="text-title">The best experience ever! </p>
-                                                    <span>Nevermind</span>
-                                                    <i class="bi bi-dot"></i>
-                                                    <span>Sep 2020</span>
-                                                </div>
 
+                                                </div>
+                                                <p class="review-text">
+                                                    {{ $review->comment }}
+                                                </p>
                                             </div>
-                                            <p class="review-text">
-                                                It was excellent! The trip is long but the vans are comfortable and have
-                                                wi-fi. The driver very friendly as well as Ahmed our guide to the
-                                                dromedaries. The camp was beautiful, comfortable beds, clean bathroom
-                                                and delicious food!
-                                            </p>
-                                        </div>
-                                        <hr>
+                                            <hr>
+                                        @endforeach
+
                                     </div>
 
                                     <div class="pagination-tours d-flex justify-content-start align-items-baseline">
-                                        <nav class="page-navigation " aria-label="page navigation">
-                                            <ul class="pagination justify-content-start">
-                                                <li class="page-item ms-0">
-                                                    <a class="page-link ms-0" href="#" tabindex="-1"
-                                                       aria-disabled="true">
-                                                        <img src="images/icon/arrow-pagination-left.svg"
-                                                             alt="page-prev">
-                                                    </a>
-                                                </li>
-                                                <li class="page-item page-number active"><a class="page-link"
-                                                                                            href="#">1</a></li>
-                                                <li class="page-item page-number"><a class="page-link" href="#">2</a>
-                                                </li>
-                                                <li class="page-item me-0">
-                                                    <a class="page-link me-0" href="#">
-                                                        <img src="images/icon/arrow-pagination-right.svg"
-                                                             alt="page-next">
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
+                                        {!! $reviews->links('components.pagination', ['isReviewPage' => true]) !!}
                                     </div>
+
                                 </div>
                             </div>
                         </div>
