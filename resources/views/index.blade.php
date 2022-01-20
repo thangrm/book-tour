@@ -28,7 +28,7 @@
                                 <a class="nav-link" href="#">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
+                                <a class="nav-link" href="{{ route('client.contact') }}">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Login</a>
@@ -160,7 +160,9 @@
                                  class="card-img-top"
                                  alt="{{ $destination->name }}">
                             <div class="card-body">
-                                <h5 class="card-title"><a href=""> {{ $destination->name }} </a></h5>
+                                <h5 class="card-title"><a
+                                        href="{{ route('client.tours.list', $destination->slug) }}"> {{ $destination->name }} </a>
+                                </h5>
                                 <p class="card-text">{{ $destination->tours()->count() }} experiences</p>
                             </div>
                         </div>

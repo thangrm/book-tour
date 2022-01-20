@@ -7,8 +7,10 @@
     background-position: top;
     min-height: 400px;
     height: auto;
+
     .box-content-header {
         margin-top: 90px;
+
         .text-header {
             .text-slogan {
                 width: 765px;
@@ -17,6 +19,7 @@
             }
         }
     }
+
     @media only screen and (max-width: 992px) {
         .box-content-header {
             .text-header {
@@ -46,11 +49,14 @@
 
 .list-tours {
     margin-top: 0;
+
     .title-slide {
         margin: 0;
     }
+
     .btn-filter-wrap {
         position: relative;
+
         .btn-filter {
             height: 38px;
             width: 105px;
@@ -61,10 +67,12 @@
             border: 1.5px solid #1E1E1E;
             border-radius: 0;
             padding-top: 10px;
+
             i {
                 font-size: 20px;
             }
         }
+
         .collapse-fillter {
             position: absolute;
             right: 0;
@@ -74,11 +82,13 @@
             border-radius: 0px;
             padding: 24px;
             box-shadow: 0px 4px 36px 0px #00000033;
-            z-index: 3;
+            z-index: 5;
             background: #FFFFFF;
+
             .card {
                 padding: 0;
                 border: none;
+
                 .filter-header {
                     text-transform: uppercase;
                     font-size: 18px;
@@ -86,33 +96,40 @@
                     font-weight: 700;
                     line-height: 23px;
                     margin-bottom: 20px;
+
                     p {
                         margin: 0;
                         color: #03387D;
                     }
+
                     .text-clear {
                         color: #C4C4C4;
                     }
+
                     .text-clear:hover {
                         color: #03387D;
                         cursor: pointer;
                     }
                 }
+
                 h5 {
                     font-size: 18px;
                     font-style: normal;
                     font-weight: 600;
                     margin-bottom: 20px;
                 }
+
                 .form-select-filter {
                     .form-group {
                         .form-check {
                             margin-bottom: 20px;
+
                             .form-check-input {
                                 margin-right: 15px;
                             }
                         }
                     }
+
                     .btn-submit-filter {
                         height: 48px;
                         width: 301px;
@@ -128,10 +145,12 @@
             }
         }
     }
+
     .body-slide {
         .card-tour {
             width: 100%;
             margin-bottom: 45px;
+
             .card-body {
                 .card-title {
                     margin: 0;
@@ -151,6 +170,7 @@
         color: #8E8E93;
         margin-right: 35%;
     }
+
     .page-navigation {
         .pagination {
             .page-item {
@@ -166,11 +186,13 @@
                     font-style: normal;
                     font-weight: 700;
                     margin: 12px;
+
                     img {
                         padding-bottom: 5px;
                     }
                 }
             }
+
             .page-item.active a {
                 background-color: $black-title;
                 color: white;
@@ -190,15 +212,19 @@
 @media only screen and (max-width: 768px) {
     .pagination-tours {
         flex-direction: column;
+
         .pagination-text {
             text-align: center;
             width: 100%;
             margin-right: 15%;
         }
+
         .page-navigation {
             width: 100%;
+
             .pagination {
                 justify-content: center !important;
+
                 .page-item {
                     .page-link {
                         width: 30px;

@@ -922,7 +922,7 @@ div[slider] > input[type=range]::-ms-tooltip {
   border-radius: 0px;
   padding: 24px;
   box-shadow: 0px 4px 36px 0px #00000033;
-  z-index: 3;
+  z-index: 5;
   background: #FFFFFF;
 }
 .list-tours .btn-filter-wrap .collapse-fillter .card {
