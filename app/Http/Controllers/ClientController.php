@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destination;
+use App\Models\Itinerary;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 
@@ -39,9 +40,15 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function showTour()
+    public function showTour(Request $request, $slug)
     {
-        return view('tour_detail');
+        $tour = Tour::with('destination', 'type', 'reviews', 'itineraries.places')
+            ->where('slug', $slug)->firstOrFail();
+        $relateTours = Tour::with('destination', 'type')
+            ->where('destination_id', $tour->destination_id)
+            ->limit(6)->get();
+
+        return view('tour_detail', compact(['tour', 'relateTours']));
     }
 
     /**

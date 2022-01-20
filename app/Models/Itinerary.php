@@ -27,6 +27,15 @@ class Itinerary extends Model
     }
 
     /**
+     * Get the places for the itinerary.
+     *
+     */
+    public function places()
+    {
+        return $this->hasMany(Place::class);
+    }
+
+    /**
      * Validate rules for itinerary
      *
      * @return string[]

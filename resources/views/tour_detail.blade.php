@@ -5,7 +5,7 @@
         <!--Logo and Nav -->
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <img class="logo" src="images/logo.png" alt="logo">
+                <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
                 <nav class="navbar navbar-expand-sm navbar-light">
                     <button class="navbar-toggler" id="navbarBtn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
@@ -48,9 +48,9 @@
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="">Home</a></li>
-                    <li class="breadcrumb-item"><a href="">Tours</a></li>
-                    <li class="breadcrumb-item"><a href="">Detail tour</a></li>
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Tours</a></li>
+                    <li class="breadcrumb-item"><a href="#">Detail tour</a></li>
                 </ol>
             </nav>
         </div>
@@ -62,16 +62,16 @@
         <div class="container">
             <div class="header-detail row">
                 <div class="col-12 col-lg-7 col-xl-8">
-                    <p class="title-tour">Discover interesting things in the romantic coastal city of Vungtau</p>
+                    <p class="title-tour">{{ $tour->name }}</p>
                     <p class="text-content">
-                        <img src="images/icon/location.svg" alt="location">
-                        <span>Vungtau City, Baria-Vungtau</span>
+                        <img src="{{ asset('images/icon/location.svg') }}" alt="location">
+                        <span>{{ $tour->destination->name }}</span>
                     </p>
                     <div class="rate">
-                        <img src="images/icon/star.svg" alt="star">
+                        <img src="{{ asset('images/icon/star.svg') }}" alt="star">
                         <span class="text-rate">4.5</span>
                     </div>
-                    <span class="text-content">128 reviews</span>
+                    <span class="text-content">{{ $tour->reviews->count() }} reviews</span>
                 </div>
             </div>
             <div class="row box-detail-content">
@@ -80,17 +80,21 @@
                         <!-------------------- Image Slider -------------------->
                         <div class="body-tour-slide">
                             <div class="main-image-tour">
-                                <img class="ribbon" src="images/icon/ribbon.svg" alt="bookmark">
+                                <img class="ribbon" src="{{ asset('images/icon/ribbon.svg') }}" alt="bookmark">
                                 <div class="main-image">
-                                    <img src="images/vungtau.png" alt="" id="mainImageTour">
+                                    <img src="{{ asset('images/vungtau.png') }}" alt="" id="mainImageTour">
                                 </div>
                                 <div class="list-image-thumbnail">
                                     <div class="owl-carousel" id="slideImageThumnail">
-                                        <img class="thumbnailItem target" class="target" src="images/vungtau.png">
-                                        <img class="thumbnailItem" src="images/sapa-tour.png">
-                                        <img class="thumbnailItem" src="images/tour2.png">
-                                        <img class="thumbnailItem" src="images/muine.png">
-                                        <img class="thumbnailItem" src="images/tour2.png">
+                                        @foreach($tour->galleries as $gallery)
+                                            @if ($loop->first)
+                                                <img class="thumbnailItem target"
+                                                     src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
+                                            @else
+                                                <img class="thumbnailItem"
+                                                     src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -132,55 +136,40 @@
                                             Overview
                                         </p>
                                         <p class="panel-text">
-                                            Set sail for the idyllic Italian island of Capri on this full-day tour,
-                                            including round-trip jetfoil transfers from Naples or Sorrento. Stop to
-                                            browse the handicraft stores of Anacapri and soak up the atmosphere in
-                                            buzzing La Piazzetta. Top it off with
-                                            a visit to the Blue Grotto and a funicular ride to Marina Grande.
+                                            {!! $tour->overview !!}
                                         </p>
-                                        <ul>
-                                            <li>Full-day tour of Capri island from Naples or Sorrento Admire views along
-                                                the coast as you cruise to the island by jetfoil
-                                            </li>
-                                            <li> Visit the lively island towns of Anacapri and Capri Ride</li>
-                                            <li>The funicular from La Piazzetta to Marina Grande Marvel at natural
-                                                wonders like the Blue Grotto Small-group tour ensures a personalized
-                                                experience
-                                            </li>
-                                        </ul>
+                                        {{--                                        <ul>--}}
+                                        {{--                                            <li>Full-day tour of Capri island from Naples or Sorrento Admire views along--}}
+                                        {{--                                                the coast as you cruise to the island by jetfoil--}}
+                                        {{--                                            </li>--}}
+                                        {{--                                            <li> Visit the lively island towns of Anacapri and Capri Ride</li>--}}
+                                        {{--                                            <li>The funicular from La Piazzetta to Marina Grande Marvel at natural--}}
+                                        {{--                                                wonders like the Blue Grotto Small-group tour ensures a personalized--}}
+                                        {{--                                                experience--}}
+                                        {{--                                            </li>--}}
+                                        {{--                                        </ul>--}}
                                     </div>
                                     <hr>
                                     <div class="box-text">
                                         <p class="panel-title">
                                             What's Included
                                         </p>
-                                        <ul class="tick-vert">
-                                            <li>Port pickup and drop-off</li>
-                                            <li>Local guide</li>
-                                            <li>Round-trip shared transfer</li>
-                                            <li>Transport by minibus</li>
-                                            <li>Blue Grotto admission tickets</li>
-                                            <li>Shared boat ride tour around the island ( if Blue grotto is closed)</li>
-                                        </ul>
+                                        {!! $tour->included !!}
+                                        {{--                                        <ul class="tick-vert">--}}
+                                        {{--                                            <li>Port pickup and drop-off</li>--}}
+                                        {{--                                            <li>Local guide</li>--}}
+                                        {{--                                            <li>Round-trip shared transfer</li>--}}
+                                        {{--                                            <li>Transport by minibus</li>--}}
+                                        {{--                                            <li>Blue Grotto admission tickets</li>--}}
+                                        {{--                                            <li>Shared boat ride tour around the island ( if Blue grotto is closed)</li>--}}
+                                        {{--                                        </ul>--}}
                                     </div>
                                     <hr>
                                     <div class="box-text">
                                         <p class="panel-title">
                                             Departure & Return
                                         </p>
-                                        <p class="panel-sub-title">
-                                            Departure Point
-                                        <p class="panel-text">
-                                            1: Molo Beverello, 80133 Napoli NA, Italy <br> 2: Hotel Il Faro, Via Marina
-                                            Piccola, 5, 80067 Sorrento NA, Italy
-                                        </p>
-                                        </p>
-                                        <p class="panel-sub-title">
-                                            Departure Time
-                                        <p class="panel-text">
-                                            8:00 AM
-                                        </p>
-                                        </p>
+                                        {!! $tour->departure !!}
                                     </div>
                                     <hr>
                                     <div class="box-text">
@@ -189,133 +178,46 @@
                                         </p>
                                         <!-- Accordion Itinerary -->
                                         <div class="accordion" id="accordionItinerary">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsItineraryHeadingOne">
-                                                    <button class="accordion-button" type="button"
+                                            @foreach($tour->itineraries as $itinerary)
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header"
+                                                        id="panelsItineraryHeading{{$loop->index}}">
+                                                        <button
+                                                            class="accordion-button {{ $loop->first ?: 'collapsed'  }}"
+                                                            type="button"
                                                             data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsItineraryCollapseOne"
-                                                            aria-expanded="true"
-                                                            aria-controls="panelsItineraryCollapseOne">
-                                                        Day 1: Molo Beverello (4 stops)
-                                                    </button>
-                                                </h2>
-                                                <div id="panelsItineraryCollapseOne"
-                                                     class="accordion-collapse collapse show"
-                                                     aria-labelledby="panelsItineraryHeadingOne">
-                                                    <div class="accordion-body">
-                                                        <ul class="list-accordion">
-                                                            <li class="list-accordion-item">
-                                                                <p class="title-item">Molo Beverello</p>
-                                                                <p class="text-item"> We start our trip from the famouse
-                                                                    place Jemaa Lefna in center of Marrakech, Crossed
-                                                                    the highest Atlas Through pass (Tizi N Tichka)</p>
-                                                                <p class="duration-item">Duration:
-                                                                    <span>5 minutes</span></p>
-                                                                <p class="text-item">Admission Ticket Free</p>
-                                                            </li>
-
-                                                            <li class="list-accordion-item">
-                                                                <p class="title-item">Marina Piccola</p>
-                                                                <p class="text-item"> so we will visit the UNESCO World
-                                                                    Heritage Site Ait Benhaddou / Official name Ksar of
-                                                                    Ait-Ben-Haddou is located in south of Morocco, It is
-                                                                    an ighrem (fortified village in English) (ksar in
-                                                                    Arabic), along the former caravan route between the
-                                                                    Sahara and Marrakech in present-day Morocco. Most
-                                                                    citizens attracted by the tourist trade live in more
-                                                                    modern dwellings in a village
-                                                                    on the other side of the river, although there are
-                                                                    four families still living in the ancient village.
-                                                                    Inside the walls of the ksar are half a dozen
-                                                                    (Kasbahs) or merchants houses and other
-                                                                    individual dwellings, Duration: 1 hour 30 minutes
-                                                                    Admission Ticket Free</p>
-                                                                <p class="duration-item">Duration: <span>1 hour 30 minutes</span>
-                                                                </p>
-                                                                <p class="text-item">Admission Ticket Free</p>
-                                                            </li>
-
-                                                            <li class="list-accordion-item">
-                                                                <p class="title-item">Blue Grotto</p>
-                                                                <p class="text-item"> Pass trough the Ait Saouen Col in
-                                                                    anti atlas</p>
-                                                            </li>
-
-                                                            <li class="list-accordion-item">
-                                                                <p class="title-item">Villa San Michele</p>
-                                                                <p class="text-item">Crossed by the Draa valley, where
-                                                                    there is more than 2 million palms along the draa
-                                                                    river which stretches for a length to Senegal to the
-                                                                    south.</p>
-                                                            </li>
-                                                        </ul>
+                                                            data-bs-target="#panelsItineraryCollapse{{$loop->index}}"
+                                                            aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
+                                                            aria-controls="panelsItineraryCollapse{{$loop->index}}">
+                                                            Day {{ $loop->index + 1}}: {{ $itinerary->name }}
+                                                            ({{ $itinerary->places->count() }} stops)
+                                                        </button>
+                                                    </h2>
+                                                    <div id="panelsItineraryCollapse{{$loop->index}}"
+                                                         class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}"
+                                                         aria-labelledby="panelsItineraryHeading{{$loop->index}}">
+                                                        <div class="accordion-body">
+                                                            <ul class="list-accordion">
+                                                                @foreach($itinerary->places as $place)
+                                                                    <li class="list-accordion-item">
+                                                                        <p class="title-item"> {{ $place->name }}</p>
+                                                                        {!! $place->description !!}
+                                                                        {{--                                                                        <p class="text-item"> We start our trip from the--}}
+                                                                        {{--                                                                            famouse--}}
+                                                                        {{--                                                                            place Jemaa Lefna in center of Marrakech,--}}
+                                                                        {{--                                                                            Crossed--}}
+                                                                        {{--                                                                            the highest Atlas Through pass (Tizi N--}}
+                                                                        {{--                                                                            Tichka)</p>--}}
+                                                                        {{--                                                                        <p class="duration-item">Duration:--}}
+                                                                        {{--                                                                            <span>5 minutes</span></p>--}}
+                                                                        {{--                                                                        <p class="text-item">Admission Ticket Free</p>--}}
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsItineraryHeadingTwo">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsItineraryCollapseTwo"
-                                                            aria-expanded="false"
-                                                            aria-controls="panelsItineraryCollapseTwo">
-                                                        Day 2: Marina Piccola (1 stop)
-                                                    </button>
-                                                </h2>
-                                                <div id="panelsItineraryCollapseTwo" class="accordion-collapse collapse"
-                                                     aria-labelledby="panelsItineraryHeadingTwo">
-                                                    <div class="accordion-body">
-                                                        <ul class="list-accordion">
-                                                            <li class="list-accordion-item">
-                                                                <p class="title-item">Marina Piccola</p>
-                                                                <p class="text-item"> so we will visit the UNESCO World
-                                                                    Heritage Site Ait Benhaddou / Official name Ksar of
-                                                                    Ait-Ben-Haddou is located in south of Morocco, It is
-                                                                    an ighrem (fortified village in English) (ksar in
-                                                                    Arabic), along the former caravan route between the
-                                                                    Sahara and Marrakech in present-day Morocco. Most
-                                                                    citizens attracted by the tourist trade live in more
-                                                                    modern dwellings in a village
-                                                                    on the other side of the river, although there are
-                                                                    four families still living in the ancient village.
-                                                                    Inside the walls of the ksar are half a dozen
-                                                                    (Kasbahs) or merchants houses and other
-                                                                    individual dwellings, Duration: 1 hour 30 minutes
-                                                                    Admission Ticket Free</p>
-                                                                <p class="duration-item">Duration: <span>1 hour 30 minutes</span>
-                                                                </p>
-                                                                <p class="text-item">Admission Ticket Free</p>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsItineraryHeadingThree">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#panelsItineraryCollapseThree"
-                                                            aria-expanded="false"
-                                                            aria-controls="panelsItineraryCollapseThree">
-                                                        Day 3: Marina Piccola (1 stop)
-                                                    </button>
-                                                </h2>
-                                                <div id="panelsItineraryCollapseThree"
-                                                     class="accordion-collapse collapse"
-                                                     aria-labelledby="panelsItineraryHeadingThree">
-                                                    <div class="accordion-body">
-                                                        <ul class="list-accordion">
-                                                            <li class="list-accordion-item">
-                                                                <p class="title-item">Villa San Michele</p>
-                                                                <p class="text-item">Crossed by the Draa valley, where
-                                                                    there is more than 2 million palms along the draa
-                                                                    river which stretches for a length to Senegal to the
-                                                                    south.</p>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="box-text">
@@ -323,29 +225,31 @@
                                             Maps
                                         </p>
                                         <div class="box-maps">
-                                            <iframe
-                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.870471877026!2d105.79155841446575!3d20.997828686015115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab1167edbae7%3A0xa0790fee2a2a9c1b!2sAdamo%20Software%20-%20Leading%20Vietnam%20Software%20Outsourcing%20Company!5e0!3m2!1svi!2s!4v1639630813755!5m2!1svi!2s"
-                                                style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-
+                                            {!! $tour->map !!}
                                         </div>
                                     </div>
                                     <div class="box-text">
                                         <p class="panel-title">
                                             360° Panoramic Images and Videos
                                         </p>
-                                        <div class="box-images-panoramic" id="imagePanoramic">
-                                            <div class="wrap-panoramic">
-                                                <img src="images/icon/360.svg" alt="">
-                                            </div>
-                                        </div>
+                                        {{--                                        <div class="box-images-panoramic" id="imagePanoramic">--}}
+                                        {{--                                            <div class="wrap-panoramic">--}}
+                                        {{--                                                <img src="images/icon/360.svg" alt="">--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
+                                        @isset($tour->panoramic_image)
+                                            <iframe class="w-100 m-t-10" height="400" src="{{$tour->panoramic_image}}"
+                                                    frameborder="0">
+                                            </iframe>
+                                        @endisset
                                         <div class="box-video">
-                                            <video controls id="videoTour">
-                                                <source src="video/sample-video.mp4" type="video/mp4"/>
-                                            </video>
-                                            <div class="wrap-video">
-                                                <i class="bi bi-play-fill" id="iconPlayVideo"></i>
-                                                <i class="bi bi-pause" id="iconPauseVideo"></i>
-                                            </div>
+                                            @isset($tour->video)
+                                                <iframe class="w-100 m-t-10" height="400"
+                                                        src="https://www.youtube.com/embed/{{ $tour->video }}"
+                                                        title="YouTube video player" frameborder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowfullscreen></iframe>
+                                            @endisset
                                         </div>
 
                                     </div>
@@ -656,23 +560,26 @@
                 <!-------------------- Form Book Now -------------------->
                 <div class="col-12 col-lg-5 col-xl-4">
                     <div class="box-book-now">
-                        <p class="card-text">from <span class="card-title">$146.00</span></p>
+                        <input type="hidden" value="{{ $tour->price }}" id="price">
+                        <p class="card-text">from <span class="card-title">${{ number_format($tour->price, 2) }}</span>
+                        </p>
                         <hr>
                         <div class="info-tour d-flex justify-content-between">
                             <span class="card-text w-50">
-                                Duration: <p class="card-title">3 days - 2 nights</p>
+                                Duration: <p
+                                    class="card-title">{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</p>
                             </span>
                             <span class="card-text w-50">
-                                Tour type: <p class="card-title">Sun - Beach</p>
+                                Tour type: <p class="card-title">{{ $tour->type->name }}</p>
                             </span>
                         </div>
                         <form action="">
                             <div class="input-inner-icon">
-                                <img src="images/icon/schedule.svg">
+                                <img src="{{ asset('images/icon/schedule.svg') }}">
                                 <input class="form-control" type="text" name="daterange" placeholder="Departure time">
                             </div>
                             <div class="input-inner-icon">
-                                <img src="images/icon/people.svg">
+                                <img src="{{ asset('images/icon/people.svg') }}">
                                 <select class="form-control" id="selectNumberPeople" required>
                                     <option value="1" class="">1 People</option>
                                     <option value="2" class="">2 People</option>
@@ -700,9 +607,7 @@
                                 <span class="card-text">
                                     Total
                                 </span>
-                                <span class="card-title" id="totalPrice">
-                                    $450.00
-                                </span>
+                                <span class="card-title" id="totalPrice">$</span>
                             </div>
                             <div class="input-search">
                                 <button class="form-control btn-search-submit" type="submit">
@@ -726,174 +631,40 @@
             </div>
             <div class="body-slide">
                 <div class="row">
-                    <div class="col-6 col-lg-4">
-                        <div class="card card-tour">
-                            <div class="card-image">
-                                <img class="ribbon fill-white" src="images/icon/ribbon.svg" alt="bookmark">
-                                <div class="rate">
-                                    <img src="images/icon/star.svg" alt="star">
-                                    <span class="text-rate">4.5</span>
+                    @foreach($relateTours as $tour)
+                        <div class="col-6 col-lg-4">
+                            <div class="card card-tour">
+                                <div class="card-image">
+                                    <img class="ribbon" src="{{ asset('/images/icon/ribbon.svg') }}"
+                                         alt="bookmark">
+                                    <div class="rate">
+                                        <img src="{{ asset('images/icon/star.svg') }}" alt="star">
+                                        <span class="text-rate">4.5</span>
+                                    </div>
+                                    <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
+                                         alt="tour-image">
                                 </div>
-                                <img src="images/muine.png" class="card-img-top" alt="tour-image">
-                            </div>
 
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <img src="images/icon/location.svg" alt="location">
-                                    <span>Sapa, Laocai</span>
-                                </p>
-                                <h5 class="card-title"><a href="">Discover interesting things in the romantic coastal
-                                        city of Vungtau</a></h5>
-                                <div class="d-inline-flex justify-content-between align-items-center w-100">
+                                <div class="card-body">
                                     <p class="card-text">
-                                        <img src="images/icon/schedule.svg" alt="location">
-                                        <span>3 days - 2 night</span>
+                                        <img src="{{ asset('images/icon/location.svg') }}" alt="location">
+                                        <span>{{ $tour->type->name }}</span>
                                     </p>
-                                    <p class="card-text">from <span class="card-title">$146.00</span></p>
+                                    <h5 class="card-title"><a
+                                            href="{{ route('client.tours.detail', $tour->slug) }}">{{ $tour->name }}</a>
+                                    </h5>
+                                    <div class="d-inline-flex justify-content-between align-items-center w-100">
+                                        <p class="card-text">
+                                            <img src="{{ asset('images/icon/schedule.svg') }}" alt="location">
+                                            <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span>
+                                        </p>
+                                        <p class="card-text">from <span class="card-title">${{ $tour->price }}</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-lg-4">
-                        <div class="card card-tour">
-                            <div class="card-image">
-                                <img class="ribbon" src="images/icon/ribbon.svg" alt="bookmark">
-                                <div class="rate">
-                                    <img src="images/icon/star.svg" alt="star">
-                                    <span class="text-rate">4.5</span>
-                                </div>
-                                <img src="images/tour2.png" class="card-img-top" alt="tour-image">
-                            </div>
-
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <img src="images/icon/location.svg" alt="location">
-                                    <span>Sapa, Laocai</span>
-                                </p>
-                                <h5 class="card-title"><a href="">Discover the most majestic Fansipan peak in Vietnam -
-                                        the roof of Indochina </a></h5>
-                                <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                    <p class="card-text">
-                                        <img src="images/icon/schedule.svg" alt="location">
-                                        <span>3 days - 2 night</span>
-                                    </p>
-                                    <p class="card-text">from <span class="card-title">$234.00</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-4">
-                        <div class="card card-tour">
-                            <div class="card-image">
-                                <img class="ribbon fill-white" src="images/icon/ribbon.svg" alt="bookmark">
-                                <div class="rate">
-                                    <img src="images/icon/star.svg" alt="star">
-                                    <span class="text-rate">4.5</span>
-                                </div>
-                                <img src="images/tour3.png" class="card-img-top" alt="tour-image">
-                            </div>
-
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <img src="images/icon/location.svg" alt="location">
-                                    <span>Sapa, Laocai</span>
-                                </p>
-                                <h5 class="card-title"><a href="">Experience sea tourism on Phuquoc golden pearl</a>
-                                </h5>
-                                <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                    <p class="card-text">
-                                        <img src="images/icon/schedule.svg" alt="location">
-                                        <span>3 days - 2 night</span>
-                                    </p>
-                                    <p class="card-text">from <span class="card-title">$334.00</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-4">
-                        <div class="card card-tour">
-                            <div class="card-image">
-                                <img class="ribbon fill-white" src="images/icon/ribbon.svg" alt="bookmark">
-                                <div class="rate">
-                                    <img src="images/icon/star.svg" alt="star">
-                                    <span class="text-rate">4.5</span>
-                                </div>
-                                <img src="images/sapa-tour.png" class="card-img-top" alt="tour-image">
-                            </div>
-
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <img src="images/icon/location.svg" alt="location">
-                                    <span>Sapa, Laocai</span>
-                                </p>
-                                <h5 class="card-title"><a href="">Discover interesting things in the romantic coastal
-                                        city of Vungtau</a></h5>
-                                <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                    <p class="card-text">
-                                        <img src="images/icon/schedule.svg" alt="location">
-                                        <span>3 days - 2 night</span>
-                                    </p>
-                                    <p class="card-text">from <span class="card-title">$146.00</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-4">
-                        <div class="card card-tour">
-                            <div class="card-image">
-                                <img class="ribbon" src="images/icon/ribbon.svg" alt="bookmark">
-                                <div class="rate">
-                                    <img src="images/icon/star.svg" alt="star">
-                                    <span class="text-rate">4.5</span>
-                                </div>
-                                <img src="images/cultural1.png" class="card-img-top" alt="tour-image">
-                            </div>
-
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <img src="images/icon/location.svg" alt="location">
-                                    <span>Sapa, Laocai</span>
-                                </p>
-                                <h5 class="card-title"><a href="">Discover the most majestic Fansipan peak in Vietnam -
-                                        the roof of Indochina </a></h5>
-                                <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                    <p class="card-text">
-                                        <img src="images/icon/schedule.svg" alt="location">
-                                        <span>3 days - 2 night</span>
-                                    </p>
-                                    <p class="card-text">from <span class="card-title">$234.00</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-lg-4">
-                        <div class="card card-tour">
-                            <div class="card-image">
-                                <img class="ribbon fill-white" src="images/icon/ribbon.svg" alt="bookmark">
-                                <div class="rate">
-                                    <img src="images/icon/star.svg" alt="star">
-                                    <span class="text-rate">4.5</span>
-                                </div>
-                                <img src="images/cultural3.png" class="card-img-top" alt="tour-image">
-                            </div>
-
-                            <div class="card-body">
-                                <p class="card-text">
-                                    <img src="images/icon/location.svg" alt="location">
-                                    <span>Sapa, Laocai</span>
-                                </p>
-                                <h5 class="card-title"><a href="">Experience sea tourism on Phuquoc golden pearl </a>
-                                </h5>
-                                <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                    <p class="card-text">
-                                        <img src="images/icon/schedule.svg" alt="location">
-                                        <span>3 days - 2 night</span>
-                                    </p>
-                                    <p class="card-text">from <span class="card-title">$334.00</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
