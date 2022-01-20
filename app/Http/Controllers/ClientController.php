@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\Utilities;
 use App\Models\Destination;
 use App\Models\Itinerary;
+use App\Models\Review;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 
@@ -30,11 +32,11 @@ class ClientController extends Controller
      */
     public function listTour($slug)
     {
-        $destination = Destination::where('slug', $slug)->first();
+        $destination = Destination::where('slug', $slug)->firstOrFail();
         $tours = Tour::with('destination', 'type')
             ->where('status', 1)
             ->where('destination_id', $destination->id)
-            ->paginate(12);
+            ->paginate(21);
 
         return view('list_tour', compact(['tours']));
     }
@@ -46,15 +48,32 @@ class ClientController extends Controller
      */
     public function showTour(Request $request, $slug)
     {
-        $tour = Tour::with('destination', 'type', 'reviews', 'itineraries.places')
-            ->where('slug', $slug)->firstOrFail();
-        $tour->faqs = $tour->faqs()->where('status', 1)->get();
+        $tour = Tour::with('destination', 'type', 'itineraries.places')
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $tour->faqs = $tour->faqs()
+            ->where('status', 1)
+            ->get();
+
+        $tour->reviews = $tour->reviews()
+            ->where('status', 1)
+            ->get();
+
         $relateTours = Tour::with('destination', 'type')
             ->where('status', 1)
             ->where('destination_id', $tour->destination_id)
-            ->limit(6)->get();
+            ->limit(6)
+            ->get();
 
-        return view('tour_detail', compact(['tour', 'relateTours']));
+        $reviews = $tour->reviews()
+            ->where('status', 1)
+            ->paginate(8);
+
+
+        $rateReview = Utilities::calculatorRateReView($tour->reviews);
+
+        return view('tour_detail', compact(['tour', 'relateTours', 'reviews', 'rateReview']));
     }
 
     /**

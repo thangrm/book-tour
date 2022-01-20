@@ -2,6 +2,7 @@
 
 namespace App\Libraries;
 
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -64,17 +65,50 @@ class Utilities
     {
         if ($duration < 1 || empty($duration)) {
             return '';
-        } elseif ($duration == 1) {
-            return 'a day';
-        } else {
-            $night = $duration - 1;
-            if ($night == 1) {
-                return "$duration days, $night night";
-            } else {
-                return "$duration days, $night nights";
-            }
         }
 
+        if ($duration == 1) {
+            return 'a day';
+        }
+
+        $night = $duration - 1;
+        if ($night == 1) {
+            return "$duration days, $night night";
+        }
+
+        return "$duration days, $night nights";
+    }
+
+    /**
+     * Calculate rate for reviews
+     *
+     * @param $reviews
+     * @return float[]
+     */
+    public static function calculatorRateReView($reviews)
+    {
+        $sumRate = 0;
+        $rate = [
+            'oneStar' => 0,
+            'twoStar' => 0,
+            'threeStar' => 0,
+            'fourStar' => 0,
+            'fiveStar' => 0
+        ];
+
+        foreach ($reviews as $review) {
+            $rate['oneStar'] += ($review->rate == 1) ? 1 : 0;
+            $rate['twoStar'] += ($review->rate == 2) ? 1 : 0;
+            $rate['threeStar'] += ($review->rate == 3) ? 1 : 0;
+            $rate['fourStar'] += ($review->rate == 4) ? 1 : 0;
+            $rate['fiveStar'] += ($review->rate == 5) ? 1 : 0;
+
+            $sumRate += $review->rate;
+        }
+
+        $rate['total'] = ceil($sumRate / count($reviews) * 10) / 10;
+
+        return $rate;
     }
 
     /**

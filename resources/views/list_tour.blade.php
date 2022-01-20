@@ -227,8 +227,10 @@
                     @endforeach
                 </div>
             </div>
-            {!! $tours->links('components.pagination') !!}
-
+            
+            <div class="pagination-tours d-flex justify-content-end align-items-baseline w-100">
+                {!! $tours->links('components.pagination') !!}
+            </div>
         </div>
     </div>
     <!-------------------- End List Tours-------------------->
