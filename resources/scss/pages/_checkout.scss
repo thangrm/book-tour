@@ -1,71 +1,90 @@
 .box-checkout {
     margin-bottom: 200px;
+
     .title-checkout {
         font-weight: 500;
         font-size: 36px;
         color: #2a2a2a;
     }
+
     .box-detail-content {
         .box-body-checkout {
             width: 95%;
+
             .box-checkout-item {
                 width: 95%;
                 font-weight: 500;
                 color: #2a2a2a;
+
                 .header-checkout {
                     font-size: 24px;
                 }
+
                 .header-desc {
                     font-size: 16px;
                     font-weight: 400;
                     color: #5E6D77;
                 }
+
                 .sub-checkout-item {
                     margin-top: 20px;
+
                     .sub-header {
                         font-size: 20px;
                     }
+
                     .title {
                         font-size: 16px;
                     }
+
                     input[type=text] {
                         height: 54px;
                         margin-bottom: 30px;
                         border-radius: 0;
                     }
+
                     .form-check {
                         margin-bottom: 15px;
+
                         .form-check-input:checked[type=radio] {
                             background-image: none;
                         }
+
                         input[type=radio] {
                             border-radius: 10%;
                         }
                     }
-                     ::placeholder {
+
+                    ::placeholder {
                         color: #888888;
                     }
+
                     textarea {
                         resize: none;
                         margin-bottom: 30px;
                     }
+
                     .payment-title {
                         width: 120px;
                         display: inline-block;
                     }
+
                     .payment-image {
                         height: 35px;
                     }
+
                     .list-policy {
                         padding-left: 16px;
                         font-size: 14px;
                         font-weight: 400;
                         color: #4F4F4F;
                         margin-top: 50px;
+
                         li {
                             margin-bottom: 20px;
                         }
                     }
+
                     .btn-submit-checkout {
                         margin-top: 30px;
                         height: 56px;
@@ -81,13 +100,17 @@
             }
         }
     }
+
     .box-coupon {
         padding: 0 !important;
+
         .wrap-content-coupon {
             padding: 30px;
+
             .text-content {
                 color: $subcolor;
             }
+
             .input-inner-icon {
                 .btn-apply-coupon {
                     border: 1px solid $orange-primary;
@@ -99,16 +122,24 @@
                     font-size: 16px;
                     font-weight: 600;
                 }
+
+                .btn-apply-coupon:hover {
+                    color: white;
+                    background-color: $orange-primary;
+                }
             }
         }
+
         .total-price-coupon {
             padding: 30px;
             background-color: $black-title;
+
             .card-text {
                 color: white !important;
                 font-weight: normal;
                 font-size: 20px;
             }
+
             .card-title {
                 color: white;
                 font-weight: bold;
@@ -116,12 +147,15 @@
             }
         }
     }
+
     @media only screen and (max-width: 992px) {
         .box-checkout-content {
             display: flex;
             flex-direction: column-reverse;
+
             .box-body-checkout {
                 width: 100%;
+
                 .box-checkout-item {
                     width: 100%
                 }
@@ -139,6 +173,7 @@
 .thank-modal {
     background-image: url('/images/background-header.png');
     background-size: cover;
+
     .panel-thank {
         position: fixed;
         max-width: 845px;
@@ -150,21 +185,25 @@
         transform: translate(-50%, -50%);
         background: linear-gradient(0deg, rgba(255, 255, 255, 0.88) 1.52%, rgba(255, 255, 255, 0.8) 100%);
         backdrop-filter: blur(42px);
+
         .thank-title {
             color: $orange-primary;
             font-weight: bold;
             font-size: 64px;
         }
+
         .thank-text {
             color: #2C2E2F;
             font-weight: normal;
             font-size: 18px;
             margin-bottom: 0;
         }
+
         .btn-back-home {
             margin-top: 60px;
             background-color: $orange-primary;
             border: none;
+
             a,
             a:hover {
                 display: block;
@@ -177,15 +216,19 @@
             }
         }
     }
+
     @media only screen and (max-width: 992px) {
         .panel-thank {
             height: 60%;
+
             .thank-title {
                 font-size: 50px;
             }
+
             .thank-text {
                 font-size: 12px;
             }
+
             .btn-back-home {
                 a,
                 a:hover {

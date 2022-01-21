@@ -50,6 +50,7 @@ class ClientController extends Controller
     {
         $tour = Tour::with('destination', 'type', 'itineraries.places')
             ->where('slug', $slug)
+            ->where('status', 1)
             ->firstOrFail();
 
         $tour->faqs = $tour->faqs()
@@ -81,9 +82,17 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function booking()
+    public function booking(Request $request, $slug)
     {
-        return view('booking');
+        $tour = Tour::with('destination', 'type', 'itineraries.places')
+            ->where('slug', $slug)
+            ->where('status', 1)
+            ->firstOrFail();
+
+        $people = $request->people;
+        $departureTime = $request->departure_time;
+
+        return view('booking', compact(['tour', 'people', 'departureTime']));
     }
 
     /**

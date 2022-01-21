@@ -1622,6 +1622,10 @@ div[slider] > input[type=range]::-ms-tooltip {
   font-size: 16px;
   font-weight: 600;
 }
+.box-checkout .box-coupon .wrap-content-coupon .input-inner-icon .btn-apply-coupon:hover {
+  color: white;
+  background-color: #FF7B42;
+}
 .box-checkout .box-coupon .total-price-coupon {
   padding: 30px;
   background-color: #1C1C1E;
