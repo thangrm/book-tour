@@ -93,20 +93,34 @@ class Utilities
             'twoStar' => 0,
             'threeStar' => 0,
             'fourStar' => 0,
-            'fiveStar' => 0
+            'fiveStar' => 0,
+            'countReviews' => [$reviews->count(), 0, 0, 0, 0, 0],
+            //[total, oneStar, twoStar, threeStar, fourStar, fiveStar]
         ];
 
         foreach ($reviews as $review) {
-            $rate['oneStar'] += ($review->rate == 1) ? 1 : 0;
-            $rate['twoStar'] += ($review->rate == 2) ? 1 : 0;
-            $rate['threeStar'] += ($review->rate == 3) ? 1 : 0;
-            $rate['fourStar'] += ($review->rate == 4) ? 1 : 0;
-            $rate['fiveStar'] += ($review->rate == 5) ? 1 : 0;
+            $rate['countReviews'][1] += ($review->rate == 1) ? 1 : 0;
+            $rate['countReviews'][2] += ($review->rate == 2) ? 1 : 0;
+            $rate['countReviews'][3] += ($review->rate == 3) ? 1 : 0;
+            $rate['countReviews'][4] += ($review->rate == 4) ? 1 : 0;
+            $rate['countReviews'][5] += ($review->rate == 5) ? 1 : 0;
 
             $sumRate += $review->rate;
         }
 
-        $rate['total'] = ceil($sumRate / count($reviews) * 10) / 10;
+        if ($reviews->count() > 0) {
+            $rate['oneStar'] = $rate['countReviews'][1] / $reviews->count() * 100;
+            $rate['twoStar'] = $rate['countReviews'][2] / $reviews->count() * 100;
+            $rate['threeStar'] = $rate['countReviews'][3] / $reviews->count() * 100;
+            $rate['fourStar'] = $rate['countReviews'][4] / $reviews->count() * 100;
+            $rate['fiveStar'] = $rate['countReviews'][5] / $reviews->count() * 100;
+        }
+
+        $rate['total'] = 5;
+
+        if (count($reviews) > 0) {
+            $rate['total'] = ceil($sumRate / count($reviews) * 10) / 10;
+        }
 
         return $rate;
     }

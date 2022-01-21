@@ -111,7 +111,8 @@
                                                id="creditCard" value="creditCard">
                                         <label class="form-check-label" for="creditCard">
                                             <span class="payment-title">Credit Card</span>
-                                            <img class="payment-image" src="images/credit-card.png" alt="credit card">
+                                            <img class="payment-image" src="{{ asset('images/credit-card.png') }}"
+                                                 alt="credit card">
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -119,7 +120,8 @@
                                                value="paypal">
                                         <label class="form-check-label" for="paypal">
                                             <span class="payment-title">Paypal</span>
-                                            <img class="payment-image" src="images/paypal.png" alt="paypal">
+                                            <img class="payment-image" src="{{ asset('images/paypal.png') }}"
+                                                 alt="paypal">
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -160,50 +162,57 @@
                 <!-------------------- Form Coupon -------------------->
                 <div class="col-12 col-lg-5 col-xl-4">
                     <div class="box-book-now box-coupon">
-                        <form action="">
+                        <form action="#">
+                            <input type="hidden" value="{{ $tour->price }}" id="price">
+                            <input type="hidden" value="{{ $tour->duration }}" id="duration">
                             <div class="wrap-content-coupon">
-                                <span class="card-title">Discover interesting things in the romantic coastal city of Vungtau</span>
+                                <span class="card-title">{{ $tour->name }}</span>
                                 <p class="text-content mt-2">
-                                    <img src="images/icon/location.svg" alt="location">
-                                    <span>Vungtau City, Baria-Vungtau</span>
+                                    <img src="{{ asset('images/icon/location.svg') }}" alt="location">
+                                    <span>{{ $tour->destination->name   }}</span>
                                 </p>
                                 <div class="info-tour d-flex justify-content-between">
                                     <span class="card-text w-50">
-                                    Duration: <p class="card-title">3 days - 2 nights</p>
-                                </span>
+                                    Duration:
+                                        <p
+                                            class="card-title">{{ \App\Libraries\Utilities::durationToString($tour->duration) }}
+                                        </p>
+                                    </span>
                                     <span class="card-text w-50">
-                                    Tour type: <p class="card-title">Sun - Beach</p>
+                                    Tour type: <p class="card-title">{{ $tour->type->name }}</p>
                                 </span>
                                 </div>
 
                                 <div class="input-inner-icon">
-                                    <img src="images/icon/schedule.svg">
-                                    <input class="form-control" type="text" name="daterange"
-                                           placeholder="Departure time">
+                                    <img src="{{ asset('images/icon/schedule.svg') }}">
+                                    <div id="departureTimePicker">
+                                        <input class="form-control" type="text" name="departure_time" id="departureTime"
+                                               value="{{ $departureTime }}">
+                                    </div>
                                 </div>
                                 <div class="input-inner-icon">
-                                    <img src="images/icon/people.svg">
-                                    <select class="form-control" id="selectNumberPeople" required>
-                                        <option value="1" class="">1 People</option>
-                                        <option value="2" class="">2 People</option>
-                                        <option value="3" class="">3 People</option>
-                                        <option value="4" class="">4 People</option>
-                                        <option value="5" class="">5 People</option>
-                                        <option value="6" class="">6 People</option>
-                                        <option value="7" class="">7 People</option>
-                                        <option value="8" class="">8 People</option>
-                                        <option value="9" class="">9 People</option>
-                                        <option value="10" class="">10 People</option>
-                                        <option value="11" class="">11 People</option>
-                                        <option value="12" class="">12 People</option>
-                                        <option value="13" class="">13 People</option>
-                                        <option value="14" class="">14 People</option>
-                                        <option value="15" class="">15 People</option>
-                                        <option value="16" class="">16 People</option>
-                                        <option value="17" class="">17 People</option>
-                                        <option value="18" class="">18 People</option>
-                                        <option value="19" class="">19 People</option>
-                                        <option value="20" class="">20 People</option>
+                                    <img src="{{ asset('images/icon/people.svg') }}">
+                                    <select class="form-control" id="selectNumberPeople" name="people" required>
+                                        <option value="1" {{ ($people == 1) ? 'selected' : '' }}>1 People</option>
+                                        <option value="2" {{ ($people == 2) ? 'selected' : '' }}>2 People</option>
+                                        <option value="3" {{ ($people == 3) ? 'selected' : '' }}>3 People</option>
+                                        <option value="4" {{ ($people == 4) ? 'selected' : '' }}>4 People</option>
+                                        <option value="5" {{ ($people == 5) ? 'selected' : '' }}>5 People</option>
+                                        <option value="6" {{ ($people == 6) ? 'selected' : '' }}>6 People</option>
+                                        <option value="7" {{ ($people == 7) ? 'selected' : '' }}>7 People</option>
+                                        <option value="8" {{ ($people == 8) ? 'selected' : '' }}>8 People</option>
+                                        <option value="9" {{ ($people == 9) ? 'selected' : '' }}>9 People</option>
+                                        <option value="10" {{ ($people == 10) ? 'selected' : '' }}>10 People</option>
+                                        <option value="11" {{ ($people == 11) ? 'selected' : '' }}>11 People</option>
+                                        <option value="12" {{ ($people == 12) ? 'selected' : '' }}>12 People</option>
+                                        <option value="13" {{ ($people == 13) ? 'selected' : '' }}>13 People</option>
+                                        <option value="14" {{ ($people == 14) ? 'selected' : '' }}>14 People</option>
+                                        <option value="15" {{ ($people == 15) ? 'selected' : '' }}>15 People</option>
+                                        <option value="16" {{ ($people == 16) ? 'selected' : '' }}>16 People</option>
+                                        <option value="17" {{ ($people == 17) ? 'selected' : '' }}>17 People</option>
+                                        <option value="18" {{ ($people == 18) ? 'selected' : '' }}>18 People</option>
+                                        <option value="19" {{ ($people == 19) ? 'selected' : '' }}>19 People</option>
+                                        <option value="20" {{ ($people == 20) ? 'selected' : '' }}>20 People</option>
                                     </select>
                                 </div>
                                 <div class="input-inner-icon">

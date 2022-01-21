@@ -73,7 +73,7 @@
                             <span class="text-rate">{{ $rateReview['total'] }}</span>
                         </div>
 
-                        <span class="text-content">{{ $tour->reviews->count() }} reviews</span>
+                        <span class="text-content">{{ $rateReview['countReviews'][0] }} reviews</span>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
                                     <button class="nav-link" href="#" id="pills-review-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-review" type="button" role="tab"
                                             aria-controls="pills-review" aria-selected="false">
-                                        Reviews({{ $tour->reviews->count()  }})
+                                        Reviews({{ $rateReview['countReviews'][0]  }})
                                     </button>
                                 </li>
                             </ul>
@@ -278,7 +278,7 @@
                                                         @include('components.rate_review', ['rate'=>$rateReview['total']])
                                                     </div>
                                                     <p class="rate-text">Based on
-                                                        <span>{{ $tour->reviews->count() }} reviews</span>
+                                                        <span>{{ $rateReview['countReviews'][0] }} reviews</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -292,12 +292,12 @@
                                                         </p>
                                                         <div class="progress">
                                                             <div class="progress-bar bg-warning"
-                                                                 style="width: {{ $rateReview['fiveStar'] / $tour->reviews->count() * 100 }}%;"
+                                                                 style="width: {{ $rateReview['fiveStar'] }}%;"
                                                                  role="progressbar" aria-valuenow="75" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['fiveStar'] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][5] }} reviews</span>
                                                     </div>
 
                                                     <div
@@ -308,12 +308,12 @@
                                                         </p>
                                                         <div class="progress">
                                                             <div class="progress-bar bg-warning"
-                                                                 style="width: {{ $rateReview['fourStar'] / $tour->reviews->count() * 100 }}%;"
+                                                                 style="width: {{ $rateReview['fourStar'] }}%;"
                                                                  role="progressbar" aria-valuenow="30" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['fourStar'] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][4] }} reviews</span>
                                                     </div>
 
                                                     <div
@@ -324,12 +324,12 @@
                                                         </p>
                                                         <div class="progress">
                                                             <div class="progress-bar bg-warning"
-                                                                 style="width: {{ $rateReview['threeStar'] / $tour->reviews->count() * 100 }}%;"
+                                                                 style="width: {{ $rateReview['threeStar']}}%;"
                                                                  role="progressbar" aria-valuenow="60" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['threeStar'] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][3] }} reviews</span>
                                                     </div>
 
                                                     <div
@@ -340,12 +340,12 @@
                                                         </p>
                                                         <div class="progress">
                                                             <div class="progress-bar bg-warning"
-                                                                 style="width: {{ $rateReview['twoStar'] / $tour->reviews->count() * 100 }}%;"
+                                                                 style="width: {{ $rateReview['twoStar']}}%;"
                                                                  role="progressbar" aria-valuenow="0" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['twoStar'] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][2] }} reviews</span>
                                                     </div>
 
                                                     <div
@@ -356,12 +356,12 @@
                                                         </p>
                                                         <div class="progress">
                                                             <div class="progress-bar bg-warning"
-                                                                 style="width: {{ $rateReview['oneStar'] / $tour->reviews->count() * 100 }}%;"
+                                                                 style="width: {{ $rateReview['oneStar']}}%;"
                                                                  role="progressbar" aria-valuenow="0" aria-valuemin="0"
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['oneStar'] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][1] }} reviews</span>
                                                     </div>
 
                                                 </div>
@@ -432,6 +432,7 @@
                 <div class="col-12 col-lg-5 col-xl-4">
                     <div class="box-book-now">
                         <input type="hidden" value="{{ $tour->price }}" id="price">
+                        <input type="hidden" value="{{ $tour->duration }}" id="duration">
                         <p class="card-text">from <span class="card-title">${{ number_format($tour->price, 2) }}</span>
                         </p>
                         <hr>
@@ -444,14 +445,17 @@
                                 Tour type: <p class="card-title">{{ $tour->type->name }}</p>
                             </span>
                         </div>
-                        <form action="">
+                        <form action="{{ route('client.booking.index', $tour->slug) }}">
                             <div class="input-inner-icon">
                                 <img src="{{ asset('images/icon/schedule.svg') }}">
-                                <input class="form-control" type="text" name="daterange" placeholder="Departure time">
+                                <div id="departureTimePicker">
+                                    <input class="form-control" type="text" name="departure_time" id="departureTime"
+                                           value="{{ date('m/d/Y') . ' - ' . date('m/d/Y', strtotime(' +' . ($tour->duration - 1) .' days')) }}">
+                                </div>
                             </div>
                             <div class="input-inner-icon">
                                 <img src="{{ asset('images/icon/people.svg') }}">
-                                <select class="form-control" id="selectNumberPeople" required>
+                                <select class="form-control" id="selectNumberPeople" name="people" required>
                                     <option value="1" class="">1 People</option>
                                     <option value="2" class="">2 People</option>
                                     <option value="3" class="">3 People</option>

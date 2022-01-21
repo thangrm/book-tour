@@ -206,16 +206,23 @@ $(document).ready(function () {
         }
     });
 
-    //Date Range Picker
-    $(function () {
-        $('input[name="daterange"]').daterangepicker({
-            locale: {
-                format: 'DD/MM/YYYY',
-            },
-            opens: 'left'
-        }, function (start, end, label) {
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        });
+    // Departure time picker
+    $('#departureTime').on('target', function () {
+        $('#departureTimePicker').trigger('click');
+    });
+
+    let durationDay = $('#duration').val();
+    console.log(durationDay);
+
+    $('#departureTimePicker').daterangepicker({
+        singleDatePicker: true,
+        locale: {
+            format: 'MM/DD/YYYY',
+        },
+        minDate: moment(),
+    }, function (start, end) {
+        end.add(durationDay - 1, 'days');
+        $('#departureTime').val(start.format("MM/DD/YYYY") + ' - ' + end.format("MM/DD/YYYY"));
     });
 
     // Calculate Price
@@ -257,7 +264,7 @@ $(document).ready(function () {
 
     function checkPhone(_string) {
         _string = _string.replace(/\s+/g, '');
-        // di động
+        // Mobile
         if (/^(0|\+84)[35789]([0-9]{8})$/.test(_string)) {
             return true;
         }
