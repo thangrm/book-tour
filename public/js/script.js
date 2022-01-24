@@ -181,6 +181,12 @@ $(document).ready(function () {
         // out
     });
 
+    // Check has page review
+    let url = new URL(window.location.href);
+    if (url.searchParams.get('page')) {
+        $('#pills-review-tab').trigger('click');
+    }
+
     //Panorama
     if ($('#imagePanoramic').length > 0) {
         pannellum.viewer('imagePanoramic', {
