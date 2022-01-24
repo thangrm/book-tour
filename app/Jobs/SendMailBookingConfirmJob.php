@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Mail\SendMail;
+use App\Mail\SendMailBookingConfirm;
 use App\Models\Booking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -12,7 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendMailJob implements ShouldQueue
+class SendMailBookingConfirmJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,7 +35,7 @@ class SendMailJob implements ShouldQueue
      */
     public function handle()
     {
-        $email = new SendMail($this->booking);
-        Mail::to('admin@ngaodu.com')->send($email);
+        $email = new SendMailBookingConfirm($this->booking);
+        Mail::to($this->booking->customer->email)->send($email);
     }
 }

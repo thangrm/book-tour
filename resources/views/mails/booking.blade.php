@@ -186,7 +186,7 @@
                                                              </p>
                                                         <p style="margin: 0; font-size: 16px; text-align: left; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;">Đã có một khách hàng đã đặt một tour mới </span><span
-                                                                style="font-size:16px;">vào lúc: <b>{{ $booking->created_at->format('H:i, d/m/Y') }}</b>. </span>
+                                                                style="font-size:16px;">vào lúc: <b>{{ $booking->created_at->format('H:i, d/m/Y') }} (UTC)</b>. </span>
                                                             </br>
                                                             <span style="font-size:16px;">Vui lòng tìm thông tin chi tiết tour bên dưới:</span>
                                                         </p>
@@ -232,7 +232,8 @@
                                                     <div
                                                         style="font-size: 14px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 16.8px; color: #ffffff; line-height: 1.2;">
                                                         <p style="margin: 0; text-align: center;"><span
-                                                                style="font-size:18px;">Tour Hanoi</span></p>
+                                                                style="font-size:18px;">Tour {{ $booking->tour->name }}</span>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </td>

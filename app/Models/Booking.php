@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\SendMailBookingConfirmJob;
 use App\Libraries\Utilities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -59,6 +60,9 @@ class Booking extends Model
         if ($diffStatus != 1 && $request->status != 4) {
             return false;
         }
+
+        dispatch(new SendMailBookingConfirmJob($booking));
+        
         return $booking->save();
     }
 

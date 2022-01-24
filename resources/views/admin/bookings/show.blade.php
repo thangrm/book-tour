@@ -39,6 +39,10 @@
                                 <td>{{ $booking->tour->name }}</td>
                             </tr>
                             <tr>
+                                <td class="tb-title">Departure:</td>
+                                <td>{{ date('d/m/Y',strtotime($booking->departure_time)) }}</td>
+                            </tr>
+                            <tr>
                                 <td class="tb-title">Payment:</td>
                                 <td>
                                     @switch($booking->payment_method)

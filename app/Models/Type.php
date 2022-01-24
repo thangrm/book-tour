@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Libraries\Notification;
 use App\Libraries\Utilities;
+use App\Traits\GetListLatest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Yajra\DataTables\DataTables;
 
 class Type extends Model
 {
-    use HasFactory;
+    use HasFactory, GetListLatest;
 
     protected $table = 'tour_types';
     protected $guarded = [];
