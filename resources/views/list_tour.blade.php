@@ -28,7 +28,7 @@
                                 <a class="nav-link" href="#">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
+                                <a class="nav-link" href="{{ route('client.contact') }}">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Login</a>
@@ -61,8 +61,8 @@
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="">Home</a></li>
-                    <li class="breadcrumb-item"><a href="">Tours</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Tours</a></li>
                 </ol>
             </nav>
         </div>
@@ -85,105 +85,89 @@
                     <!-- Collapse Filter -->
                     <div class="collapse collapse-fillter" id="filterCollapse">
                         <div class="card card-body">
-                            <div class="filter-header d-flex justify-content-between align-items-center">
-                                <p>filter by</p>
-                                <span class="text-clear" id="clearFormFilter">clear</span>
-                            </div>
-                            <div class="budget-bar">
-                                <h5>Budget:</h5>
-                                <div id="sliderRangePrice">
-                                    <div slider id="slider-distance">
-                                        <div>
-                                            <div inverse-left style="width:70%;"></div>
-                                            <div inverse-right style="width:70%;"></div>
-                                            <div range style="left:30%;right:40%;"></div>
-                                            <span thumb style="left:30%;"></span>
-                                            <span thumb style="left:60%;"></span>
-                                            <div sign style="left:30%;">
-                                                $<span>360</span>
+                            <form action="" id="formSelectFilter">
+                                <div class="filter-header d-flex justify-content-between align-items-center">
+                                    <p>filter by</p>
+                                    <span class="text-clear" id="clearFormFilter">clear</span>
+                                </div>
+                                <div class="budget-bar">
+                                    <h5>Budget:</h5>
+                                    <div id="sliderRangePrice">
+                                        <div slider id="slider-distance">
+                                            <div>
+                                                <div inverse-left style="width:70%;"></div>
+                                                <div inverse-right style="width:70%;"></div>
+                                                <div range style="left:30%;right:40%;"></div>
+                                                <span thumb style="left:30%;"></span>
+                                                <span thumb style="left:60%;"></span>
+                                                <div sign style="left:30%;">
+                                                    $<span>360</span>
+                                                </div>
+                                                <div sign style="left:60%;">
+                                                    $<span>720</span>
+                                                </div>
                                             </div>
-                                            <div sign style="left:60%;">
-                                                $<span>720</span>
-                                            </div>
+                                            <input type="range" tabindex="0" value="360" max="1200" min="0" step="1"
+                                                   oninput="leftRange(this)" name="min_price"/>
+
+                                            <input type="range" tabindex="0" value="720" max="1200" min="0" step="1"
+                                                   oninput="rightRange(this)" name="max_price"/>
                                         </div>
-                                        <input type="range" tabindex="0" value="360" max="1200" min="0" step="1"
-                                               oninput="leftRange(this)"/>
-
-                                        <input type="range" tabindex="0" value="720" max="1200" min="0" step="1"
-                                               oninput="rightRange(this)"/>
                                     </div>
                                 </div>
-                            </div>
-                            <form class="form-select-filter" id="formSelectFilter">
-                                <div class="form-group">
-                                    <hr>
-                                    <h5>Duration</h5>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="duration1">
-                                        <label class="form-check-label" for="duration1">
-                                            0-3 days
-                                        </label>
+                                <div class="form-select-filter">
+                                    <div class="form-group">
+                                        <hr>
+                                        <h5>Duration</h5>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="filter_duration[]"
+                                                   value="1" id="duration1">
+                                            <label class="form-check-label" for="duration1">
+                                                0-3 days
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="filter_duration[]"
+                                                   value="2" id="duration2">
+                                            <label class="form-check-label" for="duration2">
+                                                3-5 days
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="filter_duration[]"
+                                                   value="3" id="duration3">
+                                            <label class="form-check-label" for="duration3">
+                                                5-7 days
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="filter_duration[]"
+                                                   value="4" id="duration4">
+                                            <label class="form-check-label" for="duration4">
+                                                over 1 week
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="duration2">
-                                        <label class="form-check-label" for="duration2">
-                                            3-5 days
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="duration3">
-                                        <label class="form-check-label" for="duration3">
-                                            5-7 days
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="duration4">
-                                        <label class="form-check-label" for="duration4">
-                                            over 1 week
-                                        </label>
-                                    </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <hr>
-                                    <h5>Type of Tours</h5>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="type1">
-                                        <label class="form-check-label" for="type1">
-                                            City-Break
-                                        </label>
+                                    <div class="form-group">
+                                        <hr>
+                                        <h5>Type of Tours</h5>
+                                        @foreach($types as $type)
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="filter_type[]"
+                                                       value="{{ $type->id }}" id="type{{ $type->id }}">
+                                                <label class="form-check-label" for="type{{ $type->id }}">
+                                                    {{ $type->name }}
+                                                </label>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="type2">
-                                        <label class="form-check-label" for="type2">
-                                            Wildlife
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="type3">
-                                        <label class="form-check-label" for="type3">
-                                            Cultural
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="type4">
-                                        <label class="form-check-label" for="type4">
-                                            Ecotourism
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="type5">
-                                        <label class="form-check-label" for="type5">
-                                            Sun and Beaches
-                                        </label>
-                                    </div>
-                                </div>
 
-                                <button class="btn btn-primary w-100 btn-submit-filter">
-                                    Apply Filter
-                                </button>
+                                    <button class="btn btn-primary w-100 btn-submit-filter">
+                                        Apply Filter
+                                    </button>
+                                </div>
                             </form>
-
                         </div>
                     </div>
                     <!-- End Collapse Filter -->
@@ -227,7 +211,7 @@
                     @endforeach
                 </div>
             </div>
-            
+
             <div class="pagination-tours d-flex justify-content-end align-items-baseline w-100">
                 {!! $tours->links('components.pagination') !!}
             </div>

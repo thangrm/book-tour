@@ -9,7 +9,9 @@ use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\Destination;
 use App\Models\Tour;
+use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -39,15 +41,52 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function listTour($slug)
+    public function listTour(Request $request, $slug)
     {
+//        DB::enableQueryLog();
         $destination = Destination::where('slug', $slug)->firstOrFail();
-        $tours = Tour::with('destination', 'type')
+        $types = Type::orderBy('name')->get();
+        $query = Tour::with('destination', 'type')
             ->where('status', 1)
-            ->where('destination_id', $destination->id)
-            ->paginate(21);
+            ->where('destination_id', $destination->id);
 
-        return view('list_tour', compact(['tours']));
+        $minPrice = $request->min_price;
+        $maxPrice = $request->max_price;
+        $filterDuration = $request->filter_duration;
+        $filterType = $request->filter_type;
+
+        if (!empty($minPrice) && !empty($maxPrice)) {
+            $query->whereBetween('price', [$minPrice, $maxPrice]);
+        }
+
+        if (!empty($filterDuration)) {
+            $query->where(function ($query) use ($filterDuration) {
+                foreach ($filterDuration as $filter) {
+                    if ($filter == 1) {
+                        $query->whereBetween('duration', [0, 3]);
+                    }
+
+                    if ($filter == 2) {
+                        $query->orwhereBetween('duration', [3, 5]);
+                    }
+
+                    if ($filter == 3) {
+                        $query->orwhereBetween('duration', [5, 7]);
+                    }
+
+                    if ($filter == 4) {
+                        $query->orWhere('duration', '>', 7);
+                    }
+                }
+            });
+        }
+
+        if (!empty($filterType)) {
+            $query->whereIn('type_id', $filterType);
+        }
+
+        $tours = $query->paginate(21);
+        return view('list_tour', compact(['tours', 'types']));
     }
 
     /**
