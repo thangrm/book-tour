@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendMailJob;
+use App\Jobs\SendMailBookingJob;
 use App\Libraries\Notification;
 use App\Libraries\Utilities;
 use App\Models\Booking;
@@ -195,7 +195,7 @@ class ClientController extends Controller
         $input['status'] = 1;
         $booking = Booking::create($input);
 
-        dispatch(new SendMailJob($booking));
+        dispatch(new SendMailBookingJob($booking));
         $this->notification->setMessage('Successful tour booking', Notification::SUCCESS);
 
         return redirect()->route('index')->with($this->notification->getMessage());

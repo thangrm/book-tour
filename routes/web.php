@@ -28,7 +28,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/test', function () {
+    return view('mails.booking_comfirm');
+});
 // Client
 Route::get('/', [ClientController::class, 'index'])->name('index');
 Route::get('/list-tours/{slug}', [ClientController::class, 'listTour'])->name('client.tours.list');

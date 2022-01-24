@@ -26,10 +26,10 @@ class TourController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Destination $destination, Type $type)
     {
-        $destinations = Destination::latest()->get();
-        $types = Type::latest()->get();
+        $destinations = $destination->getListLatest();
+        $types = $type->getListLatest();
         return view('admin.tours.index', compact(['destinations', 'types']));
     }
 
@@ -38,10 +38,10 @@ class TourController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function create()
+    public function create(Destination $destination, Type $type)
     {
-        $destinations = Destination::latest()->get();
-        $types = Type::latest()->get();
+        $destinations = $destination->getListLatest();
+        $types = $type->getListLatest();
         return view('admin.tours.create', compact(['destinations', 'types']));
     }
 
@@ -75,11 +75,11 @@ class TourController extends Controller
      * @param int $id
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Destination $destination, Type $type)
     {
         $tour = Tour::findorFail($id);
-        $destinations = Destination::latest()->get();
-        $types = Type::latest()->get();
+        $destinations = $destination->getListLatest();
+        $types = $type->getListLatest();
         return view('admin.tours.edit', compact(['tour', 'destinations', 'types']));
     }
 
@@ -153,7 +153,6 @@ class TourController extends Controller
     public function info(Request $request, $id)
     {
         $tour = Tour::findOrFail($id);
-//        dd($tour);
         return view('admin.tours.info', compact('tour'));
     }
 }
