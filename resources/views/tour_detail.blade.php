@@ -376,7 +376,7 @@
                                             <textarea class="form-control" rows="5"
                                                       placeholder="Type anything"></textarea>
                                             <input type="hidden" id="inputRateReview" value="4">
-                                            <div class="d-flex justify-content-between mt-4">
+                                            <div class="d-flex flex-column flex-sm-row justify-content-between mt-4">
                                                 <div class="rate-review" id="rateReview">
                                                     <i class="rate-star bi bi-star-fill fill-yellow" data-rate="1"></i>
                                                     <i class="rate-star bi bi-star-fill fill-yellow" data-rate="2"></i>
