@@ -5,7 +5,9 @@
         <!--Logo and Nav -->
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
+                <a href="{{ route('index') }}">
+                    <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
+                </a>
                 <nav class="navbar navbar-expand-sm navbar-dark">
                     <button class="navbar-toggler" id="navbarBtn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"

@@ -5,7 +5,9 @@
         <!--Logo and Nav -->
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <img class="logo" src="images/logo.png" alt="logo">
+                <a href="{{ route('index') }}">
+                    <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
+                </a>
                 <nav class="navbar navbar-expand-sm navbar-dark">
                     <button class="navbar-toggler" id="navbarBtn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
@@ -28,7 +30,7 @@
                                 <a class="nav-link" href="#">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('client.contact') }}">Contact</a>
+                                <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Login</a>
@@ -64,7 +66,7 @@
 
                 <div class="col-12 col-xxl-4 col-lg-5 form-search">
                     <p class="title-search">Discover beautiful Vietnam</p>
-                    <form action="{{ route('client.search') }}">
+                    <form action="{{ route('client.search.index') }}">
                         <div class="input-search input-inner-icon">
                             <img src="{{ asset('images/icon/search.svg') }}">
                             <input class="form-control" type="text" name="tour_name" placeholder="Tour name">

@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Jobs\SendMailBookingJob;
+use App\Jobs\SendMailContactJob;
+use App\Libraries\Utilities;
 use App\Models\Booking;
+use App\Models\Contact;
 use App\Models\Customer;
 use App\Models\Destination;
 use App\Models\Tour;
@@ -40,6 +43,21 @@ class ClientService
     }
 
     /**
+     * Rule for store new booking tour
+     *
+     * @return string[]
+     */
+    public function ruleContact(): array
+    {
+        return [
+            'name' => 'required|max:50',
+            'email' => 'required|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/',
+            'phone' => 'required|regex:/(0)[0-9]{9,10}/',
+            'message' => 'required|string',
+        ];
+    }
+
+    /**
      * Get a tour by slug
      *
      * @param $slug
@@ -62,7 +80,7 @@ class ClientService
      */
     public function storeBooking(Request $request, $tour)
     {
-        $input = $request->only([
+        $input = Utilities::clearAllXSS($request->only([
             'first_name',
             'last_name',
             'email',
@@ -72,11 +90,11 @@ class ClientService
             'province',
             'country',
             'zipcode'
-        ]);
+        ]));
         $input['status'] = 1;
         $customer = Customer::create($input);
 
-        $input = $request->only(['people', 'payment_method', 'departure_time']);
+        $input = Utilities::clearAllXSS($request->only(['people', 'payment_method', 'departure_time']));
         $input['customer_id'] = $customer->id;
         $input['tour_id'] = $tour->id;
         $input['price'] = $tour->price;
@@ -84,6 +102,21 @@ class ClientService
         $booking = Booking::create($input);
 
         dispatch(new SendMailBookingJob($booking));
+    }
+
+    /**
+     * Store booking when user book tour
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function storeContact(Request $request)
+    {
+        $input = Utilities::clearAllXSS($request->only(['name', 'email', 'phone', 'message']));
+        $input['status'] = 1;
+
+        $contact = Contact::create($input);
+        dispatch(new SendMailContactJob($contact));
     }
 
     /**

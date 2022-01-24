@@ -35,8 +35,9 @@ Route::get('/list-tours/{slug}', [ClientController::class, 'listTour'])->name('c
 Route::get('/tours/{slug}', [ClientController::class, 'showTour'])->name('client.tours.detail');
 Route::get('/tours/{slug}/booking', [ClientController::class, 'booking'])->name('client.booking.index');
 Route::post('/tours/{slug}/booking', [ClientController::class, 'storeBooking'])->name('client.booking.store');
-Route::get('/contact', [ClientController::class, 'contact'])->name('client.contact');
-Route::get('/search', [ClientController::class, 'search'])->name('client.search');
+Route::get('/contact', [ClientController::class, 'contact'])->name('client.contact.index');
+Route::post('/contact', [ClientController::class, 'storeContact'])->name('client.contact.store');
+Route::get('/search', [ClientController::class, 'search'])->name('client.search.index');
 
 // Admin
 Route::group(['prefix' => 'admin'], function () {

@@ -99,6 +99,8 @@ class ClientController extends Controller
     }
 
     /**
+     * Store booking
+     *
      * @param Request $request
      * @param $slug
      * @return \Illuminate\Http\RedirectResponse
@@ -134,8 +136,33 @@ class ClientController extends Controller
     }
 
     /**
+     * Store contact
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeContact(Request $request)
+    {
+        $request->validate($this->clientService->ruleContact());
+        try {
+            $this->clientService->storeContact($request);
+            $this->notification->setMessage('Contact sent successfully', Notification::SUCCESS);
+
+            return redirect()->route('index')->with($this->notification->getMessage());
+        } catch (Exception $e) {
+            $this->notification->setMessage('Contact sent failed', Notification::ERROR);
+
+            return back()
+                ->with('exception', $e->getMessage())
+                ->with($this->notification->getMessage())
+                ->withInput();
+        }
+    }
+
+    /**
      * Display search page.
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function search(Request $request)
