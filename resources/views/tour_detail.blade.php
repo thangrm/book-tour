@@ -445,37 +445,26 @@
                                 Tour type: <p class="card-title">{{ $tour->type->name }}</p>
                             </span>
                         </div>
-                        <form action="{{ route('client.booking.index', $tour->slug) }}">
+                        <form action="{{ route('client.booking.index', $tour->slug) }}" id="formBookNow">
                             <div class="input-inner-icon">
                                 <img src="{{ asset('images/icon/schedule.svg') }}">
                                 <div id="departureTimePicker">
-                                    <input class="form-control" type="text" name="departure_time" id="departureTime"
-                                           value="{{ date('m/d/Y') . ' - ' . date('m/d/Y', strtotime(' +' . ($tour->duration - 1) .' days')) }}">
+                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="departure_time"
+                                           id="inputDepartureTime">
+                                    <div id="departureTimePicker">
+                                        <input class="form-control" type="text" id="departureTime">
+                                        @error('departure_time')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <div class="input-inner-icon">
                                 <img src="{{ asset('images/icon/people.svg') }}">
-                                <select class="form-control" id="selectNumberPeople" name="people" required>
-                                    <option value="1" class="">1 People</option>
-                                    <option value="2" class="">2 People</option>
-                                    <option value="3" class="">3 People</option>
-                                    <option value="4" class="">4 People</option>
-                                    <option value="5" class="">5 People</option>
-                                    <option value="6" class="">6 People</option>
-                                    <option value="7" class="">7 People</option>
-                                    <option value="8" class="">8 People</option>
-                                    <option value="9" class="">9 People</option>
-                                    <option value="10" class="">10 People</option>
-                                    <option value="11" class="">11 People</option>
-                                    <option value="12" class="">12 People</option>
-                                    <option value="13" class="">13 People</option>
-                                    <option value="14" class="">14 People</option>
-                                    <option value="15" class="">15 People</option>
-                                    <option value="16" class="">16 People</option>
-                                    <option value="17" class="">17 People</option>
-                                    <option value="18" class="">18 People</option>
-                                    <option value="19" class="">19 People</option>
-                                    <option value="20" class="">20 People</option>
+                                <select class="form-control" id="selectNumberPeople" name="people">
+                                    @for($i = 1; $i <= 20; $i++)
+                                        <option value="{{ $i }}">{{ $i }} People</option>
+                                    @endfor
                                 </select>
                             </div>
                             <div class="total-price d-flex justify-content-between">
@@ -545,4 +534,9 @@
         </div>
     </div>
     <!-------------------- End Related Tours -------------------->
+@endsection
+@section('js')
+    <script>
+        disableSubmitButton('#formBookNow');
+    </script>
 @endsection

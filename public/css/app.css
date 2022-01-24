@@ -1547,11 +1547,12 @@ div[slider] > input[type=range]::-ms-tooltip {
 }
 .box-checkout .box-detail-content .box-body-checkout .box-checkout-item .sub-checkout-item .title {
   font-size: 16px;
+  line-height: 40px;
 }
 .box-checkout .box-detail-content .box-body-checkout .box-checkout-item .sub-checkout-item input[type=text] {
   height: 54px;
-  margin-bottom: 30px;
   border-radius: 0;
+  margin-bottom: 24px;
 }
 .box-checkout .box-detail-content .box-body-checkout .box-checkout-item .sub-checkout-item .form-check {
   margin-bottom: 15px;

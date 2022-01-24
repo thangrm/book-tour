@@ -3,11 +3,15 @@
     <!-------------------- Checkout -------------------->
     <div class="box-checkout box-detail-tour mt-5">
         <div class="container">
-            <p class="title-checkout">Booking Submission</p>
-            <div class="row box-detail-content box-checkout-content">
-                <div class="col-12 col-lg-7 col-xl-8">
-                    <div class="box-body-checkout">
-                        <form id="formCheckout">
+            <form id="formCheckout" action="{{ route('client.booking.store', $tour->slug) }}" method="post">
+                <input type="hidden" value="{{ $tour->price }}" id="price">
+                <input type="hidden" value="{{ $tour->duration }}" id="duration">
+                @csrf
+                <p class="title-checkout">Booking Submission</p>
+                <div class="row box-detail-content box-checkout-content">
+                    <div class="col-12 col-lg-7 col-xl-8">
+                        <div class="box-body-checkout">
+
                             <hr>
                             <!-- checkout detail -->
                             <div class="box-checkout-item">
@@ -20,28 +24,43 @@
                                             <label for="firstName" class="form-label title">First Name <span
                                                     class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="firstName"
-                                                   placeholder="First Name" maxlength="50">
-                                            <span class="text-danger" id="errorFirstName"></span>
+                                                   placeholder="First Name" name="first_name"
+                                                   value="{{ old('first_name') }}">
+                                            <p class="text-danger" id="errorFirstName"></p>
+                                            @error('first_name')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-6">
                                             <label for="lastName" class="form-label title">Last Name <span
                                                     class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="lastName"
-                                                   placeholder="Last Name" maxlength="50">
-                                            <span class="text-danger" id="errorLastName"></span>
+                                                   placeholder="Last Name" name="last_name"
+                                                   value="{{ old('last_name') }}">
+                                            <p class="text-danger" id="errorLastName"></p>
+                                            @error('last_name')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-6">
                                             <label for="email" class="form-label title">Email <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="email"
-                                                   placeholder="email@domain.com" maxlength="100">
-                                            <span class="text-danger" id="errorEmail"></span>
+                                                   placeholder="email@domain.com" name="email"
+                                                   value="{{ old('email') }}">
+                                            <p class="text-danger" id="errorEmail"></p>
+                                            @error('email')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-6">
                                             <label for="phone" class="form-label title">Phone Number<span
                                                     class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="phone" placeholder="Your Phone"
-                                                   maxlength="15">
-                                            <span class="text-danger" id="errorPhone"></span>
+                                                   name="phone" value="{{ old('phone') }}">
+                                            <p class="text-danger" id="errorPhone"></p>
+                                            @error('phone')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
 
                                     </div>
@@ -54,47 +73,70 @@
                                         <div class="col-12">
                                             <label for="address" class="form-label title">Your Address</label>
                                             <input type="text" class="form-control" id="address"
-                                                   placeholder="Your Address" maxlength="200">
-                                            <span class="text-danger" id="errorAddress"></span>
+                                                   placeholder="Your Address" name="address"
+                                                   value="{{ old('address') }}">
+                                            <p class="text-danger" id="errorAddress"></p>
+                                            @error('address')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-6">
                                             <label for="city" class="form-label title">City </label>
                                             <input type="text" class="form-control" id="city" placeholder="Your City"
-                                                   maxlength="100">
-                                            <span class="text-danger" id="errorCity"></span>
+                                                   name="city" value="{{ old('city') }}">
+                                            <p class="text-danger" id="errorCity"></p>
+                                            @error('city')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-6">
                                             <label for="province"
                                                    class="form-label title">State/Province/Region </label>
                                             <input type="text" class="form-control" id="province"
-                                                   placeholder="Your State/Province/Region" maxlength="50">
-                                            <span class="text-danger" id="errorProvince"></span>
+                                                   placeholder="Your State/Province/Region" name="province"
+                                                   value="{{ old('province') }}">
+                                            <p class="text-danger" id="errorProvince"></p>
+                                            @error('province')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-6">
                                             <label for="zipCode" class="form-label title">Zip Code/ Postal Code</label>
                                             <input type="text" class="form-control" id="zipCode"
-                                                   placeholder="Zip Code/ Postal Code" maxlength="10">
-                                            <span class="text-danger" id="errorZipCode"></span>
+                                                   placeholder="Zip Code/ Postal Code" name="zipcode"
+                                                   value="{{ old('zipcode') }}">
+                                            <p class="text-danger" id="errorZipCode"></p>
+                                            @error('zipcode')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="col-6">
                                             <label for="country" class="form-label title">Country</label>
                                             <input type="text" class="form-control" id="country"
-                                                   placeholder="Your Country" maxlength="50">
-                                            <span class="text-danger" id="errorContry"></span>
+                                                   placeholder="Your Country" name="country"
+                                                   value="{{ old('country') }}">
+                                            <p class="text-danger" id="errorContry"></p>
+                                            @error('country')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="sub-checkout-item">
                                         <p class="sub-header">
                                             <label for="requirement" class="form-label">Special Requirement</label>
-                                            <span class="text-danger" id="errorRequirement"></span>
-                                        </p>
+                                        <p class="text-danger" id="errorRequirement"></p>
                                         <div class="row">
                                             <div class="col-12">
                                                 <textarea type="text" class="form-control" id="requirement"
-                                                          placeholder="Special Requirement" rows="5"></textarea>
+                                                          placeholder="Special Requirement" rows="5"
+                                                          name="requirement"
+                                                          value="{{ old('requirement') }}"></textarea>
                                             </div>
                                         </div>
+                                        @error('requirement')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                 </div>
@@ -107,8 +149,8 @@
                                 <p class="header-desc">Pay securely—we use SSL encryption to keep your data safe</p>
                                 <div class="sub-checkout-item">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="paymentMethod"
-                                               id="creditCard" value="creditCard">
+                                        <input class="form-check-input" type="radio" name="payment_method"
+                                               id="creditCard" value="2">
                                         <label class="form-check-label" for="creditCard">
                                             <span class="payment-title">Credit Card</span>
                                             <img class="payment-image" src="{{ asset('images/credit-card.png') }}"
@@ -116,8 +158,8 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="paymentMethod" id="paypal"
-                                               value="paypal">
+                                        <input class="form-check-input" type="radio" name="payment_method" id="paypal"
+                                               value="3">
                                         <label class="form-check-label" for="paypal">
                                             <span class="payment-title">Paypal</span>
                                             <img class="payment-image" src="{{ asset('images/paypal.png') }}"
@@ -125,13 +167,16 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="paymentMethod" id="cash"
-                                               value="cash" checked>
+                                        <input class="form-check-input" type="radio" name="payment_method" id="cash"
+                                               value="1" checked>
                                         <label class="form-check-label" for="cash">
                                             <span class="payment-title">Pay in cash</span>
                                         </label>
                                     </div>
                                 </div>
+                                @error('payment_method')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                                 <div class="sub-checkout-item">
                                     <ul class="list-policy">
                                         <li>You will be charged the total amount once your order is confirmed.</li>
@@ -154,17 +199,13 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
 
 
-                <!-------------------- Form Coupon -------------------->
-                <div class="col-12 col-lg-5 col-xl-4">
-                    <div class="box-book-now box-coupon">
-                        <form action="#">
-                            <input type="hidden" value="{{ $tour->price }}" id="price">
-                            <input type="hidden" value="{{ $tour->duration }}" id="duration">
+                    <!-------------------- Form Coupon -------------------->
+                    <div class="col-12 col-lg-5 col-xl-4">
+                        <div class="box-book-now box-coupon">
                             <div class="wrap-content-coupon">
                                 <span class="card-title">{{ $tour->name }}</span>
                                 <p class="text-content mt-2">
@@ -185,35 +226,30 @@
 
                                 <div class="input-inner-icon">
                                     <img src="{{ asset('images/icon/schedule.svg') }}">
+                                    <input type="hidden"
+                                           value="{{ old('departure_time', $departureTime) }}"
+                                           name="departure_time"
+                                           id="inputDepartureTime">
                                     <div id="departureTimePicker">
-                                        <input class="form-control" type="text" name="departure_time" id="departureTime"
-                                               value="{{ $departureTime }}">
+                                        <input class="form-control" type="text" id="departureTime">
+                                        @error('departure_time')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="input-inner-icon">
                                     <img src="{{ asset('images/icon/people.svg') }}">
-                                    <select class="form-control" id="selectNumberPeople" name="people" required>
-                                        <option value="1" {{ ($people == 1) ? 'selected' : '' }}>1 People</option>
-                                        <option value="2" {{ ($people == 2) ? 'selected' : '' }}>2 People</option>
-                                        <option value="3" {{ ($people == 3) ? 'selected' : '' }}>3 People</option>
-                                        <option value="4" {{ ($people == 4) ? 'selected' : '' }}>4 People</option>
-                                        <option value="5" {{ ($people == 5) ? 'selected' : '' }}>5 People</option>
-                                        <option value="6" {{ ($people == 6) ? 'selected' : '' }}>6 People</option>
-                                        <option value="7" {{ ($people == 7) ? 'selected' : '' }}>7 People</option>
-                                        <option value="8" {{ ($people == 8) ? 'selected' : '' }}>8 People</option>
-                                        <option value="9" {{ ($people == 9) ? 'selected' : '' }}>9 People</option>
-                                        <option value="10" {{ ($people == 10) ? 'selected' : '' }}>10 People</option>
-                                        <option value="11" {{ ($people == 11) ? 'selected' : '' }}>11 People</option>
-                                        <option value="12" {{ ($people == 12) ? 'selected' : '' }}>12 People</option>
-                                        <option value="13" {{ ($people == 13) ? 'selected' : '' }}>13 People</option>
-                                        <option value="14" {{ ($people == 14) ? 'selected' : '' }}>14 People</option>
-                                        <option value="15" {{ ($people == 15) ? 'selected' : '' }}>15 People</option>
-                                        <option value="16" {{ ($people == 16) ? 'selected' : '' }}>16 People</option>
-                                        <option value="17" {{ ($people == 17) ? 'selected' : '' }}>17 People</option>
-                                        <option value="18" {{ ($people == 18) ? 'selected' : '' }}>18 People</option>
-                                        <option value="19" {{ ($people == 19) ? 'selected' : '' }}>19 People</option>
-                                        <option value="20" {{ ($people == 20) ? 'selected' : '' }}>20 People</option>
+                                    <select class="form-control" id="selectNumberPeople" name="people">
+                                        @for($i = 1; $i <= 20; $i++)
+                                            <option
+                                                value="{{ $i }}" {{ (old('people', $people) == $i) ? 'selected' : '' }}>{{ $i }}
+                                                People
+                                            </option>
+                                        @endfor
                                     </select>
+                                    @error('people')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="input-inner-icon">
                                     <div class="row">
@@ -221,7 +257,7 @@
                                             <input class="form-control ps-3" type="text" placeholder="Promo Code">
                                         </div>
                                         <div class="col-5">
-                                            <button class="btn-apply-coupon">Apply</button>
+                                            <button type="button" class="btn-apply-coupon">Apply</button>
                                         </div>
                                     </div>
                                 </div>
@@ -231,14 +267,15 @@
                                     Total
                                 </span>
                                 <span class="card-title" id="totalPrice">
-                                    $450.00
+                                    $
                                 </span>
                             </div>
-                        </form>
+                        </div>
                     </div>
+                    <!-------------------- End Form Coupon -------------------->
                 </div>
-                <!-------------------- End Form Coupon -------------------->
-            </div>
+
+            </form>
         </div>
     </div>
     <!-------------------- End Checkout -------------------->
@@ -257,4 +294,9 @@
         </div>
     </div>
     <!-------------------- End Thanks -------------------->
+@endsection
+@section('js')
+    <script>
+        disableSubmitButton('#formCheckout');
+    </script>
 @endsection
