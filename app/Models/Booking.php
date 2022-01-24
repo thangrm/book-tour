@@ -13,6 +13,8 @@ class Booking extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     /**
      * Get the tour that owns the booking.
      *

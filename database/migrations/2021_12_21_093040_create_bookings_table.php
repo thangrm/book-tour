@@ -21,6 +21,7 @@ class CreateBookingsTable extends Migration
             $table->mediumInteger('people');
             $table->tinyInteger('payment_method')->default(1)->comment('1: Cash, 2: CreditCard, 3: Paypal');
             $table->boolean('is_payment')->default(false);
+            $table->date('departure_time');
             $table->text('requirement')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1: New, 2: Confirmed, 3: Completed, 4: Cancel');
             $table->timestamps();

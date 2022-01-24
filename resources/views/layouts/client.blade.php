@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Ngao du Việt Nam</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <!-- cdn bootstrap -->
@@ -18,6 +21,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <!-- pannellum -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+    <!-- toastr -->
+    <link rel="stylesheet" href="{{ asset('css/toastr.css') }}"/>
     <!-- custom css -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
 </head>
@@ -35,22 +40,64 @@
 
 <!-- cdn bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <!-- cdn jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <!-- owl carousel -->
 <script src="{{ asset('js/owl.carousel.js') }}"></script>
-
 <!-- date-ranger-picker -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
 <!-- panellum -->
 <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-
+<!-- toastr -->
+<script src="{{ asset('js/toastr.min.js') }}" type="text/javascript"></script>
 <!-- custom js -->
-<script src="{{ asset('js/script.js') }}"></script>
-<script src="{{ asset('js/slider.js') }}"></script>
+<script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/slider.js') }}" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    function toastrMessage(type, message) {
+        switch (type) {
+            case 'info':
+                toastr.info(message);
+                break;
+            case 'success':
+                toastr.success(message);
+                break;
+            case 'warning':
+                toastr.warning(message);
+                break;
+            case 'error':
+                toastr.error(message);
+                break;
+        }
+    }
+
+    function disableSubmitButton(idForm) {
+        $(idForm).submit(function () {
+            $(this).find("button[type='submit']").prop('disabled', true);
+        });
+    }
+
+    function enableSubmitButton(idForm, delay = 0) {
+        setTimeout(function () {
+            $(idForm).find("button[type='submit']").prop('disabled', false);
+        }, delay);
+    }
+
+    @if(Session::has('message'))
+    let type = "{{ Session::get('alert-type','info') }}";
+    let message = "{{ Session::get('message') }}";
+    toastrMessage(type, message);
+    @endif
+
+</script>
+@yield('js')
 
 </html>

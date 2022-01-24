@@ -196,7 +196,6 @@ $(document).ready(function () {
 
     //Video
     $('#videoTour, .wrap-video').on('click', function () {
-        ;
         let video = $('#videoTour').get(0);
         if (video.paused) {
             video.play();
@@ -212,17 +211,27 @@ $(document).ready(function () {
     });
 
     let durationDay = $('#duration').val();
-    console.log(durationDay);
+    let timeDeparutre = Date.parse($('#inputDepartureTime').val());
+    if (isNaN(timeDeparutre)) {
+        timeDeparutre = Date.now();
+    }
+
+    let startDepartureDate = new Date(timeDeparutre);
+    let endDepartureDate = new Date(timeDeparutre + durationDay * 24 * 60 * 60 * 1000);
+    $('#departureTime').val(startDepartureDate.toLocaleDateString("en-US") + ' - ' + endDepartureDate.toLocaleDateString("en-US"));
 
     $('#departureTimePicker').daterangepicker({
         singleDatePicker: true,
+        startDate: startDepartureDate,
         locale: {
             format: 'MM/DD/YYYY',
         },
         minDate: moment(),
     }, function (start, end) {
+        $('#inputDepartureTime').val(start.format("YYYY-MM-DD"));
+
         end.add(durationDay - 1, 'days');
-        $('#departureTime').val(start.format("MM/DD/YYYY") + ' - ' + end.format("MM/DD/YYYY"));
+        $('#departureTime').val(start.format("M/D/YYYY") + ' - ' + end.format("M/D/YYYY"));
     });
 
     // Calculate Price
@@ -246,162 +255,162 @@ $(document).ready(function () {
     caculatePrice();
 
     // Function validate
-    function stringContainsNumber(_string) {
-        return /\d/.test(_string);
-    }
-
-    function stringOnlyNumber(_string) {
-        return /^\d+$/.test(_string);
-    }
-
-    function checkMail(_string) {
-        return /^[a-z][a-z0-9_\.]{2,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}/.test(_string);
-    }
-
-    function removeAllWhiteSpace(_string) {
-        return _string.replace(/\s+/g, '')
-    }
-
-    function checkPhone(_string) {
-        _string = _string.replace(/\s+/g, '');
-        // Mobile
-        if (/^(0|\+84)[35789]([0-9]{8})$/.test(_string)) {
-            return true;
-        }
-
-        return /^(0|\+84)2([0-9]{9})$/.test(_string)
-    }
-
-    function escapeHTML(str) {
-        return str
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-
-    function getValue(_selector) {
-        return escapeHTML(($.trim($(_selector).val())));
-    }
-
-    // Form checkout
-    $("#btnSubmitCheckout").click(function (e) {
-        e.preventDefault();
-        let firstName = getValue('#firstName');
-        let lastName = getValue('#lastName');
-        let email = getValue('#email');
-        let phone = getValue('#phone ');
-        let address = getValue('#address');
-        let city = getValue('#city');
-        let province = getValue('#province');
-        let zipCode = getValue('#zipCode ');
-        let country = getValue('#country');
-        let requirement = getValue('#requirement');
-        let payment = $('input[name=paymentMethod]:checked', '#formCheckout').val()
-
-        $('#errorFirstName').text('');
-        $('#errorLastName').text('');
-        $('#errorEmail').text('');
-        $('#errorPhone').text('');
-        $('#errorAddress').text('');
-        $('#errorCity').text('');
-        $('#errorProvince').text('');
-        $('#errorZipCode').text('');
-        $('#errorCountry').text('');
-        $('#errorRequirement').text('');
-
-        let flag = true;
-
-        // validate first name
-        if (firstName == '') {
-            $('#errorFirstName').text('The first name field is required.');
-            flag = false;
-        } else if (stringContainsNumber(firstName)) {
-            $('#errorFirstName').text('The first name format is invalid.');
-            flag = false;
-        }
-
-        // validate last name
-        if (lastName == '') {
-            $('#errorLastName').text('The last name field is required.');
-            flag = false;
-        } else if (stringContainsNumber(lastName)) {
-            $('#errorLastName').text('The last name format is invalid.');
-            flag = false;
-        }
-
-        // validate email
-        if (email == '') {
-            $('#errorEmail').text('The email field is required.');
-            flag = false;
-        } else if (!checkMail(email)) {
-            $('#errorEmail').text('The email format is invalid.');
-            flag = false;
-        }
-
-        // validate phone
-        if (phone == '') {
-            $('#errorPhone').text('The phone field is required.');
-            flag = false;
-        } else if (!checkPhone(phone)) {
-            $('#errorPhone').text('The phone format is invalid.');
-            flag = false;
-        }
-
-        // validate zipcode
-        if (zipCode != '') {
-            if (!stringOnlyNumber(zipCode)) {
-                $('#errorZipCode').text('The zipcode format is invalid.');
-                flag = false;
-            }
-        }
-
-        if (flag) {
-            //$('#formCheckout').submit();
-            $('#thanksModal').modal('show');
-        } else {
-            document.getElementById("formCheckout").scrollIntoView();
-        }
-    });
-
-    // Form contact
-    $("#formContact").submit(function (e) {
-        e.preventDefault();
-        let name = getValue('#name');
-        let email = getValue('#email');
-        let phone = getValue('#phone ');
-        let message = getValue('#message');
-        $('#errorName').text('');
-        $('#errorEmail').text('');
-        $('#errorPhone').text('');
-        $('#errorMessage').text('');
-
-        // validate name
-        if (name == '') {
-            $('#errorName').text('The name field is required.');
-        } else if (stringContainsNumber(name)) {
-            $('#errorName').text('The name format is invalid.');
-        }
-
-        // validate email
-        if (email == '') {
-            $('#errorEmail').text('The email field is required.');
-        } else if (!checkMail(email)) {
-            $('#errorEmail').text('The email format is invalid.');
-        }
-
-        // validate phone
-        if (phone == '') {
-            $('#errorPhone').text('The phone field is required.');
-        } else if (!checkPhone(phone)) {
-            $('#errorPhone').text('The phone format is invalid.');
-        }
-
-        // validate message
-        if (message == '') {
-            $('#errorMessage').text('The message field is required.');
-        }
-
-    });
+//     function stringContainsNumber(_string) {
+//         return /\d/.test(_string);
+//     }
+//
+//     function stringOnlyNumber(_string) {
+//         return /^\d+$/.test(_string);
+//     }
+//
+//     function checkMail(_string) {
+//         return /^[a-z][a-z0-9_\.]{2,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}/.test(_string);
+//     }
+//
+//     function removeAllWhiteSpace(_string) {
+//         return _string.replace(/\s+/g, '')
+//     }
+//
+//     function checkPhone(_string) {
+//         _string = _string.replace(/\s+/g, '');
+//         // Mobile
+//         if (/^(0|\+84)[35789]([0-9]{8})$/.test(_string)) {
+//             return true;
+//         }
+//
+//         return /^(0|\+84)2([0-9]{9})$/.test(_string)
+//     }
+//
+//     function escapeHTML(str) {
+//         return str
+//             .replace(/&/g, "&amp;")
+//             .replace(/</g, "&lt;")
+//             .replace(/>/g, "&gt;")
+//             .replace(/"/g, "&quot;")
+//             .replace(/'/g, "&#039;");
+//     }
+//
+//     function getValue(_selector) {
+//         return escapeHTML(($.trim($(_selector).val())));
+//     }
+//
+//     // Form checkout
+//     $("#btnSubmitCheckout").click(function (e) {
+//         e.preventDefault();
+//         let firstName = getValue('#firstName');
+//         let lastName = getValue('#lastName');
+//         let email = getValue('#email');
+//         let phone = getValue('#phone ');
+//         let address = getValue('#address');
+//         let city = getValue('#city');
+//         let province = getValue('#province');
+//         let zipCode = getValue('#zipCode ');
+//         let country = getValue('#country');
+//         let requirement = getValue('#requirement');
+//         let payment = $('input[name=paymentMethod]:checked', '#formCheckout').val()
+//
+//         $('#errorFirstName').text('');
+//         $('#errorLastName').text('');
+//         $('#errorEmail').text('');
+//         $('#errorPhone').text('');
+//         $('#errorAddress').text('');
+//         $('#errorCity').text('');
+//         $('#errorProvince').text('');
+//         $('#errorZipCode').text('');
+//         $('#errorCountry').text('');
+//         $('#errorRequirement').text('');
+//
+//         let flag = true;
+//
+//         // validate first name
+//         if (firstName == '') {
+//             $('#errorFirstName').text('The first name field is required.');
+//             flag = false;
+//         } else if (stringContainsNumber(firstName)) {
+//             $('#errorFirstName').text('The first name format is invalid.');
+//             flag = false;
+//         }
+//
+//         // validate last name
+//         if (lastName == '') {
+//             $('#errorLastName').text('The last name field is required.');
+//             flag = false;
+//         } else if (stringContainsNumber(lastName)) {
+//             $('#errorLastName').text('The last name format is invalid.');
+//             flag = false;
+//         }
+//
+//         // validate email
+//         if (email == '') {
+//             $('#errorEmail').text('The email field is required.');
+//             flag = false;
+//         } else if (!checkMail(email)) {
+//             $('#errorEmail').text('The email format is invalid.');
+//             flag = false;
+//         }
+//
+//         // validate phone
+//         if (phone == '') {
+//             $('#errorPhone').text('The phone field is required.');
+//             flag = false;
+//         } else if (!checkPhone(phone)) {
+//             $('#errorPhone').text('The phone format is invalid.');
+//             flag = false;
+//         }
+//
+//         // validate zipcode
+//         if (zipCode != '') {
+//             if (!stringOnlyNumber(zipCode)) {
+//                 $('#errorZipCode').text('The zipcode format is invalid.');
+//                 flag = false;
+//             }
+//         }
+//
+//         if (flag) {
+//             //$('#formCheckout').submit();
+//             $('#thanksModal').modal('show');
+//         } else {
+//             document.getElementById("formCheckout").scrollIntoView();
+//         }
+//     });
+//
+//     // Form contact
+//     $("#formContact").submit(function (e) {
+//         e.preventDefault();
+//         let name = getValue('#name');
+//         let email = getValue('#email');
+//         let phone = getValue('#phone ');
+//         let message = getValue('#message');
+//         $('#errorName').text('');
+//         $('#errorEmail').text('');
+//         $('#errorPhone').text('');
+//         $('#errorMessage').text('');
+//
+//         // validate name
+//         if (name == '') {
+//             $('#errorName').text('The name field is required.');
+//         } else if (stringContainsNumber(name)) {
+//             $('#errorName').text('The name format is invalid.');
+//         }
+//
+//         // validate email
+//         if (email == '') {
+//             $('#errorEmail').text('The email field is required.');
+//         } else if (!checkMail(email)) {
+//             $('#errorEmail').text('The email format is invalid.');
+//         }
+//
+//         // validate phone
+//         if (phone == '') {
+//             $('#errorPhone').text('The phone field is required.');
+//         } else if (!checkPhone(phone)) {
+//             $('#errorPhone').text('The phone format is invalid.');
+//         }
+//
+//         // validate message
+//         if (message == '') {
+//             $('#errorMessage').text('The message field is required.');
+//         }
+//
+//     });
 });
