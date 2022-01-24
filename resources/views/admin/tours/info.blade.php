@@ -8,6 +8,9 @@
     </style>
 @endsection
 @section('admin')
+    @error('name')
+    <p class="text-danger">{{ $message }}</p>
+    @enderror
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">

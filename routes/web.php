@@ -28,9 +28,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/test', function () {
-    return view('mails.booking_comfirm');
-});
+
 // Client
 Route::get('/', [ClientController::class, 'index'])->name('index');
 Route::get('/list-tours/{slug}', [ClientController::class, 'listTour'])->name('client.tours.list');
@@ -38,6 +36,7 @@ Route::get('/tours/{slug}', [ClientController::class, 'showTour'])->name('client
 Route::get('/tours/{slug}/booking', [ClientController::class, 'booking'])->name('client.booking.index');
 Route::post('/tours/{slug}/booking', [ClientController::class, 'storeBooking'])->name('client.booking.store');
 Route::get('/contact', [ClientController::class, 'contact'])->name('client.contact');
+Route::get('/search', [ClientController::class, 'search'])->name('client.search');
 
 // Admin
 Route::group(['prefix' => 'admin'], function () {

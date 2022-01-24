@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Libraries\Notification;
 use App\Libraries\Utilities;
-use App\Traits\GetListLatest;
+use App\Traits\GetListData;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +14,7 @@ use Yajra\DataTables\DataTables;
 
 class Destination extends Model
 {
-    use HasFactory, GetListLatest;
+    use HasFactory, GetListData;
 
     protected $guarded = [];
     protected $path = 'public/images/destinations/';

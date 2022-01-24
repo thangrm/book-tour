@@ -151,7 +151,7 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'status', name: 'status'},
-                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
+                    {data: 'action', name: 'action', className: 'align-middle text-center', width: 68},
                 ],
                 columnDefs: [
                     {className: 'align-middle', targets: '_all'},

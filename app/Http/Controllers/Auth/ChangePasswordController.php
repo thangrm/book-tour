@@ -50,7 +50,7 @@ class ChangePasswordController extends Controller
     {
         $request->validate([
             'old_password' => 'required',
-            'password' => 'required|confirmed|min:8',
+            'password' => 'required|confirmed|min:8|max:32',
         ]);
 
         $current_password = Auth::User()->password;

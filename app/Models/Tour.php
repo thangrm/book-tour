@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Libraries\Notification;
 use App\Libraries\Utilities;
-use App\Traits\GetListLatest;
+use App\Traits\GetListData;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -15,7 +14,7 @@ use Yajra\DataTables\DataTables;
 
 class Tour extends Model
 {
-    use HasFactory, GetListLatest;
+    use HasFactory, GetListData;
 
     protected $guarded = [];
     protected $path = 'public/images/tours/';
@@ -84,7 +83,7 @@ class Tour extends Model
     public function rules($id = null)
     {
         $rule = [
-            'name' => 'required|max:50|string|unique:tours',
+            'name' => 'required|max:255|string|unique:tours',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
             'destination_id' => 'required|exists:destinations,id',
             'type_id' => 'required|exists:tour_types,id',
@@ -97,7 +96,7 @@ class Tour extends Model
         ];
 
         if ($id != null) {
-            $rule['name'] = 'max:50|string|unique:tours,name,' . $id;
+            $rule['name'] = 'max:255|string|unique:tours,name,' . $id;
             $rule['image'] = 'image|mimes:jpeg,jpg,png,gif|max:5000';
             $rule['destination_id'] = 'exists:destinations,id';
             $rule['type_id'] = 'exists:tour_types,id';
@@ -108,6 +107,27 @@ class Tour extends Model
         }
 
         return $rule;
+    }
+
+    /**
+     * Get list tour active
+     *
+     * @return mixed
+     */
+    public function getTourActive($isTrending = false, int $limit = 0)
+    {
+        $query = $this->with('type', 'destination')
+            ->where('status', 1)->latest();
+
+        if ($isTrending) {
+            $query->where('trending', 1);
+        }
+
+        if ($limit != 0) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 
     /**

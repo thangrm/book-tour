@@ -64,36 +64,35 @@
 
                 <div class="col-12 col-xxl-4 col-lg-5 form-search">
                     <p class="title-search">Discover beautiful Vietnam</p>
-                    <form action="">
+                    <form action="{{ route('client.search') }}">
                         <div class="input-search input-inner-icon">
-                            <img src="images/icon/search.svg">
-                            <input class="form-control" type="text" placeholder="Tour name">
+                            <img src="{{ asset('images/icon/search.svg') }}">
+                            <input class="form-control" type="text" name="tour_name" placeholder="Tour name">
                         </div>
                         <div class="input-search input-inner-icon">
-                            <img src="images/icon/location.svg">
-                            <input class="form-control" type="text" placeholder="Quatlam Beach, Giaothuy, Namdinh">
+                            <img src="{{ asset('images/icon/location.svg') }}">
+                            <input class="form-control" type="text" name="destination_name"
+                                   placeholder="Quatlam Beach, Giaothuy, Namdinh">
                         </div>
                         <div class="input-search input-inner-icon">
-                            <img src="images/icon/flag.svg">
-                            <select class="form-control" required>
+                            <img src="{{ asset('images/icon/flag.svg') }}">
+                            <select class="form-control" name="tour_type">
                                 <option value="" disabled selected hidden>Type of tour</option>
-                                <option value="1">City-Break</option>
-                                <option value="2">Wildlife</option>
-                                <option value="3">Cultural</option>
-                                <option value="4">Ecotourism</option>
-                                <option value="5">Sun and Beaches</option>
+                                @foreach($types as $type)
+                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="input-search input-inner-icon">
-                            <img src="images/icon/schedule.svg">
-                            <input class="form-control" type="text" placeholder="Departure time">
+                            <img src="{{ asset('images/icon/schedule.svg') }}">
+                            <input class="form-control" type="text" name="duration" placeholder="Duration">
                         </div>
 
                         <div class="input-search">
                             <button
                                 class="form-control btn-search-submit d-flex justify-content-center align-items-center"
                                 type="submit">
-                                <img class="fill-white me-2" src="images/icon/search.svg"> Search
+                                <img class="fill-white me-2" src="{{ asset('images/icon/search.svg') }}"> Search
                             </button>
                         </div>
                     </form>
