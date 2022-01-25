@@ -37,6 +37,17 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="slug" class="text-lg-right control-label col-form-label">
+                            Slug <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" name="slug" id="slug" placeholder="Slug"
+                               value="{{old('slug')}}">
+                        @error('slug')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <div class="row">
                             <div class="col-6">
                                 <label for="destinationId"
@@ -219,6 +230,16 @@
 
                 this.submit();
             });
+
+            // Auto format title to slug
+            $('#name').on('keyup', function () {
+                $('#slug').val(changeToSlug($('#name').val()));
+            });
+
+            $('#slug').on('change', function () {
+                $('#slug').val(changeToSlug($('#slug').val()));
+            });
+
         });
     </script>
 @endsection

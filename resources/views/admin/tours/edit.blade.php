@@ -32,11 +32,23 @@
                             Title <span class="text-danger">*</span>
                         </label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name tour"
-                               value="{{ empty(old('name')) ? $tour->name : old('name') }}">
+                               value="{{ old('name', $tour->name) }}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <div class="form-group">
+                        <label for="slug" class="text-lg-right control-label col-form-label">
+                            Slug <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" name="slug" id="slug" placeholder="Slug"
+                               value="{{ old('slug', $tour->slug) }}">
+                        @error('slug')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
 
                     <div class="form-group">
                         <div class="row">
@@ -49,7 +61,7 @@
                                     @isset($destinations)
                                         @foreach($destinations as $destination)
                                             <option value="{{ $destination->id }}"
-                                                {{ (empty(old('destination_id')) ? $tour->destination_id : old('destination_id')) == $destination->id ? "selected" : "" }}>
+                                                {{ old('destination_id', $tour->destination_id) == $destination->id ? "selected" : "" }}>
                                                 {{ $destination->name }}
                                             </option>
                                         @endforeach
@@ -68,7 +80,7 @@
                                     @isset($types)
                                         @foreach($types as $type)
                                             <option value="{{ $type->id }}"
-                                                {{ (empty(old('type_id')) ? $tour->type_id : old('type_id')) == $type->id ? "selected" : "" }}>
+                                                {{ old('type_id', $tour->type_id) == $type->id ? "selected" : "" }}>
                                                 {{ $type->name }}
                                             </option>
                                         @endforeach
@@ -89,7 +101,7 @@
                                         class="text-danger">*</span> </label>
                                 <input type="number" class="form-control" name="duration" id="duration"
                                        placeholder="Duration"
-                                       value="{{ empty(old('duration')) ? $tour->duration : old('duration') }}"
+                                       value="{{ old('duration',$tour->duration) }}"
                                        step="1">
                                 @error('duration')
                                 <p class="text-danger">{{ $message }}</p>
@@ -99,7 +111,7 @@
                                 <label for="price" class="text-lg-right control-label col-form-label">Price<span
                                         class="text-danger">*</span> </label>
                                 <input type="number" class="form-control" name="price" id="price" placeholder="Price"
-                                       value="{{ empty(old('price')) ? $tour->price : old('price') }}" step="0.01">
+                                       value="{{ old('price',$tour->price) }}" step="0.01">
                                 @error('price')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -170,6 +182,16 @@
                 e.preventDefault();
                 overviewEditor.updateSourceElement();
                 e.currentTarget.submit();
+            });
+
+
+            // Auto format title to slug
+            $('#name').on('keyup', function () {
+                $('#slug').val(changeToSlug($('#name').val()));
+            });
+
+            $('#slug').on('change', function () {
+                $('#slug').val(changeToSlug($('#slug').val()));
             });
         });
     </script>

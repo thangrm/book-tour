@@ -96,7 +96,8 @@ class Tour extends Model
     public function rules($id = null)
     {
         $rule = [
-            'name' => 'required|max:255|string|unique:tours',
+            'name' => 'required|max:255|string',
+            'slug' => 'required|max:255|string|unique:tours',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
             'destination_id' => 'required|exists:destinations,id',
             'type_id' => 'required|exists:tour_types,id',
@@ -109,7 +110,8 @@ class Tour extends Model
         ];
 
         if ($id != null) {
-            $rule['name'] = 'max:255|string|unique:tours,name,' . $id;
+            $rule['name'] = 'max:255|string';
+            $rule['slug'] = 'max:255|string|unique:tours,slug,' . $id;
             $rule['image'] = 'image|mimes:jpeg,jpg,png,gif|max:5000';
             $rule['destination_id'] = 'exists:destinations,id';
             $rule['type_id'] = 'exists:tour_types,id';
@@ -195,7 +197,7 @@ class Tour extends Model
         }
 
         $tour->fill($input);
-        $tour->slug = Str::slug($tour->name);
+        $tour->slug = Str::slug($tour->slug);
         if ($tour->save()) {
             if ($request->hasFile('image')) {
                 Storage::delete($this->path . $oldImage);
