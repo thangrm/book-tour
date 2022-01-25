@@ -68,16 +68,16 @@
                     <p class="title-search">Discover beautiful Vietnam</p>
                     <form action="{{ route('client.search.index') }}">
                         <div class="input-search input-inner-icon">
-                            <img src="{{ asset('images/icon/search.svg') }}">
+                            <img src="{{ asset('images/icon/search.svg') }}" alt="name tour">
                             <input class="form-control" type="text" name="tour_name" placeholder="Tour name">
                         </div>
                         <div class="input-search input-inner-icon">
-                            <img src="{{ asset('images/icon/location.svg') }}">
+                            <img src="{{ asset('images/icon/location.svg') }}" alt="location">
                             <input class="form-control" type="text" name="destination_name"
                                    placeholder="Quatlam Beach, Giaothuy, Namdinh">
                         </div>
                         <div class="input-search input-inner-icon">
-                            <img src="{{ asset('images/icon/flag.svg') }}">
+                            <img src="{{ asset('images/icon/flag.svg') }}" alt="type_of_tour">
                             <select class="form-control" name="tour_type">
                                 <option value="" disabled selected hidden>Type of tour</option>
                                 @foreach($types as $type)
@@ -86,7 +86,7 @@
                             </select>
                         </div>
                         <div class="input-search input-inner-icon">
-                            <img src="{{ asset('images/icon/schedule.svg') }}">
+                            <img src="{{ asset('images/icon/schedule.svg') }}" alt="duration">
                             <input class="form-control" type="text" name="duration" placeholder="Duration">
                         </div>
 
@@ -94,7 +94,8 @@
                             <button
                                 class="form-control btn-search-submit d-flex justify-content-center align-items-center"
                                 type="submit">
-                                <img class="fill-white me-2" src="{{ asset('images/icon/search.svg') }}"> Search
+                                <img class="fill-white me-2" src="{{ asset('images/icon/search.svg') }}" alt="search">
+                                Search
                             </button>
                         </div>
                     </form>
@@ -197,7 +198,7 @@
                                     </span>
                                 </div>
                                 <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
-                                     alt="tour-image">
+                                     alt="{{ $tour->name }}">
                             </div>
 
                             <div class="card-body">
@@ -210,7 +211,7 @@
                                 </h5>
                                 <div class="d-inline-flex justify-content-between align-items-center w-100">
                                     <p class="card-text">
-                                        <img src="{{ asset('images/icon/schedule.svg') }}" alt="location">
+                                        <img src="{{ asset('images/icon/schedule.svg') }}" alt="duration">
                                         <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span>
                                     </p>
                                     <p class="card-text">from <span class="card-title">${{ $tour->price }}</span></p>
@@ -246,7 +247,7 @@
                                     </span>
                                 </div>
                                 <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
-                                     alt="tour-image">
+                                     alt="{{ $tour->name }}">
                             </div>
 
                             <div class="card-body">
@@ -288,7 +289,7 @@
                 <div class="col-12 col-lg-5">
                     <div class="form-input-mail mt-2 mt-md-5 m-lg-0 d-flex justify-content-between align-items-center">
                         <div class="input-mail input-inner-icon flex-grow-1 flex-shrink-1">
-                            <img src="{{ asset('images/icon/location.svg') }}">
+                            <img src="{{ asset('images/icon/location.svg') }}" alt="support">
                             <input class="form-control" type="text" placeholder="example@gmail.com">
                         </div>
                         <button class="flex-grow-0 flex-shrink-0 btn-send-mail">Send</button>

@@ -16,19 +16,19 @@
                     <div class="footer-nav row">
                         <div class="col-6 col-sm-5 col-md-4 col-lg-6 p-0">
                             <nav class="nav flex-column">
-                                <a class="nav-link">Home</a>
-                                <a class="nav-link">About</a>
-                                <a class="nav-link">Tours</a>
-                                <a class="nav-link">Hotels</a>
-                                <a class="nav-link">Contact</a>
+                                <a class="nav-link" href="{{ route('index') }}">Home</a>
+                                <a class="nav-link" href="#">About</a>
+                                <a class="nav-link" href="#">Tours</a>
+                                <a class="nav-link" href="#">Hotels</a>
+                                <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
                             </nav>
                         </div>
                         <div class="col-6 col-sm-7 col-md-8 col-lg-6 p-0">
                             <nav class="nav flex-column">
-                                <a class="nav-link">Partner with us </a>
-                                <a class="nav-link">Terms & Conditions</a>
-                                <a class="nav-link">Privacy Policy</a>
-                                <a class="nav-link">Guest Policy</a>
+                                <a class="nav-link" href="#">Partner with us </a>
+                                <a class="nav-link" href="#">Terms & Conditions</a>
+                                <a class="nav-link" href="#">Privacy Policy</a>
+                                <a class="nav-link" href="#">Guest Policy</a>
                             </nav>
                         </div>
                     </div>
@@ -40,14 +40,14 @@
                                 <img class="fill-white" src="{{ asset('images/icon/location.svg') }}" alt="address">
                             </div>
                             <p style="margin-left: 5px;">
-                                <a>Lilama 10 Tower, 56 To Huu, Trung Van, Nam Tu Liem, Ha Noi</a>
+                                <a href="#">Lilama 10 Tower, 56 To Huu, Trung Van, Nam Tu Liem, Ha Noi</a>
                             </p>
                         </div>
                         <div class="contact-item">
                             <div class="icon-contact">
                                 <img class="fill-white" src="{{ asset('images/icon/mail.svg') }}" alt="email">
                             </div>
-                            <p><a>hello@adamotravel.com</a></p>
+                            <p><a href="mailto:hello@adamotravel.com">hello@adamotravel.com</a></p>
                         </div>
                     </div>
                 </div>

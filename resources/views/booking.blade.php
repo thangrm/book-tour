@@ -225,7 +225,7 @@
                                 </div>
 
                                 <div class="input-inner-icon">
-                                    <img src="{{ asset('images/icon/schedule.svg') }}">
+                                    <img src="{{ asset('images/icon/schedule.svg') }}" alt="departure">
                                     <input type="hidden"
                                            value="{{ old('departure_time', $departureTime) }}"
                                            name="departure_time"
@@ -238,7 +238,7 @@
                                     </div>
                                 </div>
                                 <div class="input-inner-icon">
-                                    <img src="{{ asset('images/icon/people.svg') }}">
+                                    <img src="{{ asset('images/icon/people.svg') }}" alt="people">
                                     <select class="form-control" id="selectNumberPeople" name="people">
                                         @for($i = 1; $i <= 20; $i++)
                                             <option

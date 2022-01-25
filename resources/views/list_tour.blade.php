@@ -190,7 +190,7 @@
                                         </span>
                                     </div>
                                     <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
-                                         alt="tour-image">
+                                         alt="{{ $tour->name }}">
                                 </div>
 
                                 <div class="card-body">

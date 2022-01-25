@@ -1,4 +1,12 @@
 @extends('layouts.client')
+@section('title'){{ $tour->meta_title == null ? $tour->name : $tour->meta_title }}@endsection
+
+@section('description'){{ $tour->meta_description == null ? $tour->name : $tour->meta_description }}@endsection
+
+@section('image_seo'){{  asset('storage/images/tours/'. ($tour->image_seo == null ? $tour->image : $tour->image_seo))  }}@endsection
+
+@section('url'){{ route('client.tours.detail', $tour->slug) }}@endsection
+
 @section('content')
     <!-------------------- Header -------------------->
     <div class="header header-tour-detail">
@@ -93,10 +101,12 @@
                                 <div class="list-image-thumbnail">
                                     <div class="owl-carousel" id="slideImageThumnail">
                                         <img class="thumbnailItem target"
-                                             src="{{ asset('storage/images/tours/'.$tour->image) }}">
+                                             src="{{ asset('storage/images/tours/'.$tour->image) }}"
+                                             alt="{{ $tour->name }}">
                                         @foreach($tour->galleries as $gallery)
                                             <img class="thumbnailItem"
-                                                 src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
+                                                 src="{{ asset('storage/images/galleries/'.$gallery->image) }}"
+                                                 alt="{{ $tour->name .'-gallery-'. $loop->index}}">
                                         @endforeach
                                     </div>
                                 </div>
@@ -373,7 +383,7 @@
                                     <hr>
 
                                     <div class="box-review d-flex align-items-start">
-                                        <img src="{{ asset('images/icon/user.svg') }}" alt="" width="56">
+                                        <img src="{{ asset('images/icon/user.svg') }}" alt="user" width="56">
                                         <form class="form-review w-100">
                                             <textarea class="form-control" rows="5"
                                                       placeholder="Type anything"></textarea>
@@ -449,7 +459,7 @@
                         </div>
                         <form action="{{ route('client.booking.index', $tour->slug) }}" id="formBookNow">
                             <div class="input-inner-icon">
-                                <img src="{{ asset('images/icon/schedule.svg') }}">
+                                <img src="{{ asset('images/icon/schedule.svg') }}" alt="departure">
                                 <div id="departureTimePicker">
                                     <input type="hidden" value="{{ date('Y-m-d') }}" name="departure_time"
                                            id="inputDepartureTime">
@@ -462,7 +472,7 @@
                                 </div>
                             </div>
                             <div class="input-inner-icon">
-                                <img src="{{ asset('images/icon/people.svg') }}">
+                                <img src="{{ asset('images/icon/people.svg') }}" alt="people">
                                 <select class="form-control" id="selectNumberPeople" name="people">
                                     @for($i = 1; $i <= 20; $i++)
                                         <option value="{{ $i }}">{{ $i }} People</option>
@@ -510,7 +520,7 @@
                                         </span>
                                     </div>
                                     <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
-                                         alt="tour-image">
+                                         alt="{{ $tour->name }}">
                                 </div>
 
                                 <div class="card-body">

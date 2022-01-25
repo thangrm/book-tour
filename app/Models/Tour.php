@@ -105,6 +105,9 @@ class Tour extends Model
             'price' => 'required|numeric|min:0',
             'status' => 'required|integer|between:1,2',
             'trending' => 'required|integer|between:1,2',
+            'image_seo' => 'image|mimes:jpeg,jpg,png,gif|max:5000',
+            'meta_title' => 'string|max:70',
+            'meta_description' => 'string|max:150',
             'panoramic_image' => 'max:255',
             'video' => 'max:100',
         ];
@@ -186,9 +189,14 @@ class Tour extends Model
 
         $tour = $this->findOrNew($id);
         $oldImage = $tour->image;
+        $oldImageSeo = $tour->image_seo;
 
         if ($request->hasFile('image')) {
             $input['image'] = Utilities::storeImage($request->file('image'), $this->path);
+        }
+
+        if ($request->hasFile('image_seo')) {
+            $input['image_seo'] = Utilities::storeImage($request->file('image_seo'), $this->path);
         }
 
         $duration = empty($request->duration) ? 128 : $request->duration;   //128 is max for duration
@@ -201,6 +209,10 @@ class Tour extends Model
         if ($tour->save()) {
             if ($request->hasFile('image')) {
                 Storage::delete($this->path . $oldImage);
+            }
+
+            if ($request->hasFile('image')) {
+                Storage::delete($this->path . $oldImageSeo);
             }
         } else {
             Storage::delete($this->path . $tour->image);
@@ -218,8 +230,8 @@ class Tour extends Model
     public function remove($id)
     {
         $tour = $this->findOrFail($id);
-        $image = $tour->image;
-        Storage::delete($this->path . $image);
+        Storage::delete($this->path . $tour->image);
+        Storage::delete($this->path . $tour->image_seo);
 
         foreach ($tour->galleries as $gallery) {
             Storage::delete('public/images/galleries/' . $gallery->image);

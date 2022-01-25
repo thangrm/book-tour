@@ -5,10 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>@yield('title','Ngao Du Viet Nam')</title>
+    <meta name="description" content="@yield('description','Tour and Travel')">
+    <meta name="author" content="ngaodu">
+    <meta property="og:title" content="@yield('title', 'Ngao Du Viet Nam')">
+    <meta property="og:description" content="@yield('description', 'Tour and Travel')">
+    <meta property="og:url" content="@yield('url', route('index'))">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ngao Du">
+    <meta property="og:image" content="@yield('image_seo')">
+    <meta property="og:image:secure_url" content="@yield('image_seo')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Ngao du Việt Nam</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <!-- cdn bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
