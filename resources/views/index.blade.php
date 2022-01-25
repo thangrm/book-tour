@@ -24,7 +24,7 @@
                                 <a class="nav-link" href="#">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Tours</a>
+                                <a class="nav-link" href="{{ route('client.tours.list','all') }}">Tours</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Hotels</a>
@@ -152,7 +152,7 @@
         <div class="container">
             <div class="header-slide">
                 <p class="title-slide">Discover fascinating destinations</p>
-                <button class="btn-view-all">View all</button>
+                <a href="{{ route('client.destination.index') }}" class="btn btn-view-all">View all</a>
             </div>
             <div class="body-slide">
                 <div class="owl-carousel" id="slideDestinations">
@@ -182,7 +182,7 @@
         <div class="container">
             <div class="header-slide">
                 <p class="title-slide">Attractive tour and interesting experiences</p>
-                <button class="btn-view-all">View all</button>
+                <a href="{{  route('client.tours.list','trending') }}" class="btn btn-view-all">View all</a>
             </div>
             <div class="body-slide">
                 <div class="owl-carousel" id="slideTours">
@@ -231,7 +231,7 @@
         <div class="container">
             <div class="header-slide">
                 <p class="title-slide">Experience the traditional cultural beauties of Vietnam</p>
-                <button class="btn-view-all">View all</button>
+                <a href="{{  route('client.tours.list','new') }}" class="btn btn-view-all">View all</a>
             </div>
             <div class="body-slide">
                 <div class="owl-carousel" id="slideCultural">
