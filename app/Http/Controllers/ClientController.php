@@ -32,7 +32,7 @@ class ClientController extends Controller
         $destinations = $destination->getByStatus(1, 8);
         $types = $type->getByStatus(1, 8);
         $trendingTours = $tour->getByTrending(true, 8);
-        $tours = $tour->getByTrending(false, 8);
+        $tours = $tour->getByStatus(1, 8);
 
         return view('index', compact(['destinations', 'trendingTours', 'types', 'tours']));
     }

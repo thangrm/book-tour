@@ -30,7 +30,7 @@
                                 <a class="nav-link" href="#">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('client.contact') }}">Contact</a>
+                                <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Login</a>
@@ -184,7 +184,9 @@
                                          alt="bookmark">
                                     <div class="rate">
                                         <img src="{{ asset('images/icon/star.svg') }}" alt="star">
-                                        <span class="text-rate">4.5</span>
+                                        <span
+                                            class="text-rate">{{ \App\Libraries\Utilities::calculatorRateReView($tour->reviews)['total'] }}
+                                        </span>
                                     </div>
                                     <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
                                          alt="tour-image">
@@ -193,7 +195,7 @@
                                 <div class="card-body">
                                     <p class="card-text">
                                         <img src="{{ asset('images/icon/location.svg') }}" alt="location">
-                                        <span>{{ $tour->type->name }}</span>
+                                        <span>{{ $tour->destination->name }}</span>
                                     </p>
                                     <h5 class="card-title"><a
                                             href="{{ route('client.tours.detail', $tour->slug) }}">{{ $tour->name }}</a>

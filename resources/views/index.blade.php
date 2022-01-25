@@ -112,8 +112,8 @@
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <div class="box-introduce-image mx-auto">
-                        <img class="img-introduce-top" src="images/introduce1.png" alt="introduce">
-                        <img class="img-introduce-bottom" src="images/introduce2.png" alt="introduce">
+                        <img class="img-introduce-top" src="{{ asset('images/introduce1.png') }}" alt="introduce">
+                        <img class="img-introduce-bottom" src="{{ asset('images/introduce2.png') }}" alt="introduce">
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">
@@ -124,7 +124,7 @@
 
                         <div class="content-introduce">
                             <div class="icon-droplet-introduce">
-                                <img src="images/icon/droplets.svg" alt="introduce">
+                                <img src="{{ asset('images/icon/droplets.svg') }}" alt="introduce">
                             </div>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus viverra nuQlla eget sed
                                 odio.
@@ -192,7 +192,9 @@
                                      alt="bookmark">
                                 <div class="rate">
                                     <img src="{{ asset('images/icon/star.svg') }}" alt="star">
-                                    <span class="text-rate">4.5</span>
+                                    <span
+                                        class="text-rate">{{ \App\Libraries\Utilities::calculatorRateReView($tour->reviews)['total'] }}
+                                    </span>
                                 </div>
                                 <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
                                      alt="tour-image">
@@ -201,7 +203,7 @@
                             <div class="card-body">
                                 <p class="card-text">
                                     <img src="{{ asset('images/icon/location.svg') }}" alt="location">
-                                    <span>{{ $tour->type->name }}</span>
+                                    <span>{{ $tour->destination->name }}</span>
                                 </p>
                                 <h5 class="card-title"><a
                                         href="{{ route('client.tours.detail', $tour->slug) }}">{{ $tour->name }}</a>
@@ -239,7 +241,9 @@
                                      alt="bookmark">
                                 <div class="rate">
                                     <img src="{{ asset('images/icon/star.svg') }}" alt="star">
-                                    <span class="text-rate">4.5</span>
+                                    <span
+                                        class="text-rate">{{ \App\Libraries\Utilities::calculatorRateReView($tour->reviews)['total'] }}
+                                    </span>
                                 </div>
                                 <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
                                      alt="tour-image">
@@ -248,7 +252,7 @@
                             <div class="card-body">
                                 <p class="card-text">
                                     <img src="{{ asset('images/icon/location.svg') }}" alt="location">
-                                    <span>{{ $tour->type->name }}</span>
+                                    <span>{{ $tour->destination->name }}</span>
                                 </p>
                                 <h5 class="card-title"><a
                                         href="{{ route('client.tours.detail', $tour->slug) }}">{{ $tour->name }}</a>
