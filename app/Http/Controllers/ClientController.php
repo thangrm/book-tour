@@ -159,4 +159,16 @@ class ClientController extends Controller
 
         return view('search', compact(['tours', 'types']));
     }
+
+    /**
+     * Display destination page.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     */
+    public function destination()
+    {
+        $destinations = $this->clientService->listDestination();
+
+        return view('destination', compact(['destinations']));
+    }
 }

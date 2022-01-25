@@ -20,26 +20,33 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Client
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| These routes are used on the client pages
 |
 */
-
-// Client
 Route::get('/', [ClientController::class, 'index'])->name('index');
+Route::prefix('/tours/{slug}')->group(function () {
+    Route::get('/', [ClientController::class, 'showTour'])->name('client.tours.detail');
+    Route::get('booking', [ClientController::class, 'booking'])->name('client.booking.index');
+    Route::post('booking', [ClientController::class, 'storeBooking'])->name('client.booking.store');
+});
+
 Route::get('/list-tours/{slug}', [ClientController::class, 'listTour'])->name('client.tours.list');
-Route::get('/tours/{slug}', [ClientController::class, 'showTour'])->name('client.tours.detail');
-Route::get('/tours/{slug}/booking', [ClientController::class, 'booking'])->name('client.booking.index');
-Route::post('/tours/{slug}/booking', [ClientController::class, 'storeBooking'])->name('client.booking.store');
+Route::get('/destination', [ClientController::class, 'destination'])->name('client.destination.index');
+Route::get('/search', [ClientController::class, 'search'])->name('client.search.index');
 Route::get('/contact', [ClientController::class, 'contact'])->name('client.contact.index');
 Route::post('/contact', [ClientController::class, 'storeContact'])->name('client.contact.store');
-Route::get('/search', [ClientController::class, 'search'])->name('client.search.index');
 
-// Admin
+/*
+|--------------------------------------------------------------------------
+| Admin
+|--------------------------------------------------------------------------
+|
+| These routes are used on the admin pages
+|
+*/
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [LoginController::class, 'index'])->name('admin.login');
     Route::post('/login', [LoginController::class, 'login'])->name('admin.login.post');

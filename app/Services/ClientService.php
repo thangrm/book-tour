@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 
 class ClientService
 {
-    public function __construct()
-    {
-    }
-
     /**
      * Rule for store new booking tour
      *
@@ -129,13 +125,23 @@ class ClientService
      */
     public function getListTour(Request $request, $slug)
     {
-        $destination = Destination::where('slug', $slug)->firstOrFail();
+        $specialSlug = ['all', 'new', 'trending'];
         $query = Tour::with('destination', 'type')
-            ->where('status', 1);
+            ->where('status', 1)
+            ->latest();
+
+        if (!in_array($slug, $specialSlug)) {
+            $destination = Destination::where('slug', $slug)->firstOrFail();
+            $query->where('destination_id', $destination->id);
+        }
+
+        if ($slug == 'trending') {
+            $query->where('trending', 1);
+        }
 
         $query = $this->filterTour($request, $query);
 
-        return $query->where('destination_id', $destination->id)->paginate(21);
+        return $query->paginate(21);
     }
 
     /**
@@ -175,5 +181,15 @@ class ClientService
         $query = $this->filterTour($request, $query);
 
         return $query->paginate(21);
+    }
+
+    /**
+     * Get list destination
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function listDestination()
+    {
+        return Destination::latest()->paginate(12);
     }
 }
