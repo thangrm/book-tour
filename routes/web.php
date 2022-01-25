@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ClientController::class, 'index'])->name('index');
 Route::prefix('/tours/{slug}')->group(function () {
     Route::get('/', [ClientController::class, 'showTour'])->name('client.tours.detail');
+    Route::post('reviews', [ClientController::class, 'storeReview'])->name('client.review.store');
     Route::get('booking', [ClientController::class, 'booking'])->name('client.booking.index');
     Route::post('booking', [ClientController::class, 'storeBooking'])->name('client.booking.store');
 });

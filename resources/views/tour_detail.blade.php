@@ -384,10 +384,16 @@
 
                                     <div class="box-review d-flex align-items-start">
                                         <img src="{{ asset('images/icon/user.svg') }}" alt="user" width="56">
-                                        <form class="form-review w-100">
+                                        <form action="{{ route('client.review.store', $tour->slug) }}"
+                                              class="form-review w-100" method="post">
+                                            @csrf
                                             <textarea class="form-control" rows="5"
-                                                      placeholder="Type anything"></textarea>
-                                            <input type="hidden" id="inputRateReview" value="4">
+                                                      placeholder="Type anything"
+                                                      name="comment">{{ old('comment') }}</textarea>
+                                            @error('comment')
+                                            <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                            <input type="hidden" id="inputRateReview" name="rate" value="4">
                                             <div class="d-flex flex-column flex-sm-row justify-content-between mt-4">
                                                 <div class="rate-review" id="rateReview">
                                                     <i class="rate-star bi bi-star-fill fill-yellow" data-rate="1"></i>
