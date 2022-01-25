@@ -37,6 +37,17 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="slug" class="text-left control-label col-form-label">
+                                Slug<span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="slug" id="slug"
+                                       placeholder="Slug">
+                            </div>
+                            <p class="text-danger" id="errorSlug"></p>
+                        </div>
+
+                        <div class="form-group">
                             <label for="image" class="text-left control-label col-form-label">
                                 Image<span class="text-danger">*</span>
                             </label>
@@ -97,6 +108,7 @@
                             <th>#</th>
                             <th>Image</th>
                             <th>Title</th>
+                            <th>Slug</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -125,10 +137,20 @@
                                 </label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="name" id="nameEdit"
-                                           placeholder="Title"
-                                           value="{{old('name')}}">
+                                           placeholder="Title">
                                 </div>
                                 <p class="text-danger" id="errorNameEdit"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="slug" class="text-left control-label col-form-label">
+                                    Slug<span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="slug" id="slugEdit"
+                                           placeholder="Slug">
+                                </div>
+                                <p class="text-danger" id="errorSlugEdit"></p>
                             </div>
 
                             <div class="form-group">
@@ -181,6 +203,7 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'image', name: 'image'},
                     {data: 'name', name: 'name'},
+                    {data: 'slug', name: 'slug'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
                 ],
@@ -270,9 +293,11 @@
                 linkEditDestination = $(this).attr('href');
                 let id = $(this).data('id');
                 let nameDestination = $('#destination-' + id).children().eq(2).text();
+                let slugDestination = $('#destination-' + id).children().eq(3).text();
                 let srcImage = $('#destination-' + id).children().eq(1).children().eq(0).attr('src');
 
                 $('#nameEdit').val(nameDestination);
+                $('#slugEdit').val(slugDestination);
                 $('#showImgEdit').attr('src', srcImage);
             });
 
@@ -313,9 +338,11 @@
                 e.preventDefault();
                 $('#errorName').text('');
                 $('#errorImage').text('');
+                $('#errorSlug').text('');
 
                 let link = $(this).attr('action');
                 let name = $('#name').val();
+                let slug = $('#slug').val();
                 let image = $("#image").prop('files')[0];
                 let status = 2;
 
@@ -326,6 +353,7 @@
                 let formData = new FormData();
                 formData.append("name", name);
                 formData.append("status", status);
+                formData.append("slug", slug);
                 if (image !== undefined) {
                     formData.append("image", image);
                 }
@@ -340,19 +368,23 @@
                         response = JSON.parse(response);
                         let type = response['alert-type'];
                         let message = response['message'];
-                        toastrMessage(type, message);
 
                         if (type === 'success') {
                             datatable.draw();
                             $('#formAddDestination')[0].reset();
                             $('#showImg').attr('src', '');
                         }
+                        toastrMessage(type, message);
                     },
                     error: function (jqXHR) {
                         let response = jqXHR.responseJSON;
                         toastrMessage('error', 'Destination creation failed');
                         if (response?.errors?.name !== undefined) {
                             $('#errorName').text(response.errors.name[0]);
+                        }
+
+                        if (response?.errors?.slug !== undefined) {
+                            $('#errorSlug').text(response.errors.slug[0]);
                         }
 
                         if (response?.errors?.image !== undefined) {
@@ -375,11 +407,13 @@
                 e.preventDefault();
 
                 let name = $('#nameEdit').val();
+                let slug = $('#slugEdit').val();
                 let image = $("#imageEdit").prop('files')[0];
 
                 let formData = new FormData();
                 formData.append("_method", 'PUT');
                 formData.append("name", name);
+                formData.append("slug", slug);
 
                 if (image !== undefined) {
                     formData.append("image", image);
@@ -395,18 +429,22 @@
                         response = JSON.parse(response);
                         let type = response['alert-type'];
                         let message = response['message'];
-                        toastrMessage(type, message);
 
                         if (type === 'success') {
                             datatable.ajax.reload(null, false);
                             $('#editModal').modal('hide');
                         }
+                        toastrMessage(type, message);
                     },
                     error: function (jqXHR) {
                         let response = jqXHR.responseJSON;
                         toastrMessage('error', 'Destination creation failed');
                         if (response?.errors?.name !== undefined) {
                             $('#errorNameEdit').text(response.errors.name[0]);
+                        }
+
+                        if (response?.errors?.slug !== undefined) {
+                            $('#errorSlugEdit').text(response.errors.slug[0]);
                         }
 
                         if (response?.errors?.image !== undefined) {
@@ -418,6 +456,23 @@
                     }
                 });
 
+            });
+
+            // Auto format title to slug
+            $('#name').on('keyup', function () {
+                $('#slug').val(changeToSlug($('#name').val()));
+            });
+
+            $('#slug').on('change', function () {
+                $('#slug').val(changeToSlug($('#slug').val()));
+            });
+
+            $('#nameEdit').on('keyup', function () {
+                $('#slugEdit').val(changeToSlug($('#nameEdit').val()));
+            });
+
+            $('#slugEdit').on('change', function () {
+                $('#slugEdit').val(changeToSlug($('#slugEdit').val()));
             });
         });
     </script>
