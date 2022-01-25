@@ -42,13 +42,15 @@ class Destination extends Model
     public function rules($id = null): array
     {
         $rule = [
-            'name' => 'required|max:100|string|unique:destinations',
+            'name' => 'required|max:100|string',
+            'slug' => 'required|max:100|string|unique:destinations',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
             'status' => 'required|integer|between:1,2'
         ];
 
         if ($id != null) {
-            $rule['name'] = "max:100|string|unique:destinations,name,$id";
+            $rule['name'] = "max:100|string";
+            $rule['slug'] = "max:100|string|unique:destinations,slug,$id";
             $rule['image'] = 'image|mimes:jpeg,jpg,png,gif|max:5000';
             $rule['status'] = 'integer|between:1,2';
         }
@@ -65,7 +67,7 @@ class Destination extends Model
      */
     public function saveData(Request $request, int $id = 0)
     {
-        $input = $request->only('name', 'status');
+        $input = $request->only('name', 'slug', 'status');
         $input = Utilities::clearAllXSS($input);
 
         $destination = $this->findOrNew($id);
@@ -76,7 +78,7 @@ class Destination extends Model
         }
 
         $destination->fill($input);
-        $destination->slug = Str::slug($destination->name);
+        $destination->slug = Str::slug($destination->slug);
         if ($destination->save()) {
             if ($request->hasFile('image')) {
                 Storage::delete($this->path . $oldImage);
