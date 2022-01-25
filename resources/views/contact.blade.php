@@ -5,7 +5,9 @@
         <!--Logo and Nav -->
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <img class="logo" src="images/logo.png" alt="logo">
+                <a href="{{ route('index') }}">
+                    <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
+                </a>
                 <nav class="navbar navbar-expand-sm navbar-dark">
                     <button class="navbar-toggler" id="navbarBtn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
@@ -16,7 +18,7 @@
                     <div class="collapse navbar-collapse" id="navbarToggler">
                         <ul class="nav navbar-header flex-column flex-sm-row">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
+                                <a class="nav-link" href="{{ route('index') }}">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">About</a>
@@ -59,7 +61,7 @@
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="">Contact Us</a></li>
                 </ol>
             </nav>
@@ -74,23 +76,40 @@
                 <div class="col-12 col-lg-6">
                     <p class="contact-title">We'd love to hear from you</p>
                     <p class="contact-text">Send us a message and we'll respond as soon as possible</p>
-                    <form action="" class="form-contact" id="formContact">
+                    <form action="{{ route('client.contact.store') }}" class="form-contact" id="formContact"
+                          method="post">
+                        @csrf
                         <div class="form-group">
-                            <input type="text" class="form-control" id="name" placeholder="Your Name" maxlength="50">
+                            <input type="text" class="form-control" id="name" placeholder="Your Name" name="name"
+                                   value="{{ old('name') }}">
                             <span class="text-danger" id="errorName"></span>
+                            @error('name')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="email" placeholder="Your Email" maxlength="100">
-                            <span class="text-danger" id="errorEmail"></span>
+                            <input type="text" class="form-control" id="email" placeholder="Your Email" name="email"
+                                   value="{{ old('email') }}">
+                            <span class="texet-danger" id="errorEmail"></span>
+                            @error('email')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="phone" placeholder="Your Phone" maxlength="15">
+                            <input type="text" class="form-control" id="phone" placeholder="Your Phone" name="phone"
+                                   value="{{ old('phone') }}">
                             <span class="text-danger" id="errorPhone"></span>
+                            @error('phone')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <textarea type="text" class="form-control" id="message" rows="5"
-                                      placeholder="Messager"></textarea>
+                                      placeholder="Messager" name="message">{{ old('message') }}</textarea>
                             <span class="text-danger" id="errorMessage"></span>
+                            @error('message')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="w-100 d-flex justify-content-end">
                             <button type="submit">Send Message</button>

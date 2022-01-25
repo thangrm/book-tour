@@ -5,7 +5,9 @@
         <!--Logo and Nav -->
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
+                <a href="{{ route('index') }}">
+                    <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
+                </a>
                 <nav class="navbar navbar-expand-sm navbar-light">
                     <button class="navbar-toggler" id="navbarBtn" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
@@ -28,7 +30,7 @@
                                 <a class="nav-link" href="#">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
+                                <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Login</a>
@@ -48,7 +50,7 @@
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Tours</a></li>
                     <li class="breadcrumb-item"><a href="#">Detail tour</a></li>
                 </ol>
@@ -390,7 +392,7 @@
                                     </div>
                                     <hr>
 
-                                    <div class="box-list-review">
+                                    <div class="box-list-review" id="boxListReview">
 
                                         @foreach($reviews as $review)
                                             <div class="review-item">

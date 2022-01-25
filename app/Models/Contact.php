@@ -12,6 +12,8 @@ class Contact extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'email', 'phone', 'message', 'status'];
+
     public function getContact($id)
     {
         $contact = Contact::findOrFail($id);

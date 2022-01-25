@@ -58,20 +58,33 @@ class Tour extends Model
     /**
      * Get the FAQs for the tour.
      *
+     * @param bool $filterActive
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-
-    public function faqs()
+    public function faqs($filterActive = false)
     {
-        return $this->hasMany(FAQ::class);
+        $query = $this->hasMany(FAQ::class);
+        if ($filterActive) {
+            $query->where('status', 1);
+        }
+
+        return $query;
     }
 
     /**
      * Get the reviews for the tour.
      *
+     * @param bool $filterActive
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function reviews()
+    public function reviews($filterActive = false)
     {
-        return $this->hasMany(Review::class);
+        $query = $this->hasMany(Review::class);
+        if ($filterActive) {
+            $query->where('status', 1);
+        }
+
+        return $query;
     }
 
     /**
@@ -110,24 +123,51 @@ class Tour extends Model
     }
 
     /**
+     * Get a tour by slug
+     *
+     * @param $slug
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     */
+    public function getTourBySlug($slug)
+    {
+        return $this->with('destination', 'type', 'itineraries.places')
+            ->where('slug', $slug)
+            ->where('status', 1)
+            ->firstOrFail();
+    }
+
+    /**
      * Get list tour active
      *
      * @return mixed
      */
-    public function getTourActive($isTrending = false, int $limit = 0)
+    public function getByTrending(int $trending = 1, int $limit = 0)
     {
         $query = $this->with('type', 'destination')
-            ->where('status', 1)->latest();
-
-        if ($isTrending) {
-            $query->where('trending', 1);
-        }
+            ->where('status', 1)
+            ->where('trending', $trending)
+            ->latest();
 
         if ($limit != 0) {
             $query->limit($limit);
         }
 
         return $query->get();
+    }
+
+    /**
+     * Get list tour related
+     *
+     * @param $destination_id
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getRelated($destination_id)
+    {
+        return $this->with('destination', 'type')
+            ->where('status', 1)
+            ->where('destination_id', $destination_id)
+            ->limit(6)
+            ->get();
     }
 
     /**
