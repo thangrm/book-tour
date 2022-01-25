@@ -28,8 +28,8 @@ class TourController extends Controller
      */
     public function index(Destination $destination, Type $type)
     {
-        $destinations = $destination->getListLatest();
-        $types = $type->getListLatest();
+        $destinations = $destination->getLatest();
+        $types = $type->getLatest();
         return view('admin.tours.index', compact(['destinations', 'types']));
     }
 
@@ -40,8 +40,8 @@ class TourController extends Controller
      */
     public function create(Destination $destination, Type $type)
     {
-        $destinations = $destination->getListLatest();
-        $types = $type->getListLatest();
+        $destinations = $destination->getLatest();
+        $types = $type->getLatest();
         return view('admin.tours.create', compact(['destinations', 'types']));
     }
 
@@ -78,8 +78,8 @@ class TourController extends Controller
     public function edit($id, Destination $destination, Type $type)
     {
         $tour = Tour::findorFail($id);
-        $destinations = $destination->getListLatest();
-        $types = $type->getListLatest();
+        $destinations = $destination->getLatest();
+        $types = $type->getLatest();
         return view('admin.tours.edit', compact(['tour', 'destinations', 'types']));
     }
 

@@ -30,7 +30,7 @@
                                 <a class="nav-link" href="#">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('client.contact') }}">Contact</a>
+                                <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Login</a>

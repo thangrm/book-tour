@@ -57,19 +57,6 @@ class ClientService
         ];
     }
 
-    /**
-     * Get a tour by slug
-     *
-     * @param $slug
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
-     */
-    public function getTourBySlug($slug)
-    {
-        return Tour::with('destination', 'type', 'itineraries.places')
-            ->where('slug', $slug)
-            ->where('status', 1)
-            ->firstOrFail();
-    }
 
     /**
      * Store booking when user book tour

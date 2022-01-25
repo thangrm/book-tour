@@ -30,7 +30,7 @@
                                 <a class="nav-link" href="#">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
+                                <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Login</a>
@@ -50,7 +50,7 @@
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Tours</a></li>
                     <li class="breadcrumb-item"><a href="#">Detail tour</a></li>
                 </ol>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendMailBookingJob;
 use App\Libraries\Notification;
 use App\Libraries\Utilities;
 use App\Models\Destination;
@@ -30,10 +29,10 @@ class ClientController extends Controller
      */
     public function index(Destination $destination, Type $type, Tour $tour)
     {
-        $destinations = $destination->getListActive(8);
-        $types = $type->getListActive();
-        $trendingTours = $tour->getTourActive(true, 8);
-        $tours = $tour->getTourActive(false, 8);
+        $destinations = $destination->getByStatus(1, 8);
+        $types = $type->getByStatus(1, 8);
+        $trendingTours = $tour->getByTrending(true, 8);
+        $tours = $tour->getByTrending(false, 8);
 
         return view('index', compact(['destinations', 'trendingTours', 'types', 'tours']));
     }
@@ -43,9 +42,9 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function listTour(Request $request, $slug)
+    public function listTour(Request $request, $slug, Type $type)
     {
-        $types = Type::orderBy('name')->get();
+        $types = $type->getOrderByTitle();
         $tours = $this->clientService->getListTour($request, $slug);
 
         return view('list_tour', compact(['tours', 'types']));
@@ -56,29 +55,13 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function showTour(Request $request, $slug)
+    public function showTour(Request $request, $slug, Tour $tourModel)
     {
-        $tour = $this->clientService->getTourBySlug($slug);
-
-        $tour->faqs = $tour->faqs()
-            ->where('status', 1)
-            ->get();
-
-        $tour->reviews = $tour->reviews()
-            ->where('status', 1)
-            ->get();
-
-        $relateTours = Tour::with('destination', 'type')
-            ->where('status', 1)
-            ->where('destination_id', $tour->destination_id)
-            ->limit(6)
-            ->get();
-
-        $reviews = $tour->reviews()
-            ->where('status', 1)
-            ->paginate(8);
-
-
+        $tour = $tourModel->getTourBySlug($slug);
+        $tour->faqs = $tour->faqs(true)->get();
+        $tour->reviews = $tour->reviews(true)->get();
+        $relateTours = $tourModel->getRelated($tour->destination_id);
+        $reviews = $tour->reviews(true)->paginate(8);
         $rateReview = Utilities::calculatorRateReView($tour->reviews);
 
         return view('tour_detail', compact(['tour', 'relateTours', 'reviews', 'rateReview']));
@@ -89,9 +72,9 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function booking(Request $request, $slug)
+    public function booking(Request $request, $slug, Tour $tourModel)
     {
-        $tour = $this->clientService->getTourBySlug($slug);
+        $tour = $tourModel->getTourBySlug($slug);
         $people = $request->people;
         $departureTime = $request->departure_time;
 
@@ -103,11 +86,12 @@ class ClientController extends Controller
      *
      * @param Request $request
      * @param $slug
+     * @param Tour $tourModel
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storeBooking(Request $request, $slug)
+    public function storeBooking(Request $request, $slug, Tour $tourModel)
     {
-        $tour = $this->clientService->getTourBySlug($slug);
+        $tour = $tourModel->getTourBySlug($slug);
         $request->validate($this->clientService->ruleBooking());
 
         try {
@@ -163,11 +147,12 @@ class ClientController extends Controller
      * Display search page.
      *
      * @param Request $request
+     * @param Type $type
      * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function search(Request $request)
+    public function search(Request $request, Type $type)
     {
-        $types = Type::orderBy('name')->get();
+        $types = $type->getOrderByTitle();
         $tours = $this->clientService->searchTour($request);
 
         return view('search', compact(['tours', 'types']));
