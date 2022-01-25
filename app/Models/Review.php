@@ -3,25 +3,50 @@
 namespace App\Models;
 
 use App\Libraries\Notification;
+use App\Libraries\Utilities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class Review extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['status'];
+    protected $fillable = ['status', 'rate', 'comment', 'tour_id'];
 
     /**
      * Validate rules for review
      *
      * @return string[]
      */
-    public function rules()
+    public function rules($id = null)
     {
-        return ['status' => 'required|integer|between:1,2'];
+        $rule = [
+            'rate' => 'required|integer|between:1,5',
+            'comment' => 'required|string|max:10000',
+        ];
+
+        if ($id != null) {
+            $rule = ['status' => 'required|integer|between:1,2'];
+        }
+
+        return $rule;
+    }
+
+    /**
+     * Store a new review for tour in database.
+     *
+     */
+    public function saveData(Request $request, Tour $tour)
+    {
+        $input = Utilities::clearAllXSS($request->only('rate', 'comment'));
+        $input['tour_id'] = $tour->id;
+        $input['status'] = 1;
+
+        Review::create($input);
     }
 
     /**

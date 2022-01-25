@@ -188,7 +188,9 @@ $(document).ready(function () {
     let url = new URL(window.location.href);
     if (url.searchParams.get('page')) {
         $('#pills-review-tab').trigger('click');
-        document.getElementById("pills-review-tab").scrollIntoView();
+        if ($('#pills-review-tab').length) {
+            document.getElementById("pills-review-tab").scrollIntoView();
+        }
     }
 
     //Panorama

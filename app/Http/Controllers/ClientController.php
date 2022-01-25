@@ -6,6 +6,7 @@ use App\Libraries\Notification;
 use App\Libraries\Utilities;
 use App\Models\Contact;
 use App\Models\Destination;
+use App\Models\Review;
 use App\Models\Tour;
 use App\Models\Type;
 use App\Services\ClientService;
@@ -170,5 +171,33 @@ class ClientController extends Controller
         $destinations = $this->clientService->listDestination();
 
         return view('destination', compact(['destinations']));
+    }
+
+    /**
+     * Store review
+     *
+     * @param Request $request
+     * @param $slug
+     * @param Review $review
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeReview(Request $request, $slug, Review $review)
+    {
+        $request->validate($review->rules());
+        try {
+            $tour = Tour::where('slug', $slug)->firstOrFail();
+            $review->saveData($request, $tour);
+            $this->notification->setMessage('Review sent successfully', Notification::SUCCESS);
+
+            return back()->with($this->notification->getMessage());
+        } catch (Exception $e) {
+            dd($e);
+            $this->notification->setMessage('Review sent failed', Notification::ERROR);
+
+            return back()
+                ->with('exception', $e->getMessage())
+                ->with($this->notification->getMessage())
+                ->withInput();
+        }
     }
 }

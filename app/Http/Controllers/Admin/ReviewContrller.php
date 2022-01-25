@@ -39,7 +39,7 @@ class ReviewContrller extends Controller
      */
     public function changeStatus(Request $request, $tourId, $id)
     {
-        $request->validate($this->review->rules());
+        $request->validate($this->review->rules($id));
         try {
             $this->review->changeStatus($request, $id);
             $this->notification->setMessage('Review change status successfully', Notification::SUCCESS);
