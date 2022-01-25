@@ -33,7 +33,7 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-        return json_encode($this->contact->getContact($id));
+        return json_encode($this->contact->getById($id));
     }
 
     /**
@@ -44,6 +44,8 @@ class ContactController extends Controller
      */
     public function getData(Request $request)
     {
-        return $this->contact->getList($request);
+        if ($request->ajax()) {
+            return $this->contact->getList($request);
+        }
     }
 }

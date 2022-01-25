@@ -62,7 +62,7 @@
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="">Contact Us</a></li>
+                    <li class="breadcrumb-item">Contact Us</li>
                 </ol>
             </nav>
         </div>
@@ -118,25 +118,25 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <div class="office">
-                        <img class="office-background" src="images/introduce1.png">
+                        <img class="office-background" src="images/introduce1.png" alt="introduce">
                         <div class="info-office">
                             <p class="office-title">Our Office</p>
                             <div class="info-office-item">
-                                <img src="images/icon/home.svg" alt="">
+                                <img src="images/icon/home.svg" alt="address">
                                 <div class="text-item">
                                     <p class="text-title">Address</p>
                                     <p class="text-content">27 Old Gloucester Street, London, WC1N 3AX</p>
                                 </div>
                             </div>
                             <div class="info-office-item">
-                                <img src="images/icon/phone.svg" alt="">
+                                <img src="images/icon/phone.svg" alt="phone">
                                 <div class="text-item">
                                     <p class="text-title">Phone Number</p>
                                     <p class="text-content">+84 (0)20 33998400 </p>
                                 </div>
                             </div>
                             <div class="info-office-item">
-                                <img src="images/icon/email.svg" alt="">
+                                <img src="images/icon/email.svg" alt="email">
                                 <div class="text-item">
                                     <p class="text-title">Email Us</p>
                                     <p class="text-content">info@ngaoduvietnam.com </p>

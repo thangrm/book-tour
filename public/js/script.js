@@ -3,6 +3,7 @@ $(document).ready(function () {
         loop: false,
         margin: 30,
         responsiveClass: true,
+        dots: false,
         nav: true,
         navText: [`<img src="images/icon/arrow-right.svg" alt="prev">`,
             `<img src="images/icon/arrow-right.svg" alt="next">`
@@ -27,6 +28,7 @@ $(document).ready(function () {
         loop: false,
         margin: 30,
         responsiveClass: true,
+        dots: false,
         nav: true,
         navText: [`<img src="images/icon/arrow-right.svg" alt="prev">`,
             `<img src="images/icon/arrow-right.svg" alt="next">`
@@ -52,6 +54,7 @@ $(document).ready(function () {
         loop: false,
         margin: 30,
         responsiveClass: true,
+        dots: false,
         nav: true,
         navText: [`<img src="images/icon/arrow-right.svg" alt="prev">`,
             `<img src="images/icon/arrow-right.svg" alt="next">`
@@ -75,7 +78,7 @@ $(document).ready(function () {
     $("#slideImageThumnail").owlCarousel({
         loop: false,
         margin: 30,
-        dotsContainer: '.owl-dots-container',
+        dots: false,
         responsive: {
             0: {
                 items: 3,

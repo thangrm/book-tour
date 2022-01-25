@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Libraries\Notification;
 use App\Libraries\Utilities;
+use App\Models\Contact;
 use App\Models\Destination;
 use App\Models\Tour;
 use App\Models\Type;
@@ -123,13 +124,14 @@ class ClientController extends Controller
      * Store contact
      *
      * @param Request $request
+     * @param Contact $contact
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storeContact(Request $request)
+    public function storeContact(Request $request, Contact $contact)
     {
-        $request->validate($this->clientService->ruleContact());
+        $request->validate($contact->rules());
         try {
-            $this->clientService->storeContact($request);
+            $contact->saveData($request);
             $this->notification->setMessage('Contact sent successfully', Notification::SUCCESS);
 
             return redirect()->route('index')->with($this->notification->getMessage());
