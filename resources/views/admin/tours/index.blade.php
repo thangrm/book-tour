@@ -228,8 +228,15 @@
                                 url: link,
                                 type: 'delete',
                                 success: function (response) {
-                                    toastr.success('Tour deleted successfully');
                                     datatable.ajax.reload();
+
+                                    if (response === '1') {
+                                        toastr.success('Tour deleted successfully');
+                                    }
+
+                                    if (response === '2') {
+                                        toastr.error('The tour has bookings that cannot be deleted')
+                                    }
                                 },
                                 error: function (response) {
                                     toastr.error('Delete failed')

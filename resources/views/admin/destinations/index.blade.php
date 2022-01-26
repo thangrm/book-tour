@@ -166,6 +166,18 @@
                                 <p class="text-danger" id="errorImageEdit"></p>
                             </div>
 
+
+                            <div class="form-group">
+                                <div class="d-flex align-items-center">
+                                    <label for="status" class="m-0">Status</label>
+                                    <div class="m-l-10">
+                                        @include('components.button_switch', ['status' => 1,'id' => 'statusDestinationEdit'])
+                                    </div>
+                                </div>
+
+                                <p class="text-danger" id="statusDestinationEditError"></p>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -292,13 +304,19 @@
             $(document).on('click', '.edit', function (e) {
                 linkEditDestination = $(this).attr('href');
                 let id = $(this).data('id');
+                let srcImage = $('#destination-' + id).children().eq(1).children().eq(0).attr('src');
                 let nameDestination = $('#destination-' + id).children().eq(2).text();
                 let slugDestination = $('#destination-' + id).children().eq(3).text();
-                let srcImage = $('#destination-' + id).children().eq(1).children().eq(0).attr('src');
+                let status = $('#destination-' + id).children().eq(4).children().eq(0).children().eq(0);
+                $('#statusDestinationEdit').prop("checked", false);
 
+                if ($(status).is(":checked")) {
+                    $('#statusDestinationEdit').prop("checked", true);
+                }
+
+                $('#showImgEdit').attr('src', srcImage);
                 $('#nameEdit').val(nameDestination);
                 $('#slugEdit').val(slugDestination);
-                $('#showImgEdit').attr('src', srcImage);
             });
 
 
@@ -409,11 +427,17 @@
                 let name = $('#nameEdit').val();
                 let slug = $('#slugEdit').val();
                 let image = $("#imageEdit").prop('files')[0];
+                let status = 2;
+
+                if ($('#statusDestinationEdit').is(":checked")) {
+                    status = 1;
+                }
 
                 let formData = new FormData();
                 formData.append("_method", 'PUT');
                 formData.append("name", name);
                 formData.append("slug", slug);
+                formData.append("status", status);
 
                 if (image !== undefined) {
                     formData.append("image", image);

@@ -120,7 +120,7 @@
                             <input type="hidden" name="trending" id="trending">
                             @include('components.button_switch',
                                         [
-                                            'status' => empty(old('trending')) ? 1 : old('trending'),
+                                            'status' => old('trending', 1),
                                             'id' => 'btnTrending'
                                         ])
                             <label for="trending" class="m-l-5 m-t-5">Trending</label>
@@ -135,7 +135,7 @@
                             <input type="hidden" name="status" id="status">
                             @include('components.button_switch',
                             [
-                                'status' => empty(old('status')) ? 1 : old('status'),
+                                'status' => old('trending', 1),
                                 'id' => 'btnStatus'
                             ])
                             <label for="status" class="m-l-5 m-t-5">Status</label>
