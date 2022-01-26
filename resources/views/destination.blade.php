@@ -1,4 +1,19 @@
 @extends('layouts.client')
+@section('css')
+    <style>
+        @media screen and (max-width: 767.98px) {
+            .card-destination .card-img-top {
+                height: 280px !important;
+            }
+        }
+
+        @media screen and (max-width: 575.98px) {
+            .card-destination .card-img-top {
+                height: 180px !important;
+            }
+        }
+    </style>
+@endsection
 @section('content')
     <!-------------------- Header -------------------->
     <div class="header header-list-tours">
@@ -79,7 +94,7 @@
             <div class="body-slide">
                 <div class="row">
                     @foreach($destinations as $destination)
-                        <div class="col-6 col-md-4 col-lg-3">
+                        <div class="col-6 col-lg-4 col-xl-3">
                             <div class="card card-destination">
                                 <img src="{{ asset('storage/images/destinations/'.$destination->image) }}"
                                      class="card-img-top"

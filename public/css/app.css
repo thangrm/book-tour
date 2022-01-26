@@ -113,9 +113,11 @@ body {
   height: 38px;
   background: #1C1C1E;
   color: white;
+  line-height: 24px;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
+  border-radius: 0;
 }
 .box-slide .body-slide {
   position: relative;
