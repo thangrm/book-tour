@@ -382,10 +382,11 @@ div[slider] > input[type=range]::-ms-tooltip {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
+  overflow: hidden;
 }
 .header .navbar button {
   position: absolute;
-  transition: all 0.9s;
+  transition: all linear 0.2s;
   top: 0;
   right: 0px;
 }
@@ -415,7 +416,7 @@ div[slider] > input[type=range]::-ms-tooltip {
 }
 @media only screen and (max-width: 992px) {
   .header {
-    background-size: auto 535px;
+    background-size: auto 435px;
     height: auto;
   }
   .header .navbar-header .nav-item a {
@@ -428,20 +429,21 @@ div[slider] > input[type=range]::-ms-tooltip {
   }
 }
 @media only screen and (max-width: 575.98px) {
+  .header {
+    background-size: auto 535px;
+  }
   .header .navbar-collapse.show .navbar-header {
     width: 300px;
   }
   .header .navbar-header {
     width: 0px;
     height: 100%;
-    transition: width 0.3s;
+    transition: width linear 0.3s;
     position: fixed;
     z-index: 10;
     top: 0;
     right: 0;
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.704) 1.52%, rgba(255, 255, 255, 0.64) 100%);
-    -webkit-backdrop-filter: blur(42px);
-            backdrop-filter: blur(42px);
+    background: #34758a;
   }
   .header .navbar-header .nav-item {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
@@ -527,9 +529,9 @@ div[slider] > input[type=range]::-ms-tooltip {
   }
   .header .box-content-header .box-feature {
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.704) 1.52%, rgba(255, 255, 255, 0.64) 100%) !important;
-    margin-right: -200px;
-    padding-right: 200px;
     padding-top: 0;
+    margin-left: 0;
+    padding-left: 0;
     margin-top: 100px;
   }
   .header .box-content-header .box-feature .dot {

@@ -62,7 +62,7 @@ class ClientController extends Controller
         $tour = $tourModel->getTourBySlug($slug);
         $tour->faqs = $tour->faqs(true)->get();
         $tour->reviews = $tour->reviews(true)->get();
-        $relateTours = $tourModel->getRelated($tour->destination_id);
+        $relateTours = $tourModel->getRelated($tour);
         $reviews = $tour->reviews(true)->paginate(8);
         $rateReview = Utilities::calculatorRateReView($tour->reviews);
 
@@ -191,7 +191,6 @@ class ClientController extends Controller
 
             return back()->with($this->notification->getMessage());
         } catch (Exception $e) {
-            dd($e);
             $this->notification->setMessage('Review sent failed', Notification::ERROR);
 
             return back()

@@ -165,7 +165,8 @@
                                class="text-lg-right control-label col-form-label">
                             Overview
                         </label>
-                        <textarea name="overview" id="overview" cols="30" rows="10"></textarea>
+                        <textarea name="overview" id="overview" cols="30"
+                                  rows="10">{{ old('overview') }}</textarea>
                         @error('overview')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -182,7 +183,6 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            let overviewEditor = null;
             $('#destinationId').select2();
             $('#typeId').select2();
 
@@ -196,21 +196,7 @@
 
             disableSubmitButton('#formCreateTour');
 
-            ClassicEditor
-                .create(document.querySelector('#overview'))
-                .then(editor => {
-                    overviewEditor = editor;
-                    editor.setData('{!! old('overview') !!}');
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-
-            $('#formCreateTour').submit(function (e) {
-                e.preventDefault();
-                overviewEditor.updateSourceElement();
-                e.currentTarget.submit();
-            });
+            CKEDITOR.replace('overview');
 
             // Add new Tour
             $('#formCreateTour').submit(function (e) {

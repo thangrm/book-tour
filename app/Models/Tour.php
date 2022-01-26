@@ -106,8 +106,8 @@ class Tour extends Model
             'status' => 'required|integer|between:1,2',
             'trending' => 'required|integer|between:1,2',
             'image_seo' => 'image|mimes:jpeg,jpg,png,gif|max:5000',
-            'meta_title' => 'string|max:70',
-            'meta_description' => 'string|max:150',
+            'meta_title' => 'max:70',
+            'meta_description' => 'max:150',
             'panoramic_image' => 'max:255',
             'video' => 'max:100',
         ];
@@ -163,14 +163,15 @@ class Tour extends Model
     /**
      * Get list tour related
      *
-     * @param $destination_id
+     * @param $tour
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getRelated($destination_id)
+    public function getRelated($tour)
     {
         return $this->with('destination', 'type')
             ->where('status', 1)
-            ->where('destination_id', $destination_id)
+            ->where('destination_id', $tour->destination_id)
+            ->where('id', '!=', $tour->id)
             ->limit(6)
             ->get();
     }

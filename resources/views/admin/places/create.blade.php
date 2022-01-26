@@ -47,7 +47,8 @@
                         <label for="description">
                             Description
                         </label>
-                        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                        <textarea name="description" id="description" cols="30"
+                                  rows="10">{{ old('description') }}</textarea>
                         @error('description')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -62,24 +63,9 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            let descriptionEditor = null;
             disableSubmitButton('#formCreatePlace');
 
-            ClassicEditor
-                .create(document.querySelector('#description'))
-                .then(editor => {
-                    descriptionEditor = editor;
-                    editor.setData('{!! old('description') !!}');
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-
-            $('#formCreatePlace').submit(function (e) {
-                e.preventDefault();
-                descriptionEditor.updateSourceElement();
-                e.currentTarget.submit();
-            });
+            CKEDITOR.replace('description');
         });
     </script>
 @endsection
