@@ -48,8 +48,10 @@ class ClientController extends Controller
     {
         $types = $type->getOrderByTitle();
         $tours = $this->clientService->getListTour($request, $slug);
+        $filterDuration = $request->filter_duration ?? [];
+        $filterType = $request->filter_type ?? [];
 
-        return view('list_tour', compact(['tours', 'types']));
+        return view('list_tour', compact(['tours', 'types', 'filterDuration', 'filterType']));
     }
 
     /**
@@ -157,8 +159,10 @@ class ClientController extends Controller
     {
         $types = $type->getOrderByTitle();
         $tours = $this->clientService->searchTour($request);
+        $filterDuration = $request->filter_duration ?? [];
+        $filterType = $request->filter_type ?? [];
 
-        return view('search', compact(['tours', 'types']));
+        return view('search', compact(['tours', 'types', 'filterDuration', 'filterType']));
     }
 
     /**

@@ -1,4 +1,11 @@
 @extends('layouts.client')
+@section('css')
+    <style>
+        .list-tours .btn-filter-wrap .collapse-fillter {
+            height: 998px;
+        }
+    </style>
+@endsection
 @section('content')
     <!-------------------- Header -------------------->
     <div class="header header-list-tours">
@@ -84,7 +91,7 @@
                         <i class="bi bi-chevron-down iconBtnFilter"></i>
                     </button>
                     <!-- Collapse Filter -->
-                    <div class="collapse collapse-fillter" id="filterCollapse">
+                    <div class="collapse collapse-fillter" id="filterCollapse" style="height: 990px !important;">
                         <div class="card card-body">
                             <form action="" id="formSelectFilter">
                                 <div class="filter-header d-flex justify-content-between align-items-center">
@@ -96,54 +103,74 @@
                                     <div id="sliderRangePrice">
                                         <div slider id="slider-distance">
                                             <div>
-                                                <div inverse-left style="width:70%;"></div>
-                                                <div inverse-right style="width:70%;"></div>
-                                                <div range style="left:30%;right:40%;"></div>
-                                                <span thumb style="left:30%;"></span>
-                                                <span thumb style="left:60%;"></span>
-                                                <div sign style="left:30%;">
-                                                    $<span>360</span>
+                                                <div inverse-left></div>
+                                                <div inverse-right></div>
+                                                <div range></div>
+                                                <span thumb></span>
+                                                <span thumb></span>
+                                                <div sign>
+                                                    $<span></span>
                                                 </div>
-                                                <div sign style="left:60%;">
-                                                    $<span>720</span>
+                                                <div sign>
+                                                    $<span></span>
                                                 </div>
                                             </div>
-                                            <input type="range" tabindex="0" value="360" max="1200" min="0" step="1"
-                                                   oninput="leftRange(this)" name="min_price"/>
+                                            <input type="range" tabindex="0" value="{{ request()->min_price }}"
+                                                   max="1200" min="0" step="1"
+                                                   oninput="leftRange(this)" name="min_price" id="minPrice"/>
 
-                                            <input type="range" tabindex="0" value="720" max="1200" min="0" step="1"
-                                                   oninput="rightRange(this)" name="max_price"/>
+                                            <input type="range" tabindex="0" value="{{ request()->max_price}}"
+                                                   value="720" max="1200" min="0" step="1"
+                                                   oninput="rightRange(this)" name="max_price" id="maxPrice"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-select-filter">
                                     <div class="form-group">
                                         <hr>
+                                        <h5>Tour</h5>
+                                        <input type="text" class="form-control" name="tour_name"
+                                               value="{{ request()->tour_name }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <hr>
+                                        <h5>Destination</h5>
+                                        <input class="form-control" type="text" name="destination_name"
+                                               value="{{ request()->destination_name }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <hr>
                                         <h5>Duration</h5>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="filter_duration[]"
-                                                   value="1" id="duration1">
+                                                   value="1"
+                                                   id="duration1" {{ in_array(1, $filterDuration) ? 'checked' : '' }}>
                                             <label class="form-check-label" for="duration1">
                                                 0-3 days
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="filter_duration[]"
-                                                   value="2" id="duration2">
+                                                   value="2" id="duration2"
+                                                   id="duration4"{{ in_array(2, $filterDuration) ? 'checked' : '' }}>
                                             <label class="form-check-label" for="duration2">
                                                 3-5 days
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="filter_duration[]"
-                                                   value="3" id="duration3">
+                                                   value="3" id="duration3"
+                                                   id="duration4"{{ in_array(3, $filterDuration) ? 'checked' : '' }}>
                                             <label class="form-check-label" for="duration3">
                                                 5-7 days
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="filter_duration[]"
-                                                   value="4" id="duration4">
+                                                   value="4"
+                                                   id="duration4"{{ in_array(4, $filterDuration) ? 'checked' : '' }}>
                                             <label class="form-check-label" for="duration4">
                                                 over 1 week
                                             </label>
@@ -156,7 +183,8 @@
                                         @foreach($types as $type)
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="filter_type[]"
-                                                       value="{{ $type->id }}" id="type{{ $type->id }}">
+                                                       value="{{ $type->id }}"
+                                                       id="type{{ $type->id }}" {{ in_array($type->id, $filterType   ) ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="type{{ $type->id }}">
                                                     {{ $type->name }}
                                                 </label>

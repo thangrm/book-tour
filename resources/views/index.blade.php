@@ -78,7 +78,7 @@
                         </div>
                         <div class="input-search input-inner-icon">
                             <img src="{{ asset('images/icon/flag.svg') }}" alt="type_of_tour">
-                            <select class="form-control" name="tour_type">
+                            <select class="form-control" name="filter_type[]">
                                 <option value="" disabled selected hidden>Type of tour</option>
                                 @foreach($types as $type)
                                     <option value="{{ $type->id }}">{{ $type->name }}</option>
