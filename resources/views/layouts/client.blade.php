@@ -32,12 +32,13 @@
     <link rel="stylesheet" href="{{ asset('css/toastr.css') }}"/>
     <!-- custom css -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
+    @yield('css')
 </head>
 
 <body>
 
 <!-------------------- Content -------------------->
-@yield('content');
+@yield('content')
 <!-------------------- End Content-------------------->
 
 <!-------------------- Footer -------------------->

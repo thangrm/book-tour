@@ -59,7 +59,7 @@
     <!-- Topbar header - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <header class="topbar">
-        @include('components.nav_admin');
+        @include('components.nav_admin')
     </header>
     <!-- ============================================================== -->
     <!-- End Topbar header -->

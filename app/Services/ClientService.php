@@ -157,7 +157,6 @@ class ClientService
 
         $tourName = $request->tour_name;
         $destinationName = $request->destination_name;
-        $typeId = $request->tour_type;
         $duration = $request->duration;
 
         if (!empty($tourName)) {
@@ -168,10 +167,6 @@ class ClientService
             $query->whereHas('destination', function ($query) use ($destinationName) {
                 $query->where('name', 'like', '%' . $destinationName . '%');
             });
-        }
-
-        if (!empty($typeId)) {
-            $query->where('type_id', $typeId);
         }
 
         if (!empty($duration)) {
