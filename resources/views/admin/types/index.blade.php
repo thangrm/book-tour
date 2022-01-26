@@ -115,6 +115,17 @@
                                     <p class="text-danger" id="errorNameEdit"></p>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <div class="d-flex align-items-center">
+                                    <label for="status" class="m-0">Status</label>
+                                    <div class="m-l-10">
+                                        @include('components.button_switch', ['status' => 1,'id' => 'statusTypeEdit'])
+                                    </div>
+                                </div>
+
+                                <p class="text-danger" id="statusTypeEditError"></p>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -223,6 +234,13 @@
                 linkEditType = $(this).attr('href');
                 let typeId = $(this).data('id');
                 let titleType = $('#type-' + typeId).children().eq(1).text();
+                let status = $('#type-' + typeId).children().eq(2).children().eq(0).children().eq(0);
+                $('#statusTypeEdit').prop("checked", false);
+
+                if ($(status).is(":checked")) {
+                    $('#statusTypeEdit').prop("checked", true);
+                }
+
                 $('#titleEdit').val(titleType);
             });
 
@@ -315,11 +333,17 @@
                 e.preventDefault();
 
                 let name = $('#titleEdit').val();
+                let status = 2;
+
+                if ($('#statusTypeEdit').is(":checked")) {
+                    status = 1;
+                }
+
                 $.ajax({
                     url: linkEditType,
                     method: "PUT",
                     dataType: 'json',
-                    data: {name: name},
+                    data: {name: name, status: status},
                     success: function (response) {
                         let type = response['alert-type'];
                         let message = response['message'];

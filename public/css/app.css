@@ -205,7 +205,7 @@ body {
 @media only screen and (max-width: 576px) {
   .box-slide .header-slide .title-slide {
     width: 250px;
-    font-size: 24px;
+    font-size: 22px;
   }
   .box-slide .body-slide .card-body div {
     flex-direction: column;
@@ -734,6 +734,9 @@ div[slider] > input[type=range]::-ms-tooltip {
   .slide-destinations .card-destination {
     width: 135px;
   }
+  .slide-destinations .card-destination .card-body .card-title {
+    font-size: 18px;
+  }
 }
 /*========== Slide Tours ==========*/
 .slide-tour {
@@ -801,6 +804,9 @@ div[slider] > input[type=range]::-ms-tooltip {
 @media only screen and (max-width: 576px) {
   .slide-tour .card-tour {
     width: 90%;
+  }
+  .slide-tour .card-tour .card-body .card-title {
+    font-size: 16px;
   }
 }
 
@@ -1514,9 +1520,9 @@ div[slider] > input[type=range]::-ms-tooltip {
   }
 }
 
-.box-slide .header-slide .title-slide {
-  font-size: 28px !important;
-  font-weight: 600 !important;
+.box-slide .header-slide .title-related {
+  font-size: 28px;
+  font-weight: 600;
 }
 
 .box-checkout {

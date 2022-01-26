@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\ClientController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -131,4 +132,8 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/data', [ContactController::class, 'getData'])->name('contacts.data');
         });
     });
+});
+
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
 });

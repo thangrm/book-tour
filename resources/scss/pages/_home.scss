@@ -118,6 +118,12 @@
     .slide-destinations {
         .card-destination {
             width: 135px;
+
+            .card-body {
+                .card-title {
+                    font-size: 18px;
+                }
+            }
         }
     }
 }
@@ -201,6 +207,12 @@
     @media only screen and (max-width: 576px) {
         .card-tour {
             width: 90%;
+
+            .card-body {
+                .card-title {
+                    font-size: 16px;
+                }
+            }
         }
     }
 }

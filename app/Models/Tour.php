@@ -56,6 +56,15 @@ class Tour extends Model
     }
 
     /**
+     * Get the bookings for the tour.
+     *
+     */
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    /**
      * Get the FAQs for the tour.
      *
      * @param bool $filterActive
@@ -81,7 +90,7 @@ class Tour extends Model
     {
         $query = $this->hasMany(Review::class);
         if ($filterActive) {
-            $query->where('status', 1);
+            $query->where('status', 1)->latest();
         }
 
         return $query;
@@ -238,12 +247,19 @@ class Tour extends Model
             Storage::delete('public/images/galleries/' . $gallery->image);
         }
 
-        $tour->galleries()->delete();
-        $tour->itineraries()->delete();
-        $tour->faqs()->delete();
-        $tour->reviews()->delete();
+        if ($tour->bookings()->count() > 0) {
+            return 2;
+        }
 
-        return $tour->delete();
+        DB::transaction(function () use ($tour) {
+            $tour->galleries()->delete();
+            $tour->itineraries()->delete();
+            $tour->faqs()->delete();
+            $tour->reviews()->delete();
+            $tour->delete();
+        });
+
+        return 1;
     }
 
     /**

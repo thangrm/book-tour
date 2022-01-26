@@ -171,6 +171,7 @@ $(document).ready(function () {
     // Rate review{
     $('.rate-star').hover(function (e) {
         let currentRate = e.target.dataset.rate;
+        $('#inputRateReview').val(currentRate);
         $('#rateReview').children().each(function () {
             if (this.dataset.rate <= currentRate) {
                 this.classList.remove('bi-star');

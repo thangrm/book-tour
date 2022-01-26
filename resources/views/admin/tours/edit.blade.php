@@ -120,6 +120,36 @@
                     </div>
 
                     <div class="form-group">
+                        <div class="input-group">
+                            <input type="hidden" name="trending" id="trending">
+                            @include('components.button_switch',
+                                        [
+                                            'status' => old('trending', $tour->trending),
+                                            'id' => 'btnTrending'
+                                        ])
+                            <label for="trending" class="m-l-5 m-t-5">Trending</label>
+                        </div>
+                        @error('trending')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group m-r-5">
+                            <input type="hidden" name="status" id="status">
+                            @include('components.button_switch',
+                            [
+                                'status' => old('trending', $tour->status),
+                                'id' => 'btnStatus'
+                            ])
+                            <label for="status" class="m-l-5 m-t-5">Status</label>
+                        </div>
+                        @error('status')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label for="image" class="text-lg-right control-label col-form-label">Select Image
                             <span class="text-danger">*</span>
                         </label>
@@ -159,7 +189,7 @@
         $(document).ready(function () {
             $('#destinationId').select2();
             $('#typeId').select2();
-            
+
             $('#image').change(function (e) {
                 let reader = new FileReader();
                 reader.onload = function (e) {
@@ -180,6 +210,26 @@
             $('#slug').on('change', function () {
                 $('#slug').val(changeToSlug($('#slug').val()));
             });
+
+            // Update Tour
+            $('#formEditTour').submit(function (e) {
+                e.preventDefault();
+
+                if ($('#btnStatus').is(":checked")) {
+                    $('#status').val(1);
+                } else {
+                    $('#status').val(2);
+                }
+
+                if ($('#btnTrending').is(":checked")) {
+                    $('#trending').val(1);
+                } else {
+                    $('#trending').val(2);
+                }
+
+                this.submit();
+            });
+
         });
     </script>
 @endsection

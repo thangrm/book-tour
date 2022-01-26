@@ -509,7 +509,7 @@
     <div class="box-slide slide-tour list-tours mt-5">
         <div class="container">
             <div class="header-slide d-flex align-items-end">
-                <p class="title-slide">Related tours</p>
+                <p class="title-related">Related tours</p>
             </div>
             <div class="body-slide">
                 <div class="row">
