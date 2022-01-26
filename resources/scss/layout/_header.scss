@@ -7,42 +7,52 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
+    overflow: hidden;
+
     .navbar {
         button {
             position: absolute;
-            transition: all 0.9s;
+            transition: all linear 0.2s;
             top: 0;
             right: 0px;
         }
-        button[aria-expanded="true"]>span.navbar-toggler-icon {
+
+        button[aria-expanded="true"] > span.navbar-toggler-icon {
             display: none;
         }
-        button[aria-expanded="false"]>span.navbar-icon-close {
+
+        button[aria-expanded="false"] > span.navbar-icon-close {
             display: none;
         }
     }
+
     .navbar-header {
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
+
         .nav-item {
             a {
                 color: white;
                 padding: 8px 2em;
             }
+
             a:hover {
                 color: $orange-primary;
             }
+
             a:focus {
                 color: $orange-primary;
             }
+
             .active {
                 color: $orange-primary;
             }
         }
     }
+
     @media only screen and (max-width: 992px) {
-        background-size: auto 535px;
+        background-size: auto 435px;
         height: auto;
         .navbar-header {
             .nav-item {
@@ -62,25 +72,28 @@
         }
     }
     @media only screen and (max-width: 575.98px) {
+        background-size: auto 535px;
         .navbar-collapse.show .navbar-header {
             width: 300px;
         }
         .navbar-header {
             width: 0px;
             height: 100%;
-            transition: width 0.3s;
+            transition: width linear 0.3s;
             position: fixed;
             z-index: 10;
             top: 0;
             right: 0;
-            background: linear-gradient(0deg, rgba(255, 255, 255, 0.704) 1.52%, rgba(255, 255, 255, 0.64) 100%);
-            backdrop-filter: blur(42px);
+            background: #34758a;
+
             .nav-item {
                 border-top: 1px solid rgba(255, 255, 255, 0.2);
+
                 a {
                     color: white !important;
                 }
             }
+
             .active,
             .nav-item:hover {
                 background-color: $orange-primary;
@@ -92,6 +105,7 @@
             right: 300px !important;
         }
     }
+
     .box-content-header {
         margin-top: 153px;
         /* Text Header*/
@@ -101,6 +115,7 @@
                 font-weight: bold;
                 font-size: 16px;
             }
+
             .text-slogan {
                 width: 445px;
                 color: white;
@@ -108,6 +123,7 @@
                 font-size: 60px;
             }
         }
+
         /* Feature */
         .box-feature {
             background-color: white;
@@ -116,6 +132,7 @@
             margin-top: 188px;
             margin-left: -1000px;
             padding-left: 1000px;
+
             .dot {
                 height: 8px;
                 width: 8px;
@@ -124,10 +141,12 @@
                 border-radius: 50%;
                 display: inline-block;
             }
+
             .info-feature {
                 p {
                     font-size: 24px;
                     font-weight: bold;
+
                     span {
                         font-size: 16px;
                         font-weight: normal;
@@ -135,20 +154,24 @@
                 }
             }
         }
+
         /* Search */
         .form-search {
             background: linear-gradient(0deg, rgba(255, 255, 255, 0.704) 1.52%, rgba(255, 255, 255, 0.64) 100%);
             backdrop-filter: blur(42px);
             padding-bottom: 25px;
+
             .title-search {
                 font-weight: 500;
                 font-size: 24px;
                 margin: 18px 30px;
                 color: $black-title;
             }
+
             .input-search {
                 margin: 18px 30px;
             }
+
             .btn-search-submit {
                 height: 64px;
                 background-color: $orange-primary;
@@ -156,19 +179,23 @@
                 border: none;
             }
         }
+
         @media only screen and (max-width: 992px) {
             .box-feature {
                 background: linear-gradient(0deg, rgba(255, 255, 255, 0.704) 1.52%, rgba(255, 255, 255, 0.64) 100%) !important;
-                margin-right: -200px;
-                padding-right: 200px;
                 padding-top: 0;
+                margin-left: 0;
+                padding-left: 0;
                 margin-top: 100px;
+
                 .dot {
                     margin-left: 10px;
                 }
+
                 .info-feature {
                     margin-left: 10px;
                     width: 95% !important;
+
                     span {
                         display: block;
                     }
@@ -179,6 +206,7 @@
                 .text-welcome {
                     padding-left: 10px;
                 }
+
                 .text-slogan {
                     padding-left: 10px;
                     font-size: 25px;

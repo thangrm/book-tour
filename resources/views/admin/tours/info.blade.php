@@ -134,7 +134,8 @@
                                class="text-lg-right control-label col-form-label">
                             Included
                         </label>
-                        <textarea name="included" id="included" cols="30" rows="10"></textarea>
+                        <textarea name="included" id="included" cols="30"
+                                  rows="10">{{ old('included', $tour->included) }}</textarea>
                         @error('included')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -145,7 +146,8 @@
                                class="text-lg-right control-label col-form-label">
                             Additional
                         </label>
-                        <textarea name="additional" id="additional" cols="30" rows="10"></textarea>
+                        <textarea name="additional" id="additional" cols="30"
+                                  rows="10">{{ old('additional', $tour->additional) }}</textarea>
                         @error('additional')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -156,7 +158,9 @@
                                class="text-lg-right control-label col-form-label">
                             Departure
                         </label>
-                        <textarea name="departure" id="departure" cols="30" rows="10"></textarea>
+                        <textarea name="departure" id="departure" cols="30"
+                                  rows="10">{{ old('departure', $tour->departure) }}
+                        </textarea>
                         @error('departure')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -172,10 +176,6 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            let includedEditor = null;
-            let additionalEditor = null;
-            let departureEditor = null;
-
             $('#imageSeo').change(function (e) {
                 let reader = new FileReader();
                 reader.onload = function (e) {
@@ -186,34 +186,9 @@
 
             disableSubmitButton('#formEditTour');
 
-            ClassicEditor
-                .create(document.querySelector('#included'))
-                .then(editor => {
-                    includedEditor = editor;
-                    editor.setData(`{!!  empty(old('included')) ? $tour->included : old('included') !!}`);
-                })
-
-            ClassicEditor
-                .create(document.querySelector('#additional'))
-                .then(editor => {
-                    additionalEditor = editor;
-                    editor.setData(`{!!  empty(old('additional')) ? $tour->additional : old('additional') !!}`);
-                })
-
-            ClassicEditor
-                .create(document.querySelector('#departure'))
-                .then(editor => {
-                    departureEditor = editor;
-                    editor.setData(`{!!  empty(old('departure')) ? $tour->departure : old('departure') !!}`);
-                })
-
-            $('#formEditTour').submit(function (e) {
-                e.preventDefault();
-                includedEditor.updateSourceElement();
-                additionalEditor.updateSourceElement();
-                departureEditor.updateSourceElement();
-                e.currentTarget.submit();
-            });
+            CKEDITOR.replace('included');
+            CKEDITOR.replace('additional');
+            CKEDITOR.replace('departure');
         });
     </script>
 @endsection

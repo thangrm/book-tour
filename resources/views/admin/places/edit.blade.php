@@ -30,7 +30,7 @@
                       id="formEditPlace" method="post">
                     @method('PUT')
                     @csrf
-                    
+
                     <div class="form-group">
                         <label for="name">Name place <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name place"
@@ -42,7 +42,8 @@
 
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                        <textarea name="description" id="description" cols="30"
+                                  rows="10">{{ old('description', $place->description) }}</textarea>
                         @error('description')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -58,24 +59,9 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            let descriptionEditor = null;
             disableSubmitButton('#formEditPlace');
 
-            ClassicEditor
-                .create(document.querySelector('#description'))
-                .then(editor => {
-                    descriptionEditor = editor;
-                    editor.setData(`{!!  empty(old('description')) ? $place->description : old('description')  !!}`);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-
-            $('#formEditPlace').submit(function (e) {
-                e.preventDefault();
-                descriptionEditor.updateSourceElement();
-                e.currentTarget.submit();
-            });
+            CKEDITOR.replace('description');
         });
     </script>
 @endsection
