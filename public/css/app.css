@@ -927,7 +927,6 @@ div[slider] > input[type=range]::-ms-tooltip {
   position: absolute;
   right: 0;
   top: 60px;
-  height: 780px;
   width: 350px;
   border-radius: 0px;
   padding: 24px;
@@ -1568,7 +1567,7 @@ div[slider] > input[type=range]::-ms-tooltip {
   margin-bottom: 15px;
 }
 .box-checkout .box-detail-content .box-body-checkout .box-checkout-item .sub-checkout-item .form-check .form-check-input:checked[type=radio] {
-  background-image: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
 }
 .box-checkout .box-detail-content .box-body-checkout .box-checkout-item .sub-checkout-item .form-check input[type=radio] {
   border-radius: 10%;

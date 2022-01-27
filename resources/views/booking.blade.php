@@ -288,7 +288,8 @@
                 <p class="thank-title">Thank You!</p>
                 <p class="thank-text">Your order has been successfully ordered.</p>
                 <p class="thank-text"> Order information has been emailed to you. Thank you!</p>
-                <button class="btn-back-home"><a class="d-flex align-items-center justify-content-center" href="/">Back
+                <button class="btn-back-home"><a class="d-flex align-items-center justify-content-center"
+                                                 href="{{ route('index') }}">Back
                         to our home</a></button>
             </div>
         </div>
@@ -298,5 +299,79 @@
 @section('js')
     <script>
         disableSubmitButton('#formCheckout');
+
+        $('#formCheckout').on('submit', function (e) {
+            e.preventDefault();
+            let link = $(this).attr('action');
+            let formData = new FormData(document.getElementById('formCheckout'));
+
+            $.ajax({
+                url: link,
+                type: 'post',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    let type = response['alert-type'];
+                    let message = response['message'];
+
+                    if (type === 'success') {
+                        $('#thanksModal').modal('show');
+                        return;
+                    }
+
+                    toastrMessage(type, message);
+                },
+                error: function (jqXHR) {
+                    let response = jqXHR.responseJSON;
+
+                    if (response?.errors?.first_name !== undefined) {
+                        $('#errorFirstName').text(response.errors.first_name[0]);
+                    }
+
+                    if (response?.errors?.last_name !== undefined) {
+                        $('#errorLastName').text(response.errors.last_name[0]);
+                    }
+
+                    if (response?.errors?.email !== undefined) {
+                        $('#errorEmail').text(response.errors.email[0]);
+                    }
+
+                    if (response?.errors?.phone !== undefined) {
+                        $('#errorPhone').text(response.errors.phone[0]);
+                    }
+
+                    if (response?.errors?.address !== undefined) {
+                        $('#errorAddress').text(response.errors.address[0]);
+                    }
+
+                    if (response?.errors?.city !== undefined) {
+                        $('#errorCity').text(response.errors.city[0]);
+                    }
+
+                    if (response?.errors?.province !== undefined) {
+                        $('#errorProvince').text(response.errors.province[0]);
+                    }
+
+                    if (response?.errors?.zipcode !== undefined) {
+                        $('#errorZipCode').text(response.errors.zipcode[0]);
+                    }
+
+                    if (response?.errors?.country !== undefined) {
+                        $('#errorContry').text(response.errors.country[0]);
+                    }
+
+                    if (response?.errors?.requirement !== undefined) {
+                        $('#errorRequirement').text(response.errors.requirement[0]);
+                    }
+
+                    document.getElementById("formCheckout").scrollIntoView();
+                },
+                complete: function () {
+                    enableSubmitButton('#formCheckout', 300);
+                }
+            });
+        });
+
     </script>
 @endsection
