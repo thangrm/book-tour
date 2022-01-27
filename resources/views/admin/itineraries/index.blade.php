@@ -139,18 +139,17 @@
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $.ajax(
-                            {
-                                url: link,
-                                type: 'delete',
-                                success: function (response) {
-                                    toastr.success('Itinerary deleted successfully');
-                                    datatable.ajax.reload(null, false);
-                                },
-                                error: function (response) {
-                                    toastr.error('Delete failed')
-                                }
-                            });
+                        $.ajax({
+                            url: link,
+                            type: 'delete',
+                            success: function (response) {
+                                toastr.success('Itinerary deleted successfully');
+                                datatable.ajax.reload(null, false);
+                            },
+                            error: function (response) {
+                                toastr.error('Delete failed')
+                            }
+                        });
                     } else if (
                         result.dismiss === Swal.DismissReason.cancel
                     ) {

@@ -36,10 +36,17 @@ trait GetListData
     /**
      * Get list order by title
      *
+     * @param bool $isStatus
+     * @param string $sort
      * @return mixed
      */
-    public function getOrderByTitle($sort = 'asc')
+    public function getOrderByTitle($isStatus = true, $sort = 'asc')
     {
-        return $this->orderBy('name', $sort)->get();
+        $query = $this->orderBy('name', $sort);
+        if ($isStatus) {
+            $query->where('status', 1);
+        }
+
+        return $query->get();
     }
 }

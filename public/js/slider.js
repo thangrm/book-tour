@@ -18,5 +18,7 @@ function rightRange(el) {
     children[13].childNodes[1].innerHTML = el.value;
 }
 
-leftRange(document.getElementById('minPrice'));
-rightRange(document.getElementById('maxPrice'));
+if (document.getElementById('minPrice') !== null) {
+    leftRange(document.getElementById('minPrice'));
+    rightRange(document.getElementById('maxPrice'));
+}

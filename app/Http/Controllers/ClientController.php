@@ -91,26 +91,22 @@ class ClientController extends Controller
      * @param Request $request
      * @param $slug
      * @param Tour $tourModel
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function storeBooking(Request $request, $slug, Tour $tourModel)
     {
         $tour = $tourModel->getTourBySlug($slug);
         $request->validate($this->clientService->ruleBooking());
-
+        $this->notification->setMessage('Successful tour booking', Notification::SUCCESS);
+        return response()->json($this->notification->getMessage());
         try {
             $this->clientService->storeBooking($request, $tour);
-
             $this->notification->setMessage('Successful tour booking', Notification::SUCCESS);
-            return redirect()->route('index')->with($this->notification->getMessage());
         } catch (Exception $e) {
             $this->notification->setMessage('The tour booking failed', Notification::ERROR);
-
-            return back()
-                ->with('exception', $e->getMessage())
-                ->with($this->notification->getMessage())
-                ->withInput();
         }
+
+        return response()->json($this->notification->getMessage());
     }
 
     /**

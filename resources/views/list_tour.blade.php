@@ -109,11 +109,11 @@
                                                     $<span></span>
                                                 </div>
                                             </div>
-                                            <input type="range" tabindex="0" value="{{ request()->min_price }}"
+                                            <input type="range" tabindex="0" value="{{ request()->min_price ?? 360 }}"
                                                    max="1200" min="0" step="1"
                                                    oninput="leftRange(this)" name="min_price" id="minPrice"/>
 
-                                            <input type="range" tabindex="0" value="{{ request()->max_price}}"
+                                            <input type="range" tabindex="0" value="{{ request()->max_price ?? 720}}"
                                                    value="720" max="1200" min="0" step="1"
                                                    oninput="rightRange(this)" name="max_price" id="maxPrice"/>
                                         </div>

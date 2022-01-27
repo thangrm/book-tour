@@ -165,3 +165,10 @@
     </div>
     <!-------------------- End List Tours-------------------->
 @endsection
+@section('js')
+    <script>
+        @if($errors->any())
+        document.getElementById("formContact").scrollIntoView();
+        @endif
+    </script>
+@endsection
