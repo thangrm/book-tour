@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\TourController;
+use App\Http\Controllers\Api\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +16,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('signup', [AuthController::class, 'signup']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('verify/{id}', [VerificationController::class, 'verify']);
+Route::post('send-code/{id}', [VerificationController::class, 'sendCode']);
+
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('logout', [AuthController::class, 'logout']);
     Route::get('users', [AuthController::class, 'user']);
+
 });
-Route::post('signup', [AuthController::class, 'signup']);
-Route::post('login', [AuthController::class, 'login']);
 
 Route::get('test', function (TourController $tourController) {
     return json_encode($tourController->index());
 });
 Route::apiResource('tours', TourController::class)->except(['show', 'update']);
+
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'API Not Found. If error persists, contact support@website.com'
+    ], 404);
+});

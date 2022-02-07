@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Jobs\SendMailContactJob;
+use App\Jobs\SendMailVerifyCodeJob;
 use App\Libraries\Utilities;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -59,7 +59,7 @@ class Contact extends Model
         $input['status'] = 1;
 
         $contact = Contact::create($input);
-        dispatch(new SendMailContactJob($contact));
+        dispatch(new SendMailVerifyCodeJob($contact));
     }
 
     /**
