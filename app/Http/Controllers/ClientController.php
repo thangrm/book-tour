@@ -98,7 +98,7 @@ class ClientController extends Controller
         $tour = $tourModel->getTourBySlug($slug);
         $request->validate($this->clientService->ruleBooking());
         $this->notification->setMessage('Successful tour booking', Notification::SUCCESS);
-        return response()->json($this->notification->getMessage());
+
         try {
             $this->clientService->storeBooking($request, $tour);
             $this->notification->setMessage('Successful tour booking', Notification::SUCCESS);

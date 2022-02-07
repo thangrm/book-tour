@@ -6,7 +6,7 @@ class Notification
 {
     const INFO = "info";
     const SUCCESS = "success";
-    const WARNING = "error";
+    const WARNING = "warning";
     const ERROR = "error";
 
     public $message;

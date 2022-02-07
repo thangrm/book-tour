@@ -133,7 +133,3 @@ Route::group(['prefix' => 'admin'], function () {
         });
     });
 });
-
-Route::get('/linkstorage', function () {
-    Artisan::call('storage:link');
-});

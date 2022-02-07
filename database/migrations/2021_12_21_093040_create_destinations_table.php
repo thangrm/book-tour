@@ -15,8 +15,8 @@ class CreateDestinationsTable extends Migration
     {
         Schema::create('destinations', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('name', 100)->unique();;
-            $table->string('slug', 100);
+            $table->string('name', 100);
+            $table->string('slug', 100)->unique();
             $table->string('image', 100);
             $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();

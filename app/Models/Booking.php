@@ -61,8 +61,10 @@ class Booking extends Model
             return false;
         }
 
-        dispatch(new SendMailBookingConfirmJob($booking));
-        
+        if ($booking->status == 2) {
+            dispatch(new SendMailBookingConfirmJob($booking));
+        }
+
         return $booking->save();
     }
 

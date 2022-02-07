@@ -26,62 +26,74 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{ route('faqs.update', [$faq->tour_id, $faq->id]) }}" class="form-horizontal" method="post"
-              enctype="multipart/form-data"
-              id="formUpdateFAQ">
-            @method('PUT')
-            @csrf
+        <div class="card">
             <div class="card-body">
-                <div class="form-group row">
-                    <label for="name" class="col-sm-2 text-lg-right control-label col-form-label">
-                        Question <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-sm-9">
+
+                <form action="{{ route('faqs.update', [$faq->tour_id, $faq->id]) }}" class="form-horizontal"
+                      method="post"
+                      enctype="multipart/form-data"
+                      id="formUpdateFAQ">
+                    @method('PUT')
+                    @csrf
+                    <div class="form-group">
+                        <label for="question">Question <span class="text-danger">*</span></label>
                         <textarea type="text" class="form-control" name="question" id="question" placeholder="Question"
                                   rows="3">{{ empty(old('question')) ? $faq->question : old('question')  }}</textarea>
                         @error('question')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="name" class="col-sm-2 text-lg-right control-label col-form-label">
-                        Answer <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-sm-9">
-                        <textarea type="text" class="form-control" name="answer" id="answer" placeholder="Answer"
-                                  rows="5">{{  empty(old('answer')) ? $faq->answer : old('answer') }}</textarea>
+                    <div class="form-group">
+                       <textarea type="text" class="form-control" name="answer" id="answer" placeholder="Answer"
+                                 rows="5">{{  empty(old('answer')) ? $faq->answer : old('answer') }}</textarea>
                         @error('answer')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
 
-            </div>
+                    <div class="form-group">
+                        <div class="d-flex align-items-center">
+                            <input type="hidden" name="status" id="status">
+                            <label for="name" class="m-t-10">Status</label>
+                            <div class="m-l-10">
+                                @include('components.button_switch',
+                                     [
+                                         'status' => empty(old('status')) ? 1 : old('status'),
+                                         'id' => 'statusFAQ'
+                                     ])
+                            </div>
+                        </div>
 
-            <div class="card-body">
-                <div class="form-group m-b-0 text-lg-right row">
-                    <div class="col-11">
-                        <button type="submit" class="btn btn-info waves-effect waves-light">Update</button>
+                        <div>
+                            @error('status')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
-                </div>
+
+                    <button type="submit" class="btn btn-info waves-effect waves-light">Update</button>
+                </form>
             </div>
-        </form>
+
+        </div>
     </div>
 @endsection
 @section('js')
     <script>
         $(document).ready(function () {
-            $('#image').change(function (e) {
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#showImg').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(e.target.files['0']);
-            });
-
             disableSubmitButton('#formUpdateFAQ');
+
+            $('#formUpdateFAQ').submit(function (e) {
+                e.preventDefault();
+
+                if ($('#statusFAQ').is(":checked")) {
+                    $('#status').val(1);
+                } else {
+                    $('#status').val(2);
+                }
+
+                this.submit();
+            })
         });
     </script>
 @endsection

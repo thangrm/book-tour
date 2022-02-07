@@ -132,9 +132,9 @@
                         @error('images.*')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
-                        <button type="submit" class="btn btn-info mb-3">
-                            Add
-                        </button>
+                        {{--                        <button type="submit" class="btn btn-info mb-3">--}}
+                        {{--                            Add--}}
+                        {{--                        </button>--}}
                     </form>
                 </div>
             </div>
@@ -150,7 +150,7 @@
                                 <img class="image-item" src="{{ asset('storage/images/galleries/'.$gallery->image) }}">
                                 <a href="{{ route("galleries.destroy", [$tourId, $gallery->id]) }}"
                                    class="btn btn-danger btn-sm rounded-0 text-white delete" types="button"
-                                   data-toggle="tooltip" title="Delete"
+                                   {{--                                   data-toggle="tooltip" title="Delete"--}}
                                    data-id="{{ $gallery->id }}">
                                     <i class="fa fa-trash"></i>
                                 </a>
@@ -177,22 +177,25 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            disableSubmitButton('#formAddNewImage');
+            // disableSubmitButton('#formAddNewImage');
 
             // Render image
-            function imageIsLoaded(e) {
-                $('#showListImg').append('<img style="max-height: 100px; margin: 10px 2px" src=' + e.target.result + '>');
-            };
+            // function imageIsLoaded(e) {
+            //     $('#showListImg').append('<img style="max-height: 100px; margin: 10px 2px" src=' + e.target.result + '>');
+            // };
 
             $('#images').change(function (e) {
-                $('#showListImg').empty();
-                if (this.files && this.files[0]) {
-                    for (let i = 0; i < this.files.length; i++) {
-                        let reader = new FileReader();
-                        reader.onload = imageIsLoaded;
-                        reader.readAsDataURL(this.files[i]);
-                    }
-                }
+                $('#formAddNewImage').submit();
+                $(this).prop('disabled', true);
+
+                // $('#showListImg').empty();
+                // if (this.files && this.files[0]) {
+                //     for (let i = 0; i < this.files.length; i++) {
+                //         let reader = new FileReader();
+                //         reader.onload = imageIsLoaded;
+                //         reader.readAsDataURL(this.files[i]);
+                //     }
+                // }
             });
 
             // Modal view image
@@ -240,20 +243,19 @@
                 $('#navLeftGallery').removeClass('nav-disabled');
                 $('#navRightGallery').removeClass('nav-disabled');
 
-                if (index === 0) {
+                if (index <= 0) {
                     $('#navLeftGallery').addClass('nav-disabled');
                 }
 
-                if (index === listImages.length - 1) {
+                if (index >= listImages.length - 1) {
                     $('#navRightGallery').addClass('nav-disabled');
                 }
             }
 
             // Nav image
             function navImage(step) {
-                let i = getCurrentIndex();
-                checkDisabledNav(i);
-                let nextIndex = i + step;
+                let nextIndex = getCurrentIndex() + step;
+                checkDisabledNav(nextIndex);
                 if (nextIndex < 0 || nextIndex >= listImages.length) {
                     return;
                 }

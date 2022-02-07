@@ -231,6 +231,7 @@
 
             // Event edit type
             $(document).on('click', '.edit', function (e) {
+                $('#errorNameEdit').text('');
                 linkEditType = $(this).attr('href');
                 let typeId = $(this).data('id');
                 let titleType = $('#type-' + typeId).children().eq(1).text();
@@ -331,6 +332,7 @@
             // Submit Edit Type
             $('#formEditType').submit(function (e) {
                 e.preventDefault();
+                $('#errorNameEdit').text('');
 
                 let name = $('#titleEdit').val();
                 let status = 2;

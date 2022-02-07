@@ -32,50 +32,48 @@
                       enctype="multipart/form-data"
                       id="formCreateFAQ">
                     @csrf
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="question">Question <span class="text-danger">*</span></label>
-                            <textarea type="text" class="form-control" name="question" id="question"
-                                      placeholder="Question"
-                                      rows="3">{{old('question')}}</textarea>
-                            @error('question')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="answer">Answer <span class="text-danger">*</span></label>
-                            <textarea type="text" class="form-control" name="answer" id="answer"
-                                      placeholder="Answer"
-                                      rows="5">{{old('answer')}}</textarea>
-                            @error('answer')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <div class="d-flex align-items-center">
-                                <input type="hidden" name="status" id="status">
-                                <label for="name" class="m-t-10">Status</label>
-                                <div class="m-l-10">
-                                    @include('components.button_switch',
-                                         [
-                                             'status' => empty(old('status')) ? 1 : old('status'),
-                                             'id' => 'statusFAQ'
-                                         ])
-                                </div>
-                            </div>
-
-                            <div>
-                                @error('status')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-info waves-effect waves-light">Add new FAQ</button>
-
+                    <div class="form-group">
+                        <label for="question">Question <span class="text-danger">*</span></label>
+                        <textarea type="text" class="form-control" name="question" id="question"
+                                  placeholder="Question"
+                                  rows="3">{{old('question')}}</textarea>
+                        @error('question')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
+
+                    <div class="form-group">
+                        <label for="answer">Answer <span class="text-danger">*</span></label>
+                        <textarea type="text" class="form-control" name="answer" id="answer"
+                                  placeholder="Answer"
+                                  rows="5">{{old('answer')}}</textarea>
+                        @error('answer')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center">
+                            <input type="hidden" name="status" id="status">
+                            <label for="name" class="m-t-10">Status</label>
+                            <div class="m-l-10">
+                                @include('components.button_switch',
+                                     [
+                                         'status' => empty(old('status')) ? 1 : old('status'),
+                                         'id' => 'statusFAQ'
+                                     ])
+                            </div>
+                        </div>
+
+                        <div>
+                            @error('status')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info waves-effect waves-light">Add new FAQ</button>
+
                 </form>
 
             </div>

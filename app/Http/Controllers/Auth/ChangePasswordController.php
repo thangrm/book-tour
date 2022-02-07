@@ -67,7 +67,7 @@ class ChangePasswordController extends Controller
             return redirect()->route('admin.dashboard')->with($notification);
         }
 
-        return redirect()->back()->withErrors(['old-password' => 'Incorrect Password']);
+        return redirect()->back()->withErrors(['old_password' => 'Incorrect Password']);
     }
 
 }

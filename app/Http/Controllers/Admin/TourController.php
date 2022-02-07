@@ -100,9 +100,7 @@ class TourController extends Controller
             $this->notification->setMessage('Tour updated successfully', Notification::SUCCESS);
 
             if ($messageCode == 2) {
-                $this->notification->setMessage('The tour update failed', Notification::ERROR);
-
-                return back()->with($this->notification->getMessage());
+                return back()->withErrors(['duration' => 'The duration is less than number of itineraries'])->withInput();
             }
 
             if ($request->ajax()) {

@@ -51,7 +51,8 @@ class ItineraryController extends Controller
             $codeMessage = $this->itinerary->saveData($request, $tourId);
 
             if ($codeMessage == 2) {
-                $this->notification->setMessage('The tour is only ' . Tour::findOrFail($tourId)->duration);
+                $this->notification->setMessage('Tour duration is ' . Tour::findOrFail($tourId)->duration,
+                    Notification::ERROR);
             }
 
         } catch (QueryException $e) {

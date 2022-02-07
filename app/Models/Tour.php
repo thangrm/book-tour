@@ -240,13 +240,6 @@ class Tour extends Model
     public function remove($id)
     {
         $tour = $this->findOrFail($id);
-        Storage::delete($this->path . $tour->image);
-        Storage::delete($this->path . $tour->image_seo);
-
-        foreach ($tour->galleries as $gallery) {
-            Storage::delete('public/images/galleries/' . $gallery->image);
-        }
-
         if ($tour->bookings()->count() > 0) {
             return 2;
         }
@@ -257,6 +250,12 @@ class Tour extends Model
             $tour->faqs()->delete();
             $tour->reviews()->delete();
             $tour->delete();
+
+            Storage::delete($this->path . $tour->image);
+            Storage::delete($this->path . $tour->image_seo);
+            foreach ($tour->galleries as $gallery) {
+                Storage::delete('public/images/galleries/' . $gallery->image);
+            }
         });
 
         return 1;

@@ -95,7 +95,7 @@ class Utilities
             'fourStar' => 0,
             'fiveStar' => 0,
             'countReviews' => [$reviews->count(), 0, 0, 0, 0, 0],
-            //[total, oneStar, twoStar, threeStar, fourStar, fiveStar]
+            //countReviews is [total, oneStar, twoStar, threeStar, fourStar, fiveStar]
         ];
 
         foreach ($reviews as $review) {

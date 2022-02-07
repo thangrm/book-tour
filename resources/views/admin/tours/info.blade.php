@@ -71,7 +71,7 @@
                             </div>
                             <div>
                                 <img id="showImgSeo" style="max-height: 156px; margin: 10px 2px"
-                                     src="{{ asset('storage/images/tours/'.$tour->image_seo) }}">
+                                     src="{{ asset('storage/images/tours/'. (empty($tour->image_seo) ? $tour->image : $tour->image_seo) ) }}">
                             </div>
                             @error('image_seo')
                             <p class="text-danger">{{ $message }}</p>

@@ -302,6 +302,11 @@
 
             // Edit
             $(document).on('click', '.edit', function (e) {
+                $('#errorNameEdit').text('');
+                $('#errorImageEdit').text('');
+                $('#errorSlugEdit').text('');
+                $('#formEditDestination').trigger('reset');
+
                 linkEditDestination = $(this).attr('href');
                 let id = $(this).data('id');
                 let srcImage = $('#destination-' + id).children().eq(1).children().eq(0).attr('src');
@@ -423,6 +428,10 @@
             // Submit Edit
             $('#formEditDestination').submit(function (e) {
                 e.preventDefault();
+                $('#errorNameEdit').text('');
+                $('#errorImageEdit').text('');
+                $('#errorSlugEdit').text('');
+
 
                 let name = $('#nameEdit').val();
                 let slug = $('#slugEdit').val();

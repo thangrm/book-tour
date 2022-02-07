@@ -44,38 +44,44 @@
                 <div class="logo">
                     <span class="db"><img src="{{ asset('admins/assets/images/logo-icon.png') }}" alt="logo"/></span>
                     <h5 class="font-medium m-b-20">Recover Password</h5>
-                    <span>Enter your Email and instructions will be sent to you!</span>
+                    @if(Session::has('status'))
+                        <span class="text-success">{{ Session::get('status')}}</span>
+                    @else
+                        <span>Enter your Email and instructions will be sent to you!</span>
+                    @endif
                 </div>
-                <div class="row m-t-20">
-                    <!-- Form -->
-                    <form class="col-12" method="POST" action="{{ route('admin.password.email') }}">
-                    @csrf
-                    <!-- email -->
-                        <div class="form-group row">
-                            @if(Session::has('status'))
+                @if(!Session::has('status'))
+                    <div class="row m-t-20">
+                        <!-- Form -->
+                        <form class="col-12" method="POST" action="{{ route('admin.password.email') }}">
+                        @csrf
+                        <!-- email -->
+                            <div class="form-group row">
+                                @if(Session::has('status'))
+                                    <div class="col-12">
+                                        <p class="text-success">  {{ Session::get('status')}}</p>
+                                    </div>
+                                @endif
                                 <div class="col-12">
-                                    <p class="text-success">  {{ Session::get('status')}}</p>
+                                    <input class="form-control form-control-lg" type="email" name="email"
+                                           placeholder="Email" value="{{ old('email')  }}">
                                 </div>
-                            @endif
-                            <div class="col-12">
-                                <input class="form-control form-control-lg" type="email" name="email"
-                                       placeholder="Email" required>
+                                @error('email')
+                                <div class="col-12">
+                                    <span class="text-danger"> {{ $message }}</span>
+                                </div>
+                                @enderror
                             </div>
-                            @error('email')
-                            <div class="col-12">
-                                <span class="text-danger"> {{ $message }}</span>
+                            <!-- pwd -->
+                            <div class="row m-t-20">
+                                <div class="col-12">
+                                    <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">Reset
+                                    </button>
+                                </div>
                             </div>
-                            @enderror
-                        </div>
-                        <!-- pwd -->
-                        <div class="row m-t-20">
-                            <div class="col-12">
-                                <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">Reset
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
