@@ -20,9 +20,9 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|unique:users|max:255',
+            'password' => 'required|string|max:255|confirmed'
         ]);
 
         $user = new User([
@@ -44,7 +44,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'email' => 'required|string|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|unique:users|max:255',
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
@@ -92,5 +92,30 @@ class AuthController extends Controller
     {
         Passport::routes();
         return response()->json($request->user());
+    }
+
+    /**
+     * Verify OTP Code
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function verifyOtp(Request $request)
+    {
+        $user = User::where([['email', '=', $request->email], ['otp', '=', $request->otp]])->first();
+        if ($user) {
+            auth()->login($user, true);
+            User::where('email', '=', $request->email)->update(['otp' => null]);
+            $accessToken = auth()->user()->createToken('authToken')->accessToken;
+
+            return response([
+                "status" => 200,
+                "message" => "Success",
+                'user' => auth()->user(),
+                'access_token' => $accessToken
+            ]);
+        } else {
+            return response(["status" => 401, 'message' => 'Invalid']);
+        }
     }
 }
