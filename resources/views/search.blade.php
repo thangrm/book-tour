@@ -122,7 +122,7 @@
                                     <div class="form-group">
                                         <hr>
                                         <h5>Tour</h5>
-                                        <input type="text" class="form-control" name="tour_name"
+                                        <input type="text" class="form-control" name="tour_name" placeholder="Title"
                                                value="{{ request()->tour_name }}">
                                     </div>
 
@@ -130,6 +130,7 @@
                                         <hr>
                                         <h5>Destination</h5>
                                         <input class="form-control" type="text" name="destination_name"
+                                               placeholder="Destination"
                                                value="{{ request()->destination_name }}">
                                     </div>
 
