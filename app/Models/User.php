@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use App\Libraries\Utilities;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $path = 'public/images/users/';
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +24,13 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'avatar',
+        'first_name',
+        'last_name',
+        'address',
     ];
 
     /**
@@ -41,4 +51,64 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Validate rules for user
+     *
+     * @param $id
+     * @return string[]
+     */
+    public function rules($id = null)
+    {
+        $rule = [
+            'username' => 'required|string|alpha_dash|max:255|unique:users',
+            'email' => 'required|string|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|unique:users|max:255',
+            'password' => 'required|string|max:255|confirmed',
+            'avatar' => 'image|mimes:jpeg,jpg,png,gif|max:5000|nullable',
+            'first_name' => 'string|max:50|nullable',
+            'last_name' => 'string|max:50|nullable',
+            'address' => 'string|max:255|nullable',
+        ];
+
+        if ($id != null) {
+            $rule = [
+                'avatar' => 'image|mimes:jpeg,jpg,png,gif|max:5000|nullable',
+                'first_name' => 'string|max:50|nullable',
+                'last_name' => 'string|max:50|nullable',
+                'address' => 'string|max:255|nullable',
+            ];
+        }
+
+        return $rule;
+    }
+
+    /**
+     * Store a new user in database.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return integer
+     */
+    public function saveUser(Request $request, int $id = 0)
+    {
+        $input = Utilities::clearAllXSS($request->all());
+
+        $user = $this->findOrNew($id);
+        $oldImage = $user->avatar;
+
+        if ($request->hasFile('avatar')) {
+            $input['avatar'] = Utilities::storeImage($request->file('avatar'), $this->path);
+        }
+
+        $user->fill($input);
+        if ($user->save()) {
+            if ($request->hasFile('avatar')) {
+                Storage::delete($this->path . $oldImage);
+            }
+        } else {
+            Storage::delete($this->path . $user->image);
+        }
+
+        return 1;
+    }
 }

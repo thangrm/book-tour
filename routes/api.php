@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\TourController;
-use App\Http\Controllers\Api\VerificationController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,24 +17,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth
-Route::post('signup', [AuthController::class, 'signup']);
+Route::post('signup', [UserController::class, 'store']);
 Route::post('login', [AuthController::class, 'login']);
-Route::post('verify', [VerificationController::class, 'verify']);
-Route::post('send-code', [VerificationController::class, 'sendCode']);
+Route::post('verify', [AuthController::class, 'verify']);
+Route::post('send-code', [AuthController::class, 'sendCode']);
 Route::put('reset-password', [AuthController::class, 'resetPassword']);
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('logout', [AuthController::class, 'logout']);
-    Route::get('users', [AuthController::class, 'user']);
     Route::put('change-password', [AuthController::class, 'changePassword']);
+    Route::get('users', [UserController::class, 'show']);
+    Route::put('users/{id}', [UserController::class, 'update']);
 
+    //Tour
+    Route::apiResource('tours', TourController::class)->except(['show', 'update']);
 });
 
 //Tour
-Route::get('test', function (TourController $tourController) {
-    return json_encode($tourController->index());
-});
-Route::apiResource('tours', TourController::class)->except(['show', 'update']);
+
 
 //Fallback
 Route::fallback(function () {
