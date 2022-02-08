@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\DestinationResource;
 use App\Http\Resources\TourCollection;
 use App\Http\Resources\TypeResource;
+use App\Libraries\Notification;
 use App\Models\Destination;
 use App\Models\Tour;
 use App\Models\Type;
+use App\Services\ClientService;
+use Exception;
+use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
@@ -31,5 +35,32 @@ class ClientController extends Controller
             'latest' => $latestTours->collection,
             'type' => $types,
         ]);
+    }
+
+    /**
+     * Store booking
+     *
+     * @param Request $request
+     * @param ClientService $clientService
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function storeBooking(Request $request, ClientService $clientService)
+    {
+        $rule = $clientService->ruleBooking();
+        $rule['tour_id'] = 'required|integer|exists:tours,id';
+        $request->validate($rule);
+        $tour = Tour::findOrFail($request->tour_id);
+
+        try {
+            $clientService->storeBooking($request, $tour);
+
+            return response()->json(['message' => 'Successful tour booking']);
+        } catch (Exception $e) {
+
+            return response()->json([
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ], 500);
+        }
     }
 }
