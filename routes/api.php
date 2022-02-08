@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\TourController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -30,11 +31,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('users/{id}', [UserController::class, 'update']);
 
     //Tour
-    Route::apiResource('tours', TourController::class)->except(['update']);
+    Route::get('tours', [TourController::class, 'index']);
+    Route::get('tours/{id}', [TourController::class, 'show']);
+
+    //Home
+    Route::get('home', [ClientController::class, 'home']);
 });
-
-//Tour
-
 
 //Fallback
 Route::fallback(function () {
