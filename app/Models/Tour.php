@@ -261,6 +261,44 @@ class Tour extends Model
         return 1;
     }
 
+    public function getListForApi(Request $request)
+    {
+        $perPage = $request->per_page ?? 8;
+        $search = $request->search;
+        $minPrice = $request->min_price;
+        $maxPrice = $request->max_price;
+        $duration = $request->duration;
+        $status = $request->status;
+
+        $query = Tour::with('itineraries.places', 'destination', 'type');
+
+        if (!empty($search)) {
+            $search = Utilities::clearXSS($search);
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+                $query->orwhere('slug', 'like', '%' . $search . '%');
+            });
+        }
+
+        if (!empty($status)) {
+            $query->where('status', $status);
+        }
+
+        if (!empty($minPrice)) {
+            $query->where('price', '>=', $minPrice);
+        }
+
+        if (!empty($maxPrice)) {
+            $query->where('price', '<=', $maxPrice);
+        }
+
+        if (!empty($duration)) {
+            $query->where('duration', $duration);
+        }
+
+        return $query->paginate($perPage);
+    }
+
     /**
      * Get a list of tours
      *

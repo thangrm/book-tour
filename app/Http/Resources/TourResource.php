@@ -35,6 +35,8 @@ class TourResource extends JsonResource
             'duration' => $this->duration,
             'status' => $this->status,
             'trending' => $this->trending,
+            'destination' => $this->destination->name,
+            'type' => $this->type->name,
             'itineraries' => ItineraryResource::collection($this->whenLoaded('itineraries')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
