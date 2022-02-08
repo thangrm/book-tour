@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('users/{id}', [UserController::class, 'update']);
 
     //Tour
-    Route::apiResource('tours', TourController::class)->except(['show', 'update']);
+    Route::apiResource('tours', TourController::class)->except(['update']);
 });
 
 //Tour

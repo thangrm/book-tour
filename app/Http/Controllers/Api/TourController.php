@@ -16,25 +16,17 @@ class TourController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return TourCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tours = Tour::with('itineraries.places')->paginate(100);
-        return (new TourCollection($tours))->additional([
-            'add-tour' => [
-                'key' => 'value',
-            ]
-        ]);;
-
-//        return TourResource::collection($tours);
-        return (new TourResource(Tour::with('itineraries.places')->find(13)))
-            ->additional([
-                'add-itineraries' => [
-                    'key' => 'value',
-                ]
-            ]);
-//        return response()->json($tour, Response::HTTP_OK);
+        $request->validate([
+            'page' => 'integer',
+            'per_page' => 'integer|between:1,100'
+        ]);
+        $perPage = $request->per_page ?? 8;
+        $tours = Tour::with('itineraries.places')->paginate($perPage);
+        return (new TourCollection($tours));
     }
 
     /**
@@ -51,12 +43,12 @@ class TourController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Tour $tour
-     * @return \Illuminate\Http\Response
+     * @param $tourId
+     * @return TourResource
      */
-    public function show(Tour $tour)
+    public function show($tourId)
     {
-        return $tour;
+        return new TourResource(Tour::with('itineraries.places')->findOrFail($tourId));
     }
 
     /**
