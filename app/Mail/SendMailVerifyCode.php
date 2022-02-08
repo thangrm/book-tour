@@ -14,17 +14,15 @@ class SendMailVerifyCode extends Mailable
     use Queueable, SerializesModels;
 
     protected $user;
-    protected $code;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $code)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->code = $code;
     }
 
     /**
@@ -34,9 +32,13 @@ class SendMailVerifyCode extends Mailable
      */
     public function build()
     {
-        return $this->subject("Verify Code - Ngao Du")
+        $title = "Verify Email - NgaoDu";
+        if ($this->user->type_otp == 2) {
+            $title = "Reset Password Notification - NgaoDu";
+        }
+
+        return $this->subject($title)
             ->view('mails.verify_code')
-            ->with('user', $this->user)
-            ->with('code', $this->code);
+            ->with('user', $this->user);
     }
 }

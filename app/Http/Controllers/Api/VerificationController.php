@@ -6,30 +6,39 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SendMailVerifyCodeJob;
 use App\Models\User;
 use Exception;
+use App\Models\PasswordReset;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class VerificationController extends Controller
 {
     /**
-     * @param $user_id
+     * Verify code
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function verify($user_id, Request $request)
+    public function verify(Request $request)
     {
         $request->validate([
+            'email' => 'required|string|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|exists:users|max:255',
             'type' => 'required|integer|between:1,2',
             'code' => 'required',
         ]);
 
-        $user = User::findOrFail($user_id);
+        $user = User::where('email', $request->email)->first();
+
         if ($user->otp == $request->code && $user->type_otp == $request->type) {
             $user->otp = null;
             $user->save();
             if ($request->type == 2) {
+                $token = Password::broker('users')->createToken($user);
+
                 return response()->json([
-                    "message" => "Verification Code Success",
+                    "token" => $token,
+                    "email" => $request->email,
+                    "message" => "Verification code forgot password success",
                     "success" => true,
                     "type" => $request->type
                 ]);
@@ -50,29 +59,30 @@ class VerificationController extends Controller
             "message" => "The verification code is incorrect",
             "success" => false,
             "type" => $request->type
-        ]);
+        ], 400);
     }
 
     /**
-     * @param $userId
+     * Send code via mail
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sendCode($userId, Request $request)
+    public function sendCode(Request $request)
     {
-        $request->validate(['type' => 'required|integer|between:1,2']);
+        $request->validate([
+            'email' => 'required|string|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|exists:users|max:255',
+            'type' => 'required|integer|between:1,2'
+        ]);
 
-        $user = User::find($userId);
-        if (!$user) {
-            return response()->json(["message" => "User not found."], 404);
-        }
+        $user = User::where('email', $request->email)->first();
 
         if ($request->type == 1 && $user->hasVerifiedEmail()) {
             return response()->json(["message" => "Email already verified."], 400);
         }
 
         try {
-            $code = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
+            $code = rand(1000, 9999);
             $user->otp = $code;
             $user->type_otp = $request->type;
             $user->save();
