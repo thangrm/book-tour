@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ItineraryResource;
 use App\Http\Resources\TourCollection;
 use App\Http\Resources\TourResource;
+use App\Libraries\Utilities;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,26 +19,17 @@ class TourController extends Controller
      *
      * @return TourCollection
      */
-    public function index(Request $request)
+    public function index(Request $request, Tour $tour)
     {
         $request->validate([
             'page' => 'integer',
-            'per_page' => 'integer|between:1,100'
+            'per_page' => 'integer|between:1,100',
+            'min_price' => 'numeric|nullable',
+            'max_price' => 'numeric|nullable',
+            'duration' => 'integer|between:1,127|nullable',
         ]);
-        $perPage = $request->per_page ?? 8;
-        $tours = Tour::with('itineraries.places')->paginate($perPage);
-        return (new TourCollection($tours));
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return (new TourCollection($tour->getListForApi($request)));
     }
 
     /**
@@ -48,29 +40,7 @@ class TourController extends Controller
      */
     public function show($tourId)
     {
-        return new TourResource(Tour::with('itineraries.places')->findOrFail($tourId));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Tour $tour
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tour $tour)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Tour $tour
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tour $tour)
-    {
-        //
+        return new TourResource(Tour::with('itineraries.places', 'destination', 'type')
+            ->findOrFail($tourId));
     }
 }
