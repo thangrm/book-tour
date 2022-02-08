@@ -36,6 +36,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     //Home
     Route::get('home', [ClientController::class, 'home']);
+
+    //Booking
+    Route::post('booking', [ClientController::class, 'storeBooking']);
 });
 
 //Fallback

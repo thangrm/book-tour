@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Destination;
 use App\Models\Tour;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class ClientService
@@ -26,7 +27,7 @@ class ClientService
             'email' => 'required|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/',
             'phone' => 'required|regex:/(0)[0-9]{9,10}/',
             'people' => 'required|integer|min:0|max:20',
-            'departure_time' => 'required|string',
+            'departure_time' => 'required|date',
             'payment_method' => 'required|integer|min:0|max:3',
             'address' => 'string|max:100|nullable',
             'city' => 'string|max:50|nullable',
@@ -59,7 +60,7 @@ class ClientService
         $input['status'] = 1;
         $customer = Customer::create($input);
 
-        $input = Utilities::clearAllXSS($request->only(['people', 'payment_method', 'departure_time']));
+        $input = Utilities::clearAllXSS($request->only(['people', 'payment_method', 'departure_time', 'requirement']));
         $input['customer_id'] = $customer->id;
         $input['tour_id'] = $tour->id;
         $input['price'] = $tour->price;

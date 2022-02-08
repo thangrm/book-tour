@@ -138,6 +138,14 @@
                         </table>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Requirement</h4>
+                        <hr>
+                        <p> {{ $booking->requirement }} </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -14,8 +14,12 @@ class Utilities
      * @param string|null $string
      * @return string
      */
-    public static function clearXSS(?string $string): string
+    public static function clearXSS(?string $string)
     {
+        if ($string == null) {
+            return $string;
+        }
+
         $string = nl2br($string);
         $string = trim(strip_tags($string));
         return self::removeScripts($string);

@@ -3,6 +3,9 @@
 namespace App\Jobs;
 
 use App\Mail\SendMailBooking;
+use App\Mail\SendMailBookingCancel;
+use App\Mail\SendMailBookingComplete;
+use App\Mail\SendMailBookingConfirm;
 use App\Models\Booking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -35,7 +38,24 @@ class SendMailBookingJob implements ShouldQueue
      */
     public function handle()
     {
-        $email = new SendMailBooking($this->booking);
-        Mail::to('admin@ngaodu.com')->send($email);
+        if ($this->booking->status == 1) {
+            $email = new SendMailBooking($this->booking);
+            Mail::to('admin@ngaodu.com')->send($email);
+        }
+
+        if ($this->booking->status == 2) {
+            $email = new SendMailBookingConfirm($this->booking);
+            Mail::to($this->booking->customer->email)->send($email);
+        }
+
+        if ($this->booking->status == 3) {
+            $email = new SendMailBookingComplete($this->booking);
+            Mail::to($this->booking->customer->email)->send($email);
+        }
+
+        if ($this->booking->status == 4) {
+            $email = new SendMailBookingCancel($this->booking);
+            Mail::to($this->booking->customer->email)->send($email);
+        }
     }
 }
