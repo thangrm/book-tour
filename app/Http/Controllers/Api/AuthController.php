@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\PasswordReset;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Laravel\Passport\Passport;
 
 class AuthController extends Controller
@@ -44,7 +48,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|unique:users|max:255',
+            'email' => 'required|string|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|max:255',
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
@@ -95,27 +99,57 @@ class AuthController extends Controller
     }
 
     /**
-     * Verify OTP Code
+     * Change password for user
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function verifyOtp(Request $request)
+    public function changePassword(Request $request)
     {
-        $user = User::where([['email', '=', $request->email], ['otp', '=', $request->otp]])->first();
-        if ($user) {
-            auth()->login($user, true);
-            User::where('email', '=', $request->email)->update(['otp' => null]);
-            $accessToken = auth()->user()->createToken('authToken')->accessToken;
+        $request->validate([
+            'email' => 'required|string|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|exists:users|max:255',
+            'old_password' => 'required|string|max:255',
+            'password' => 'required|string|max:255|confirmed'
+        ]);
+        
+        $current_password = Auth::user()->password;
+        if (Hash::check($request->old_password, $current_password)) {
+            $user = Auth::user();
+            $user->password = bcrypt($request->password);
+            $user->save();
 
-            return response([
-                "status" => 200,
-                "message" => "Success",
-                'user' => auth()->user(),
-                'access_token' => $accessToken
-            ]);
-        } else {
-            return response(["status" => 401, 'message' => 'Invalid']);
+            return response()->json(['message' => 'Change password successfully!']);
         }
+
+        return response()->json(['message' => 'Old password is invalid']);
+    }
+
+    /**
+     * Change password for user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/|exists:users|max:255',
+            'password' => 'required|string|max:255|confirmed',
+            'token' => 'required|string',
+        ]);
+
+        $status = Password::broker('users')->reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user) use ($request) {
+                $user->forceFill([
+                    'password' => Hash::make($request->password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new \Illuminate\Auth\Events\PasswordReset($user));
+            }
+        );
+
+        return response()->json(['message' => __($status)]);
     }
 }

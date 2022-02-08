@@ -145,7 +145,7 @@
                                                             <span style="font-size:16px;">
                                                                 Your verification code is:
                                                                 <strong style="font-size: 18px">
-                                                                    <u>{{ $code }}</u>
+                                                                    <u>{{ $user->otp }}</u>
                                                                 </strong> <br>
                                                                 If you have any questions, email us: support@example.com<br>
                                                                 We&#8217;re glad you&#8217;re here!
