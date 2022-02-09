@@ -22,7 +22,6 @@ class UserController extends Controller
         $request->validate($user->rules());
 
         try {
-            $request->password = bcrypt($request->password);
             $user->saveUser($request);
 
             return response()->json(['message' => 'Successfully created user!'], 201);

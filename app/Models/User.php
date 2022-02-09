@@ -100,6 +100,10 @@ class User extends Authenticatable implements MustVerifyEmail
             $input['avatar'] = Utilities::storeImage($request->file('avatar'), $this->path);
         }
 
+        if (!empty($request->password)) {
+            $input['password'] = bcrypt($request->password);
+        }
+        
         $user->fill($input);
         if ($user->save()) {
             if ($request->hasFile('avatar')) {
