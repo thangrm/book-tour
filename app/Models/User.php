@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\SendMailVerifyCodeJob;
 use App\Libraries\Utilities;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -103,11 +104,21 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!empty($request->password)) {
             $input['password'] = bcrypt($request->password);
         }
-        
+
         $user->fill($input);
+        $code = rand(1000, 9999);
+        if (!$user->hasVerifiedEmail()) {
+            $user->otp = $code;
+            $user->type_otp = 1;
+        }
+
         if ($user->save()) {
             if ($request->hasFile('avatar')) {
                 Storage::delete($this->path . $oldImage);
+            }
+
+            if (!$user->hasVerifiedEmail()) {
+                dispatch(new SendMailVerifyCodeJob($user));
             }
         } else {
             Storage::delete($this->path . $user->image);

@@ -210,7 +210,7 @@ class AuthController extends Controller
             $user->otp = $code;
             $user->type_otp = $request->type;
             $user->save();
-            dispatch(new SendMailVerifyCodeJob($user, $code));
+            dispatch(new SendMailVerifyCodeJob($user));
 
             return response()->json([
                 "message" => "Code verification sent on your email",
