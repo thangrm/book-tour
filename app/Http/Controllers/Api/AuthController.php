@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Laravel\Passport\Passport;
 
 class AuthController extends Controller
 {
@@ -33,7 +32,13 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json([
+                "success" => false,
+                'error' => [
+                    'code' => 401,
+                    'message' => 'Unauthorized'
+                ]
+            ], 401);
         }
 
         $user = $request->user();
@@ -45,9 +50,11 @@ class AuthController extends Controller
         $token->save();
 
         return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
+            'data' => [
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
+            ]
         ]);
     }
 
@@ -61,7 +68,10 @@ class AuthController extends Controller
     {
         $request->user()->token()->revoke();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json([
+            'message' => 'Successfully logged out',
+            "success" => true
+        ]);
     }
 
     /**
@@ -84,10 +94,18 @@ class AuthController extends Controller
             $user->password = bcrypt($request->password);
             $user->save();
 
-            return response()->json(['message' => 'Change password successfully!']);
+            return response()->json([
+                'message' => 'Change password successfully!',
+                "success" => true,
+            ]);
         }
 
-        return response()->json(['message' => 'Old password is invalid']);
+        return response()->json(
+            [
+                'message' => 'The given data was invalid.',
+                "success" => false,
+                'errors' => ['password' => 'Old password is invalid.']
+            ]);
     }
 
     /**

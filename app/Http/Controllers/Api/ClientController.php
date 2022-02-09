@@ -30,10 +30,13 @@ class ClientController extends Controller
         $latestTours = new TourCollection($tour->getByStatus(1, 8));
 
         return response()->json([
-            'destination' => $destinations,
-            'trending' => $trendingTours->collection,
-            'latest' => $latestTours->collection,
-            'type' => $types,
+            'data' => [
+                'destination' => $destinations,
+                'trending' => $trendingTours->collection,
+                'latest' => $latestTours->collection,
+                'type' => $types,
+            ],
+            "success" => true,
         ]);
     }
 
@@ -54,13 +57,20 @@ class ClientController extends Controller
         try {
             $clientService->storeBooking($request, $tour);
 
-            return response()->json(['message' => 'Successful tour booking']);
+            return response()->json([
+                'message' => 'Successful tour booking',
+                "success" => true,
+            ]);
         } catch (Exception $e) {
 
-            return response()->json([
-                'message' => $e->getMessage(),
-                'code' => $e->getCode()
-            ], 500);
+            return response()->json(
+                [
+                    "success" => false,
+                    'error' => [
+                        'message' => $e->getMessage(),
+                        'code' => $e->getCode()
+                    ]
+                ], 500);
         }
     }
 }

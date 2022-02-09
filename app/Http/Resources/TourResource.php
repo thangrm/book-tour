@@ -6,8 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TourResource extends JsonResource
 {
-    public static $wrap = 'tour';
-
     /**
      * Transform the resource into an array.
      *

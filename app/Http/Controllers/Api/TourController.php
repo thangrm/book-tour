@@ -25,7 +25,7 @@ class TourController extends Controller
             'duration' => 'integer|between:1,127|nullable',
         ]);
 
-        return (new TourCollection($tour->getListForApi($request)));
+        return (new TourCollection($tour->getListForApi($request)))->additional(["success" => true]);
     }
 
     /**
@@ -36,8 +36,8 @@ class TourController extends Controller
      */
     public function show($tourId)
     {
-        return new TourResource(Tour::with('itineraries.places', 'destination', 'type')
-            ->findOrFail($tourId));
+        return (new TourResource(Tour::with('itineraries.places', 'destination', 'type')
+            ->findOrFail($tourId)))->additional(["success" => true]);
     }
 
 }

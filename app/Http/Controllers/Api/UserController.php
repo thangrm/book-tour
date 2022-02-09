@@ -28,8 +28,10 @@ class UserController extends Controller
             return response()->json(['message' => 'Successfully created user!'], 201);
         } catch (Exception $e) {
             return response()->json([
-                'message' => $e->getMessage(),
-                'code' => $e->getCode()
+                'error' => [
+                    'message' => $e->getMessage(),
+                    'code' => $e->getCode()
+                ]
             ], 500);
         }
     }
@@ -62,10 +64,13 @@ class UserController extends Controller
 
             return response()->json(['message' => 'Successfully updated user!']);
         } catch (Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage(),
-                'code' => $e->getCode()
-            ], 500);
+            return response()->json(
+                [
+                    'error' => [
+                        'message' => $e->getMessage(),
+                        'code' => $e->getCode()
+                    ]
+                ], 500);
         }
     }
 }
