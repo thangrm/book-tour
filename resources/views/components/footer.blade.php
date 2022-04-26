@@ -16,19 +16,20 @@
                     <div class="footer-nav row">
                         <div class="col-6 col-sm-5 col-md-4 col-lg-6 p-0">
                             <nav class="nav flex-column">
-                                <a class="nav-link" href="{{ route('index') }}">Home</a>
-                                <a class="nav-link" href="#">About</a>
-                                <a class="nav-link" href="#">Tours</a>
-                                <a class="nav-link" href="#">Hotels</a>
-                                <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
+                                <a class="nav-link" href="{{ route('index') }}">{{ __('client.home') }}</a>
+                                <a class="nav-link" href="#">{{ __('client.about') }}</a>
+                                <a class="nav-link" href="#">{{ __('client.tours') }}</a>
+                                <a class="nav-link" href="#">{{ __('client.hotels') }}</a>
+                                <a class="nav-link"
+                                   href="{{ route('client.contact.index') }}">{{ __('client.contact') }}</a>
                             </nav>
                         </div>
                         <div class="col-6 col-sm-7 col-md-8 col-lg-6 p-0">
                             <nav class="nav flex-column">
-                                <a class="nav-link" href="#">Partner with us </a>
-                                <a class="nav-link" href="#">Terms & Conditions</a>
-                                <a class="nav-link" href="#">Privacy Policy</a>
-                                <a class="nav-link" href="#">Guest Policy</a>
+                                <a class="nav-link" href="#">{{ __('client.footer.partner_with_us') }}</a>
+                                <a class="nav-link" href="#">{{ __('client.footer.terms_and_conditions') }}</a>
+                                <a class="nav-link" href="#">{{ __('client.footer.privacy_policy') }}</a>
+                                <a class="nav-link" href="#">{{ __('client.footer.guest_policy') }}</a>
                             </nav>
                         </div>
                     </div>
@@ -40,14 +41,14 @@
                                 <img class="fill-white" src="{{ asset('images/icon/location.svg') }}" alt="address">
                             </div>
                             <p style="margin-left: 5px;">
-                                <a href="#">Lilama 10 Tower, 56 To Huu, Trung Van, Nam Tu Liem, Ha Noi</a>
+                                <a href="#">Số 298 Đ. Cầu Diễn, Minh Khai, Bắc Từ Liêm, Hà Nội</a>
                             </p>
                         </div>
                         <div class="contact-item">
                             <div class="icon-contact">
                                 <img class="fill-white" src="{{ asset('images/icon/mail.svg') }}" alt="email">
                             </div>
-                            <p><a href="mailto:hello@adamotravel.com">hello@adamotravel.com</a></p>
+                            <p><a href="mailto:hello@adamotravel.com">hello@thangloitravel.com</a></p>
                         </div>
                     </div>
                 </div>

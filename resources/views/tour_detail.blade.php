@@ -1,11 +1,19 @@
 @extends('layouts.client')
-@section('title'){{ $tour->meta_title == null ? $tour->name : $tour->meta_title }}@endsection
+@section('title')
+    {{ $tour->meta_title == null ? $tour->name : $tour->meta_title }}
+@endsection
 
-@section('description'){{ $tour->meta_description == null ? $tour->name : $tour->meta_description }}@endsection
+@section('description')
+    {{ $tour->meta_description == null ? $tour->name : $tour->meta_description }}
+@endsection
 
-@section('image_seo'){{  asset('storage/images/tours/'. ($tour->image_seo == null ? $tour->image : $tour->image_seo))  }}@endsection
+@section('image_seo')
+    {{  asset('storage/images/tours/'. ($tour->image_seo == null ? $tour->image : $tour->image_seo))  }}
+@endsection
 
-@section('url'){{ route('client.tours.detail', $tour->slug) }}@endsection
+@section('url')
+    {{ route('client.tours.detail', $tour->slug) }}
+@endsection
 
 @section('content')
     <!-------------------- Header -------------------->
@@ -26,22 +34,23 @@
                     <div class="collapse navbar-collapse" id="navbarToggler">
                         <ul class="nav navbar-header flex-column flex-sm-row">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('index') }}">Home</a>
+                                <a class="nav-link" href="{{ route('index') }}">{{ __('client.home') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">About</a>
+                                <a class="nav-link" href="#">{{ __('client.about') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Tours</a>
+                                <a class="nav-link active" href="#">{{ __('client.tours') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Hotels</a>
+                                <a class="nav-link" href="#">{{ __('client.hotels') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
+                                <a class="nav-link"
+                                   href="{{ route('client.contact.index') }}">{{ __('client.contact') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Login</a>
+                                <a class="nav-link" href="#">{{ __('client.login') }}</a>
                             </li>
                         </ul>
                     </div>
@@ -58,9 +67,9 @@
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Tours</a></li>
-                    <li class="breadcrumb-item"><a href="#">Detail tour</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">{{ __('client.home') }}</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{ __('client.tours') }}</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{ __('client.detail_tour') }}</a></li>
                 </ol>
             </nav>
         </div>
@@ -83,7 +92,8 @@
                             <span class="text-rate">{{ $rateReview['total'] }}</span>
                         </div>
 
-                        <span class="text-content">{{ $rateReview['countReviews'][0] }} reviews</span>
+                        <span
+                            class="text-content">{{ $rateReview['countReviews'][0] }} {{ __('client.reviews') }}</span>
                     </div>
                 </div>
             </div>
@@ -122,20 +132,22 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="pills-desc-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-desc" type="button" role="tab"
-                                            aria-controls="pills-desc" aria-selected="true">Descriptions
+                                            aria-controls="pills-desc"
+                                            aria-selected="true">{{ __('client.detail.description') }}
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="pills-info-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-info" type="button" role="tab"
-                                            aria-controls="pills-info" aria-selected="false">Additional Info
+                                            aria-controls="pills-info"
+                                            aria-selected="false">{{ __('client.detail.addtional_info') }}
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" href="#" id="pills-review-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-review" type="button" role="tab"
                                             aria-controls="pills-review" aria-selected="false">
-                                        Reviews({{ $rateReview['countReviews'][0]  }})
+                                        {{ __('client.detail.reviews') }}({{ $rateReview['countReviews'][0]  }})
                                     </button>
                                 </li>
                             </ul>
@@ -147,7 +159,7 @@
                                      aria-labelledby="pills-desc-tab">
                                     <div class="box-text">
                                         <p class="panel-title">
-                                            Overview
+                                            {{ __('client.detail.overview') }}
                                         </p>
                                         <p class="panel-text">
                                             {!! $tour->overview !!}
@@ -156,21 +168,21 @@
                                     <hr>
                                     <div class="box-text">
                                         <p class="panel-title">
-                                            What's Included
+                                            {{ __('client.detail.included') }}
                                         </p>
                                         {!! $tour->included !!}
                                     </div>
                                     <hr>
                                     <div class="box-text">
                                         <p class="panel-title">
-                                            Departure & Return
+                                            {{ __('client.detail.departure_return') }}
                                         </p>
                                         {!! $tour->departure !!}
                                     </div>
                                     <hr>
                                     <div class="box-text">
                                         <p class="panel-title">
-                                            Tour Itinerary
+                                            {{ __('client.itinerary') }}
                                         </p>
                                         <!-- Accordion Itinerary -->
                                         <div class="accordion" id="accordionItinerary">
@@ -185,8 +197,10 @@
                                                             data-bs-target="#panelsItineraryCollapse{{$loop->index}}"
                                                             aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
                                                             aria-controls="panelsItineraryCollapse{{$loop->index}}">
-                                                            Day {{ $loop->index + 1}}: {{ $itinerary->name }}
-                                                            ({{ $itinerary->places->count() }} stops)
+                                                            {{ __('client.detail.day') . ' ' . $loop->index + 1}}
+                                                            : {{ $itinerary->name }}
+                                                            ({{ $itinerary->places->count() . ' ' . __('client.detail.stops')}}
+                                                            )
                                                         </button>
                                                     </h2>
                                                     <div id="panelsItineraryCollapse{{$loop->index}}"
@@ -289,8 +303,8 @@
                                                     <div class="list-rate-star">
                                                         @include('components.rate_review', ['rate'=>$rateReview['total']])
                                                     </div>
-                                                    <p class="rate-text">Based on
-                                                        <span>{{ $rateReview['countReviews'][0] }} reviews</span>
+                                                    <p class="rate-text"> {{__('client.detail.based_on')}}
+                                                        <span>{{ $rateReview['countReviews'][0] }} {{ __('client.detail.reviews') }}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -309,7 +323,7 @@
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['countReviews'][5] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][5] }} {{ __('client.reviews') }}</span>
                                                     </div>
 
                                                     <div
@@ -325,7 +339,7 @@
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['countReviews'][4] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][4] }} {{ __('client.reviews') }}</span>
                                                     </div>
 
                                                     <div
@@ -341,7 +355,7 @@
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['countReviews'][3] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][3] }} {{ __('client.reviews') }}</span>
                                                     </div>
 
                                                     <div
@@ -357,7 +371,7 @@
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['countReviews'][2] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][2] }} {{ __('client.reviews') }}</span>
                                                     </div>
 
                                                     <div
@@ -373,7 +387,7 @@
                                                                  aria-valuemax="100"></div>
                                                         </div>
                                                         <span
-                                                            class="text-review">{{ $rateReview['countReviews'][1] }} reviews</span>
+                                                            class="text-review">{{ $rateReview['countReviews'][1] }} {{ __('client.reviews') }}</span>
                                                     </div>
 
                                                 </div>
@@ -388,7 +402,7 @@
                                               class="form-review w-100" method="post">
                                             @csrf
                                             <textarea class="form-control" rows="5"
-                                                      placeholder="Type anything"
+                                                      placeholder="{{ __('client.detail.type_anything') }}"
                                                       name="comment">{{ old('comment') }}</textarea>
                                             @error('comment')
                                             <p class="text-danger">{{ $message }}</p>
@@ -402,7 +416,8 @@
                                                     <i class="rate-star bi bi-star-fill fill-yellow" data-rate="4"></i>
                                                     <i class="rate-star bi bi-star fill-yellow" data-rate="5"></i>
                                                 </div>
-                                                <button class="btn" type="submit">Upload review</button>
+                                                <button class="btn"
+                                                        type="submit">{{ __('client.detail.upload_review') }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -451,16 +466,17 @@
                     <div class="box-book-now">
                         <input type="hidden" value="{{ $tour->price }}" id="price">
                         <input type="hidden" value="{{ $tour->duration }}" id="duration">
-                        <p class="card-text">from <span class="card-title">${{ number_format($tour->price, 2) }}</span>
+                        <p class="card-text">{{ __('client.from') }} <span
+                                class="card-title">{{ number_format($tour->price * 20000) }} VNĐ</span>
                         </p>
                         <hr>
                         <div class="info-tour d-flex justify-content-between">
                             <span class="card-text w-50">
-                                Duration: <p
+                                {{ __('client.index.duration') }} : <p
                                     class="card-title">{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</p>
                             </span>
                             <span class="card-text w-50">
-                                Tour type: <p class="card-title">{{ $tour->type->name }}</p>
+                                {{ __('client.type_of_tour') }} : <p class="card-title">{{ $tour->type->name }}</p>
                             </span>
                         </div>
                         <form action="{{ route('client.booking.index', $tour->slug) }}" id="formBookNow">
@@ -485,15 +501,74 @@
                                     @endfor
                                 </select>
                             </div>
+
+
+                            <!--- THÊM MỚI -->
+                            <style>
+
+                            </style>
+
+                            <h5>Loại phòng</h5>
+                            <div class="input-inner-icon">
+                                <img src="{{ asset('images/icon/home_icon.svg') }}" alt="people">
+                                <select class="form-control" id="selectRoom" name="people">
+                                    <option value="2500000">Phòng hạng sang (1 giường) - 2.5tr</option>
+                                    <option value="2000000">Phòng VIP (2 giường) - 2tr</option>
+                                    <option value="1500000">Phòng thường (2 giường) - 1.5tr</option>
+                                    <option value="1000000">Phòng thường (1 giường) - 1tr</option>
+                                    <option value="800000">Phòng bình dân (1 giường) - 800k</option>
+                                </select>
+                            </div>
+                            <div class="input-inner-icon">
+                                <img src="{{ asset('images/icon/number.svg') }}" alt="people">
+                                <input type="number" class="form-control" id="numberRoom" name="people"
+                                       placeholder="Số lượng phòng" min="1" value="1">
+                            </div>
+
+                            <h5>Dịch vụ kèm thêm</h5>
+                            - Miễn phí bữa sáng</br>
+                            - Miễn phí vé vào cửa</br></br>
+                            {{--                            <div class="input-inner-icon">--}}
+                            {{--                                <div class="sub-checkout-item">--}}
+                            {{--                                    <div class="form-check">--}}
+                            {{--                                        <input class="form-check-input" type="radio" name="payment_method"--}}
+                            {{--                                               id="creditCard" value="2">--}}
+                            {{--                                        <label class="form-check-label" for="creditCard">--}}
+                            {{--                                            <span class="payment-title">Credit Card</span>--}}
+                            {{--                                            <img class="payment-image"--}}
+                            {{--                                                 src="http://127.0.0.1:8000/images/credit-card.png" alt="credit card">--}}
+                            {{--                                        </label>--}}
+                            {{--                                    </div>--}}
+                            {{--                                    <div class="form-check">--}}
+                            {{--                                        <input class="form-check-input" type="radio" name="payment_method" id="paypal"--}}
+                            {{--                                               value="3">--}}
+                            {{--                                        <label class="form-check-label" for="paypal">--}}
+                            {{--                                            <span class="payment-title">Paypal</span>--}}
+                            {{--                                            <img class="payment-image" src="http://127.0.0.1:8000/images/paypal.png"--}}
+                            {{--                                                 alt="paypal">--}}
+                            {{--                                        </label>--}}
+                            {{--                                    </div>--}}
+                            {{--                                    <div class="form-check">--}}
+                            {{--                                        <input class="form-check-input" type="radio" name="payment_method" id="cash"--}}
+                            {{--                                               value="1" checked="">--}}
+                            {{--                                        <label class="form-check-label" for="cash">--}}
+                            {{--                                            <span class="payment-title">Pay in cash</span>--}}
+                            {{--                                        </label>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
+
+
+                            <!--- KẾT THÚC THÊM MỚI -->
                             <div class="total-price d-flex justify-content-between">
                                 <span class="card-text">
-                                    Total
+                                    {{ __('client.total') }}
                                 </span>
-                                <span class="card-title" id="totalPrice">$</span>
+                                <span class="card-title" id="totalPrice">VNĐ</span>
                             </div>
                             <div class="input-search">
                                 <button class="form-control btn-search-submit" type="submit">
-                                    Book now
+                                    {{ __('client.detail.book_now') }}
                                 </button>
                             </div>
                         </form>
@@ -509,7 +584,7 @@
     <div class="box-slide slide-tour list-tours mt-5">
         <div class="container">
             <div class="header-slide d-flex align-items-end">
-                <p class="title-related">Related tours</p>
+                <p class="title-related">{{ __('client.related_tour') }}</p>
             </div>
             <div class="body-slide">
                 <div class="row">
@@ -542,7 +617,8 @@
                                             <img src="{{ asset('images/icon/schedule.svg') }}" alt="location">
                                             <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span>
                                         </p>
-                                        <p class="card-text">from <span class="card-title">${{ $tour->price }}</span>
+                                        <p class="card-text">{{ __('client.from') }} <span
+                                                class="card-title">${{ $tour->price }}</span>
                                         </p>
                                     </div>
                                 </div>

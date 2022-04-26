@@ -72,15 +72,18 @@ class Utilities
         }
 
         if ($duration == 1) {
-            return 'a day';
+//            return 'a day';
+            return 'một ngày';
         }
 
         $night = $duration - 1;
         if ($night == 1) {
-            return "$duration days, $night night";
+            return "$duration ngày, $night đêm";
+//            return "$duration days, $night night";
         }
 
-        return "$duration days, $night nights";
+        return "$duration ngày, $night đêm";
+//        return "$duration days, $night nights";
     }
 
     /**

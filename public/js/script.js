@@ -249,20 +249,26 @@ $(document).ready(function () {
 
     // Calculate Price
     let PRICE_DEFAULT = $('#price').val();
-    $('#selectNumberPeople').on('change', function () {
+    $('#selectNumberPeople, #selectRoom').on('change', function () {
+        caculatePrice();
+    });
+
+    $('#numberRoom').on('keyup', function () {
         caculatePrice();
     });
 
     function caculatePrice() {
         let numberPeople = $('#selectNumberPeople').val();
-        let price = (numberPeople * PRICE_DEFAULT).toFixed(2);
+        let price = numberPeople * PRICE_DEFAULT * 20000;
         if (isNaN(price)) {
-            $('#totalPrice').text('$');
+            $('#totalPrice').text('VNĐ');
 
             return;
         }
+        let priceRoom = $('#selectRoom').val() * $('#numberRoom').val();
+        price = price + priceRoom;
 
-        $('#totalPrice').text('$' + price);
+        $('#totalPrice').text(price.toLocaleString() + ' VNĐ');
     }
 
     caculatePrice();
