@@ -1,222 +1,29 @@
-/*========== Introduce ==========*/
+.ads {
+    margin-top: 100px;
+    height: 350px;
 
-.introduce {
-    margin-top: 200px;
-    margin-bottom: 100px;
-
-    .box-introduce-image {
-        min-height: 623px;
-        position: relative;
-
-        .img-introduce-top {
-            width: 80%;
-            height: 85%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .img-introduce-bottom {
-            width: 65%;
-            width: 65%;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
+    .ads-left {
+        padding-right: 0;
+        background-color: $primary-color;
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
-    .box-text-introduce {
-        .introduce-title {
-            width: 95%;
-            font-size: 40px;
-            line-height: 40px;
-            font-weight: 500;
-
-            span {
-                color: $orange-primary;
-            }
-        }
-
-        .content-introduce {
-            margin-top: 60px;
-            height: 450px;
-            font-size: 16px;
-
-            .icon-droplet-introduce {
-                float: left;
-                height: 100%;
-                margin-right: 38.88px;
-            }
-        }
+    .ads-right {
+        padding-left: 0;
     }
-
-    @media only screen and (min-width: 1400px) {
-        .box-introduce-image {
-            width: 85%;
-        }
-    }
-    @media only screen and (max-width: 992px) {
-        .box-introduce-image {
-            width: 75%;
-            margin-bottom: 80px;
-        }
-    }
-    @media only screen and (max-width: 576px) {
-        .box-introduce-image {
-            min-height: 300px;
-        }
-        .box-text-introduce {
-            .introduce-title {
-                font-size: 28px;
-            }
-        }
-    }
-}
-
-
-/*========== Slide Destinations ==========*/
-
-.card-destination {
-    width: 255px;
 
     img {
-        height: 350px !important;
-    }
-
-    .card-body {
-        h5 {
-            min-height: 28px !important;
-            margin: 0;
-        }
-
-        .card-title {
-            -webkit-line-clamp: 1 !important;
-            font-size: 20px;
-            margin-bottom: 2px;
-        }
-
-        .card-text {
-            font-size: 14px;
-            padding: 0;
-        }
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
     }
 }
-
-@media only screen and (max-width: 992px) {
-    .slide-destinations {
-        .card-destination {
-            width: 200px;
-
-            img {
-                height: 200px !important;
-            }
-        }
-    }
-}
-
-@media only screen and (max-width: 576px) {
-    .slide-destinations {
-        .card-destination {
-            width: 135px;
-
-            .card-body {
-                .card-title {
-                    font-size: 18px;
-                }
-            }
-        }
-    }
-}
-
-
-/*========== Slide Tours ==========*/
-
-.slide-tour {
-    margin-top: 150px;
-
-    .card-tour {
-        width: 350px;
-
-        .card-image {
-            position: relative;
-
-            .ribbon {
-                position: absolute;
-                top: -2px;
-                right: 8%;
-                height: 35px;
-                width: 20px;
-                z-index: 1;
-            }
-
-            .rate {
-                width: 65px;
-                height: 30px;
-                padding: 0 10px;
-                position: absolute;
-                left: 0;
-                bottom: 10%;
-                background-color: $orange-primary;
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                z-index: 1;
-
-                img {
-                    height: 16px;
-                    width: 16px;
-                    display: inline;
-                }
-
-                span {
-                    padding-top: 4px;
-                    font-size: 14px;
-                    font-style: normal;
-                    font-weight: 700;
-                    line-height: 22px;
-                    color: white;
-                }
-            }
-        }
-
-        .card-body {
-            .card-title {
-                font-size: 18px;
-            }
-
-            .card-text {
-                font-size: 14px;
-                padding: 9px 0;
-                margin: 0;
-
-                img {
-                    width: 16px;
-                    height: 18px;
-                    display: inline-block;
-                    margin-right: 14px;
-                }
-            }
-        }
-    }
-
-    @media only screen and (max-width: 992px) {
-        .card-tour {
-            width: 220px;
-        }
-    }
-    @media only screen and (max-width: 576px) {
-        .card-tour {
-            width: 90%;
-
-            .card-body {
-                .card-title {
-                    font-size: 16px;
-                }
-            }
-        }
-    }
-}
-
 
 /*========== Mail Deals ==========*/
 

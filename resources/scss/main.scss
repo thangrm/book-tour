@@ -3,7 +3,11 @@
 @import "utilities/variables";
 @import "utilities/base";
 
-/* layouts */
+/* components */
+
+@import "components/hamburger";
+@import "components/destination";
+@import "components/tour";
 
 @import "components/breadcrumb";
 @import "components/input";

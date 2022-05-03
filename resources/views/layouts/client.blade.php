@@ -17,10 +17,22 @@
     <meta property="og:image:secure_url" content="@yield('image_seo')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('favicon.ico') }}">
+
+    <!-- Font -->
+    <link rel="stylesheet" href="{{ asset('font/fontawesome-free-6.1.1-web/css/all.min.css') }}">
+
     <!-- cdn bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    {{--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"--}}
+    {{--          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--}}
+    {{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">--}}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap-reboot.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <script src="{{ asset('js/jquery/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/select2/select2.min.js') }}"></script>
+
     <!-- owl carousel -->
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.theme.default.css') }}">
@@ -37,13 +49,14 @@
 
 <body>
 
+<!-------------------- Header -------------------->
+@include('components.header')
+
 <!-------------------- Content -------------------->
 @yield('content')
-<!-------------------- End Content-------------------->
 
 <!-------------------- Footer -------------------->
 @include('components.footer')
-<!-------------------- End Footer-------------------->
 </body>
 
 <!-- cdn bootstrap -->

@@ -31,10 +31,10 @@ class ClientController extends Controller
      */
     public function index(Destination $destination, Type $type, Tour $tour)
     {
-        $destinations = $destination->getByStatus(1, 8);
-        $types = $type->getByStatus(1, 8);
-        $trendingTours = $tour->getByTrending(true, 8);
-        $tours = $tour->getByStatus(1, 8);
+        $destinations = $destination->getByStatus(1, 5);
+        $types = $type->getByStatus(1, 3);
+        $trendingTours = $tour->getByTrending(true, 3);
+        $tours = $tour->getByStatus(1, 3);
 
         return view('index', compact(['destinations', 'trendingTours', 'types', 'tours']));
     }

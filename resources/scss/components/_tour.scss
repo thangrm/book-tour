@@ -1,0 +1,64 @@
+.tour-image {
+    position: relative;
+    height: 250px;
+
+    img {
+        height: 250px;
+    }
+
+    .best-seller {
+        position: absolute;
+        bottom: -20px;
+        left: 20px;
+        padding: 5px 8px;
+        background-color: $primary-color;
+        z-index: 1;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+    }
+}
+
+.tour-title {
+    padding-top: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: black;
+}
+
+.tour-title:hover {
+    text-decoration: none;
+    color: $primary-color;
+}
+
+.tour-duration {
+    color: $primary-color;
+    font-size: 20px;
+}
+
+.price-discount {
+    font-size: 15px;
+    color: #a7a7a7;
+    text-decoration-line: line-through;
+}
+
+.price {
+    font-size: 22px;
+    font-weight: bold;
+    color: $primary-color;
+}
+
+@media only screen and (min-width: 576px) {
+    .tour-image img {
+        height: 350px;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .tour-image img {
+        height: 210px;
+    }
+}

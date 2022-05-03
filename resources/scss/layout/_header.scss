@@ -1,220 +1,229 @@
-.header {
+#overlay {
+    position: fixed;
+    display: none;
     width: 100%;
-    height: 766px;
-    margin: 0 auto;
-    padding-top: 20px;
-    background-image: url('../images/background-header.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top;
-    overflow: hidden;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.18);
+    z-index: 2;
+    cursor: pointer;
+}
 
-    .navbar {
-        button {
-            position: absolute;
-            transition: all linear 0.2s;
-            top: 0;
-            right: 0px;
-        }
+.header {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+}
 
-        button[aria-expanded="true"] > span.navbar-toggler-icon {
-            display: none;
-        }
+.header nav {
+    position: relative;
+}
 
-        button[aria-expanded="false"] > span.navbar-icon-close {
-            display: none;
-        }
+.navigator-bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-bottom: solid 3px #e5e5e5;
+    transition: all 0.25s;
+    z-index: -1;
+}
+
+#navbarNav {
+    .nav-link {
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #94999f;
     }
 
-    .navbar-header {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
+    .nav-link:hover,
+    .active {
+        color: #1e354c;
+    }
+}
+
+@media only screen and (max-width: 991.99px) {
+    #overlay.show {
+        display: block;
+    }
+    .nav-margin-right {
+        margin-right: 350px;
+        margin-left: -350px;
+    }
+    #navbarNav {
+        transition: right .25s ease-in-out;
+        background-color: #1f1f1f;
+        padding-top: 30px;
+        height: 100%;
+        width: 350px;
+        position: fixed;
+        z-index: 3;
+        right: -350px;
+        top: 0;
 
         .nav-item {
-            a {
-                color: white;
-                padding: 8px 2em;
-            }
+            padding: 0 30px;
+        }
 
-            a:hover {
-                color: $orange-primary;
-            }
+        .nav-link {
+            padding: 20px 0;
+            color: #979797;
+            border-bottom: solid 1px #979797;
+        }
 
-            a:focus {
-                color: $orange-primary;
-            }
-
-            .active {
-                color: $orange-primary;
-            }
+        .nav-link:hover,
+        .active {
+            color: #ffffff;
         }
     }
-
-    @media only screen and (max-width: 992px) {
-        background-size: auto 435px;
-        height: auto;
-        .navbar-header {
-            .nav-item {
-                a {
-                    padding: 8px 1.2em;
-                }
-            }
-        }
+    #navbarNav.show {
+        right: 0;
     }
-    @media only screen and (max-width: 768px) {
-        .navbar-header {
-            .nav-item {
-                a {
-                    padding: 8px 0.8em;
-                }
-            }
-        }
+}
+
+@media only screen and (max-width: 575.99px) {
+    .nav-margin-right {
+        margin-right: 250px;
+        margin-left: -250px;
     }
-    @media only screen and (max-width: 575.98px) {
-        background-size: auto 535px;
-        .navbar-collapse.show .navbar-header {
-            width: 300px;
-        }
-        .navbar-header {
-            width: 0px;
-            height: 100%;
-            transition: width linear 0.3s;
-            position: fixed;
-            z-index: 10;
-            top: 0;
-            right: 0;
-            background: #34758a;
+    .nav-link {
+        padding: 10px 0;
+    }
+    #navbarNav {
+        width: 250px;
+        right: -250px;
+    }
+    #navbarNav.show {
+        right: 0;
+    }
+}
 
-            .nav-item {
-                border-top: 1px solid rgba(255, 255, 255, 0.2);
+//Banner
+.box-banner-header {
+    margin-top: 80px;
+    width: 100%;
+}
 
-                a {
-                    color: white !important;
-                }
-            }
+.banner-header {
+    height: 550px;
+    padding-top: 80px;
+    width: 100%;
+    background-size: cover;
+    background-image: url('/images/bg-travel.jpg');
+    color: white;
+    text-align: center;
 
-            .active,
-            .nav-item:hover {
-                background-color: $orange-primary;
-            }
-        }
-        .navbar-active-btn {
-            position: fixed !important;
-            top: 0 !important;
-            right: 300px !important;
-        }
+    .title-header {
+        font-weight: bold;
+        font-size: 30px;
+        margin-bottom: 0;
     }
 
-    .box-content-header {
-        margin-top: 153px;
-        /* Text Header*/
-        .text-header {
-            .text-welcome {
-                color: #FFF2CF;
-                font-weight: bold;
-                font-size: 16px;
-            }
+    .desc-header {
+        font-size: 16px;
+    }
 
-            .text-slogan {
-                width: 445px;
-                color: white;
-                font-weight: 500;
-                font-size: 60px;
-            }
+    .box-find-tour {
+        width: 65%;
+        margin: 0 auto;
+        margin-top: 50px;
+        font-size: 15px;
+
+        .col-find-tour {
+            padding: 2px;
         }
 
-        /* Feature */
-        .box-feature {
-            background-color: white;
-            height: 99px;
-            padding-top: 26px;
-            margin-top: 188px;
-            margin-left: -1000px;
-            padding-left: 1000px;
-
-            .dot {
-                height: 8px;
-                width: 8px;
-                padding-right: 8px;
-                background-color: $orange-primary;
-                border-radius: 50%;
-                display: inline-block;
-            }
-
-            .info-feature {
-                p {
-                    font-size: 24px;
-                    font-weight: bold;
-
-                    span {
-                        font-size: 16px;
-                        font-weight: normal;
-                    }
-                }
-            }
+        .col-find-tour.search input {
+            padding-right: 30px;
         }
 
-        /* Search */
-        .form-search {
-            background: linear-gradient(0deg, rgba(255, 255, 255, 0.704) 1.52%, rgba(255, 255, 255, 0.64) 100%);
-            backdrop-filter: blur(42px);
-            padding-bottom: 25px;
-
-            .title-search {
-                font-weight: 500;
-                font-size: 24px;
-                margin: 18px 30px;
-                color: $black-title;
-            }
-
-            .input-search {
-                margin: 18px 30px;
-            }
-
-            .btn-search-submit {
-                height: 64px;
-                background-color: $orange-primary;
-                color: white;
-                border: none;
-            }
+        .col-find-tour.search::after {
+            content: "\f002";
+            font-family: fontAwesome;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            color: black;
+            z-index: 1;
+            transform: translateY(-50%);
         }
 
-        @media only screen and (max-width: 992px) {
-            .box-feature {
-                background: linear-gradient(0deg, rgba(255, 255, 255, 0.704) 1.52%, rgba(255, 255, 255, 0.64) 100%) !important;
-                padding-top: 0;
-                margin-left: 0;
-                padding-left: 0;
-                margin-top: 100px;
-
-                .dot {
-                    margin-left: 10px;
-                }
-
-                .info-feature {
-                    margin-left: 10px;
-                    width: 95% !important;
-
-                    span {
-                        display: block;
-                    }
-                }
-            }
-            /* Text Header*/
-            .text-header {
-                .text-welcome {
-                    padding-left: 10px;
-                }
-
-                .text-slogan {
-                    padding-left: 10px;
-                    font-size: 25px;
-                }
-            }
-            .form-search {
-                margin-top: 50px;
-            }
+        .form-find-tour {
+            height: 65px;
+            position: relative;
         }
+
+        .btn-find-tour {
+            height: 65px;
+            width: 100%;
+            background-color: $primary-color;
+            color: white;
+        }
+    }
+}
+
+//Statistical
+.box-statistical {
+    padding-top: 30px;
+    width: 100%;
+    background-color: $primary-color;
+    background: linear-gradient(rgba(249, 114, 81, 1), rgba(255, 152, 108, 1))
+}
+
+.statistical {
+    width: 65%;
+    margin: 0 auto;
+}
+
+.statistical-item {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+
+    img {
+        width: 60px;
+        height: 60px;
+        margin-right: 20px;
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+.statistical-content {
+    width: 80%;
+    font-size: 15px;
+    color: white;
+
+    .title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+}
+
+.box-title {
+    width: 100%;
+    margin: 80px 0;
+    text-align: center;
+
+    .title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    a {
+        color: $primary-color;
+    }
+
+    a:hover {
+        text-decoration: none;
     }
 }

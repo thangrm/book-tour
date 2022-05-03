@@ -1,283 +1,210 @@
 @extends('layouts.client')
 @section('content')
-    <!-------------------- Header -------------------->
-    <div class="header">
-        <!--Logo and Nav -->
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <a href="{{ route('index') }}">
-                    <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
-                </a>
-                <nav class="navbar navbar-expand-sm navbar-dark">
-                    <button class="navbar-toggler" id="navbarBtn" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span class="navbar-icon-close">X</span>
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarToggler">
-                        <ul class="nav navbar-header flex-column flex-sm-row">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">{{ __('client.home') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">{{ __('client.about') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                   href="{{ route('client.tours.list', 'all') }}">{{ __('client.tours') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">{{ __('client.hotels') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                   href="{{ route('client.contact.index') }}">{{ __('client.contact') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link pe-0" href="#">{{ __('client.login') }}</a>
-                            </li>
-                        </ul>
+    <div class="box-banner-header" id="boxBanner">
+        <div class="banner-header">
+            <p class="title-header">Điểm du lịch tiếp theo</p>
+            <p class="desc-header">Khám phá những địa điểm tuyệt vời với các ưu đãi độc quyền</p>
+
+            <div class="box-find-tour">
+                <div class="row">
+                    <div class="col-12 col-lg-3 col-find-tour search">
+                        <input type="text" class="form-control form-find-tour" placeholder="Từ khóa">
                     </div>
-                </nav>
+                    <div class="col-12 col-lg-3 col-find-tour">
+                        <select class="form-control form-find-tour">
+                            <option value="">Địa điểm</option>
+                            <option value="">Hà Nội</option>
+                            <option value="">TP. Hồ Chí Minh</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-lg-3 col-find-tour">
+                        <select class="form-control form-find-tour">
+                            <option value="">Thời gian</option>
+                            <option value="">1 ngày</option>
+                            <option value="">2-4 ngày</option>
+                            <option value="">5-7 ngày</option>
+                            <option value="">7+ ngày</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-lg-3 col-find-tour">
+                        <button class="btn btn-find-tour">Tìm kiếm</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--End Logo and Nav -->
+        <div class="box-statistical">
+            <div class="statistical">
+                <div class="row">
+                    <div class="col-12 col-lg-4 statistical-item">
+                        <img src="{{ asset('images/icon/tvicon1.png') }}" alt="number destinations">
+                        <div class="statistical-content">
+                            <p class="title">700+ ĐỊA ĐIỂM HẤP DẪN</p>
+                            <p class="content">Nhóm chuyên gia của chúng tôi đã lựa chọn cẩn thận tất cả các điểm
+                                đến</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 statistical-item">
+                        <img src="{{ asset('images/icon/tvicon2.png') }}" alt="best price guarantee">
+                        <div class="statistical-content">
+                            <p class="title">ĐẢM BẢO GIÁ TỐT NHẤT</p>
+                            <p class="content">Liên hệ thỏa thuận giá cả trong vòng 48 giờ sau khi xác nhận đơn hàng</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 statistical-item">
+                        <img src="{{ asset('images/icon/tvicon3.png') }}" alt="top notch support">
+                        <div class="statistical-content">
+                            <p class="title">HỖ TRỢ NHANH CHÓNG</p>
+                            <p class="content">Chúng tôi sẵn sàng trợ trước và ngay cả sau chuyến đi của bạn.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <!-- Info feature and Search -->
-        <div class="container box-content-header">
+    <!-- Destiantion -->
+    <div class="popular-destination container">
+        <div class="box-title">
+            <p class="title">Các địa điểm nổi tiếng</p>
+            <a href="#">
+                <span>Xem tất cả địa điểm</span>
+                <i class="fa fa-long-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="destinations">
             <div class="row">
-                <div class="col-12 col-xxl-8 col-lg-7 p-0">
-                    <div class="text-header">
-                        <p class="text-welcome">{{ __('client.index.welcome_to_viet_nam') }}</p>
-                        <p class="text-slogan">{{ __('client.index.perfect_place_for_your_stories') }}</p>
+                @foreach($destinations as $destination)
+                    <div
+                        class="col-12 @if ($loop->first) col-lg-8 @else col-lg-4 @endif destination-item">
+                        <img src="{{ asset('storage/images/destinations/' . $destination->image) }}"
+                             alt="{{ $destination->name }}">
+                        <div class="info-destination">
+                            <p class="name-destination">{{ $destination->name }}</p>
+                            <p class="description">{{ $destination->description}}</p>
+                            <a class="btn-view" href="{{ route('client.tours.list', $destination->slug) }}">
+                                Xem tất cả tour
+                            </a>
+                        </div>
+                        <div class="total-tours">5 tours</div>
                     </div>
-                    <div class="box-feature">
-                        <div>
-                            <span class="dot"></span>
-                            <span>{{ __('client.index.feature') }}</span>
-                        </div>
-                        <div class="info-feature d-flex justify-content-between w-75">
-                            <p>200+ <span>{{  __('client.tours') }}</span></p>
-                            <p>100+ <span>{{  __('client.destinations') }}</span></p>
-                            <p>8+ <span>{{  __('client.type_of_tour') }}</span></p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-12 col-xxl-4 col-lg-5 form-search">
-                    <p class="title-search">{{ __('client.index.discover_beautiful_vietnam') }}</p>
-                    <form action="{{ route('client.search.index') }}">
-                        <div class="input-search input-inner-icon">
-                            <img src="{{ asset('images/icon/search.svg') }}" alt="name tour">
-                            <input class="form-control" type="text" name="tour_name"
-                                   placeholder="{{ __('client.index.tour_name') }}">
-                        </div>
-                        <div class="input-search input-inner-icon">
-                            <img src="{{ asset('images/icon/location.svg') }}" alt="location">
-                            <input class="form-control" type="text" name="destination_name"
-                                   placeholder="{{ __('client.index.location') }}">
-                        </div>
-                        <div class="input-search input-inner-icon">
-                            <img src="{{ asset('images/icon/flag.svg') }}" alt="type_of_tour">
-                            <select class="form-control" name="filter_type[]">
-                                <option value="" disabled selected hidden>{{ __('client.type_of_tour') }}</option>
-                                @foreach ($types as $type)
-                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="input-search input-inner-icon">
-                            <img src="{{ asset('images/icon/schedule.svg') }}" alt="duration">
-                            <input class="form-control" type="text" name="duration"
-                                   placeholder="{{ __('client.index.duration') }}">
-                        </div>
-
-                        <div class="input-search">
-                            <button
-                                class="form-control btn-search-submit d-flex justify-content-center align-items-center"
-                                type="submit">
-                                <img class="fill-white me-2" src="{{ asset('images/icon/search.svg') }}"
-                                     alt="{{ __('client.search') }}">
-                                {{ __('client.search') }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                @endforeach
             </div>
         </div>
-        <!--End Info feature and Search -->
-
     </div>
-    <!-------------------- End Header -------------------->
 
-    <!-------------------- Introduce -------------------->
-    <div class="introduce">
-        <div class="container">
+    <!-- List tour -->
+    <div class="popular-tour container">
+        <div class="box-title">
+            <p class="title">Các tour thường đến</p>
+            <a href="#">
+                <span>Xem tất cả tour</span>
+                <i class="fa fa-long-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="tours">
             <div class="row">
-                <div class="col-12 col-lg-6">
-                    <div class="box-introduce-image mx-auto">
-                        <img class="img-introduce-top" src="{{ asset('images/introduce1.png') }}" alt="introduce">
-                        <img class="img-introduce-bottom" src="{{ asset('images/introduce2.png') }}" alt="introduce">
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <div class="box-text-introduce">
-                        <p class="introduce-title">
-                            {{ __('client.index.with') }}
-                            <span>{{ __('client.index.thang_loi_travel') }},</span> {{ __('client.index.immerses_you_in_majestic_space_and_unique_cultural_features') }}
-                        </p>
-
-                        <div class="content-introduce">
-                            <div class="icon-droplet-introduce">
-                                <img src="{{ asset('images/icon/droplets.svg') }}" alt="introduce">
-                            </div>
-                            <p>
-                                {{ __('client.index.introduce_one') }}
-                            </p>
-                            <p>
-                                {{ __('client.index.introduce_two') }}
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-------------------- End Introduce -------------------->
-
-    <!-------------------- Slide Destinations -------------------->
-    <div class="box-slide slide-destinations">
-        <div class="container">
-            <div class="header-slide">
-                <p class="title-slide">  {{ __('client.index.discover_fascinating_destinations') }}</p>
-                <a href="{{ route('client.destination.index') }}"
-                   class="btn btn-view-all">  {{ __('client.index.view_all') }}</a>
-            </div>
-            <div class="body-slide">
-                <div class="owl-carousel" id="slideDestinations">
-                    @foreach ($destinations as $destination)
-                        <div class="card card-destination">
-                            <img src="{{ asset('storage/images/destinations/' . $destination->image) }}"
-                                 class="card-img-top" alt="{{ $destination->name }}">
-                            <div class="card-body">
-                                <h5 class="card-title"><a
-                                        href="{{ route('client.tours.list', $destination->slug) }}">
-                                        {{ $destination->name }} </a>
-                                </h5>
-                                <p class="card-text">{{ $destination->tours()->count() }} {{ strtolower(__('tours')) }}</p>
-                            </div>
-                        </div>
-                    @endforeach
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-------------------- End Slide Destinations-------------------->
-
-    <!-------------------- Slide Tours -------------------->
-    <div class="box-slide slide-tour">
-        <div class="container">
-            <div class="header-slide">
-                <p class="title-slide">{{ __('client.index.attractive_tour_and_interesting_experiences') }}</p>
-                <a href="{{ route('client.tours.list', 'trending') }}"
-                   class="btn btn-view-all">{{ __('client.index.view_all') }}</a>
-            </div>
-            <div class="body-slide">
-                <div class="owl-carousel" id="slideTours">
-                    @foreach ($trendingTours as $tour)
-                        <div class="card card-tour">
-                            <div class="card-image">
-                                <img class="ribbon" src="{{ asset('/images/icon/ribbon.svg') }}" alt="bookmark">
-                                <div class="rate">
-                                    <img src="{{ asset('images/icon/star.svg') }}" alt="star">
-                                    <span
-                                        class="text-rate">{{ \App\Libraries\Utilities::calculatorRateReView($tour->reviews)['total'] }}
-                                    </span>
-                                </div>
-                                <img src="{{ asset('storage/images/tours/' . $tour->image) }}" class="card-img-top"
+                @foreach ($trendingTours as $tour)
+                    <div class="col-12 col-lg-4 mb-5">
+                        <div class="card">
+                            <a href="{{ route('client.tours.detail', $tour->slug) }}" class="tour-image">
+                                <img class="card-img-top" src="{{ asset('storage/images/tours/' . $tour->image) }}"
                                      alt="{{ $tour->name }}">
-                            </div>
-
+                                <div class="best-seller {{ ($tour->trending) ? '' : 'd-none'  }}">
+                                    <span>Nổi bật</span>
+                                </div>
+                            </a>
                             <div class="card-body">
-                                <p class="card-text">
-                                    <img src="{{ asset('images/icon/location.svg') }}" alt="location">
-                                    <span>{{ $tour->destination->name }}</span>
-                                </p>
-                                <h5 class="card-title"><a
-                                        href="{{ route('client.tours.detail', $tour->slug) }}">{{ $tour->name }}</a>
-                                </h5>
-                                <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                    <p class="card-text">
-                                        <img src="{{ asset('images/icon/schedule.svg') }}" alt="duration">
-                                        <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span>
+                                <a href="{{ route('client.tours.detail', $tour->slug) }}" class="tour-title">
+                                    <h5 class="card-title">{{ $tour->name }}</h5>
+                                </a>
+                                <div class="d-flex justify-content-between pt-3">
+                                    <span><i
+                                            class="fa-regular fa-clock tour-duration"></i> <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span></span>
+                                    <span class="price-discount">{{ number_format($tour->price * 1.2) }}đ</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p>
+                                        <i class="fa-solid fa-star star"></i>
+                                        <i class="fa-solid fa-star star"></i>
+                                        <i class="fa-solid fa-star star"></i>
+                                        <i class="fa-solid fa-star star"></i>
+                                        <i class="fa-solid fa-star star"></i>
                                     </p>
-                                    <p class="card-text">{{ __('client.from') }} <span
-                                            class="card-title">{{ number_format($tour->price * 20000) }} VNĐ</span></p>
+                                    <p class="price">{{ number_format($tour->price) }}đ</p>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
-
         </div>
     </div>
-    <!-------------------- End Slide Tours-------------------->
 
-    <!-------------------- Slide Traditional Cultural -------------------->
-    <div class="box-slide slide-tour slide-cultural">
-        <div class="container">
-            <div class="header-slide">
-                <p class="title-slide">{{ __('client.index.experience_the_traditional_cultural_beauties_of_Vietnam') }}</p>
-                <a href="{{ route('client.tours.list', 'new') }}"
-                   class="btn btn-view-all"> {{ __('client.index.view_all') }}</a>
+    <div class="ads container">
+        <div class="row">
+            <div class="col-6 ads-left">
+                <p>Trải nghiểm kỳ nghỉ hè 2022 với chúng tôi</p>
+                <span>Ưu đãi lên tới 40%</span>
             </div>
-            <div class="body-slide">
-                <div class="owl-carousel" id="slideCultural">
-                    @foreach ($tours as $tour)
-                        <div class="card card-tour">
-                            <div class="card-image">
-                                <img class="ribbon" src="{{ asset('/images/icon/ribbon.svg') }}" alt="bookmark">
-                                <div class="rate">
-                                    <img src="{{ asset('images/icon/star.svg') }}" alt="star">
-                                    <span
-                                        class="text-rate">{{ \App\Libraries\Utilities::calculatorRateReView($tour->reviews)['total'] }}
-                                    </span>
-                                </div>
-                                <img src="{{ asset('storage/images/tours/' . $tour->image) }}" class="card-img-top"
+            <div class="col-6 ads-right">
+                <img src="{{ asset('images/ads.jpg') }}" alt="ads tour">
+            </div>
+        </div>
+    </div>
+
+    <!-- Recomended tour -->
+    <div class="recommended-tour container">
+        <div class="box-title">
+            <p class="title">Gợi ý của chúng tôi</p>
+            <a href="#">
+                <span>Xem tất cả tour</span>
+                <i class="fa fa-long-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="tours">
+            <div class="row">
+                @foreach ($tours as $tour)
+                    <div class="col-12 col-lg-4 mb-5">
+                        <div class="card">
+                            <a href="{{ route('client.tours.detail', $tour->slug) }}" class="tour-image">
+                                <img class="card-img-top" src="{{ asset('storage/images/tours/' . $tour->image) }}"
                                      alt="{{ $tour->name }}">
-                            </div>
-
+                                <div class="best-seller {{ ($tour->trending) ? '' : 'd-none'  }}">
+                                    <span>Nổi bật</span>
+                                </div>
+                            </a>
                             <div class="card-body">
-                                <p class="card-text">
-                                    <img src="{{ asset('images/icon/location.svg') }}" alt="location">
-                                    <span>{{ $tour->destination->name }}</span>
-                                </p>
-                                <h5 class="card-title"><a
-                                        href="{{ route('client.tours.detail', $tour->slug) }}">{{ $tour->name }}</a>
-                                </h5>
-                                <div class="d-inline-flex justify-content-between align-items-center w-100">
-                                    <p class="card-text">
-                                        <img src="{{ asset('images/icon/schedule.svg') }}" alt="location">
-                                        <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span>
+                                <a href="{{ route('client.tours.detail', $tour->slug) }}" class="tour-title">
+                                    <h5 class="card-title">{{ $tour->name }}</h5>
+                                </a>
+                                <div class="d-flex justify-content-between pt-3">
+                                    <span><i
+                                            class="fa-regular fa-clock tour-duration"></i> <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span></span>
+                                    <span class="price-discount">{{ number_format($tour->price * 1.2) }}đ</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p>
+                                        <i class="fa-solid fa-star star"></i>
+                                        <i class="fa-solid fa-star star"></i>
+                                        <i class="fa-solid fa-star star"></i>
+                                        <i class="fa-solid fa-star star"></i>
+                                        <i class="fa-solid fa-star star"></i>
                                     </p>
-                                    <p class="card-text">{{ __('client.from') }} <span
-                                            class="card-title">{{ number_format($tour->price * 20000) }} VNĐ</span></p>
+                                    <p class="price">{{ number_format($tour->price) }}đ</p>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
-
         </div>
     </div>
-    <!-------------------- End Slide Tours-------------------->
+
+
+
 
     <!-------------------- Email Deals -------------------->
     <div class="mail-deals">
@@ -303,4 +230,50 @@
         </div>
     </div>
     <!-------------------- End Email Deals-------------------->
+@endsection
+@section('js')
+    <script>
+        $(document).ready(function () {
+            // Get screen size
+            let windowsize = $(window).width();
+
+            function checkWidth() {
+                windowsize = $(window).width();
+            }
+
+            checkWidth();
+            $(window).resize(checkWidth);
+
+            // Event nav icon
+            $('#nav-icon1,#overlay').click(function () {
+                $('#body').toggleClass("nav-margin-right");
+                $('#nav-icon1').toggleClass('open');
+                $('#navbarNav').toggleClass("show");
+                $('#overlay').toggleClass("show");
+            });
+
+            // Event hover menu
+            $('#navHeader').on("mouseenter", ".nav-link", function () {
+                navigatorBar($(this));
+            });
+            $('#navHeader').on("mouseleave", ".nav-link", function () {
+                navigatorBar($('#navHeader .active'));
+            });
+
+            function navigatorBar(tab) {
+                if (windowsize < 992) {
+                    return;
+                }
+                let left = tab.offset().left - $('#navHeader').offset().left + 36;
+                let top = tab.offset().top - $('#navHeader').offset().top + 35;
+                let width = tab.width();
+
+                $('#navigatorBar').css('left', left);
+                $('#navigatorBar').css('top', top);
+                $('#navigatorBar').css('width', width);
+            }
+
+            navigatorBar($('#navHeader .active'));
+        });
+    </script>
 @endsection

@@ -1,0 +1,89 @@
+.destination-item {
+    height: 320px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    .info-destination {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: absolute;
+        top: 125px;
+        left: 0;
+        z-index: 2;
+        text-align: center;
+        padding: 0 10%;
+        font-size: 20px;
+        color: white;
+        transition: all 0.25s;
+        .name-destination {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .description {
+            display: none;
+        }
+        .btn-view {
+            color: $primary-color;
+            font-weight: bold;
+            display: none;
+        }
+        .btn-view:hover {
+            text-decoration: none;
+            opacity: 0.8;
+        }
+    }
+    .total-tours {
+        position: absolute;
+        z-index: 1;
+        right: 35px;
+        top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: $primary-color;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+    }
+}
+
+.destination-item:hover {
+    img {
+        filter: brightness(0.5)
+    }
+    .info-destination {
+        top: 0;
+    }
+    .description,
+    .btn-view {
+        display: block;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .banner-header {
+        padding-top: 165px;
+    }
+}
+
+@media only screen and (min-width: 576px) {
+    .banner-header {
+        .title-header {
+            font-size: 52px;
+        }
+        .desc-header {
+            font-size: 21px;
+        }
+        .box-find-tour {
+            font-size: 15px;
+        }
+    }
+}
