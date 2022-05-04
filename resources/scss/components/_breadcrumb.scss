@@ -1,9 +1,13 @@
 .breadcrumb-wrap {
     margin-top: 80px;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
+
     .breadcrumb {
+        //background: transparent;
+
         .breadcrumb-item {
             padding: 0;
+
             a {
                 color: $text-content;
                 text-decoration: none;
@@ -14,7 +18,8 @@
             }
         }
     }
-    .breadcrumb-item+.breadcrumb-item::before {
+
+    .breadcrumb-item + .breadcrumb-item::before {
         content: url('../images/icon/ellipse.svg');
         padding: 0 1.2rem;
         line-height: 22px;

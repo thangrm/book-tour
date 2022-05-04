@@ -2,7 +2,7 @@
     <div class="container mb-2">
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo-brand">
-                <a href="#">
+                <a href="{{ route('index') }}">
                     <img src="{{ asset('images/logo-black.png') }}" width="100" alt="logo-brand">
                 </a>
             </div>

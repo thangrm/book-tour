@@ -1,164 +1,120 @@
-/*========== Header ==========*/
+.banner-title {
+    position: relative;
+    margin-top: 80px;
 
-.header-list-tours {
-    background-image: url('../images/background-tour.png');
-    background-size: 100% 400px;
-    background-repeat: no-repeat;
-    background-position: top;
-    min-height: 400px;
-    height: auto;
-
-    .box-content-header {
-        margin-top: 90px;
-
-        .text-header {
-            .text-slogan {
-                width: 765px;
-                line-height: 60px;
-                letter-spacing: 0em;
-            }
-        }
+    img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
     }
 
-    @media only screen and (max-width: 992px) {
-        .box-content-header {
-            .text-header {
-                .text-slogan {
-                    width: 420px;
-                    font-size: 36px;
-                    line-height: 36px;
-                }
-            }
-        }
-    }
-    @media only screen and (max-width: 567px) {
-        .box-content-header {
-            .text-header {
-                .text-slogan {
-                    width: 360px;
-                    font-size: 28px;
-                    line-height: 28px;
-                }
-            }
-        }
+    .title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 60px;
+        font-weight: bold;
     }
 }
 
+/*========== Filter tour ==========*/
 
-/*========== List Tours Item ==========*/
+.btn-filter-wrap {
+    position: relative;
 
-.list-tours {
-    margin-top: 0;
+    .btn-filter {
+        height: 38px;
+        width: 105px;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 22px;
+        border: 1.5px solid #1E1E1E;
+        border-radius: 0;
+        padding-top: 10px;
+        background: transparent;
 
-    .title-slide {
-        margin: 0;
+        i {
+            font-size: 16px;
+            transition: all 0.25s;
+        }
     }
 
-    .btn-filter-wrap {
-        position: relative;
+    .collapse-fillter {
+        position: absolute;
+        right: 0;
+        top: 60px;
+        width: 350px;
+        border-radius: 0px;
+        padding: 24px;
+        box-shadow: 0px 4px 36px 0px #00000033;
+        z-index: 5;
+        background: #FFFFFF;
 
-        .btn-filter {
-            height: 38px;
-            width: 105px;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 22px;
-            border: 1.5px solid #1E1E1E;
-            border-radius: 0;
-            padding-top: 10px;
+        .card {
+            padding: 0;
+            border: none;
 
-            i {
-                font-size: 20px;
+            .filter-header {
+                text-transform: uppercase;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 23px;
+                margin-bottom: 20px;
+
+                p {
+                    margin: 0;
+                    color: #03387D;
+                }
+
+                .text-clear {
+                    color: #C4C4C4;
+                }
+
+                .text-clear:hover {
+                    color: #03387D;
+                    cursor: pointer;
+                }
             }
-        }
 
-        .collapse-fillter {
-            position: absolute;
-            right: 0;
-            top: 60px;
-            width: 350px;
-            border-radius: 0px;
-            padding: 24px;
-            box-shadow: 0px 4px 36px 0px #00000033;
-            z-index: 5;
-            background: #FFFFFF;
+            h5 {
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
 
-            .card {
-                padding: 0;
-                border: none;
+            .form-select-filter {
+                .form-group {
+                    .form-check {
+                        margin-bottom: 20px;
 
-                .filter-header {
-                    text-transform: uppercase;
-                    font-size: 18px;
-                    font-style: normal;
-                    font-weight: 700;
-                    line-height: 23px;
-                    margin-bottom: 20px;
-
-                    p {
-                        margin: 0;
-                        color: #03387D;
-                    }
-
-                    .text-clear {
-                        color: #C4C4C4;
-                    }
-
-                    .text-clear:hover {
-                        color: #03387D;
-                        cursor: pointer;
-                    }
-                }
-
-                h5 {
-                    font-size: 18px;
-                    font-style: normal;
-                    font-weight: 600;
-                    margin-bottom: 20px;
-                }
-
-                .form-select-filter {
-                    .form-group {
-                        .form-check {
-                            margin-bottom: 20px;
-
-                            .form-check-input {
-                                margin-right: 15px;
-                            }
+                        .form-check-input {
+                            margin-right: 15px;
                         }
                     }
-
-                    .btn-submit-filter {
-                        height: 48px;
-                        width: 301px;
-                        margin-top: 32px;
-                        background-color: $orange-primary;
-                        color: white;
-                        font-size: 16px;
-                        font-style: normal;
-                        font-weight: 600;
-                        line-height: 24px;
-                    }
                 }
-            }
-        }
-    }
 
-    .body-slide {
-        .card-tour {
-            width: 100%;
-            margin-bottom: 45px;
-
-            .card-body {
-                .card-title {
-                    margin: 0;
+                .btn-submit-filter {
+                    height: 48px;
+                    width: 301px;
+                    margin-top: 32px;
+                    background-color: $orange-primary;
+                    color: white;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 24px;
                 }
             }
         }
     }
 }
 
+/*========== Pagination ==========*/
 .pagination-tours {
     .pagination-text {
         font-size: 14px;
@@ -230,7 +186,7 @@
                         height: 30px;
                         line-height: 30px;
                         font-size: 15px;
-                        margin: 10;
+                        margin: 10px;
                     }
                 }
             }

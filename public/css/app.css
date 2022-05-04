@@ -363,6 +363,7 @@ body {
 }
 
 .tour-title {
+  height: 50px;
   padding-top: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -396,18 +397,24 @@ body {
 }
 
 @media only screen and (min-width: 576px) {
+  .tour-image {
+    height: 350px;
+  }
   .tour-image img {
     height: 350px;
   }
 }
 @media only screen and (min-width: 992px) {
+  .tour-image {
+    height: 210px;
+  }
   .tour-image img {
     height: 210px;
   }
 }
 .breadcrumb-wrap {
   margin-top: 80px;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 }
 .breadcrumb-wrap .breadcrumb .breadcrumb-item {
   padding: 0;
@@ -1110,49 +1117,31 @@ div[slider] > input[type=range]::-ms-tooltip {
   }
 }
 
-/*========== Header ==========*/
-.header-list-tours {
-  background-image: url("../images/background-tour.png");
-  background-size: 100% 400px;
-  background-repeat: no-repeat;
-  background-position: top;
-  min-height: 400px;
-  height: auto;
+.banner-title {
+  position: relative;
+  margin-top: 80px;
 }
-.header-list-tours .box-content-header {
-  margin-top: 90px;
+.banner-title img {
+  width: 100%;
+  height: 500px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
-.header-list-tours .box-content-header .text-header .text-slogan {
-  width: 765px;
-  line-height: 60px;
-  letter-spacing: 0em;
-}
-@media only screen and (max-width: 992px) {
-  .header-list-tours .box-content-header .text-header .text-slogan {
-    width: 420px;
-    font-size: 36px;
-    line-height: 36px;
-  }
-}
-@media only screen and (max-width: 567px) {
-  .header-list-tours .box-content-header .text-header .text-slogan {
-    width: 360px;
-    font-size: 28px;
-    line-height: 28px;
-  }
+.banner-title .title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 60px;
+  font-weight: bold;
 }
 
-/*========== List Tours Item ==========*/
-.list-tours {
-  margin-top: 0;
-}
-.list-tours .title-slide {
-  margin: 0;
-}
-.list-tours .btn-filter-wrap {
+/*========== Filter tour ==========*/
+.btn-filter-wrap {
   position: relative;
 }
-.list-tours .btn-filter-wrap .btn-filter {
+.btn-filter-wrap .btn-filter {
   height: 38px;
   width: 105px;
   font-size: 14px;
@@ -1162,11 +1151,13 @@ div[slider] > input[type=range]::-ms-tooltip {
   border: 1.5px solid #1E1E1E;
   border-radius: 0;
   padding-top: 10px;
+  background: transparent;
 }
-.list-tours .btn-filter-wrap .btn-filter i {
-  font-size: 20px;
+.btn-filter-wrap .btn-filter i {
+  font-size: 16px;
+  transition: all 0.25s;
 }
-.list-tours .btn-filter-wrap .collapse-fillter {
+.btn-filter-wrap .collapse-fillter {
   position: absolute;
   right: 0;
   top: 60px;
@@ -1177,11 +1168,11 @@ div[slider] > input[type=range]::-ms-tooltip {
   z-index: 5;
   background: #FFFFFF;
 }
-.list-tours .btn-filter-wrap .collapse-fillter .card {
+.btn-filter-wrap .collapse-fillter .card {
   padding: 0;
   border: none;
 }
-.list-tours .btn-filter-wrap .collapse-fillter .card .filter-header {
+.btn-filter-wrap .collapse-fillter .card .filter-header {
   text-transform: uppercase;
   font-size: 18px;
   font-style: normal;
@@ -1189,30 +1180,30 @@ div[slider] > input[type=range]::-ms-tooltip {
   line-height: 23px;
   margin-bottom: 20px;
 }
-.list-tours .btn-filter-wrap .collapse-fillter .card .filter-header p {
+.btn-filter-wrap .collapse-fillter .card .filter-header p {
   margin: 0;
   color: #03387D;
 }
-.list-tours .btn-filter-wrap .collapse-fillter .card .filter-header .text-clear {
+.btn-filter-wrap .collapse-fillter .card .filter-header .text-clear {
   color: #C4C4C4;
 }
-.list-tours .btn-filter-wrap .collapse-fillter .card .filter-header .text-clear:hover {
+.btn-filter-wrap .collapse-fillter .card .filter-header .text-clear:hover {
   color: #03387D;
   cursor: pointer;
 }
-.list-tours .btn-filter-wrap .collapse-fillter .card h5 {
+.btn-filter-wrap .collapse-fillter .card h5 {
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
   margin-bottom: 20px;
 }
-.list-tours .btn-filter-wrap .collapse-fillter .card .form-select-filter .form-group .form-check {
+.btn-filter-wrap .collapse-fillter .card .form-select-filter .form-group .form-check {
   margin-bottom: 20px;
 }
-.list-tours .btn-filter-wrap .collapse-fillter .card .form-select-filter .form-group .form-check .form-check-input {
+.btn-filter-wrap .collapse-fillter .card .form-select-filter .form-group .form-check .form-check-input {
   margin-right: 15px;
 }
-.list-tours .btn-filter-wrap .collapse-fillter .card .form-select-filter .btn-submit-filter {
+.btn-filter-wrap .collapse-fillter .card .form-select-filter .btn-submit-filter {
   height: 48px;
   width: 301px;
   margin-top: 32px;
@@ -1223,14 +1214,8 @@ div[slider] > input[type=range]::-ms-tooltip {
   font-weight: 600;
   line-height: 24px;
 }
-.list-tours .body-slide .card-tour {
-  width: 100%;
-  margin-bottom: 45px;
-}
-.list-tours .body-slide .card-tour .card-body .card-title {
-  margin: 0;
-}
 
+/*========== Pagination ==========*/
 .pagination-tours .pagination-text {
   font-size: 14px;
   font-style: normal;
@@ -1286,7 +1271,7 @@ div[slider] > input[type=range]::-ms-tooltip {
     height: 30px;
     line-height: 30px;
     font-size: 15px;
-    margin: 10;
+    margin: 10px;
   }
 }
 /*========== Header ==========*/

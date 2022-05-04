@@ -142,7 +142,7 @@ class ClientService
 
         $query = $this->filterTour($request, $query);
 
-        return $query->paginate(21);
+        return $query->paginate(9);
     }
 
     /**

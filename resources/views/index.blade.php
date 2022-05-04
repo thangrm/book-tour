@@ -66,7 +66,7 @@
     <div class="popular-destination container">
         <div class="box-title">
             <p class="title">Các địa điểm nổi tiếng</p>
-            <a href="#">
+            <a href="{{ route('client.destination.index') }}">
                 <span>Xem tất cả địa điểm</span>
                 <i class="fa fa-long-arrow-right"></i>
             </a>
@@ -202,9 +202,6 @@
             </div>
         </div>
     </div>
-
-
-
 
     <!-------------------- Email Deals -------------------->
     <div class="mail-deals">
