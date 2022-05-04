@@ -1,19 +1,4 @@
 @extends('layouts.client')
-@section('css')
-    <style>
-        @media screen and (max-width: 767.98px) {
-            .card-destination .card-img-top {
-                height: 280px !important;
-            }
-        }
-
-        @media screen and (max-width: 575.98px) {
-            .card-destination .card-img-top {
-                height: 180px !important;
-            }
-        }
-    </style>
-@endsection
 @section('content')
     <!-------------------- Breadcrumb -------------------->
     <div class="breadcrumb-wrap">

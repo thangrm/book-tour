@@ -5,32 +5,31 @@
             <p class="title-header">Điểm du lịch tiếp theo</p>
             <p class="desc-header">Khám phá những địa điểm tuyệt vời với các ưu đãi độc quyền</p>
 
-            <div class="box-find-tour">
-                <div class="row">
-                    <div class="col-12 col-lg-3 col-find-tour search">
-                        <input type="text" class="form-control form-find-tour" placeholder="Từ khóa">
-                    </div>
-                    <div class="col-12 col-lg-3 col-find-tour">
-                        <select class="form-control form-find-tour">
-                            <option value="">Địa điểm</option>
-                            <option value="">Hà Nội</option>
-                            <option value="">TP. Hồ Chí Minh</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-lg-3 col-find-tour">
-                        <select class="form-control form-find-tour">
-                            <option value="">Thời gian</option>
-                            <option value="">1 ngày</option>
-                            <option value="">2-4 ngày</option>
-                            <option value="">5-7 ngày</option>
-                            <option value="">7+ ngày</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-lg-3 col-find-tour">
-                        <button class="btn btn-find-tour">Tìm kiếm</button>
+            <form action="{{ route('client.search.index') }}">
+                <div class="box-find-tour">
+                    <div class="row">
+                        <div class="col-12 col-lg-3 col-find-tour search">
+                            <input type="text" class="form-control form-find-tour" name="tour_name" placeholder="Từ khóa">
+                        </div>
+                        <div class="col-12 col-lg-3 col-find-tour">
+                            <input class="form-control form-find-tour" name="destination_name" placeholder="Tên địa điểm">
+                        </div>
+                        <div class="col-12 col-lg-3 col-find-tour">
+                            <select class="form-control form-find-tour" name="duration">
+                                <option value="">Thời gian</option>
+                                <option value="">1 ngày</option>
+                                <option value="">2-4 ngày</option>
+                                <option value="">5-7 ngày</option>
+                                <option value="">7+ ngày</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-lg-3 col-find-tour">
+                            <button class="btn btn-find-tour">Tìm kiếm</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
+
         </div>
         <div class="box-statistical">
             <div class="statistical">

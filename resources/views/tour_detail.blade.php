@@ -16,57 +16,13 @@
 @endsection
 
 @section('content')
-    <!-------------------- Header -------------------->
-    <div class="header header-tour-detail">
-        <!--Logo and Nav -->
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <a href="{{ route('index') }}">
-                    <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
-                </a>
-                <nav class="navbar navbar-expand-sm navbar-light">
-                    <button class="navbar-toggler" id="navbarBtn" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span class="navbar-icon-close">X</span>
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarToggler">
-                        <ul class="nav navbar-header flex-column flex-sm-row">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('index') }}">{{ __('client.home') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">{{ __('client.about') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">{{ __('client.tours') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">{{ __('client.hotels') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                   href="{{ route('client.contact.index') }}">{{ __('client.contact') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">{{ __('client.login') }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!--End Logo and Nav -->
-    </div>
-    <!-------------------- End Header -------------------->
-    <hr>
-
+        <link href="{{ asset('css/bootstrap-v5.min.css') }}" rel="stylesheet" >
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <!-------------------- Breadcrumb -------------------->
     <div class="breadcrumb-wrap">
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
-                <ol class="breadcrumb">
+                <ol class="breadcrumb p-3">
                     <li class="breadcrumb-item"><a href="{{ route('index') }}">{{ __('client.home') }}</a></li>
                     <li class="breadcrumb-item"><a href="#">{{ __('client.tours') }}</a></li>
                     <li class="breadcrumb-item"><a href="#">{{ __('client.detail_tour') }}</a></li>
@@ -467,7 +423,7 @@
                         <input type="hidden" value="{{ $tour->price }}" id="price">
                         <input type="hidden" value="{{ $tour->duration }}" id="duration">
                         <p class="card-text">{{ __('client.from') }} <span
-                                class="card-title">{{ number_format($tour->price * 20000) }} VNĐ</span>
+                                class="card-title">{{ number_format($tour->price) }} VNĐ</span>
                         </p>
                         <hr>
                         <div class="info-tour d-flex justify-content-between">
@@ -504,14 +460,10 @@
 
 
                             <!--- THÊM MỚI -->
-                            <style>
-
-                            </style>
-
                             <h5>Loại phòng</h5>
                             <div class="input-inner-icon">
                                 <img src="{{ asset('images/icon/home_icon.svg') }}" alt="people">
-                                <select class="form-control" id="selectRoom" name="people">
+                                <select class="form-control" id="selectRoom" name="room">
                                     <option value="2500000">Phòng hạng sang (1 giường) - 2.5tr</option>
                                     <option value="2000000">Phòng VIP (2 giường) - 2tr</option>
                                     <option value="1500000">Phòng thường (2 giường) - 1.5tr</option>
@@ -521,7 +473,7 @@
                             </div>
                             <div class="input-inner-icon">
                                 <img src="{{ asset('images/icon/number.svg') }}" alt="people">
-                                <input type="number" class="form-control" id="numberRoom" name="people"
+                                <input type="number" class="form-control" id="numberRoom" name="number_room"
                                        placeholder="Số lượng phòng" min="1" value="1">
                             </div>
 

@@ -259,7 +259,7 @@ $(document).ready(function () {
 
     function caculatePrice() {
         let numberPeople = $('#selectNumberPeople').val();
-        let price = numberPeople * PRICE_DEFAULT * 20000;
+        let price = numberPeople * PRICE_DEFAULT;
         if (isNaN(price)) {
             $('#totalPrice').text('VNĐ');
 

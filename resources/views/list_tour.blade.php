@@ -121,7 +121,7 @@
                                     </div>
 
                                     <button class="btn btn-primary w-100 btn-submit-filter">
-                                        Apply Filter
+                                        Tìm tour
                                     </button>
                                 </div>
                             </form>

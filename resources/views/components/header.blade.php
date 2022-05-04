@@ -17,25 +17,16 @@
                 <div class="navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav justify-content-center" id="navHeader">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="{{ route('index') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Destinations</a>
+                            <a class="nav-link active" href="{{ route('client.destination.index') }}">Destinations</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Tours</a>
+                            <a class="nav-link" href="{{ route('client.search.index') }}">Tours</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Hotels</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Login</a>
+                            <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
                         </li>
 
                         <div class="navigator-bar" id="navigatorBar"></div>

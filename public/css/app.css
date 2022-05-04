@@ -343,6 +343,52 @@ body {
     font-size: 15px;
   }
 }
+.card-destination {
+  width: 255px;
+}
+.card-destination img {
+  height: 350px !important;
+}
+.card-destination .card-body h5 {
+  min-height: 28px !important;
+  margin: 0;
+}
+.card-destination .card-body .card-title {
+  -webkit-line-clamp: 1 !important;
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+.card-destination .card-body .card-text {
+  font-size: 14px;
+  padding: 0;
+}
+
+@media only screen and (max-width: 992px) {
+  .slide-destinations .card-destination {
+    width: 200px;
+  }
+  .slide-destinations .card-destination img {
+    height: 200px !important;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .slide-destinations .card-destination {
+    width: 135px;
+  }
+  .slide-destinations .card-destination .card-body .card-title {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 767.98px) {
+  .card-destination .card-img-top {
+    height: 280px !important;
+  }
+}
+@media screen and (max-width: 575.98px) {
+  .card-destination .card-img-top {
+    height: 180px !important;
+  }
+}
 .tour-image {
   position: relative;
   height: 250px;
@@ -363,7 +409,7 @@ body {
 }
 
 .tour-title {
-  height: 50px;
+  height: 55px;
   padding-top: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1833,7 +1879,6 @@ div[slider] > input[type=range]::-ms-tooltip {
 .box-checkout .box-detail-content .box-body-checkout .box-checkout-item .sub-checkout-item .btn-submit-checkout {
   margin-top: 30px;
   height: 56px;
-  width: 635px;
   background-color: #FF7B42;
   font-size: 16px;
   font-weight: 600;

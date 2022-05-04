@@ -1,13 +1,15 @@
 @extends('layouts.client')
 @section('content')
+    <link href="{{ asset('css/bootstrap-v5.min.css') }}" rel="stylesheet" >
+
     <!-------------------- Checkout -------------------->
-    <div class="box-checkout box-detail-tour mt-5">
+    <div class="box-checkout box-detail-tour" style="margin-top: 100px">
         <div class="container">
             <form id="formCheckout" action="{{ route('client.booking.store', $tour->slug) }}" method="post">
                 <input type="hidden" value="{{ $tour->price }}" id="price">
                 <input type="hidden" value="{{ $tour->duration }}" id="duration">
                 @csrf
-                <p class="title-checkout">Booking Submission</p>
+                <p class="title-checkout">Thông tin đặt tour</p>
                 <div class="row box-detail-content box-checkout-content">
                     <div class="col-12 col-lg-7 col-xl-8">
                         <div class="box-body-checkout">
@@ -15,16 +17,16 @@
                             <hr>
                             <!-- checkout detail -->
                             <div class="box-checkout-item">
-                                <p class="header-checkout">Traveler Details</p>
-                                <p class="header-desc">Information we need to confirm your tour or activity</p>
+                                <p class="header-checkout">Thông tin khách hàng</p>
+                                <p class="header-desc">Chúng tôi cần một số thông tin để xác nhận chuyến tham của bạn</p>
                                 <div class="sub-checkout-item">
-                                    <p class="sub-header">Lead Traveler (Adult) </p>
+                                    <p class="sub-header">Người đặt </p>
                                     <div class="row">
                                         <div class="col-6">
-                                            <label for="firstName" class="form-label title">First Name <span
+                                            <label for="firstName" class="form-label title">Tên <span
                                                     class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="firstName"
-                                                   placeholder="First Name" name="first_name"
+                                                   placeholder="Tên" name="first_name"
                                                    value="{{ old('first_name') }}">
                                             <p class="text-danger" id="errorFirstName"></p>
                                             @error('first_name')
@@ -32,10 +34,10 @@
                                             @enderror
                                         </div>
                                         <div class="col-6">
-                                            <label for="lastName" class="form-label title">Last Name <span
+                                            <label for="lastName" class="form-label title">Họ<span
                                                     class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="lastName"
-                                                   placeholder="Last Name" name="last_name"
+                                                   placeholder="Họ" name="last_name"
                                                    value="{{ old('last_name') }}">
                                             <p class="text-danger" id="errorLastName"></p>
                                             @error('last_name')
@@ -53,9 +55,9 @@
                                             @enderror
                                         </div>
                                         <div class="col-6">
-                                            <label for="phone" class="form-label title">Phone Number<span
+                                            <label for="phone" class="form-label title">Số điện thoại<span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="phone" placeholder="Your Phone"
+                                            <input type="text" class="form-control" id="phone" placeholder="Số điện thoại"
                                                    name="phone" value="{{ old('phone') }}">
                                             <p class="text-danger" id="errorPhone"></p>
                                             @error('phone')
@@ -68,12 +70,12 @@
                                 </div>
 
                                 <div class="sub-checkout-item">
-                                    <p class="sub-header">Address </p>
+                                    <p class="sub-header">Địa chỉ </p>
                                     <div class="row">
                                         <div class="col-12">
-                                            <label for="address" class="form-label title">Your Address</label>
+                                            <label for="address" class="form-label title">Địa chỉ của bạn</label>
                                             <input type="text" class="form-control" id="address"
-                                                   placeholder="Your Address" name="address"
+                                                   placeholder="Địa chỉ của bạn" name="address"
                                                    value="{{ old('address') }}">
                                             <p class="text-danger" id="errorAddress"></p>
                                             @error('address')
@@ -81,8 +83,8 @@
                                             @enderror
                                         </div>
                                         <div class="col-6">
-                                            <label for="city" class="form-label title">City </label>
-                                            <input type="text" class="form-control" id="city" placeholder="Your City"
+                                            <label for="city" class="form-label title">Thành phố </label>
+                                            <input type="text" class="form-control" id="city" placeholder="Thành phố của bạn"
                                                    name="city" value="{{ old('city') }}">
                                             <p class="text-danger" id="errorCity"></p>
                                             @error('city')
@@ -91,9 +93,9 @@
                                         </div>
                                         <div class="col-6">
                                             <label for="province"
-                                                   class="form-label title">State/Province/Region </label>
+                                                   class="form-label title">Huyện </label>
                                             <input type="text" class="form-control" id="province"
-                                                   placeholder="Your State/Province/Region" name="province"
+                                                   placeholder="Your State/Province/Region" name="Huyện"
                                                    value="{{ old('province') }}">
                                             <p class="text-danger" id="errorProvince"></p>
                                             @error('province')
@@ -101,9 +103,9 @@
                                             @enderror
                                         </div>
                                         <div class="col-6">
-                                            <label for="zipCode" class="form-label title">Zip Code/ Postal Code</label>
+                                            <label for="zipCode" class="form-label title">Mã Zipcode</label>
                                             <input type="text" class="form-control" id="zipCode"
-                                                   placeholder="Zip Code/ Postal Code" name="zipcode"
+                                                   placeholder="Mã Zipcode" name="zipcode"
                                                    value="{{ old('zipcode') }}">
                                             <p class="text-danger" id="errorZipCode"></p>
                                             @error('zipcode')
@@ -111,10 +113,10 @@
                                             @enderror
                                         </div>
                                         <div class="col-6">
-                                            <label for="country" class="form-label title">Country</label>
+                                            <label for="country" class="form-label title">Quốc gia</label>
                                             <input type="text" class="form-control" id="country"
-                                                   placeholder="Your Country" name="country"
-                                                   value="{{ old('country') }}">
+                                                   placeholder="Quốc gia" name="country"
+                                                   value="{{ old('country', 'Việt Nam') }}">
                                             <p class="text-danger" id="errorContry"></p>
                                             @error('country')
                                             <p class="text-danger">{{ $message }}</p>
@@ -124,12 +126,12 @@
 
                                     <div class="sub-checkout-item">
                                         <p class="sub-header">
-                                            <label for="requirement" class="form-label">Special Requirement</label>
+                                            <label for="requirement" class="form-label">Yêu cầu của khách hàng</label>
                                         <p class="text-danger" id="errorRequirement"></p>
                                         <div class="row">
                                             <div class="col-12">
                                                 <textarea type="text" class="form-control" id="requirement"
-                                                          placeholder="Special Requirement" rows="5"
+                                                          placeholder="Yêu cầu" rows="5"
                                                           name="requirement"
                                                           value="{{ old('requirement') }}"></textarea>
                                             </div>
@@ -145,57 +147,63 @@
                             <!-- Payment method -->
                             <div class="box-checkout-item">
                                 <hr>
-                                <p class="header-checkout">Payment Menthod</p>
-                                <p class="header-desc">Pay securely—we use SSL encryption to keep your data safe</p>
-                                <div class="sub-checkout-item">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="payment_method"
-                                               id="creditCard" value="2">
-                                        <label class="form-check-label" for="creditCard">
-                                            <span class="payment-title">Credit Card</span>
-                                            <img class="payment-image" src="{{ asset('images/credit-card.png') }}"
-                                                 alt="credit card">
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="payment_method" id="paypal"
-                                               value="3">
-                                        <label class="form-check-label" for="paypal">
-                                            <span class="payment-title">Paypal</span>
-                                            <img class="payment-image" src="{{ asset('images/paypal.png') }}"
-                                                 alt="paypal">
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="payment_method" id="cash"
-                                               value="1" checked>
-                                        <label class="form-check-label" for="cash">
-                                            <span class="payment-title">Pay in cash</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                @error('payment_method')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                                <div class="sub-checkout-item">
-                                    <ul class="list-policy">
-                                        <li>You will be charged the total amount once your order is confirmed.</li>
-                                        <li>If confirmation isn't received instantly, an authorization for the total
-                                            amount will be held until your booking is confirmed.
-                                        </li>
-                                        <li>You can cancel for free up to 24 hours before the day of the experience,
-                                            local time. By clicking 'Pay with PayPal,' you are acknowledging that you
-                                            have read and are bound by Ojimah's
-                                        </li>
-                                        <li>Customer Terms of Use, Privacy Policy, plus the tour operator's rules &
-                                            regulations (see the listing for more details).
-                                        </li>
-                                    </ul>
-                                </div>
+                                <p class="header-checkout">Phương thức thanh toán</p>
+                                <p class="header-desc">STK: 88889999,</br>
+                                    ACB - Chi nhánh Thường Tín</p>
+
+                                <input class="form-check-input d-none" type="radio" name="payment_method" id="cash"
+                                       value="1" checked>
+
+
+{{--                                <div class="sub-checkout-item">--}}
+{{--                                    <div class="form-check">--}}
+{{--                                        <input class="form-check-input" type="radio" name="payment_method"--}}
+{{--                                               id="creditCard" value="2">--}}
+{{--                                        <label class="form-check-label" for="creditCard">--}}
+{{--                                            <span class="payment-title">Credit Card</span>--}}
+{{--                                            <img class="payment-image" src="{{ asset('images/credit-card.png') }}"--}}
+{{--                                                 alt="credit card">--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-check">--}}
+{{--                                        <input class="form-check-input" type="radio" name="payment_method" id="paypal"--}}
+{{--                                               value="3">--}}
+{{--                                        <label class="form-check-label" for="paypal">--}}
+{{--                                            <span class="payment-title">Paypal</span>--}}
+{{--                                            <img class="payment-image" src="{{ asset('images/paypal.png') }}"--}}
+{{--                                                 alt="paypal">--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-check">--}}
+{{--                                        <input class="form-check-input" type="radio" name="payment_method" id="cash"--}}
+{{--                                               value="1" checked>--}}
+{{--                                        <label class="form-check-label" for="cash">--}}
+{{--                                            <span class="payment-title">Pay in cash</span>--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                @error('payment_method')--}}
+{{--                                <p class="text-danger">{{ $message }}</p>--}}
+{{--                                @enderror--}}
+{{--                                <div class="sub-checkout-item">--}}
+{{--                                    <ul class="list-policy">--}}
+{{--                                        <li>You will be charged the total amount once your order is confirmed.</li>--}}
+{{--                                        <li>If confirmation isn't received instantly, an authorization for the total--}}
+{{--                                            amount will be held until your booking is confirmed.--}}
+{{--                                        </li>--}}
+{{--                                        <li>You can cancel for free up to 24 hours before the day of the experience,--}}
+{{--                                            local time. By clicking 'Pay with PayPal,' you are acknowledging that you--}}
+{{--                                            have read and are bound by Ojimah's--}}
+{{--                                        </li>--}}
+{{--                                        <li>Customer Terms of Use, Privacy Policy, plus the tour operator's rules &--}}
+{{--                                            regulations (see the listing for more details).--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                </div>--}}
 
                                 <div class="sub-checkout-item">
                                     <button type="submit" class="btn-submit-checkout" id="btnSubmitCheckout">
-                                        Complete Booking
+                                        Đặt tour
                                     </button>
                                 </div>
                             </div>
@@ -254,20 +262,45 @@
                                 <div class="input-inner-icon">
                                     <div class="row">
                                         <div class="col-7">
-                                            <input class="form-control ps-3" type="text" placeholder="Promo Code">
+                                            <input class="form-control" style="padding-left: 30px" type="text" placeholder="Code">
                                         </div>
                                         <div class="col-5">
                                             <button type="button" class="btn-apply-coupon">Apply</button>
                                         </div>
                                     </div>
                                 </div>
+
+                                <!--- THÊM MỚI -->
+                                <h5>Loại phòng</h5>
+                                <div class="input-inner-icon">
+                                    <img src="{{ asset('images/icon/home_icon.svg') }}" alt="people">
+                                    <select class="form-control" id="selectRoom" name="room">
+                                        <option value="2500000">Phòng hạng sang (1 giường) - 2.5tr</option>
+                                        <option value="2000000">Phòng VIP (2 giường) - 2tr</option>
+                                        <option value="1500000">Phòng thường (2 giường) - 1.5tr</option>
+                                        <option value="1000000">Phòng thường (1 giường) - 1tr</option>
+                                        <option value="800000">Phòng bình dân (1 giường) - 800k</option>
+                                    </select>
+                                </div>
+                                <div class="input-inner-icon">
+                                    <img src="{{ asset('images/icon/number.svg') }}" alt="people">
+                                    <input type="number" class="form-control" id="numberRoom" name="number_room"
+                                           placeholder="Số lượng phòng" min="1" value="1">
+                                </div>
+
+                                <h5>Dịch vụ kèm thêm</h5>
+                                - Miễn phí bữa sáng</br>
+                                - Miễn phí vé vào cửa</br></br>
+
+                                <!--- KẾT THÚC THÊM MỚI -->
+
                             </div>
                             <div class="total-price-coupon d-flex justify-content-between">
                                 <span class="card-text">
                                     Total
                                 </span>
                                 <span class="card-title" id="totalPrice">
-                                    $
+                                    VNĐ
                                 </span>
                             </div>
                         </div>
@@ -285,12 +318,12 @@
          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="panel-thank modal-content d-flex justify-content-center align-items-center flex-column">
-                <p class="thank-title">Thank You!</p>
-                <p class="thank-text">Your order has been successfully ordered.</p>
-                <p class="thank-text"> Order information has been emailed to you. Thank you!</p>
+                <p class="thank-title">Cảm ơn!</p>
+                <p class="thank-text">Bạn đã đặt tour thành công.</p>
+                <p class="thank-text">Thông tin chi tiết về giá cả và đặt xe,</p>
+                <p class="thank-text"> sẽ được nhân viên liên hệ với bạn vào thời gian sớm nhất.</p>
                 <button class="btn-back-home"><a class="d-flex align-items-center justify-content-center"
-                                                 href="{{ route('index') }}">Back
-                        to our home</a></button>
+                                                 href="{{ route('index') }}">Quay lại trang chủ</a></button>
             </div>
         </div>
     </div>
