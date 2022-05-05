@@ -16,15 +16,16 @@
 @endsection
 
 @section('content')
-        <link href="{{ asset('css/bootstrap-v5.min.css') }}" rel="stylesheet" >
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="{{ asset('css/bootstrap-v5.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <!-------------------- Breadcrumb -------------------->
     <div class="breadcrumb-wrap">
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb p-3">
                     <li class="breadcrumb-item"><a href="{{ route('index') }}">{{ __('client.home') }}</a></li>
-                    <li class="breadcrumb-item"><a href="#">{{ __('client.tours') }}</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="{{ route('client.search.index') }}">{{ __('client.tours') }}</a></li>
                     <li class="breadcrumb-item"><a href="#">{{ __('client.detail_tour') }}</a></li>
                 </ol>
             </nav>
@@ -463,12 +464,12 @@
                             <h5>Loại phòng</h5>
                             <div class="input-inner-icon">
                                 <img src="{{ asset('images/icon/home_icon.svg') }}" alt="people">
-                                <select class="form-control" id="selectRoom" name="room">
-                                    <option value="2500000">Phòng hạng sang (1 giường) - 2.5tr</option>
-                                    <option value="2000000">Phòng VIP (2 giường) - 2tr</option>
-                                    <option value="1500000">Phòng thường (2 giường) - 1.5tr</option>
-                                    <option value="1000000">Phòng thường (1 giường) - 1tr</option>
-                                    <option value="800000">Phòng bình dân (1 giường) - 800k</option>
+                                <select class="form-control" id="selectRoom" name="room_id">
+                                    @foreach($tour->rooms as $room)
+                                        <option value="{{ $room->id }}" data-price="{{ $room->price }}">
+                                            {{ $room->name . ' - ' . number_format($room->price) . 'đ' }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="input-inner-icon">
@@ -477,39 +478,9 @@
                                        placeholder="Số lượng phòng" min="1" value="1">
                             </div>
 
-                            <h5>Dịch vụ kèm thêm</h5>
-                            - Miễn phí bữa sáng</br>
-                            - Miễn phí vé vào cửa</br></br>
-                            {{--                            <div class="input-inner-icon">--}}
-                            {{--                                <div class="sub-checkout-item">--}}
-                            {{--                                    <div class="form-check">--}}
-                            {{--                                        <input class="form-check-input" type="radio" name="payment_method"--}}
-                            {{--                                               id="creditCard" value="2">--}}
-                            {{--                                        <label class="form-check-label" for="creditCard">--}}
-                            {{--                                            <span class="payment-title">Credit Card</span>--}}
-                            {{--                                            <img class="payment-image"--}}
-                            {{--                                                 src="http://127.0.0.1:8000/images/credit-card.png" alt="credit card">--}}
-                            {{--                                        </label>--}}
-                            {{--                                    </div>--}}
-                            {{--                                    <div class="form-check">--}}
-                            {{--                                        <input class="form-check-input" type="radio" name="payment_method" id="paypal"--}}
-                            {{--                                               value="3">--}}
-                            {{--                                        <label class="form-check-label" for="paypal">--}}
-                            {{--                                            <span class="payment-title">Paypal</span>--}}
-                            {{--                                            <img class="payment-image" src="http://127.0.0.1:8000/images/paypal.png"--}}
-                            {{--                                                 alt="paypal">--}}
-                            {{--                                        </label>--}}
-                            {{--                                    </div>--}}
-                            {{--                                    <div class="form-check">--}}
-                            {{--                                        <input class="form-check-input" type="radio" name="payment_method" id="cash"--}}
-                            {{--                                               value="1" checked="">--}}
-                            {{--                                        <label class="form-check-label" for="cash">--}}
-                            {{--                                            <span class="payment-title">Pay in cash</span>--}}
-                            {{--                                        </label>--}}
-                            {{--                                    </div>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
-
+                            {{--                            <h5>Dịch vụ kèm thêm</h5>--}}
+                            {{--                            - Miễn phí bữa sáng</br>--}}
+                            {{--                            - Miễn phí vé vào cửa</br></br>--}}
 
                             <!--- KẾT THÚC THÊM MỚI -->
                             <div class="total-price d-flex justify-content-between">

@@ -109,8 +109,7 @@ class TourController extends Controller
 
             return redirect()->route('tours.index')->with($this->notification->getMessage());
         } catch (Exception $e) {
-            dd($e);
-            $this->notification->setMessage('The tour update failed', Notification::ERROR);
+            $this->notification->setMessage('Cập nhật thông tin tour không thành công', Notification::ERROR);
 
             return back()
                 ->with('exception', $e->getMessage())

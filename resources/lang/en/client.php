@@ -60,5 +60,8 @@ return [
         'terms_and_conditions' => 'Terms and conditions',
         'privacy_policy' => 'Privacy policy',
         'guest_policy' => 'Guest policy',
-    ]
+    ],
+
+    'name' => 'name',
+    'price' => 'price',
 ];

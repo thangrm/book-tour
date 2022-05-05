@@ -7,6 +7,7 @@ use App\Libraries\Utilities;
 use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\Destination;
+use App\Models\Room;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -55,15 +56,24 @@ class ClientService
             'city',
             'province',
             'country',
-            'zipcode'
+            'zipcode',
         ]));
         $input['status'] = 1;
         $customer = Customer::create($input);
+        $room = Room::findOrFail($request->room_id);
 
-        $input = Utilities::clearAllXSS($request->only(['people', 'payment_method', 'departure_time', 'requirement']));
+        $input = Utilities::clearAllXSS($request->only([
+            'people',
+            'payment_method',
+            'departure_time',
+            'requirement',
+            'room_id',
+            'number_room'
+        ]));
         $input['customer_id'] = $customer->id;
         $input['tour_id'] = $tour->id;
         $input['price'] = $tour->price;
+        $input['total'] = $tour->price * $request->people + $room->price * $request->number_room;
         $input['status'] = 1;
         $booking = Booking::create($input);
 

@@ -31,7 +31,7 @@
                                     <h5 class="card-title"><a
                                             href="{{ route('client.tours.list', $destination->slug) }}"> {{ $destination->name }} </a>
                                     </h5>
-                                    <p class="card-text">{{ $destination->tours()->count() }} experiences</p>
+                                    <p class="card-text">{{ $destination->tours()->count() }} điểm trải nghiệm</p>
                                 </div>
                             </div>
                         </div>

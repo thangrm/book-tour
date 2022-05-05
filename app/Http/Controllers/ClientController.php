@@ -81,8 +81,10 @@ class ClientController extends Controller
         $tour = $tourModel->getTourBySlug($slug);
         $people = $request->people;
         $departureTime = $request->departure_time;
+        $roomId = $request->room_id;
+        $numberRoom = $request->number_room;
 
-        return view('booking', compact(['tour', 'people', 'departureTime']));
+        return view('booking', compact(['tour', 'people', 'departureTime', 'roomId', 'numberRoom']));
     }
 
     /**
@@ -97,11 +99,10 @@ class ClientController extends Controller
     {
         $tour = $tourModel->getTourBySlug($slug);
         $request->validate($this->clientService->ruleBooking());
-        $this->notification->setMessage('Successful tour booking', Notification::SUCCESS);
+        $this->notification->setMessage('Đặt tour thành công', Notification::SUCCESS);
 
         try {
             $this->clientService->storeBooking($request, $tour);
-            $this->notification->setMessage('Successful tour booking', Notification::SUCCESS);
         } catch (Exception $e) {
             $this->notification->setMessage('The tour booking failed', Notification::ERROR);
         }

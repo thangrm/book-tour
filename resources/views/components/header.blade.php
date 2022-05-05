@@ -17,16 +17,20 @@
                 <div class="navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav justify-content-center" id="navHeader">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('index') }}">Home</a>
+                            <a class="nav-link {{ url()->current() == route('index') ? 'active' : '' }}"
+                               href="{{ route('index') }}">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('client.destination.index') }}">Destinations</a>
+                            <a class="nav-link {{ url()->current() == route('client.destination.index') ? 'active' : '' }}"
+                               href="{{ route('client.destination.index') }}">Điểm điến</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('client.search.index') }}">Tours</a>
+                            <a class="nav-link {{ url()->current() == route('client.search.index') ? 'active' : '' }}"
+                               href="{{ route('client.search.index') }}">Tours</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('client.contact.index') }}">Contact</a>
+                            <a class="nav-link {{ url()->current() == route('client.contact.index') ? 'active' : '' }}"
+                               href="{{ route('client.contact.index') }}">Liên hệ</a>
                         </li>
 
                         <div class="navigator-bar" id="navigatorBar"></div>

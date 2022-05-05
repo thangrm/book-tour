@@ -1,6 +1,6 @@
 @extends('layouts.client')
 @section('content')
-    <link href="{{ asset('css/bootstrap-v5.min.css') }}" rel="stylesheet" >
+    <link href="{{ asset('css/bootstrap-v5.min.css') }}" rel="stylesheet">
 
     <!-------------------- Checkout -------------------->
     <div class="box-checkout box-detail-tour" style="margin-top: 100px">
@@ -18,7 +18,8 @@
                             <!-- checkout detail -->
                             <div class="box-checkout-item">
                                 <p class="header-checkout">Thông tin khách hàng</p>
-                                <p class="header-desc">Chúng tôi cần một số thông tin để xác nhận chuyến tham của bạn</p>
+                                <p class="header-desc">Chúng tôi cần một số thông tin để xác nhận chuyến tham của
+                                    bạn</p>
                                 <div class="sub-checkout-item">
                                     <p class="sub-header">Người đặt </p>
                                     <div class="row">
@@ -57,7 +58,8 @@
                                         <div class="col-6">
                                             <label for="phone" class="form-label title">Số điện thoại<span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="phone" placeholder="Số điện thoại"
+                                            <input type="text" class="form-control" id="phone"
+                                                   placeholder="Số điện thoại"
                                                    name="phone" value="{{ old('phone') }}">
                                             <p class="text-danger" id="errorPhone"></p>
                                             @error('phone')
@@ -84,7 +86,8 @@
                                         </div>
                                         <div class="col-6">
                                             <label for="city" class="form-label title">Thành phố </label>
-                                            <input type="text" class="form-control" id="city" placeholder="Thành phố của bạn"
+                                            <input type="text" class="form-control" id="city"
+                                                   placeholder="Thành phố của bạn"
                                                    name="city" value="{{ old('city') }}">
                                             <p class="text-danger" id="errorCity"></p>
                                             @error('city')
@@ -155,51 +158,51 @@
                                        value="1" checked>
 
 
-{{--                                <div class="sub-checkout-item">--}}
-{{--                                    <div class="form-check">--}}
-{{--                                        <input class="form-check-input" type="radio" name="payment_method"--}}
-{{--                                               id="creditCard" value="2">--}}
-{{--                                        <label class="form-check-label" for="creditCard">--}}
-{{--                                            <span class="payment-title">Credit Card</span>--}}
-{{--                                            <img class="payment-image" src="{{ asset('images/credit-card.png') }}"--}}
-{{--                                                 alt="credit card">--}}
-{{--                                        </label>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-check">--}}
-{{--                                        <input class="form-check-input" type="radio" name="payment_method" id="paypal"--}}
-{{--                                               value="3">--}}
-{{--                                        <label class="form-check-label" for="paypal">--}}
-{{--                                            <span class="payment-title">Paypal</span>--}}
-{{--                                            <img class="payment-image" src="{{ asset('images/paypal.png') }}"--}}
-{{--                                                 alt="paypal">--}}
-{{--                                        </label>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-check">--}}
-{{--                                        <input class="form-check-input" type="radio" name="payment_method" id="cash"--}}
-{{--                                               value="1" checked>--}}
-{{--                                        <label class="form-check-label" for="cash">--}}
-{{--                                            <span class="payment-title">Pay in cash</span>--}}
-{{--                                        </label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                @error('payment_method')--}}
-{{--                                <p class="text-danger">{{ $message }}</p>--}}
-{{--                                @enderror--}}
-{{--                                <div class="sub-checkout-item">--}}
-{{--                                    <ul class="list-policy">--}}
-{{--                                        <li>You will be charged the total amount once your order is confirmed.</li>--}}
-{{--                                        <li>If confirmation isn't received instantly, an authorization for the total--}}
-{{--                                            amount will be held until your booking is confirmed.--}}
-{{--                                        </li>--}}
-{{--                                        <li>You can cancel for free up to 24 hours before the day of the experience,--}}
-{{--                                            local time. By clicking 'Pay with PayPal,' you are acknowledging that you--}}
-{{--                                            have read and are bound by Ojimah's--}}
-{{--                                        </li>--}}
-{{--                                        <li>Customer Terms of Use, Privacy Policy, plus the tour operator's rules &--}}
-{{--                                            regulations (see the listing for more details).--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="sub-checkout-item">--}}
+                                {{--                                    <div class="form-check">--}}
+                                {{--                                        <input class="form-check-input" type="radio" name="payment_method"--}}
+                                {{--                                               id="creditCard" value="2">--}}
+                                {{--                                        <label class="form-check-label" for="creditCard">--}}
+                                {{--                                            <span class="payment-title">Credit Card</span>--}}
+                                {{--                                            <img class="payment-image" src="{{ asset('images/credit-card.png') }}"--}}
+                                {{--                                                 alt="credit card">--}}
+                                {{--                                        </label>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="form-check">--}}
+                                {{--                                        <input class="form-check-input" type="radio" name="payment_method" id="paypal"--}}
+                                {{--                                               value="3">--}}
+                                {{--                                        <label class="form-check-label" for="paypal">--}}
+                                {{--                                            <span class="payment-title">Paypal</span>--}}
+                                {{--                                            <img class="payment-image" src="{{ asset('images/paypal.png') }}"--}}
+                                {{--                                                 alt="paypal">--}}
+                                {{--                                        </label>--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="form-check">--}}
+                                {{--                                        <input class="form-check-input" type="radio" name="payment_method" id="cash"--}}
+                                {{--                                               value="1" checked>--}}
+                                {{--                                        <label class="form-check-label" for="cash">--}}
+                                {{--                                            <span class="payment-title">Pay in cash</span>--}}
+                                {{--                                        </label>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+                                {{--                                @error('payment_method')--}}
+                                {{--                                <p class="text-danger">{{ $message }}</p>--}}
+                                {{--                                @enderror--}}
+                                {{--                                <div class="sub-checkout-item">--}}
+                                {{--                                    <ul class="list-policy">--}}
+                                {{--                                        <li>You will be charged the total amount once your order is confirmed.</li>--}}
+                                {{--                                        <li>If confirmation isn't received instantly, an authorization for the total--}}
+                                {{--                                            amount will be held until your booking is confirmed.--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>You can cancel for free up to 24 hours before the day of the experience,--}}
+                                {{--                                            local time. By clicking 'Pay with PayPal,' you are acknowledging that you--}}
+                                {{--                                            have read and are bound by Ojimah's--}}
+                                {{--                                        </li>--}}
+                                {{--                                        <li>Customer Terms of Use, Privacy Policy, plus the tour operator's rules &--}}
+                                {{--                                            regulations (see the listing for more details).--}}
+                                {{--                                        </li>--}}
+                                {{--                                    </ul>--}}
+                                {{--                                </div>--}}
 
                                 <div class="sub-checkout-item">
                                     <button type="submit" class="btn-submit-checkout" id="btnSubmitCheckout">
@@ -262,10 +265,12 @@
                                 <div class="input-inner-icon">
                                     <div class="row">
                                         <div class="col-7">
-                                            <input class="form-control" style="padding-left: 30px" type="text" placeholder="Code">
+                                            <input class="form-control" style="padding-left: 30px" type="text"
+                                                   placeholder="Code" id="coupon">
+                                            <input type="hidden" id="discountCoupon" value="0">
                                         </div>
                                         <div class="col-5">
-                                            <button type="button" class="btn-apply-coupon">Apply</button>
+                                            <button type="button" class="btn-apply-coupon">Xác nhận</button>
                                         </div>
                                     </div>
                                 </div>
@@ -274,23 +279,24 @@
                                 <h5>Loại phòng</h5>
                                 <div class="input-inner-icon">
                                     <img src="{{ asset('images/icon/home_icon.svg') }}" alt="people">
-                                    <select class="form-control" id="selectRoom" name="room">
-                                        <option value="2500000">Phòng hạng sang (1 giường) - 2.5tr</option>
-                                        <option value="2000000">Phòng VIP (2 giường) - 2tr</option>
-                                        <option value="1500000">Phòng thường (2 giường) - 1.5tr</option>
-                                        <option value="1000000">Phòng thường (1 giường) - 1tr</option>
-                                        <option value="800000">Phòng bình dân (1 giường) - 800k</option>
+                                    <select class="form-control" id="selectRoom" name="room_id">
+                                        @foreach($tour->rooms as $room)
+                                            <option value="{{ $room->id }}" data-price="{{ $room->price }}"
+                                                {{ $room->id == $roomId ? 'selected' : '' }}>
+                                                {{ $room->name . ' - ' . number_format($room->price) . 'đ' }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="input-inner-icon">
                                     <img src="{{ asset('images/icon/number.svg') }}" alt="people">
                                     <input type="number" class="form-control" id="numberRoom" name="number_room"
-                                           placeholder="Số lượng phòng" min="1" value="1">
+                                           placeholder="Số lượng phòng" min="1" value="{{ $numberRoom }}">
                                 </div>
 
-                                <h5>Dịch vụ kèm thêm</h5>
-                                - Miễn phí bữa sáng</br>
-                                - Miễn phí vé vào cửa</br></br>
+                                {{--                                <h5>Dịch vụ kèm thêm</h5>--}}
+                                {{--                                - Miễn phí bữa sáng</br>--}}
+                                {{--                                - Miễn phí vé vào cửa</br></br>--}}
 
                                 <!--- KẾT THÚC THÊM MỚI -->
 

@@ -259,14 +259,17 @@ $(document).ready(function () {
 
     function caculatePrice() {
         let numberPeople = $('#selectNumberPeople').val();
+        let discount = $('#discountCoupon').val();
         let price = numberPeople * PRICE_DEFAULT;
         if (isNaN(price)) {
             $('#totalPrice').text('VNĐ');
 
             return;
         }
-        let priceRoom = $('#selectRoom').val() * $('#numberRoom').val();
+        let priceRoom = $('#selectRoom option:selected').data('price') * $('#numberRoom').val();
         price = price + priceRoom;
+        price = price - price * discount;
+
 
         $('#totalPrice').text(price.toLocaleString() + ' VNĐ');
     }

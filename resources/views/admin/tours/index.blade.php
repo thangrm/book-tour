@@ -28,14 +28,14 @@
                             <div class="form-group row w-75 mb-0">
                                 <div class="col-12 col-md-8 mb-2">
                                     <input type="text" class="form-control" name="search" id="searchName"
-                                           placeholder="Search">
+                                           placeholder="Tìm kiếm">
                                 </div>
 
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-10 col-sm-6 col-lg-4 mb-2">
                                             <select class="form-control select2" name="type_id" id="filterType">
-                                                <option value="">Choose type</option>
+                                                <option value="">Chọn loại tour</option>
                                                 @isset($types)
                                                     @foreach($types as $type)
                                                         <option value="{{ $type->id }}"> {{ $type->name }} </option>
@@ -46,7 +46,7 @@
 
                                         <div class="col-10 col-sm-6 col-lg-5 mb-2">
                                             <select class="form-control" name="destination_id" id="filterDestination">
-                                                <option value="">Choose destination</option>
+                                                <option value="">Chọn điểm đến</option>
                                                 @isset($destinations)
                                                     @foreach($destinations as $destination)
                                                         <option
@@ -58,9 +58,9 @@
 
                                         <div class="col-10 col-sm-6 col-lg-3 mb-2">
                                             <select class="form-control h-100" name="status" id="filterStatus">
-                                                <option value="">Choose status</option>
-                                                <option value="1">Active</option>
-                                                <option value="2">Inactive</option>
+                                                <option value="">Trạng thái</option>
+                                                <option value="1">Hoạt động</option>
+                                                <option value="2">không hoạt động</option>
                                             </select>
                                         </div>
                                     </div>
@@ -75,13 +75,13 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Trending</th>
-                            <th>Detail</th>
-                            <th>Action</th>
+                            <th>Ảnh</th>
+                            <th>Tên tour</th>
+                            <th>Giá</th>
+                            <th>Trạng thái</th>
+                            <th>Nổi bật</th>
+                            <th>Chi tiết</th>
+                            <th>Hoạt động</th>
                         </tr>
                         </thead>
                     </table>

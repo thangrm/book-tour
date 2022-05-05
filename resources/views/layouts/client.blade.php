@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title','Ngao Du Viet Nam')</title>
+    <title>@yield('title','Thắng Lợi Travel')</title>
     <meta name="description" content="@yield('description','Tour and Travel')">
-    <meta name="author" content="ngaodu">
-    <meta property="og:title" content="@yield('title', 'Ngao Du Viet Nam')">
+    <meta name="author" content="thangloi">
+    <meta property="og:title" content="@yield('title', 'Thắng Lợi Travel')">
     <meta property="og:description" content="@yield('description', 'Tour and Travel')">
     <meta property="og:url" content="@yield('url', route('index'))">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Ngao Du">
+    <meta property="og:site_name" content="Thắng Lợi">
     <meta property="og:image" content="@yield('image_seo')">
     <meta property="og:image:secure_url" content="@yield('image_seo')">
     <meta name="csrf-token" content="{{ csrf_token() }}">

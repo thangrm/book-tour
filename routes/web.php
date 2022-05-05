@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ItineraryController;
 use App\Http\Controllers\Admin\PlaceController;
 use App\Http\Controllers\Admin\ReviewContrller;
+use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Auth\ChangePasswordController;
@@ -103,6 +104,15 @@ Route::group(['prefix' => 'admin'], function () {
                     Route::resource('places', PlaceController::class)->except(['show']);
                     Route::get('places/data', [PlaceController::class, 'getData'])->name('places.data');
                 });
+            });
+
+            // Itinerary
+            Route::prefix('rooms')->group(function () {
+                Route::get('/', [RoomController::class, 'index'])->name('rooms.index');
+                Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
+                Route::put('/{id}', [RoomController::class, 'update'])->name('rooms.update');
+                Route::delete('/{id}', [RoomController::class, 'destroy'])->name('rooms.destroy');
+                Route::get('/data', [RoomController::class, 'getData'])->name('rooms.data');
             });
 
             // FAQ

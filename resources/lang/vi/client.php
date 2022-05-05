@@ -60,5 +60,8 @@ return [
         'terms_and_conditions' => 'Chính sách và điều khoản',
         'privacy_policy' => 'Chính sách bảo mật',
         'guest_policy' => 'Chính sách khách hàng',
-    ]
+    ],
+
+    'name' => 'tên',
+    'price' => 'giá',
 ];

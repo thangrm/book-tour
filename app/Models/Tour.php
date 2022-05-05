@@ -65,6 +65,15 @@ class Tour extends Model
     }
 
     /**
+     * Get the bookings for the tour.
+     *
+     */
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+
+    /**
      * Get the FAQs for the tour.
      *
      * @param bool $filterActive
@@ -365,7 +374,7 @@ class Tour extends Model
                 return view('components.image', compact('pathImage'));
             })
             ->editColumn('price', function ($data) {
-                return number_format($data->price, 2) . ' $';;
+                return number_format($data->price) . ' đ';;
             })
             ->editColumn('status', function ($data) {
                 $link = route('tours.update', $data->id);
@@ -387,22 +396,26 @@ class Tour extends Model
                 $routerItinerary = route('itineraries.index', $data->id);
                 $routerFAQ = route('faqs.index', $data->id);
                 $routerReview = route('reviews.index', $data->id);
-                $width = 65;
+                $routerRoom = route('rooms.index', $data->id);
+                $width = 68;
 
                 $view = view('components.action',
-                    ['link' => $routerInfo, 'title' => 'More Info', 'width' => $width])->render();
+                    ['link' => $routerInfo, 'title' => 'Thông tin', 'width' => $width])->render();
 
                 $view .= view('components.action',
-                    ['link' => $routerGallery, 'title' => 'Galleries', 'width' => $width])->render();
+                    ['link' => $routerGallery, 'title' => 'Ảnh', 'width' => $width])->render();
 
                 $view .= view('components.action',
-                    ['link' => $routerItinerary, 'title' => 'Itineraries', 'width' => $width])->render();
+                    ['link' => $routerItinerary, 'title' => 'Hành trình', 'width' => $width])->render();
 
                 $view .= view('components.action',
-                    ['link' => $routerFAQ, 'title' => 'Faqs', 'width' => $width])->render();
+                    ['link' => $routerRoom, 'title' => 'Phòng', 'width' => $width])->render();
 
                 $view .= view('components.action',
-                    ['link' => $routerReview, 'title' => 'Reviews', 'width' => $width])->render();
+                    ['link' => $routerReview, 'title' => 'Đánh giá', 'width' => $width])->render();
+
+                $view .= view('components.action',
+                    ['link' => $routerFAQ, 'title' => 'Hỏi đáp', 'width' => $width])->render();
 
                 return $view;
             })
