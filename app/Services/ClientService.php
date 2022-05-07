@@ -26,8 +26,8 @@ class ClientService
         return [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'email' => 'required|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/',
-            'phone' => 'required|regex:/(0)[0-9]{9,10}/',
+            'email' => 'nullable|regex:/^[a-z][a-z0-9_\.]{3,}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/',
+            'phone' => 'required|regex:/^(0)[0-9]{9,10}$/',
             'people' => 'required|integer|min:0|max:20',
             'departure_time' => 'required|date',
             'payment_method' => 'required|integer|min:0|max:3',
@@ -60,6 +60,9 @@ class ClientService
             'zipcode',
         ]));
         $input['status'] = 1;
+        if(empty($input['email'])){
+            $input['email'] = 'Không có email';
+        }
         $customer = Customer::create($input);
         $room = Room::findOrFail($request->room_id);
         $coupon = Coupon::where('code', $request->codeCoupon)->first();

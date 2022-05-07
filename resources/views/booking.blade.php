@@ -47,7 +47,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-6">
-                                            <label for="email" class="form-label title">Email <span class="text-danger">*</span></label>
+                                            <label for="email" class="form-label title">Email</label>
                                             <input type="text" class="form-control" id="email"
                                                    placeholder="email@domain.com" name="email"
                                                    value="{{ old('email') }}">
@@ -219,7 +219,7 @@
                     <div class="col-12 col-lg-5 col-xl-4">
                         <div class="box-book-now box-coupon">
                             <div class="wrap-content-coupon">
-                                <span class="card-title">{{ $tour->name }}</span>
+                                <span class="card-title">{{ $tour->name . ' - ' . number_format($tour->price) . 'đ'}} </span>
                                 <p class="text-content mt-2">
                                     <img src="{{ asset('images/icon/location.svg') }}" alt="location">
                                     <span>{{ $tour->destination->name   }}</span>
@@ -307,12 +307,13 @@
                                 <!--- KẾT THÚC THÊM MỚI -->
 
                             </div>
-                            <div class="total-price-coupon d-flex justify-content-between">
+                            <div class="total-price-coupon d-flex justify-content-between align-items-center">
                                 <span class="card-text">
-                                    Total
+                                    Tổng
                                 </span>
-                                <span class="card-title" id="totalPrice">
-                                    VNĐ
+                                <span class="card-title" >
+                                        <p class="d-none" id="priceAfterDiscount" style="text-decoration: line-through; color: grey"></p>
+                                    <span id="totalPrice"></span>
                                 </span>
                             </div>
                         </div>
@@ -349,6 +350,16 @@
             e.preventDefault();
             let link = $(this).attr('action');
             let formData = new FormData(document.getElementById('formCheckout'));
+            $('#errorFirstName').text('');
+            $('#errorLastName').text('');
+            $('#errorEmail').text('');
+            $('#errorPhone').text('');
+            $('#errorAddress').text('');
+            $('#errorCity').text('');
+            $('#errorProvince').text('');
+            $('#errorZipCode').text('');
+            $('#errorContry').text('');
+            $('#errorRequirement').text('');
 
             $.ajax({
                 url: link,

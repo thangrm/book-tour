@@ -2,7 +2,7 @@
 @section('content')
     <div class="banner-title">
         <img src="{{ asset('images/page-title.jpg') }}" alt="banner title">
-        <p class="title">Hội an</p>
+        <p class="title">Điểm đến</p>
     </div>
 
     <!-------------------- Breadcrumb -------------------->

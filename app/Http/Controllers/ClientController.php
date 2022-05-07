@@ -98,7 +98,19 @@ class ClientController extends Controller
     public function storeBooking(Request $request, $slug, Tour $tourModel)
     {
         $tour = $tourModel->getTourBySlug($slug);
-        $request->validate($this->clientService->ruleBooking());
+        $request->validate($this->clientService->ruleBooking(),[],[
+            'first_name' => 'tên',
+            'last_name' => 'họ',
+            'phone' => 'điện thoại',
+            'people' => 'sô người',
+            'departure_time' => 'ngày',
+            'payment_method' => 'loại thanh toán',
+            'address' => 'địa chỉ',
+            'city' => 'thành phố',
+            'province' => 'huyện',
+            'country' => 'quốc gia',
+            'zipcode' => 'mã zipcode',
+        ]);
         $this->notification->setMessage('Đặt tour thành công', Notification::SUCCESS);
 
         try {

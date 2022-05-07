@@ -268,9 +268,13 @@ $(document).ready(function () {
         }
         let priceRoom = $('#selectRoom option:selected').data('price') * $('#numberRoom').val();
         price = price + priceRoom;
-        price = price - price * discount / 100;
-        console.log(discount);
-        $('#totalPrice').text(price.toLocaleString() + ' VNĐ');
+        let total = price - price * discount / 100;
+        $('#totalPrice').text(total.toLocaleString() + ' VNĐ');
+
+        $('#priceAfterDiscount').text(price.toLocaleString() + ' VNĐ - ' + discount + '%');
+        if(discount > 0){
+            $('#priceAfterDiscount').removeClass('d-none');
+        }
     }
 
     caculatePrice();
