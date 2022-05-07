@@ -64,4 +64,8 @@ return [
 
     'name' => 'name',
     'price' => 'price',
+    'code' => 'code',
+    'discount' => 'discount',
+    'number' => 'number',
+    'status' => 'status',
 ];

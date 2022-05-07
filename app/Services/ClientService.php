@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Jobs\SendMailBookingJob;
 use App\Libraries\Utilities;
 use App\Models\Booking;
+use App\Models\Coupon;
 use App\Models\Customer;
 use App\Models\Destination;
 use App\Models\Room;
@@ -61,6 +62,7 @@ class ClientService
         $input['status'] = 1;
         $customer = Customer::create($input);
         $room = Room::findOrFail($request->room_id);
+        $coupon = Coupon::where('code', $request->codeCoupon)->first();
 
         $input = Utilities::clearAllXSS($request->only([
             'people',
@@ -73,9 +75,20 @@ class ClientService
         $input['customer_id'] = $customer->id;
         $input['tour_id'] = $tour->id;
         $input['price'] = $tour->price;
-        $input['total'] = $tour->price * $request->people + $room->price * $request->number_room;
+        $input['discount_code'] = @$coupon->code;
+        $input['discount'] = @$coupon->discount ?? 0;
+        $input['room_price'] = $room->price;
+
+        $total = $tour->price * $request->people + $room->price * $request->number_room;
+        $total = $total - $total * $input['discount'] / 100;
+        $input['total'] = $total;
         $input['status'] = 1;
         $booking = Booking::create($input);
+        if ($coupon) {
+            $coupon->update([
+                'number' => $coupon->number - 1,
+            ]);
+        }
 
         dispatch(new SendMailBookingJob($booking));
     }

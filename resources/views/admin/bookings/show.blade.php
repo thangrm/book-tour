@@ -3,7 +3,7 @@
     <style>
         .tb-title {
             font-weight: bold;
-            width: 80px;
+            width: 120px;
             margin-bottom: 20px;
         }
     </style>
@@ -12,13 +12,13 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">Booking</h4>
+                <h4 class="page-title">Đặt tour</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('bookings.index') }}">Booking</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Detail</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Tổng quan</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('bookings.index') }}">Đặt tour</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
                         </ol>
                     </nav>
                 </div>
@@ -31,7 +31,13 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Booking</h4>
+                        <h4 class="card-title d-flex justify-content-between align-items-center">
+                            <span>Thông tin đặt tour</span>
+                            <button class="btn btn-info text-white edit" title="Thanh toán / cọc"
+                                    data-toggle="modal" data-target="#editModal">
+                                Thánh toán / cọc
+                            </button>
+                        </h4>
                         <hr>
                         <table>
                             <tr>
@@ -39,18 +45,18 @@
                                 <td>{{ $booking->tour->name }}</td>
                             </tr>
                             <tr>
-                                <td class="tb-title">Departure:</td>
+                                <td class="tb-title">Thời gian:</td>
                                 <td>{{ date('d/m/Y',strtotime($booking->departure_time)) }}</td>
                             </tr>
                             <tr>
-                                <td class="tb-title">Payment:</td>
+                                <td class="tb-title">Thanh toán:</td>
                                 <td>
                                     @switch($booking->payment_method)
                                         @case(1)
-                                        Cash
+                                        Tiền mặt
                                         @break
                                         @case(2)
-                                        CreditCard
+                                        Thẻ
                                         @break
                                         @case(3)
                                         Paypal
@@ -59,41 +65,61 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tb-title">Status:</td>
+                                <td class="tb-title">Trạng thái:</td>
                                 <td>
                                     @include('components.status_booking', ['status' => $booking->status])
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tb-title">Price:</td>
-                                <td>{{ number_format($booking->price, 2) . ' $'}}</td>
+                                <td class="tb-title">Giá:</td>
+                                <td>{{ number_format($booking->price) . ' đ'}}</td>
                             </tr>
                             <tr>
-                                <td class="tb-title">People:</td>
+                                <td class="tb-title">Số người:</td>
                                 <td>{{ $booking->people }}</td>
                             </tr>
                             <tr>
-                                <td class="tb-title">Total:</td>
-                                <td>{{ number_format($booking->price * $booking->people, 2) . ' $'}}</td>
+                                <td class="tb-title">Phòng:</td>
+                                <td>{{ $booking->room->name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="tb-title">Giá phòng:</td>
+                                <td>{{ number_format($booking->room_price) . ' đ' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="tb-title">Số phòng:</td>
+                                <td>{{ $booking->number_room }}</td>
+                            </tr>
+                            <tr>
+                                <td class="tb-title">Giảm giá:</td>
+                                <td>{{ $booking->discount }}%</td>
+                            </tr>
+                            <tr>
+                                <td class="tb-title">Tổng:</td>
+                                <td>{{ number_format($booking->total) . ' đ'}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tb-title">Đã thanh toán:</td>
+                                <td>{{ number_format($booking->deposit) . ' đ'}}</td>
                             </tr>
                             <tr>
                                 <td colspan="2">
                                     @if($booking->status == 1)
                                         <button onclick="changeStatusBooking(2)"
                                                 class="btn btn-success btn-status m-r-5 m-t-30">
-                                            Confirmed
+                                            Xác nhận
                                         </button>
                                     @elseif($booking->status == 2)
                                         <button onclick="changeStatusBooking(3)"
                                                 class="btn btn-primary btn-status m-r-5 m-t-30">
-                                            Complete
+                                            Hoàn thành
                                         </button>
                                     @endif
 
                                     @if($booking->status < 3 )
                                         <button onclick="changeStatusBooking(4)"
                                                 class="btn btn-danger btn-status m-t-30">
-                                            Cancel booking
+                                            Hủy đơn hàng
                                         </button>
                                     @endif
                                 </td>
@@ -105,11 +131,11 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Customer</h4>
+                        <h4 class="card-title">Thông tin khách hàng</h4>
                         <hr>
                         <table>
                             <tr>
-                                <td class="tb-title">Name:</td>
+                                <td class="tb-title">Tên:</td>
                                 <td>{{ $booking->customer->first_name . ' ' . $booking->customer->last_name }}</td>
                             </tr>
                             <tr>
@@ -117,11 +143,11 @@
                                 <td>{{ $booking->customer->email }}</td>
                             </tr>
                             <tr>
-                                <td class="tb-title">Phone:</td>
+                                <td class="tb-title">Điện thoại:</td>
                                 <td>{{ $booking->customer->phone }}</td>
                             </tr>
                             <tr>
-                                <td class="tb-title">Address:</td>
+                                <td class="tb-title">Địa chỉ:</td>
                                 <td>
                                     {{ trim(implode(", ", [
                                         $booking->customer->address,
@@ -141,11 +167,45 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Requirement</h4>
+                        <h4 class="card-title">Yêu cầu</h4>
                         <hr>
                         <p> {{ $booking->requirement }} </p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="formEditDeposit">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Thanh toán / cọc</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name" class="text-left control-label col-form-label">
+                                Số tiền<span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <input type="number" min="0" class="form-control" name="deposit" id="deposit"
+                                       value="{{ $booking->deposit }}" placeholder="Số tiền">
+                            </div>
+                            <p class="text-danger" id="errorDeposit"></p>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-info" id="btnSubmitDeposit">Lưu</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -168,24 +228,25 @@
             let text = '';
             switch (status) {
                 case CONFIRMED:
-                    text = 'confirm';
+                    text = 'xác nhận';
                     break;
                 case COMPLETE:
-                    text = 'complete';
+                    text = 'hoàn thành';
                     break;
                 case CANCEL:
-                    text = 'cancel';
+                    text = 'hủy';
                     break;
                 default:
                     return;
             }
 
             swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: `You want to ${text} this booking!`,
+                title: 'Bạn có chắc chắn?',
+                text: `Bạn muốn ${text} lịch đặt tour này!`,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, do it',
+                confirmButtonText: 'Vâng, xác nhận',
+                cancelButtonText: 'Hủy',
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -197,12 +258,49 @@
                             if (response) {
                                 location.reload(true);
                             } else {
-                                toastrMessage('error', 'Status change failed');
+                                toastrMessage('error', 'Thay đổi trạng thái thất bại');
                             }
                         }
                     });
                 }
             })
         }
+
+        $('#formEditDeposit').submit(function (e) {
+            e.preventDefault();
+            disableSubmitButton('#formEditDeposit');
+            $('#errorDeposit').text('');
+
+            let deposit = $('#deposit').val();
+            if (deposit > {{ $booking->total }}) {
+                $('#errorDeposit').text('Số tiền không được lớn hơn tổng tiền thanh toán');
+                return;
+            }
+            let formData = new FormData();
+            formData.append("_method", 'PUT');
+            formData.append("deposit", deposit);
+
+            $.ajax({
+                url: '{{ route('bookings.deposit', $booking->id) }}',
+                method: "POST",
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    if (response) {
+                        location.reload(true);
+                    } else {
+                        toastrMessage('error', 'Cập nhật tiền thanh toán không thành công');
+                    }
+                },
+                error: function (jqXHR) {
+                    toastrMessage('error', 'Cập nhật tiền thanh toán không thành công');
+                },
+                complete: function () {
+                    enableSubmitButton('#formEditDeposit', 300);
+                }
+            });
+
+        });
     </script>
 @endsection

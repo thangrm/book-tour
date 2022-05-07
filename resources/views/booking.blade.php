@@ -1,6 +1,7 @@
 @extends('layouts.client')
 @section('content')
     <link href="{{ asset('css/bootstrap-v5.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
 
     <!-------------------- Checkout -------------------->
     <div class="box-checkout box-detail-tour" style="margin-top: 100px">
@@ -264,13 +265,18 @@
                                 </div>
                                 <div class="input-inner-icon">
                                     <div class="row">
+                                        <input type="hidden" id="linkCheckCoupon" value="{{ route('coupons.check') }}">
+                                        <input type="hidden" name="codeCoupon" id="codeCoupon"
+                                               value="">
                                         <div class="col-7">
                                             <input class="form-control" style="padding-left: 30px" type="text"
                                                    placeholder="Code" id="coupon">
                                             <input type="hidden" id="discountCoupon" value="0">
                                         </div>
                                         <div class="col-5">
-                                            <button type="button" class="btn-apply-coupon">Xác nhận</button>
+                                            <button type="button" id="btnCouponSubmit" class="btn-apply-coupon">Xác
+                                                nhận
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -411,6 +417,5 @@
                 }
             });
         });
-
     </script>
 @endsection

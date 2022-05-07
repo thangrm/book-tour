@@ -49,6 +49,19 @@ class BookingController extends Controller
         return json_encode($this->booking->updateStatus($request, $id));
     }
 
+    public function updateDeposit(Request $request, $id)
+    {
+        $request->validate([
+            'deposit' => 'required|integer'
+        ]);
+        $booking = Booking::findOrFail($id);
+
+        return json_encode($booking->update([
+            'deposit' => $request->deposit,
+        ]));
+    }
+
+
     /**
      * Process datatables ajax request.
      *

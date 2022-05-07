@@ -34,6 +34,11 @@ class Booking extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
+
     /**
      * Validate rules for booking
      *
@@ -117,7 +122,7 @@ class Booking extends Model
                 return $data->customer->first_name . ' ' . $data->customer->last_name;
             })
             ->editColumn('price', function ($data) {
-                return number_format($data->price, 2) . ' $';
+                return number_format($data->price) . ' đ';
             })
             ->editColumn('payment_method', function ($data) {
                 switch ($data->payment_method) {
@@ -135,7 +140,7 @@ class Booking extends Model
                 return view('components.status_booking', ['status' => $data->status]);
             })
             ->addColumn('total', function ($data) {
-                return number_format($data->price * $data->people, 2) . ' $';
+                return number_format($data->total) . ' đ';
             })
             ->addColumn('action', function ($data) {
                 $link = route('bookings.show', $data->id);

@@ -50,22 +50,17 @@ class RoomController extends Controller
         ]);
 
         try {
-            $this->notification->setMessage('New room added successfully', Notification::SUCCESS);
-            $codeMessage = $this->room->saveData($request, $tourId);
-
-            if ($codeMessage == 2) {
-                $this->notification->setMessage('Tour duration is ' . Tour::findOrFail($tourId)->duration,
-                    Notification::ERROR);
-            }
+            $this->notification->setMessage('Đã thêm một phòng mới thành công', Notification::SUCCESS);
+            $this->room->saveData($request, $tourId);
 
         } catch (QueryException $e) {
-            $this->notification->setMessage('room addition failed', Notification::ERROR);
+            $this->notification->setMessage('Thêm mới phòng không thành công', Notification::ERROR);
 
             if ($e->errorInfo[1] == '1062') {
-                $this->notification->setMessage('The room already exists', Notification::ERROR);
+                $this->notification->setMessage('Phòng đã tồn tại', Notification::ERROR);
             }
         } catch (Exception $e) {
-            $this->notification->setMessage('room addition failed', Notification::ERROR);
+            $this->notification->setMessage('Thêm mới phòng không thành công', Notification::ERROR);
         }
 
         return response()->json($this->notification->getMessage());

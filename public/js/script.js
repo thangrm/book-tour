@@ -268,13 +268,42 @@ $(document).ready(function () {
         }
         let priceRoom = $('#selectRoom option:selected').data('price') * $('#numberRoom').val();
         price = price + priceRoom;
-        price = price - price * discount;
-
-
+        price = price - price * discount / 100;
+        console.log(discount);
         $('#totalPrice').text(price.toLocaleString() + ' VNĐ');
     }
 
     caculatePrice();
+
+    //Apply coupon
+    $('#btnCouponSubmit').on('click', function (e) {
+        $(this).prop('disabled', true);
+        let code = $('#coupon').val();
+        if (code === "") {
+            toastr.error("Không được để trống mã giảm giá");
+            $('#btnCouponSubmit').prop('disabled', false);
+            return;
+        }
+
+        $.ajax({
+            url: $('#linkCheckCoupon').val(),
+            type: 'get',
+            data: {code: code},
+            success: function (response) {
+                $('#discountCoupon').val(response.discount);
+                $('#codeCoupon').val(response.code);
+                caculatePrice();
+                toastr.success("Áp dụng mã giảm giá thành công");
+            },
+            error: function (jqXHR) {
+                let response = jqXHR.responseJSON;
+                toastr.error(response.message);
+            },
+            complete: function () {
+                $('#btnCouponSubmit').prop('disabled', false);
+            }
+        });
+    });
 
     // Function validate
 //     function stringContainsNumber(_string) {

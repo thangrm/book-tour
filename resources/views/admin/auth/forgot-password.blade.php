@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admins/assets/images/favicon.png') }} ">
-    <title>Forgot Password Admin | Ngao Du</title>
+    <title>Quên mật khẩu | Thang loi</title>
     <!-- Custom CSS -->
     <link href="{{ asset('admins/dist/css/style.min.css') }}  " rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,19 +43,19 @@
             <div id="recoverform" style="display: block">
                 <div class="logo">
                     <span class="db"><img src="{{ asset('admins/assets/images/logo-icon.png') }}" alt="logo"/></span>
-                    <h5 class="font-medium m-b-20">Recover Password</h5>
+                    <h5 class="font-medium m-b-20">Khôi phục mật khẩu</h5>
                     @if(Session::has('status'))
                         <span class="text-success">{{ Session::get('status')}}</span>
                     @else
-                        <span>Enter your Email and instructions will be sent to you!</span>
+                        <span>Nhập mật khẩu của bạn và chúng tôi sẽ gửi một email xác nhận!</span>
                     @endif
                 </div>
                 @if(!Session::has('status'))
                     <div class="row m-t-20">
                         <!-- Form -->
                         <form class="col-12" method="POST" action="{{ route('admin.password.email') }}">
-                        @csrf
-                        <!-- email -->
+                            @csrf
+                            <!-- email -->
                             <div class="form-group row">
                                 @if(Session::has('status'))
                                     <div class="col-12">
@@ -75,7 +75,7 @@
                             <!-- pwd -->
                             <div class="row m-t-20">
                                 <div class="col-12">
-                                    <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">Reset
+                                    <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">Gửi
                                     </button>
                                 </div>
                             </div>

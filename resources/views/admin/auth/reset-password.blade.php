@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admins/assets/images/favicon.png') }} ">
-    <title>Forgot Password Admin | Ngao Du</title>
+    <title>Khôi phục mật khẩu | Thắng lợi travel</title>
     <!-- Custom CSS -->
     <link href="{{ asset('admins/dist/css/style.min.css') }}  " rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,7 +43,7 @@
             <div>
                 <div class="logo">
                     <span class="db"><img src="{{ asset('admins/assets/images/logo-icon.png') }}" alt="logo"/></span>
-                    <h5 class="font-medium m-b-20">Reset Password</h5>
+                    <h5 class="font-medium m-b-20">Khôi phục mật khẩu</h5>
                 </div>
                 <!-- Form -->
                 <div class="row">
@@ -66,7 +66,7 @@
                             <div class="form-group row">
                                 <div class="col-12 ">
                                     <input class="form-control form-control-lg" name="password" type="password"
-                                           required=" " placeholder="Password">
+                                           required=" " placeholder="Mật khẩu">
                                 </div>
                                 @error ('password')
                                 <div class="col-12 ">
@@ -77,7 +77,7 @@
                             <div class="form-group row">
                                 <div class="col-12 ">
                                     <input class="form-control form-control-lg" name="password_confirmation"
-                                           type="password" required=" " placeholder="Confirm Password">
+                                           type="password" required=" " placeholder="Xác nhận mật khẩu">
                                 </div>
                                 @error ('password_confirmation')
                                 <div class="col-12 ">
@@ -87,7 +87,7 @@
                             </div>
                             <div class="form-group text-center ">
                                 <div class="col-xs-12 p-b-20 ">
-                                    <button class="btn btn-block btn-lg btn-info " type="submit ">Reset Password
+                                    <button class="btn btn-block btn-lg btn-info " type="submit ">Cập nhật mật khẩu
                                     </button>
                                 </div>
                             </div>

@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap-reboot.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    {{--    <link rel="stylesheet" href="{{ asset('css/main.css') }}">--}}
     <script src="{{ asset('js/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/select2/select2.min.js') }}"></script>

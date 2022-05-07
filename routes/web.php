@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\FAQController;
@@ -41,6 +42,7 @@ Route::get('/destination', [ClientController::class, 'destination'])->name('clie
 Route::get('/search', [ClientController::class, 'search'])->name('client.search.index');
 Route::get('/contact', [ClientController::class, 'contact'])->name('client.contact.index');
 Route::post('/contact', [ClientController::class, 'storeContact'])->name('client.contact.store');
+Route::get('coupons/check', [CouponController::class, 'check'])->name('coupons.check');
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +79,15 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('data', [TypeController::class, 'getData'])->name('types.data');
         });
 
+        //Coupon
+        Route::prefix('coupons')->group(function () {
+            Route::get('/', [CouponController::class, 'index'])->name('coupons.index');
+            Route::post('/', [CouponController::class, 'store'])->name('coupons.store');
+            Route::put('/{id}', [CouponController::class, 'update'])->name('coupons.update');
+            Route::delete('/{id}', [CouponController::class, 'destroy'])->name('coupons.destroy');
+            Route::get('/data', [CouponController::class, 'getData'])->name('coupons.data');
+        });
+
         // Tour
         Route::resource('tours', TourController::class)->except(['show']);
         Route::get('tours/data', [TourController::class, 'getData'])->name('tours.data');
@@ -106,7 +117,7 @@ Route::group(['prefix' => 'admin'], function () {
                 });
             });
 
-            // Itinerary
+            // Room
             Route::prefix('rooms')->group(function () {
                 Route::get('/', [RoomController::class, 'index'])->name('rooms.index');
                 Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
@@ -132,6 +143,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/', [BookingController::class, 'index'])->name('bookings.index');
             Route::get('/show/{id}', [BookingController::class, 'show'])->name('bookings.show');
             Route::put('/{id}/change-status', [BookingController::class, 'changeStatus'])->name('bookings.status');
+            Route::put('/{id}/deposit', [BookingController::class, 'updateDeposit'])->name('bookings.deposit');
             Route::get('/data', [BookingController::class, 'getData'])->name('bookings.data');
         });
 

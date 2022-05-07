@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admins/assets/images/favicon.png') }} ">
-    <title>Login Admin | Ngao Du</title>
+    <title>Đăng nhập Admin | Thắng lợi travel</title>
     <!-- Custom CSS -->
     <link href="{{ asset('admins/dist/css/style.min.css') }}  " rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,7 +43,7 @@
             <div id="loginform">
                 <div class="logo">
                     <span class="db"><img src="{{ asset('admins/assets/images/logo-icon.png') }}" alt="logo"/></span>
-                    <h5 class="font-medium m-b-20">Sign In to Admin</h5>
+                    <h5 class="font-medium m-b-20">Đăng nhập</h5>
                 </div>
                 <!-- Form -->
                 <div class="row">
@@ -68,7 +68,7 @@
                                     <span class="input-group-text" id="basic-addon2"><i class="ti-pencil"></i></span>
                                 </div>
                                 <input type="password" class="form-control form-control-lg" name="password"
-                                       placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" }}>
+                                       placeholder="Mật khẩu" aria-label="Password" aria-describedby="basic-addon1" }}>
                             </div>
                             @error('password')
                             <div class=" col-12 ">
@@ -80,10 +80,10 @@
                                 <div class="col-md-12">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Remember me</label>
+                                        <label class="custom-control-label" for="customCheck1">Lưu phiên</label>
                                         <a href="{{ route('admin.password.request') }}" id="to-recover"
-                                           class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot
-                                            pwd?</a>
+                                           class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Quên tài
+                                            khoản?</a>
                                     </div>
                                 </div>
                             </div>

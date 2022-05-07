@@ -6,7 +6,7 @@
                 <a class="sidebar-link waves-effect waves-dark"
                    href="{{ route('admin.dashboard') }}" aria-expanded="false">
                     <i class="mdi mdi-view-dashboard"></i>
-                    <span class="hide-menu">Dashboard</span>
+                    <span class="hide-menu">Tổng quan</span>
                 </a>
             </li>
 
@@ -14,7 +14,7 @@
                 <a class="sidebar-link waves-effect waves-dark"
                    href="{{ route('destinations.index') }}" aria-expanded="false">
                     <i class="mdi mdi-map-marker"></i>
-                    <span class="hide-menu">Destinations</span>
+                    <span class="hide-menu">Địa điểm</span>
                 </a>
             </li>
 
@@ -22,7 +22,7 @@
                 <a class="sidebar-link waves-effect waves-dark"
                    href="{{ route('types.index') }}" aria-expanded="false">
                     <i class="mdi mdi-format-list-bulleted-type"></i>
-                    <span class="hide-menu">Type of tours</span>
+                    <span class="hide-menu">Thể loại tour</span>
                 </a>
             </li>
 
@@ -36,9 +36,17 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link waves-effect waves-dark"
+                   href="{{ route('coupons.index') }}" aria-expanded="false">
+                    <i class="mdi mdi-gift"></i>
+                    <span class="hide-menu">Mã giảm giá</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link waves-effect waves-dark"
                    href="{{ route('bookings.index') }}" aria-expanded="false">
                     <i class="mdi mdi-calendar"></i>
-                    <span class="hide-menu">Bookings</span>
+                    <span class="hide-menu">Đặt tours</span>
                 </a>
             </li>
 
@@ -46,7 +54,7 @@
                 <a class="sidebar-link waves-effect waves-dark"
                    href="{{ route('contacts.index') }}" aria-expanded="false">
                     <i class="mdi mdi-account-box"></i>
-                    <span class="hide-menu">Contacts</span>
+                    <span class="hide-menu">Liên hệ</span>
                 </a>
             </li>
         </ul>

@@ -64,4 +64,8 @@ return [
 
     'name' => 'tên',
     'price' => 'giá',
+    'code' => 'mã giảm giá',
+    'discount' => 'tỉ lệ giảm giá',
+    'number' => 'số lượng',
+    'status' => 'trạng thái',
 ];

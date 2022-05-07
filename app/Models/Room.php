@@ -25,7 +25,7 @@ class Room extends Model
     }
 
     /**
-     * Validate rules for itinerary
+     * Validate rules for room
      *
      * @return string[]
      */
@@ -38,7 +38,7 @@ class Room extends Model
     }
 
     /**
-     * Save itinerary
+     * Save room
      *
      * @param Request $request
      * @param $tourId
@@ -63,7 +63,7 @@ class Room extends Model
     }
 
     /**
-     * Delete the itinerary by id in database.
+     * Delete the room by id in database.
      *
      * @param $id
      * @return mixed
@@ -75,7 +75,7 @@ class Room extends Model
     }
 
     /**
-     * Get a list of itinerary
+     * Get a list of room
      *
      * @param $tourId
      * @return mixed
@@ -97,7 +97,7 @@ class Room extends Model
 
                 return view('components.action_modal', compact(['id', 'linkEdit', 'linkDelete']));
             })
-            ->rawColumns(['place', 'action'])
+            ->rawColumns(['action'])
             ->make(true);
     }
 }

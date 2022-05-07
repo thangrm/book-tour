@@ -18,6 +18,7 @@
 @section('content')
     <link href="{{ asset('css/bootstrap-v5.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
     <!-------------------- Breadcrumb -------------------->
     <div class="breadcrumb-wrap">
         <div class="container">
@@ -358,6 +359,8 @@
                                         <form action="{{ route('client.review.store', $tour->slug) }}"
                                               class="form-review w-100" method="post">
                                             @csrf
+                                            <input type="hidden" id="discountCoupon" value="0">
+
                                             <textarea class="form-control" rows="5"
                                                       placeholder="{{ __('client.detail.type_anything') }}"
                                                       name="comment">{{ old('comment') }}</textarea>
