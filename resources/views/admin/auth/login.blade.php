@@ -80,7 +80,7 @@
                                 <div class="col-md-12">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Lưu phiên</label>
+                                        <label class="custom-control-label" for="customCheck1">Lưu tài khoản</label>
                                         <a href="{{ route('admin.password.request') }}" id="to-recover"
                                            class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Quên tài
                                             khoản?</a>

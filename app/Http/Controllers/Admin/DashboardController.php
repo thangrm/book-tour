@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
+use App\Models\Destination;
+use App\Models\Tour;
+use App\Models\Type;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = Auth::guard('admin')->user();
-        return view('admin.dashboard');
+        $numberDestinations = Destination::where('status', ACTIVE)->count();
+        $numberTypes = Type::where('status', ACTIVE)->count();
+        $numberTours = Tour::where('status', ACTIVE)->count();
+        $numberBookings = Booking::count();
+        return view('admin.dashboard', compact(['numberDestinations', 'numberTypes', 'numberTours', 'numberBookings']));
     }
 }
