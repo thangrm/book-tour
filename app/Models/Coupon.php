@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Libraries\Utilities;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -23,20 +24,13 @@ class Coupon extends Model
     public function rules(int $id = null): array
     {
         $rule = [
-            'code' => 'required|string|max:20',
+            'code' => 'required|string|between:5,20',
             'discount' => 'required|integer|between:1,100',
             'number' => 'required|integer|between:0,1000000',
             'status' => 'required|integer|between:1,2',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
         ];
-
-        if ($id != null) {
-            $rule = [
-                'code' => 'string|max:20',
-                'discount' => 'integer|between:1,100',
-                'number' => 'integer|between:0,1000000',
-                'status' => 'integer|between:1,2',
-            ];
-        }
 
         return $rule;
     }
@@ -50,7 +44,7 @@ class Coupon extends Model
      */
     public function saveData(Request $request, int $id = 0)
     {
-        $input = $request->only('code', 'discount', 'number', 'status');
+        $input = $request->only('code', 'discount', 'number', 'status', 'start_date', 'end_date');
         $input = Utilities::clearAllXSS($input);
         $coupon = $this->findOrNew($id);
         $coupon->fill($input);
@@ -98,6 +92,12 @@ class Coupon extends Model
             ->addIndexColumn()
             ->setRowId(function ($data) {
                 return 'coupon-' . $data->id;
+            })
+            ->editColumn('start_date', function ($data) {
+                return Carbon::parse($data->start_date)->format('Y-m-d H:i');
+            })
+            ->editColumn('end_date', function ($data) {
+                return Carbon::parse($data->end_date)->format('Y-m-d H:i');
             })
             ->editColumn('status', function ($data) {
                 $link = route('coupons.update', $data->id);

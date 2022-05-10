@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Libraries\Notification;
 use App\Models\Coupon;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\QueryException;
@@ -47,6 +48,8 @@ class CouponController extends Controller
             'discount' => __('client.discount'),
             'number' => __('client.number'),
             'status' => __('client.status'),
+            'start_date' => __('client.start_date'),
+            'end_date' => __('client.end_date')
         ]);
 
         try {
@@ -81,6 +84,8 @@ class CouponController extends Controller
             'discount' => __('client.discount'),
             'number' => __('client.number'),
             'status' => __('client.status'),
+            'start_date' => __('client.start_date'),
+            'end_date' => __('client.end_date')
         ]);
 
         try {
@@ -139,7 +144,12 @@ class CouponController extends Controller
 
     public function check(Request $request)
     {
-        $coupon = Coupon::where('code', $request->code)->first();
+        $now = Carbon::now();
+        $coupon = Coupon::where('code', $request->code)
+            ->where('start_date', '<=', $now)
+            ->where('end_date', '>', $now)
+            ->first();
+
         if (@$coupon->number > 0) {
             return response()->json($coupon);
         }

@@ -11,17 +11,17 @@
             <b class="logo-icon">
                 <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                 <!-- Dark Logo icon -->
-                <img src="{{ asset('admins/assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo"/>
+                <img width="30" src="{{ asset('images/travel.png') }}" alt="homepage" class="dark-logo"/>
                 <!-- Light Logo icon -->
                 <img src="{{ asset('admins/assets/images/logo-light-icon.png') }}" alt="homepage"
                      class="light-logo"/>
             </b>
             <!--End Logo icon -->
             <!-- Logo text -->
-            <span class="logo-text">
+            <span class="logo-text" style="margin-left: 20px;">
                  <!-- dark Logo text -->
-                 <img src="{{ asset('admins/assets/images/logo-text.png') }}" alt="homepage"
-                      class="dark-logo"/>
+                 <img height="40" src="{{ asset('images/logo-black.png') }}" alt="homepage" class="dark-logo"/>
+
                 <!-- Light Logo text -->
                  <img src="{{ asset('admins/assets/images/logo-light-text.png') }}" class="light-logo"
                       alt="homepage"/>

@@ -68,4 +68,6 @@ return [
     'discount' => 'tỉ lệ giảm giá',
     'number' => 'số lượng',
     'status' => 'trạng thái',
+    'start_date' => 'ngày bắt đầu',
+    'end_date' => 'ngày kết thúc',
 ];

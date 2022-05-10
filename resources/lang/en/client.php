@@ -68,4 +68,6 @@ return [
     'discount' => 'discount',
     'number' => 'number',
     'status' => 'status',
+    'start_date' => 'start date',
+    'end_date' => 'end date',
 ];

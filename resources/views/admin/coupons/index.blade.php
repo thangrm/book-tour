@@ -58,6 +58,28 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="startDate" class="col-3 col-xl-2 control-label col-form-label">
+                                Ngày bắt đầu<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-9 col-xl-10">
+                                <input type="datetime-local" class="form-control"
+                                       name="start_date" id="startDate" min="{{ date('Y-m-d\TH:i') }}">
+                                <p class="text-danger" id="errorStartDate"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="endDate" class="col-3 col-xl-2 control-label col-form-label">
+                                Ngày kết thúc<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-9 col-xl-10">
+                                <input type="datetime-local" class="form-control" min="{{ date('Y-m-d\TH:i') }}"
+                                       name="end_date" id="endDate">
+                                <p class="text-danger" id="errorEndDate"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="status" class="col-3 col-xl-2 control-label col-form-label">Trạng thái
                             </label>
                             <div class="col-9 col-xl-10 d-flex align-items-center">
@@ -108,6 +130,8 @@
                             <th>Mã</th>
                             <th>Tỉ lệ (%)</th>
                             <th>Số lượng</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
                             <th>Trạng thái</th>
                             <th></th>
                         </tr>
@@ -164,6 +188,27 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="startDateEdit" class="col-12">
+                                    Ngày bắt đầu<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-12">
+                                    <input type="datetime-local" class="form-control" name="start_date"
+                                           id="startDateEdit">
+                                    <p class="text-danger" id="errorStartDateEdit"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="endDateEdit" class="col-12">
+                                    Ngày kết thúc<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-12">
+                                    <input type="datetime-local" class="form-control" name="end_date" id="endDateEdit">
+                                    <p class="text-danger" id="errorEndDateEdit"></p>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="d-flex align-items-center">
                                     <label for="status" class="m-0">Trạng thái</label>
@@ -176,8 +221,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-info" id="btnSubmitEdit">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-info" id="btnSubmitEdit">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -221,6 +266,8 @@
                     {data: 'code', name: 'code'},
                     {data: 'discount', name: 'discount'},
                     {data: 'number', name: 'number'},
+                    {data: 'start_date', name: 'start_date'},
+                    {data: 'end_date', name: 'end_date'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action', className: 'align-middle text-center', width: 68},
                 ],
@@ -239,7 +286,7 @@
                 datatable.draw();
             });
 
-            // Event delete type
+            // Event delete
             $(document).on('click', '.delete', function (e) {
                 e.preventDefault();
                 let link = $(this).attr("href");
@@ -290,27 +337,37 @@
                 })
             })
 
-            // Event edit type
+            // Event edit
             $(document).on('click', '.edit', function (e) {
                 $('#errorCodeEdit').text('');
                 $('#errorDiscountEdit').text('');
                 $('#errorNumberEdit').text('');
+                $('#errorStartDateEdit').text('');
+                $('#errorEndDateEdit').text('');
 
                 linkEditCoupon = $(this).attr('href');
                 let couponId = $(this).data('id');
                 let code = $('#coupon-' + couponId).children().eq(1).text();
                 let discount = $('#coupon-' + couponId).children().eq(2).text();
                 let number = $('#coupon-' + couponId).children().eq(3).text();
-                let status = $('#coupon-' + couponId).children().eq(4).children().eq(0).children().eq(0);
+                let startDate = $('#coupon-' + couponId).children().eq(4).text();
+                let endDate = $('#coupon-' + couponId).children().eq(5).text();
+                let status = $('#coupon-' + couponId).children().eq(6).children().eq(0).children().eq(0);
                 $('#statusCouponEdit').prop("checked", false);
 
                 if ($(status).is(":checked")) {
                     $('#statusCouponEdit').prop("checked", true);
                 }
 
+                let regex = /\ /i;
+                startDate = startDate.replace(regex, 'T').slice(0, 16);
+                endDate = endDate.replace(regex, 'T').slice(0, 16);
+
                 $('#codeEdit').val(code);
                 $('#discountEdit').val(discount);
                 $('#numberEdit').val(number);
+                $('#startDateEdit').val(startDate);
+                $('#endDateEdit').val(endDate);
             });
 
             // Change status type
@@ -351,13 +408,19 @@
                 $('#errorCode').text('');
                 $('#errorDiscount').text('');
                 $('#errorNumber').text('');
+                $('#errorStartDate').text('');
+                $('#errorEndDate').text('');
                 $('#errorStatus').text('');
 
                 let link = $(this).attr('action');
                 let code = $('#code').val();
                 let discount = $('#discount').val();
                 let number = $('#number').val();
+                let startDate = $('#startDate').val();
+                let endDate = $('#endDate').val();
                 let status = 2;
+
+                console.log(startDate, endDate);
 
                 if ($('#statusCoupon').is(":checked")) {
                     status = 1;
@@ -367,6 +430,8 @@
                 formData.append("code", code);
                 formData.append("discount", discount);
                 formData.append("number", number);
+                formData.append("start_date", startDate);
+                formData.append("end_date", endDate);
                 formData.append("status", status);
 
                 $.ajax({
@@ -403,6 +468,14 @@
                         if (response?.errors?.status !== undefined) {
                             $('#errorStatus').text(response.errors.image[0]);
                         }
+
+                        if (response?.errors?.start_date !== undefined) {
+                            $('#errorStartDate').text(response.errors.start_date[0]);
+                        }
+
+                        if (response?.errors?.end_date !== undefined) {
+                            $('#errorEndDate').text(response.errors.end_date[0]);
+                        }
                     },
                     complete: function () {
                         enableSubmitButton('#formAddCoupon', 300);
@@ -416,9 +489,13 @@
                 $('#errorNameEdit').text('');
                 $('#errorDiscountEdit').text('');
                 $('#errorNumberEdit').text('');
+                $('#errorStartDateEdit').text('');
+                $('#errorEndDateEdit').text('');
 
                 let code = $('#codeEdit').val();
                 let discount = $('#discountEdit').val();
+                let startDate = $('#startDateEdit').val();
+                let endDate = $('#endDateEdit').val();
                 let number = $('#numberEdit').val();
                 let status = 2;
 
@@ -430,7 +507,14 @@
                     url: linkEditCoupon,
                     method: "PUT",
                     dataType: 'json',
-                    data: {code: code, discount: discount, number: number, status: status},
+                    data: {
+                        code: code,
+                        discount: discount,
+                        start_date: startDate,
+                        end_date: endDate,
+                        number: number,
+                        status: status
+                    },
                     success: function (response) {
                         let type = response['alert-type'];
                         let message = response['message'];
@@ -458,6 +542,14 @@
 
                         if (response?.errors?.status !== undefined) {
                             $('#errorStatusEdit').text(response.errors.status[0]);
+                        }
+
+                        if (response?.errors?.start_date !== undefined) {
+                            $('#errorStartDateEdit').text(response.errors.start_date[0]);
+                        }
+
+                        if (response?.errors?.end_date !== undefined) {
+                            $('#errorEndDateEdit').text(response.errors.end_date[0]);
                         }
                     },
                     complete: function () {

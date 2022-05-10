@@ -238,7 +238,7 @@
                     {
                         type: 'value',
                         axisLabel: {
-                            formatter: '{value}'
+                            formatter: '{value}đ'
                         }
                     }
                 ],
@@ -277,11 +277,11 @@
         }
 
         function bookingChart(response) {
-            let bookingMarket = response.booking_market
-            let responseDate = bookingMarket.date;
-            let success = bookingMarket.success;
-            let reject = bookingMarket.reject;
-            let other = bookingMarket.other;
+            let booking = response.booking;
+            let responseDate = booking.date;
+            let success = booking.success;
+            let reject = booking.reject;
+            let other = booking.other;
             let typeChart = $('#optionBookingChart').val();
             let chartBooking = echarts.init(document.getElementById('bookingArea'));
             let date = formatDateChart(responseDate);

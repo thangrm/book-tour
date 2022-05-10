@@ -131,6 +131,11 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-body">
+                        <h4 class="card-title">Ngày tạo: {{  $booking->created_at->format('d/m/Y') }}</h4>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
                         <h4 class="card-title">Thông tin khách hàng</h4>
                         <hr>
                         <table>
@@ -164,7 +169,6 @@
                         </table>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Yêu cầu</h4>

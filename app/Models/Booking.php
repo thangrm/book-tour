@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Jobs\SendMailBookingJob;
 use App\Libraries\Utilities;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -148,5 +149,47 @@ class Booking extends Model
                 return view('components.button_link_info', ['link' => $link, 'title' => 'Detail']);
             })
             ->make(true);
+    }
+
+    public function getRevenue($start, $end)
+    {
+        $startDate = new Carbon($start);
+        $endDate = (new Carbon($end))->addDay();
+        $arrDates = Utilities::dateRange($start, $end);
+        $numberDates = count($arrDates);
+
+        $success = array_fill(0, $numberDates, 0);
+        $reject = array_fill(0, $numberDates, 0);
+        $other = array_fill(0, $numberDates, 0);
+
+        $bookings = $this->whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<', $endDate)
+            ->select('total', 'status', 'created_at')
+            ->get();
+
+        foreach ($bookings as $booking) {
+            $i = array_search($booking->created_at->format('Y-m-d'), $arrDates);
+            if ($i > -1) {
+                switch ($booking->status) {
+                    case BOOKING_COMPLETE:
+                        $success[$i] += $booking->total;
+                        break;
+                    case BOOKING_CANCEL:
+                        $reject[$i] += $booking->total;
+                        break;
+                    case BOOKING_NEW:
+                    case BOOKING_CONFIRM:
+                        $other[$i] += $booking->total;
+                        break;
+                }
+            }
+        }
+
+        return [
+            'date' => $arrDates,
+            'success' => $success,
+            'reject' => $reject,
+            'other' => $other,
+        ];
     }
 }
