@@ -8,7 +8,7 @@
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Tour</li>
                         </ol>
                     </nav>
@@ -68,7 +68,7 @@
                             </div>
 
                             <a class="btn btn-info mb-2" href="{{ route('tours.create') }}" class="text-white">
-                                New Tour
+                                Thêm
                             </a>
 
                         </div>
@@ -81,7 +81,7 @@
                             <th>Trạng thái</th>
                             <th>Nổi bật</th>
                             <th>Chi tiết</th>
-                            <th>Hoạt động</th>
+                            <th>Thao tác</th>
                         </tr>
                         </thead>
                     </table>
@@ -103,6 +103,7 @@
                 searching: false,
                 stateSave: true,
                 ordering: false,
+                language: getLanguageDataTable(),
                 ajax: {
                     url: "{!! route('tours.data') !!}",
                     data: function (d) {
@@ -154,8 +155,8 @@
                     dataType: 'json',
                     data: {status: status},
                     success: function (response) {
-                        // toastr.clear();
-                        // toastr.success('Change status successfully')
+                        toastr.clear();
+                        toastr.success('Thay đổi trạng thái thành công')
                     },
                     error: function (response) {
                         setTimeout(function () {
@@ -164,7 +165,7 @@
                             } else {
                                 $(buttonSwitch).prop('checked', true);
                             }
-                            toastr.error('Change status failed')
+                            toastr.error('Thay đổi trạng thái không thành công')
                         }, 500);
                     }
                 });
@@ -186,8 +187,8 @@
                     dataType: 'json',
                     data: {trending: trending},
                     success: function (response) {
-                        // toastr.clear();
-                        // toastr.success('Change trending successfully')
+                        toastr.clear();
+                        toastr.success('Thay đổi độ ưu tiên thành công')
                     },
                     error: function (response) {
                         setTimeout(function () {
@@ -196,7 +197,7 @@
                             } else {
                                 $(buttonSwitch).prop('checked', true);
                             }
-                            toastr.error('Change trending failed')
+                            toastr.error('hay đổi độ ưu tiên thất bại')
                         }, 500);
                     }
                 });
@@ -214,12 +215,12 @@
                     buttonsStyling: false
                 })
                 swalWithBootstrapButtons.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Bạn có chắc chắn?',
+                    text: "Bạn sẽ không thể hoàn tác lại điều này!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'No, cancel!',
+                    confirmButtonText: 'Vâng, xóa nó!',
+                    cancelButtonText: 'Không, hủy!',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -231,15 +232,15 @@
                                     datatable.ajax.reload();
 
                                     if (response === '1') {
-                                        toastr.success('Tour deleted successfully');
+                                        toastr.success('Đã xóa chuyến tham quan thành công');
                                     }
 
                                     if (response === '2') {
-                                        toastr.error('The tour has bookings that cannot be deleted')
+                                        toastr.warning('Chuyến tham quan có khách đặt không thể xóa')
                                     }
                                 },
                                 error: function (response) {
-                                    toastr.error('Delete failed')
+                                    toastr.error('Xóa không thành công')
                                 }
                             });
                     } else if (

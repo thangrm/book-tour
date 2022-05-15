@@ -342,7 +342,8 @@
                     dataType: 'json',
                     data: {status: status},
                     success: function (response) {
-                        //toastr.success('Change status successfully')
+                        toastr.clear();
+                        toastr.success('Thay đổi trạng thái thành công')
                     },
                     error: function (response) {
                         setTimeout(function () {
@@ -351,7 +352,7 @@
                             } else {
                                 $(buttonSwitch).prop('checked', true);
                             }
-                            toastr.error('Change status failed')
+                            toastr.error('Thay đổi trạng thái không thành công')
                         }, 500);
                     }
                 });

@@ -4,12 +4,12 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">Type of tour</h4>
+                <h4 class="page-title">Thể loại tour</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Type of tour</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Thể loại tour</li>
                         </ol>
                     </nav>
                 </div>
@@ -25,17 +25,17 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-3 col-xl-2 control-label col-form-label">Title
+                            <label for="name" class="col-3 col-xl-2 control-label col-form-label">Tên thể loại
                                 <span
                                     class="text-danger">*</span> </label>
                             <div class="col-9 col-xl-10">
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Title">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Tên thể loại">
                                 <p class="text-danger" id="errorName"></p>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="status" class="col-3 col-xl-2 control-label col-form-label">Status
+                            <label for="status" class="col-3 col-xl-2 control-label col-form-label">Trạng thái
                             </label>
                             <div class="col-9 col-xl-10 d-flex align-items-center">
                                 <div>
@@ -49,9 +49,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-info mb-3">
-                                Add Type
-                            </button>
+                            <button type="submit" class="btn btn-info mb-3">Thêm</button>
                         </div>
 
                     </form>
@@ -68,13 +66,13 @@
                             <div class="row w-75">
                                 <div class="col-12 col-sm-6 col-md-5 mb-2">
                                     <input type="text" class="form-control" name="search" id="searchName"
-                                           placeholder="Search">
+                                           placeholder="Tìm kiếm">
                                 </div>
                                 <div class="col-10 col-sm-6 col-md-5 mb-2">
                                     <select class="form-control" name="status" id="filterStatus">
-                                        <option value="">Choose status</option>
-                                        <option value="1">Active</option>
-                                        <option value="2">Inactive</option>
+                                        <option value="">Chọn trạng thái</option>
+                                        <option value="1">Hoạt động</option>
+                                        <option value="2">Không hoạt động</option>
                                     </select>
                                 </div>
                             </div>
@@ -82,9 +80,9 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Tên thể loại</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
                         </tr>
                         </thead>
                     </table>
@@ -99,7 +97,7 @@
                 <div class="modal-content">
                     <form id="formEditType">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Edit type</h5>
+                            <h5 class="modal-title" id="editModalLabel">Sửa thể loại</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -107,18 +105,18 @@
                         <div class="modal-body">
                             <div class="form-group row">
                                 <label for="name" class="col-12">
-                                    Title<span class="text-danger">*</span>
+                                    Tên thể loại<span class="text-danger">*</span>
                                 </label>
                                 <div class="col-12">
                                     <input type="text" class="form-control" name="name" id="titleEdit"
-                                           placeholder="Name itinerary">
+                                           placeholder="Tên thể loại">
                                     <p class="text-danger" id="errorNameEdit"></p>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="d-flex align-items-center">
-                                    <label for="status" class="m-0">Status</label>
+                                    <label for="status" class="m-0">Trạng thái</label>
                                     <div class="m-l-10">
                                         @include('components.button_switch', ['status' => 1,'id' => 'statusTypeEdit'])
                                     </div>
@@ -128,8 +126,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-info" id="btnSubmitEdit">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-info" id="btnSubmitEdit">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -151,6 +149,7 @@
                 searching: false,
                 stateSave: true,
                 ordering: false,
+                language: getLanguageDataTable(),
                 ajax: {
                     url: "{!! route('types.data') !!}",
                     data: function (d) {
@@ -191,12 +190,12 @@
                     buttonsStyling: false
                 })
                 swalWithBootstrapButtons.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Bạn có chắc chắn?',
+                    text: "Bạn sẽ không thể hoàn tác lại điều này!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'No, cancel!',
+                    confirmButtonText: 'Vâng, xóa nó!',
+                    cancelButtonText: 'Không, hủy!',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -214,14 +213,14 @@
                                     }
                                 },
                                 error: function (response) {
-                                    toastr.error('Delete failed')
+                                    toastr.error('Xóa không thành công')
                                 }
                             });
                     } else if (
                         result.dismiss === Swal.DismissReason.cancel
                     ) {
                         swalWithBootstrapButtons.fire(
-                            'Cancelled',
+                            'Đã hủy',
                             '',
                             'error'
                         )
@@ -261,7 +260,8 @@
                     dataType: 'json',
                     data: {status: status},
                     success: function (response) {
-                        //toastr.success('Change status successfully')
+                        toastr.clear();
+                        toastr.success('Thay đổi trạng thái thành công')
                     },
                     error: function (response) {
                         setTimeout(function () {
@@ -270,7 +270,7 @@
                             } else {
                                 $(buttonSwitch).prop('checked', true);
                             }
-                            toastr.error('Change status failed')
+                            toastr.error('Thay đổi trạng thái không thành công')
                         }, 500);
                     }
                 });
@@ -314,7 +314,7 @@
                     },
                     error: function (jqXHR) {
                         let response = jqXHR.responseJSON;
-                        toastrMessage('error', 'Type creation failed');
+                        toastrMessage('error', 'Tạo thể loại tour không thành công');
                         if (response?.errors?.name !== undefined) {
                             $('#errorName').text(response.errors.name[0]);
                         }
@@ -358,7 +358,7 @@
                     },
                     error: function (jqXHR) {
                         let response = jqXHR.responseJSON;
-                        toastrMessage('error', 'Type creation failed');
+                        toastrMessage('error', 'Cập nhật thể loại tour không thành công');
                         if (response?.errors?.name !== undefined) {
                             $('#errorNameEdit').text(response.errors.name[0]);
                         }

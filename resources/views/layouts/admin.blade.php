@@ -144,7 +144,8 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
+    // toastr.options.progressBar = true;
+    // toastr.options.preventDuplicates = true;
     function toastrMessage(type, message) {
         switch (type) {
             case 'info':

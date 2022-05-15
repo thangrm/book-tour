@@ -38,12 +38,15 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->typeTour->rules());
+        $request->validate($this->typeTour->rules(), [] ,[
+            'name' => 'tên thể loại',
+            'status' => 'trạng thái'
+        ]);
         try {
             $this->typeTour->saveData($request);
-            $this->notification->setMessage('New type added successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Đã thêm thể loại tour mới thành công', Notification::SUCCESS);
         } catch (Exception $e) {
-            $this->notification->setMessage('Type creation failed', Notification::ERROR);
+            $this->notification->setMessage('Tạo thể loại tour không thành công', Notification::ERROR);
         }
 
         return json_encode($this->notification->getMessage());
@@ -58,12 +61,15 @@ class TypeController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $request->validate($this->typeTour->rules($id));
+        $request->validate($this->typeTour->rules($id), [] ,[
+            'name' => 'tên thể loại',
+            'status' => 'trạng thái'
+        ]);
         try {
             $this->typeTour->saveData($request, $id);
-            $this->notification->setMessage('Type updated successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Đã cập nhật thành công', Notification::SUCCESS);
         } catch (Exception $e) {
-            $this->notification->setMessage('Type creation failed', Notification::ERROR);
+            $this->notification->setMessage('Cập nhật không thành công', Notification::ERROR);
         }
 
         return response()->json($this->notification->getMessage());
@@ -79,13 +85,13 @@ class TypeController extends Controller
     {
         try {
             $codeMessage = $this->typeTour->remove($id);
-            $this->notification->setMessage('Type deleted successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Đã xóa thành công', Notification::SUCCESS);
 
             if ($codeMessage == 2) {
-                $this->notification->setMessage('The type has tours that cannot be deleted', Notification::ERROR);
+                $this->notification->setMessage('Thể loại tour đã có những tour du lịch không thể xóa', Notification::WARNING);
             }
         } catch (Exception $e) {
-            $this->notification->setMessage('Type delete failed', Notification::ERROR);
+            $this->notification->setMessage('Xóa không thành công', Notification::ERROR);
         }
 
         return response()->json($this->notification->getMessage());

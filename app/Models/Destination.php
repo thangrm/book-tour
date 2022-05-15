@@ -99,8 +99,8 @@ class Destination extends Model
         $destination = $this->findOrFail($id);
         $numberTours = $destination->tours()->count();
         if ($numberTours > 0) {
-            $this->notification->setMessage('Điểm đến có các tours du lịch không thể xóa',
-                Notification::ERROR);
+            $this->notification->setMessage('Điểm đến đã có các tours du lịch không thể xóa',
+                Notification::WARNING);
             return $this->notification;
         }
 

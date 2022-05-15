@@ -397,7 +397,7 @@ class Tour extends Model
                 $routerFAQ = route('faqs.index', $data->id);
                 $routerReview = route('reviews.index', $data->id);
                 $routerRoom = route('rooms.index', $data->id);
-                $width = 68;
+                $width = 69;
 
                 $view = view('components.action',
                     ['link' => $routerInfo, 'title' => 'Thông tin', 'width' => $width])->render();
