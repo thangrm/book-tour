@@ -19,7 +19,7 @@ class CreateBookingsTable extends Migration
             $table->integer('customer_id')->index('customer_id');
             $table->float('price', 10, 0);
             $table->mediumInteger('people');
-            $table->tinyInteger('payment_method')->default(1)->comment('1: Cash, 2: CreditCard, 3: Paypal');
+            $table->tinyInteger('payment_method')->default(1)->comment('1: Cash, 2: Momo');
             $table->boolean('is_payment')->default(false)->comment('0: Unpaid, 1: paid');;
             $table->date('departure_time');
             $table->text('requirement')->nullable();

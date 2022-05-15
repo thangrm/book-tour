@@ -457,7 +457,7 @@
                                 <img src="{{ asset('images/icon/people.svg') }}" alt="people">
                                 <select class="form-control" id="selectNumberPeople" name="people">
                                     @for($i = 1; $i <= 20; $i++)
-                                        <option value="{{ $i }}">{{ $i }} People</option>
+                                        <option value="{{ $i }}">{{ $i }} Người</option>
                                     @endfor
                                 </select>
                             </div>
