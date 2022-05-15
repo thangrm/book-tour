@@ -4,12 +4,12 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">Booking</h4>
+                <h4 class="page-title">Đặt tour</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Booking</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Đặt tour</li>
                         </ol>
                     </nav>
                 </div>
@@ -27,15 +27,15 @@
                         <div class="form-group row w-75 mb-0">
                             <div class="col-12 col-md-8 mb-2">
                                 <input type="text" class="form-control" name="search" id="searchName"
-                                       placeholder="Search">
+                                       placeholder="Tìm kiếm">
                             </div>
                             <div class="col-10 col-sm-6 col-lg-3 mb-2">
                                 <select class="form-control" name="status" id="filterStatus">
-                                    <option value="">Choose status</option>
-                                    <option value="1">New</option>
-                                    <option value="2">Confirmed</option>
-                                    <option value="3">Completed</option>
-                                    <option value="4">Cancel</option>
+                                    <option value="">Chọn trạng thái</option>
+                                    <option value="1">Mới</option>
+                                    <option value="2">Xác nhận</option>
+                                    <option value="3">Hoàn thành</option>
+                                    <option value="4">Hủy</option>
                                 </select>
                             </div>
                         </div>
@@ -43,14 +43,14 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Customer</th>
+                        <th>Khách hàng</th>
                         <th>Tour</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>People</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                        <th>Action</th>
+                        <th>Số điện thoại</th>
+                        <th>Số người</th>
+                        <th>Trạng thái</th>
+                        <th>Tổng</th>
+                        <th>Thao tác</th>
                     </tr>
                     </thead>
                 </table>
@@ -69,6 +69,7 @@
                 searching: false,
                 stateSave: true,
                 ordering: false,
+                language: getLanguageDataTable(),
                 ajax: {
                     url: "{!! route('bookings.data') !!}",
                     data: function (d) {

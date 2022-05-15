@@ -4,12 +4,12 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">Địa điểm</h4>
+                <h4 class="page-title">Điểm đến</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Địa điểm</li>
+                            <li class="breadcrumb-item active" aria-current="page">Điểm đến</li>
                         </ol>
                     </nav>
                 </div>

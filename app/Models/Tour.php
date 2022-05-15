@@ -114,7 +114,7 @@ class Tour extends Model
     public function rules($id = null)
     {
         $rule = [
-            'name' => 'required|max:255|string',
+            'name' => 'required|max:255|string|unique:tours',
             'slug' => 'required|max:255|string|unique:tours',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
             'destination_id' => 'required|exists:destinations,id',
@@ -131,7 +131,7 @@ class Tour extends Model
         ];
 
         if ($id != null) {
-            $rule['name'] = 'max:255|string';
+            $rule['name'] = 'max:255|string|unique:tours,name,' . $id;
             $rule['slug'] = 'max:255|string|unique:tours,slug,' . $id;
             $rule['image'] = 'image|mimes:jpeg,jpg,png,gif|max:5000';
             $rule['destination_id'] = 'exists:destinations,id';

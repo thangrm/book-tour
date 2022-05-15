@@ -4,13 +4,13 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">Edit Tour</h4>
+                <h4 class="page-title">Chỉnh sửa tour</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tour</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                            <li class="breadcrumb-item active" aria-current="page">Sửa</li>
                         </ol>
                     </nav>
                 </div>
@@ -29,9 +29,9 @@
 
                     <div class="form-group">
                         <label for="name" class="text-lg-right control-label col-form-label">
-                            Title <span class="text-danger">*</span>
+                            Tên <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Name tour"
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Tên"
                                value="{{ old('name', $tour->name) }}">
                         @error('name')
                         <p class="text-danger">{{ $message }}</p>
@@ -40,22 +40,21 @@
 
                     <div class="form-group">
                         <label for="slug" class="text-lg-right control-label col-form-label">
-                            Slug <span class="text-danger">*</span>
+                            Tên rút gọn <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control" name="slug" id="slug" placeholder="Slug"
+                        <input type="text" class="form-control" name="slug" id="slug" placeholder="Tên rút gọn"
                                value="{{ old('slug', $tour->slug) }}">
                         @error('slug')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
 
-
                     <div class="form-group">
                         <div class="row">
                             <div class="col-6">
                                 <label for="destinationId"
                                        class="text-lg-right control-label col-form-label">
-                                    Destination <span class="text-danger">*</span>
+                                    Điếm đến <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="destination_id" id="destinationId">
                                     @isset($destinations)
@@ -74,7 +73,7 @@
                             <div class="col-6">
                                 <label for="typeId"
                                        class="text-lg-right control-label col-form-label">
-                                    Type <span class="text-danger">*</span>
+                                    Thể loại <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" name="type_id" id="typeId">
                                     @isset($types)
@@ -96,11 +95,11 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-6">
-                                <label for="duration" class="text-lg-right control-label col-form-label">Duration
+                                <label for="duration" class="text-lg-right control-label col-form-label">Thời gian
                                     <span
                                         class="text-danger">*</span> </label>
                                 <input type="number" class="form-control" name="duration" id="duration"
-                                       placeholder="Duration"
+                                       placeholder="Thời gian"
                                        value="{{ old('duration',$tour->duration) }}"
                                        step="1">
                                 @error('duration')
@@ -108,10 +107,10 @@
                                 @enderror
                             </div>
                             <div class="col-6">
-                                <label for="price" class="text-lg-right control-label col-form-label">Price<span
+                                <label for="price" class="text-lg-right control-label col-form-label">Giá<span
                                         class="text-danger">*</span> </label>
-                                <input type="number" class="form-control" name="price" id="price" placeholder="Price"
-                                       value="{{ old('price',$tour->price) }}" step="0.01">
+                                <input type="number" class="form-control" name="price" id="price" placeholder="Giá"
+                                       value="{{ old('price',$tour->price) }}" step="1000">
                                 @error('price')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -127,7 +126,7 @@
                                             'status' => old('trending', $tour->trending),
                                             'id' => 'btnTrending'
                                         ])
-                            <label for="trending" class="m-l-5 m-t-5">Trending</label>
+                            <label for="trending" class="m-l-5 m-t-5">Ưu tiên</label>
                         </div>
                         @error('trending')
                         <p class="text-danger">{{ $message }}</p>
@@ -142,7 +141,7 @@
                                 'status' => old('trending', $tour->status),
                                 'id' => 'btnStatus'
                             ])
-                            <label for="status" class="m-l-5 m-t-5">Status</label>
+                            <label for="status" class="m-l-5 m-t-5">Trạng thái</label>
                         </div>
                         @error('status')
                         <p class="text-danger">{{ $message }}</p>
@@ -150,7 +149,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="image" class="text-lg-right control-label col-form-label">Select Image
+                        <label for="image" class="text-lg-right control-label col-form-label">Chọn ảnh
                             <span class="text-danger">*</span>
                         </label>
                         <div class="input-group mb-3">
@@ -168,7 +167,7 @@
                     <div class="form-group">
                         <label for="description"
                                class="text-lg-right control-label col-form-label">
-                            Overview
+                            Tổng quan
                         </label>
                         <textarea name="overview" id="overview" cols="30"
                                   rows="10">{{ old('overview', $tour->overview) }}</textarea>
@@ -177,8 +176,8 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-info mr-2">Update</button>
-                    <a href="{{ route('tours.index') }}" class="btn btn-dark">Cancel</a>
+                    <button type="submit" class="btn btn-info mr-2">Cập nhật</button>
+                    <a href="{{ route('tours.index') }}" class="btn btn-dark">Hủy</a>
                 </form>
             </div>
         </div>

@@ -100,7 +100,7 @@ class Contact extends Model
             ->addColumn('action', function ($data) {
                 $link = route('contacts.show', $data->id);
 
-                return view('components.button_modal', ['link' => $link, 'id' => $data->id, 'title' => 'View']);
+                return view('components.button_modal', ['link' => $link, 'id' => $data->id, 'title' => 'Xem']);
             })
             ->make(true);
     }

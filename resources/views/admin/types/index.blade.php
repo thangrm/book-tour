@@ -24,26 +24,25 @@
                     <form action="{{ route('types.store') }}" id="formAddType" method="post">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="name" class="col-3 col-xl-2 control-label col-form-label">Tên thể loại
+                        <div class="form-group row mb-0">
+                            <label for="name" class="col-12 control-label col-form-label">Tên thể loại
                                 <span
                                     class="text-danger">*</span> </label>
-                            <div class="col-9 col-xl-10">
+                            <div class="col-12">
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Tên thể loại">
                                 <p class="text-danger" id="errorName"></p>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="status" class="col-3 col-xl-2 control-label col-form-label">Trạng thái
+                            <label for="status" class="col-12 control-label col-form-label">Trạng thái
                             </label>
-                            <div class="col-9 col-xl-10 d-flex align-items-center">
+                            <div class="col-12 d-flex align-items-center">
                                 <div>
                                     @include('components.button_switch',['status' => 1,'id' => 'statusType'])
                                 </div>
                             </div>
-                            <div class="col-3 col-xl-2"></div>
-                            <div class="col-9">
+                            <div class="col-12">
                                 <p class="text-danger" id="errorStatus"></p>
                             </div>
                         </div>

@@ -117,7 +117,7 @@ return [
     'starts_with' => 'Trường :attribute phải bắt đầu bằng một trong những điều sau: :values.',
     'string' => 'Trường :attribute cần phải là một chuỗi.',
     'timezone' => 'Trường :attribute cần phải một khu vực hợp lệ.',
-    'unique' => 'Trường :attribute đã được lấy.',
+    'unique' => 'Trường :attribute đã tồn tại.',
     'uploaded' => 'Trường :attribute không tải lên được.',
     'url' => 'Trường :attribute định dạng không hợp lệ.',
     'uuid' => 'Trường :attribute cần phải có một UUID hợp lệ.',

@@ -53,14 +53,29 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->tour->rules());
+        $request->validate($this->tour->rules(),[],[
+            'name' => 'tên',
+            'slug' => 'tên rút gọn',
+            'image' => 'ảnh',
+            'destination_id' => 'địa điểm',
+            'type_id' => 'thể loại',
+            'duration' => 'thời gian',
+            'price' => 'giá',
+            'status' => 'trạng thái',
+            'trending' => 'ưu tiên',
+            'image_seo' => 'ảnh seo',
+            'meta_title' => 'tiêu đề thẻ meta',
+            'meta_description' => 'mô tả thẻ meta',
+            'panoramic_image' => 'ảnh',
+            'video' => 'video',
+        ]);
         try {
             $this->tour->saveTour($request);
-            $this->notification->setMessage('New tour added successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Tour mới đã được thêm thành công', Notification::SUCCESS);
 
             return redirect()->route('tours.index')->with($this->notification->getMessage());
         } catch (Exception $e) {
-            $this->notification->setMessage('Tour creation failed', Notification::ERROR);
+            $this->notification->setMessage('Tạo tour không thành công', Notification::ERROR);
 
             return back()
                 ->with('exception', $e->getMessage())
@@ -93,14 +108,29 @@ class TourController extends Controller
     public function update(Request $request, int $id)
     {
         Tour::findOrFail($id);
-        $request->validate($this->tour->rules($id));
+        $request->validate($this->tour->rules($id), [],[
+            'name' => 'tên',
+            'slug' => 'tên rút gọn',
+            'image' => 'ảnh',
+            'destination_id' => 'địa điểm',
+            'type_id' => 'thể loại',
+            'duration' => 'thời gian',
+            'price' => 'giá',
+            'status' => 'trạng thái',
+            'trending' => 'ưu tiên',
+            'image_seo' => 'ảnh seo',
+            'meta_title' => 'tiêu đề thẻ meta',
+            'meta_description' => 'mô tả thẻ meta',
+            'panoramic_image' => 'ảnh',
+            'video' => 'video',
+        ]);
 
         try {
             $messageCode = $this->tour->saveTour($request, $id);
-            $this->notification->setMessage('Tour updated successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Đã cập nhật tour thành công', Notification::SUCCESS);
 
             if ($messageCode == 2) {
-                return back()->withErrors(['duration' => 'The duration is less than number of itineraries'])->withInput();
+                return back()->withErrors(['duration' => 'Thời gian không được ít hơn số lượng hành trình'])->withInput();
             }
 
             if ($request->ajax()) {

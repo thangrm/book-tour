@@ -21,12 +21,12 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">Booking</h4>
+                <h4 class="page-title">Liên hệ</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Booking</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Liên hệ</li>
                         </ol>
                     </nav>
                 </div>
@@ -43,13 +43,13 @@
                         <div class="row w-75">
                             <div class="col-12 col-sm-6 col-md-5 mb-2">
                                 <input type="text" class="form-control" name="search" id="searchContact"
-                                       placeholder="Search">
+                                       placeholder="Tìm kiếm">
                             </div>
                             <div class="col-10 col-sm-6 col-md-5 mb-2">
                                 <select class="form-control" name="status" id="filterStatus">
-                                    <option value="">Choose status</option>
-                                    <option value="1">Unread</option>
-                                    <option value="2">Read</option>
+                                    <option value="">Chọn trạng thái</option>
+                                    <option value="1">Chưa đọc</option>
+                                    <option value="2">Đã đọc</option>
                                 </select>
                             </div>
                         </div>
@@ -57,11 +57,11 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>Tên</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Date</th>
-                        <th>Action</th>
+                        <th>Số điện thoại</th>
+                        <th>Ngày</th>
+                        <th>Thao tác</th>
                     </tr>
                     </thead>
                 </table>
@@ -74,7 +74,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Contact</h5>
+                        <h5 class="modal-title" id="editModalLabel">Liên hệ</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -83,7 +83,7 @@
                         <div class="form-group row">
                             <table class="table-show-contact">
                                 <tr>
-                                    <td class="tb-title">Name:</td>
+                                    <td class="tb-title">Tên:</td>
                                     <td id="nameContact"></td>
                                 </tr>
                                 <tr>
@@ -91,18 +91,18 @@
                                     <td id="emailContact"></td>
                                 </tr>
                                 <tr>
-                                    <td class="tb-title">Phone:</td>
+                                    <td class="tb-title">Số điện thoại:</td>
                                     <td id="phoneContact"></td>
                                 </tr>
                                 <tr>
-                                    <td class="tb-title">Message:</td>
+                                    <td class="tb-title">Nội dung:</td>
                                     <td id="messageContact"></td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -120,6 +120,7 @@
                 searching: false,
                 stateSave: true,
                 ordering: false,
+                language: getLanguageDataTable(),
                 ajax: {
                     url: "{!! route('contacts.data') !!}",
                     data: function (d) {

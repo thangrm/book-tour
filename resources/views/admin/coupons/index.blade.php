@@ -24,32 +24,32 @@
                     <form action="{{ route('coupons.store') }}" id="formAddCoupon" method="post">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="code" class="col-3 col-xl-2 control-label col-form-label">Mã giảm giá
+                        <div class="form-group row mb-0">
+                            <label for="code" class="col-12 control-label col-form-label">Mã giảm giá
                                 <span
                                     class="text-danger">*</span> </label>
-                            <div class="col-9 col-xl-10">
+                            <div class="col-12">
                                 <input type="text" class="form-control" name="code" id="code" placeholder="Mã giảm giá">
                                 <p class="text-danger" id="errorCode"></p>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="discount" class="col-3 col-xl-2 control-label col-form-label">Tỉ lệ (%)
+                        <div class="form-group row mb-0">
+                            <label for="discount" class="col-12 control-label col-form-label">Tỉ lệ (%)
                                 <span
                                     class="text-danger">*</span> </label>
-                            <div class="col-9 col-xl-10">
+                            <div class="col-12">
                                 <input type="text" class="form-control" name="discount" id="discount"
                                        placeholder="Tỉ lệ">
                                 <p class="text-danger" id="errorDiscount"></p>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="number" class="col-3 col-xl-2 control-label col-form-label">Số lượng
+                        <div class="form-group row mb-0">
+                            <label for="number" class="col-12 control-label col-form-label">Số lượng
                                 <span
                                     class="text-danger">*</span> </label>
-                            <div class="col-9 col-xl-10">
+                            <div class="col-12">
                                 <input type="text" class="form-control" name="number"
                                        id="number"
                                        placeholder="Số lượng">
@@ -57,37 +57,37 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="startDate" class="col-3 col-xl-2 control-label col-form-label">
+                        <div class="form-group row mb-0">
+                            <label for="startDate" class="col-12 control-label col-form-label">
                                 Ngày bắt đầu<span class="text-danger">*</span>
                             </label>
-                            <div class="col-9 col-xl-10">
+                            <div class="col-12">
                                 <input type="datetime-local" class="form-control"
                                        name="start_date" id="startDate" min="{{ date('Y-m-d\TH:i') }}">
                                 <p class="text-danger" id="errorStartDate"></p>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="endDate" class="col-3 col-xl-2 control-label col-form-label">
+                        <div class="form-group row mb-0">
+                            <label for="endDate" class="col-12 control-label col-form-label">
                                 Ngày kết thúc<span class="text-danger">*</span>
                             </label>
-                            <div class="col-9 col-xl-10">
+                            <div class="col-12">
                                 <input type="datetime-local" class="form-control" min="{{ date('Y-m-d\TH:i') }}"
                                        name="end_date" id="endDate">
                                 <p class="text-danger" id="errorEndDate"></p>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="status" class="col-3 col-xl-2 control-label col-form-label">Trạng thái
+                        <div class="form-group row mb-0">
+                            <label for="status" class="col-12 control-label col-form-label">Trạng thái
                             </label>
-                            <div class="col-9 col-xl-10 d-flex align-items-center">
+                            <div class="col-12 d-flex align-items-center">
                                 <div>
                                     @include('components.button_switch',['status' => 1,'id' => 'statusCoupon'])
                                 </div>
                             </div>
-                            <div class="col-3 col-xl-2"></div>
+                            <div class="col-12"></div>
                             <div class="col-9">
                                 <p class="text-danger" id="errorStatus"></p>
                             </div>
@@ -154,7 +154,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group row">
+                            <div class="form-group row mb-0">
                                 <label for="codeEdit" class="col-12">
                                     Mã giảm giá<span class="text-danger">*</span>
                                 </label>
@@ -165,7 +165,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row mb-0">
                                 <label for="discountEdit" class="col-12">
                                     Tỉ lệ<span class="text-danger">*</span>
                                 </label>
@@ -176,7 +176,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row mb-0">
                                 <label for="numberEdit" class="col-12">
                                     Số lượng<span class="text-danger">*</span>
                                 </label>
@@ -188,7 +188,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row mb-0">
                                 <label for="startDateEdit" class="col-12">
                                     Ngày bắt đầu<span class="text-danger">*</span>
                                 </label>
@@ -199,7 +199,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row mb-0">
                                 <label for="endDateEdit" class="col-12">
                                     Ngày kết thúc<span class="text-danger">*</span>
                                 </label>
@@ -254,6 +254,7 @@
                 searching: false,
                 stateSave: true,
                 ordering: false,
+                language: getLanguageDataTable(),
                 ajax: {
                     url: "{!! route('coupons.data') !!}",
                     data: function (d) {

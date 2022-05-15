@@ -145,8 +145,13 @@ class Booking extends Model
             })
             ->addColumn('action', function ($data) {
                 $link = route('bookings.show', $data->id);
+                $width = 80;
 
-                return view('components.button_link_info', ['link' => $link, 'title' => 'Detail']);
+                return view('components.button_link_info', [
+                    'link' => $link,
+                    'title' => 'Chi tiết',
+                    'width' => $width,
+                ]);
             })
             ->make(true);
     }

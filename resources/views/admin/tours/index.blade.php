@@ -247,7 +247,7 @@
                         result.dismiss === Swal.DismissReason.cancel
                     ) {
                         swalWithBootstrapButtons.fire(
-                            'Cancelled',
+                            'Đã hủy',
                             '',
                             'error'
                         )

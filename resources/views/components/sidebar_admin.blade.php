@@ -14,7 +14,7 @@
                 <a class="sidebar-link waves-effect waves-dark"
                    href="{{ route('destinations.index') }}" aria-expanded="false">
                     <i class="mdi mdi-map-marker"></i>
-                    <span class="hide-menu">Địa điểm</span>
+                    <span class="hide-menu">Điếm đến</span>
                 </a>
             </li>
 
