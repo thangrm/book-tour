@@ -109,7 +109,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body analytics-info">
-                        <h4 class="card-title"> Số lượng đặt tours </h4>
+                        <h4 class="card-title"> Doanh thu </h4>
                         <div class="row">
                             <div class="col-md-10">
                                 <div class='input-group mb-3'>

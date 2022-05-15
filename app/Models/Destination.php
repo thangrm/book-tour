@@ -99,17 +99,17 @@ class Destination extends Model
         $destination = $this->findOrFail($id);
         $numberTours = $destination->tours()->count();
         if ($numberTours > 0) {
-            $this->notification->setMessage('The destination has tours that cannot be deleted',
+            $this->notification->setMessage('Điểm đến có các tours du lịch không thể xóa',
                 Notification::ERROR);
             return $this->notification;
         }
 
         if ($destination->delete()) {
-            $this->notification->setMessage('Destination deleted successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Đã xóa điểm đến thành công', Notification::SUCCESS);
             $image = $destination->image;
             Storage::delete($this->path . $image);
         } else {
-            $this->notification->setMessage('Destination delete failed', Notification::ERROR);
+            $this->notification->setMessage('Xóa điểm đến không thành công', Notification::ERROR);
         }
 
         return $this->notification;

@@ -9,6 +9,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Font -->
+    <style>
+{{--        @import url('{{ asset('font/Nunito_Sans/NunitoSans-Regular.ttf') }}');--}}
+        @import url(https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+        body {
+            font-family: "Public Sans", sans-serif !important;
+            /*font-family: sans-serif !important;*/
+        }
+    </style>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admins/assets/images/favicon.png') }}">
     <title>Dashboard</title>
@@ -171,11 +180,50 @@
     toastrMessage(type, message);
     @endif
 
+    function removeAccents(str) {
+        let AccentsMap = [
+            "aàảãáạăằẳẵắặâầẩẫấậ",
+            "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+            "dđ", "DĐ",
+            "eèẻẽéẹêềểễếệ",
+            "EÈẺẼÉẸÊỀỂỄẾỆ",
+            "iìỉĩíị",
+            "IÌỈĨÍỊ",
+            "oòỏõóọôồổỗốộơờởỡớợ",
+            "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+            "uùủũúụưừửữứự",
+            "UÙỦŨÚỤƯỪỬỮỨỰ",
+            "yỳỷỹýỵ",
+            "YỲỶỸÝỴ"
+        ];
+        for (let i=0; i<AccentsMap.length; i++) {
+            let re = new RegExp('[' + AccentsMap[i].substr(1) + ']', 'g');
+            let char = AccentsMap[i][0];
+            str = str.replace(re, char);
+        }
+        return str;
+    }
+
     function changeToSlug(str) {
-        var $slug = '';
-        var trimmed = $.trim(str);
+        str = removeAccents(str);
+        let $slug = '';
+        let trimmed = $.trim(str);
         $slug = trimmed.replace(/[^a-z0-9-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
         return $slug.toLowerCase();
+    }
+
+    function getLanguageDataTable()
+    {
+        return {
+            "emptyTable": "Không có dữ liệu",
+            "info": "Hiển thị _START_ đến _END_ của _TOTAL_ mục",
+            "infoEmpty": "Hiển thị 0 đến 0 của 0 mục",
+            "lengthMenu":     "Hiển thị _MENU_ mục",
+            "paginate": {
+                "previous": "Trước",
+                "next": "Sau"
+            }
+        };
     }
 </script>
 @yield('js')

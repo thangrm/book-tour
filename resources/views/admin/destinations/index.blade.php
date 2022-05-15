@@ -4,12 +4,12 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-5 align-self-center">
-                <h4 class="page-title">Dashboard</h4>
+                <h4 class="page-title">Địa điểm</h4>
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Destination</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Địa điểm</li>
                         </ol>
                     </nav>
                 </div>
@@ -27,10 +27,10 @@
 
                         <div class="form-group">
                             <label for="name" class="text-left control-label col-form-label">
-                                Title<span class="text-danger">*</span>
+                                Tên điểm đến<span class="text-danger">*</span>
                             </label>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Title"
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Tên điểm đến"
                                        value="{{old('name')}}">
                             </div>
                             <p class="text-danger" id="errorName"></p>
@@ -38,18 +38,18 @@
 
                         <div class="form-group">
                             <label for="slug" class="text-left control-label col-form-label">
-                                Slug<span class="text-danger">*</span>
+                                Tiêu đề rút gọn<span class="text-danger">*</span>
                             </label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="slug" id="slug"
-                                       placeholder="Slug">
+                                       placeholder="Rút gọn">
                             </div>
                             <p class="text-danger" id="errorSlug"></p>
                         </div>
 
                         <div class="form-group">
                             <label for="image" class="text-left control-label col-form-label">
-                                Image<span class="text-danger">*</span>
+                                Ảnh<span class="text-danger">*</span>
                             </label>
                             <div class="input-group">
                                 <input type="file" id="image" name="image">
@@ -62,7 +62,7 @@
 
                         <div class="form-group">
                             <div class="d-flex align-items-center">
-                                <label for="status" class="m-0">Status</label>
+                                <label for="status" class="m-0">Trạng thái</label>
                                 <div class="m-l-10">
                                     @include('components.button_switch', ['status' => 1,'id' => 'statusDestination'])
                                 </div>
@@ -74,7 +74,7 @@
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-info mb-3">
-                                Add Destination
+                                Thêm
                             </button>
                         </div>
 
@@ -92,13 +92,13 @@
                             <div class="row w-75">
                                 <div class="col-12 col-sm-6 col-md-5 mb-2">
                                     <input type="text" class="form-control" name="search" id="searchName"
-                                           placeholder="Search">
+                                           placeholder="Tìm kiếm">
                                 </div>
                                 <div class="col-10 col-sm-6 col-md-5 mb-2">
                                     <select class="form-control" name="status" id="filterStatus">
-                                        <option value="">Choose status</option>
-                                        <option value="1">Active</option>
-                                        <option value="2">Inactive</option>
+                                        <option value="">Chọn trạng thái</option>
+                                        <option value="1">Hoạt động</option>
+                                        <option value="2">Không hoạt động</option>
                                     </select>
                                 </div>
                             </div>
@@ -106,11 +106,11 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Slug</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Ảnh</th>
+                            <th>Tên</th>
+                            <th>Tên rút gọn</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
                         </tr>
                         </thead>
                     </table>
@@ -125,7 +125,7 @@
                 <div class="modal-content">
                     <form id="formEditDestination">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Edit type</h5>
+                            <h5 class="modal-title" id="editModalLabel">Sửa địa điểm</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -133,7 +133,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="name" class="text-left control-label col-form-label">
-                                    Title<span class="text-danger">*</span>
+                                    Tên địa điểm<span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="name" id="nameEdit"
@@ -144,7 +144,7 @@
 
                             <div class="form-group">
                                 <label for="slug" class="text-left control-label col-form-label">
-                                    Slug<span class="text-danger">*</span>
+                                    Tên rút gọn<span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="slug" id="slugEdit"
@@ -155,7 +155,7 @@
 
                             <div class="form-group">
                                 <label for="image" class="text-left control-label col-form-label">
-                                    Image
+                                    Ảnh
                                 </label>
                                 <div class="input-group">
                                     <input type="file" id="imageEdit" name="image">
@@ -169,7 +169,7 @@
 
                             <div class="form-group">
                                 <div class="d-flex align-items-center">
-                                    <label for="status" class="m-0">Status</label>
+                                    <label for="status" class="m-0">Trạng thái</label>
                                     <div class="m-l-10">
                                         @include('components.button_switch', ['status' => 1,'id' => 'statusDestinationEdit'])
                                     </div>
@@ -180,8 +180,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-info" id="btnSubmitEdit">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-info" id="btnSubmitEdit">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -204,6 +204,7 @@
                 searching: false,
                 stateSave: true,
                 ordering: false,
+                language: getLanguageDataTable(),
                 ajax: {
                     url: "{!! route('destinations.data') !!}",
                     data: function (d) {
@@ -263,12 +264,12 @@
                     buttonsStyling: false
                 })
                 swalWithBootstrapButtons.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Bạn có chắc chắn?',
+                    text: "Bạn sẽ không thể hoàn tác lại điều này!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'No, cancel!',
+                    confirmButtonText: 'Vâng, xóa nó!',
+                    cancelButtonText: 'Không, hủy!',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -285,14 +286,14 @@
                                 }
                             },
                             error: function (response) {
-                                toastr.error('Delete failed')
+                                toastr.error('Xóa không thành công')
                             }
                         });
                     } else if (
                         result.dismiss === Swal.DismissReason.cancel
                     ) {
                         swalWithBootstrapButtons.fire(
-                            'Cancelled',
+                            'Đã hủy',
                             '',
                             'error'
                         )
@@ -401,7 +402,7 @@
                     },
                     error: function (jqXHR) {
                         let response = jqXHR.responseJSON;
-                        toastrMessage('error', 'Destination creation failed');
+                        toastrMessage('error', 'Tạo điểm đến không thành công');
                         if (response?.errors?.name !== undefined) {
                             $('#errorName').text(response.errors.name[0]);
                         }
@@ -471,7 +472,7 @@
                     },
                     error: function (jqXHR) {
                         let response = jqXHR.responseJSON;
-                        toastrMessage('error', 'Destination creation failed');
+                        toastrMessage('error', 'Cập nhật điểm đến không thành công');
                         if (response?.errors?.name !== undefined) {
                             $('#errorNameEdit').text(response.errors.name[0]);
                         }

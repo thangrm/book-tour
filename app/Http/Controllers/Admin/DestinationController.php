@@ -47,14 +47,19 @@ class DestinationController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->destination->rules());
+        $request->validate($this->destination->rules(), [],[
+            'name' => 'tên điểm đến',
+            'slug' => 'tên rút gọn',
+            'image' => 'ảnh',
+            'status' => 'trạng thái'
+        ]);
         try {
             $this->destination->saveData($request);
-            $this->notification->setMessage('New destination added successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Đã thêm điểm đến mới thành công', Notification::SUCCESS);
 
             return json_encode($this->notification->getMessage());
         } catch (Exception $e) {
-            $this->notification->setMessage('Destination creation failed', Notification::ERROR);
+            $this->notification->setMessage('Tạo điểm đến không thành công', Notification::ERROR);
 
             return json_encode($this->notification->getMessage());
         }
@@ -82,15 +87,20 @@ class DestinationController extends Controller
     public function update(Request $request, $id)
     {
         Destination::findOrFail($id);
-        $request->validate($this->destination->rules($id));
+        $request->validate($this->destination->rules($id),[],[
+            'name' => 'tên điểm đến',
+            'slug' => 'tên rút gọn',
+            'image' => 'ảnh',
+            'status' => 'trạng thái'
+        ]);
 
         try {
             $this->destination->saveData($request, $id);
-            $this->notification->setMessage('Destination updated successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Đã cập nhật điểm đến thành công', Notification::SUCCESS);
 
             return json_encode($this->notification->getMessage());
         } catch (Exception $e) {
-            $this->notification->setMessage('The destination update failed', Notification::ERROR);
+            $this->notification->setMessage('Cập nhật điểm đến không thành công', Notification::ERROR);
 
             return json_encode($this->notification->getMessage());
         }
