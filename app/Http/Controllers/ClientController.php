@@ -50,8 +50,9 @@ class ClientController extends Controller
         $tours = $this->clientService->getListTour($request, $slug);
         $filterDuration = $request->filter_duration ?? [];
         $filterType = $request->filter_type ?? [];
+        $destination = Destination::where('slug', $slug)->first();
 
-        return view('list_tour', compact(['tours', 'types', 'filterDuration', 'filterType']));
+        return view('list_tour', compact(['tours', 'types', 'filterDuration', 'filterType', 'destination']));
     }
 
     /**
@@ -98,7 +99,7 @@ class ClientController extends Controller
     public function storeBooking(Request $request, $slug, Tour $tourModel)
     {
         $tour = $tourModel->getTourBySlug($slug);
-        $request->validate($this->clientService->ruleBooking(),[],[
+        $request->validate($this->clientService->ruleBooking(), [], [
             'first_name' => 'tên',
             'last_name' => 'họ',
             'phone' => 'điện thoại',
@@ -116,7 +117,7 @@ class ClientController extends Controller
         try {
             $this->clientService->storeBooking($request, $tour);
         } catch (Exception $e) {
-            $this->notification->setMessage('The tour booking failed', Notification::ERROR);
+            $this->notification->setMessage('Đặt tour không thành công', Notification::ERROR);
         }
 
         return response()->json($this->notification->getMessage());
@@ -141,14 +142,19 @@ class ClientController extends Controller
      */
     public function storeContact(Request $request, Contact $contact)
     {
-        $request->validate($contact->rules());
+        $request->validate($contact->rules(), [], [
+            'name' => 'tên',
+            'email' => 'email',
+            'phone' => 'số điện thoại',
+            'message' => 'nội dung',
+        ]);
         try {
             $contact->saveData($request);
-            $this->notification->setMessage('Contact sent successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Gửi phản hồi thành công', Notification::SUCCESS);
 
             return redirect()->route('index')->with($this->notification->getMessage());
         } catch (Exception $e) {
-            $this->notification->setMessage('Contact sent failed', Notification::ERROR);
+            $this->notification->setMessage('Gửi phản hồi thất bại', Notification::ERROR);
 
             return back()
                 ->with('exception', $e->getMessage())
@@ -200,11 +206,11 @@ class ClientController extends Controller
         try {
             $tour = Tour::where('slug', $slug)->firstOrFail();
             $review->saveData($request, $tour);
-            $this->notification->setMessage('Review sent successfully', Notification::SUCCESS);
+            $this->notification->setMessage('Đánh giá đã được gửi thành công', Notification::SUCCESS);
 
             return back()->with($this->notification->getMessage());
         } catch (Exception $e) {
-            $this->notification->setMessage('Review sent failed', Notification::ERROR);
+            $this->notification->setMessage('Đánh giá gửi không thành công', Notification::ERROR);
 
             return back()
                 ->with('exception', $e->getMessage())

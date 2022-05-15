@@ -9,18 +9,20 @@
                 <div class="box-find-tour">
                     <div class="row">
                         <div class="col-12 col-lg-3 col-find-tour search">
-                            <input type="text" class="form-control form-find-tour" name="tour_name" placeholder="Từ khóa">
+                            <input type="text" class="form-control form-find-tour" name="tour_name"
+                                   placeholder="Từ khóa">
                         </div>
                         <div class="col-12 col-lg-3 col-find-tour">
-                            <input class="form-control form-find-tour" name="destination_name" placeholder="Tên địa điểm">
+                            <input class="form-control form-find-tour" name="destination_name"
+                                   placeholder="Tên địa điểm">
                         </div>
                         <div class="col-12 col-lg-3 col-find-tour">
-                            <select class="form-control form-find-tour" name="duration">
+                            <select class="form-control form-find-tour" name="filter_duration[]">
                                 <option value="">Thời gian</option>
-                                <option value="">1 ngày</option>
-                                <option value="">2-4 ngày</option>
-                                <option value="">5-7 ngày</option>
-                                <option value="">7+ ngày</option>
+                                <option value="1">0-3 ngày</option>
+                                <option value="2">3-5 ngày</option>
+                                <option value="3">5-7 ngày</option>
+                                <option value="4">7+ ngày</option>
                             </select>
                         </div>
                         <div class="col-12 col-lg-3 col-find-tour">
@@ -96,9 +98,9 @@
     <div class="popular-tour container">
         <div class="box-title">
             <p class="title">Các tour thường đến</p>
-            <a href="#">
+            <a href="{{ route('client.tours.list', 'trending') }}">
                 <span>Xem tất cả tour</span>
-                <i class="fa fa-long-arrow-right"></i>
+                <i class=" fa fa-long-arrow-right"></i>
             </a>
         </div>
 
@@ -157,7 +159,7 @@
     <div class="recommended-tour container">
         <div class="box-title">
             <p class="title">Gợi ý của chúng tôi</p>
-            <a href="#">
+            <a href="{{  route('client.tours.list','new') }}">
                 <span>Xem tất cả tour</span>
                 <i class="fa fa-long-arrow-right"></i>
             </a>

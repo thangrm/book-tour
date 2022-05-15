@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-12 col-md-4 col-xxl-4">
                     <div class="footer-nav row">
-                        <div class="col-6 col-sm-5 col-md-4 col-lg-6 p-0">
+                        <div class="col-6 col-sm-5 col-md-4 col-lg-5 p-0">
                             <nav class="nav flex-column">
                                 <a class="nav-link" href="{{ route('index') }}">{{ __('client.home') }}</a>
                                 <a class="nav-link" href="#">{{ __('client.about') }}</a>
@@ -24,7 +24,7 @@
                                    href="{{ route('client.contact.index') }}">{{ __('client.contact') }}</a>
                             </nav>
                         </div>
-                        <div class="col-6 col-sm-7 col-md-8 col-lg-6 p-0">
+                        <div class="col-6 col-sm-7 col-md-8 col-lg-7 p-0">
                             <nav class="nav flex-column">
                                 <a class="nav-link" href="#">{{ __('client.footer.partner_with_us') }}</a>
                                 <a class="nav-link" href="#">{{ __('client.footer.terms_and_conditions') }}</a>

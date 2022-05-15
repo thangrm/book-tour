@@ -6,14 +6,14 @@
     margin: 45px 0 10px 0;
 }
 
-[slider]>div {
+[slider] > div {
     position: absolute;
     left: 13px;
     right: 15px;
     height: 6px;
 }
 
-[slider]>div>[inverse-left] {
+[slider] > div > [inverse-left] {
     position: absolute;
     left: 0;
     height: 6px;
@@ -22,7 +22,7 @@
     margin: 0 7px;
 }
 
-[slider]>div>[inverse-right] {
+[slider] > div > [inverse-right] {
     position: absolute;
     right: 0;
     height: 6px;
@@ -31,7 +31,7 @@
     margin: 0 7px;
 }
 
-[slider]>div>[range] {
+[slider] > div > [range] {
     position: absolute;
     left: 0;
     height: 6px;
@@ -39,7 +39,7 @@
     background-color: #FF7B42;
 }
 
-[slider]>div>[thumb] {
+[slider] > div > [thumb] {
     position: absolute;
     top: -5px;
     z-index: 2;
@@ -55,7 +55,7 @@
     outline: none;
 }
 
-[slider]>input[type=range] {
+[slider] > input[type=range] {
     position: absolute;
     pointer-events: none;
     -webkit-appearance: none;
@@ -70,28 +70,28 @@
     opacity: 0;
 }
 
-div[slider]>input[type=range]::-ms-track {
+div[slider] > input[type=range]::-ms-track {
     -webkit-appearance: none;
     background: transparent;
     color: transparent;
 }
 
-div[slider]>input[type=range]::-moz-range-track {
+div[slider] > input[type=range]::-moz-range-track {
     -moz-appearance: none;
     background: transparent;
     color: transparent;
 }
 
-div[slider]>input[type=range]:focus::-webkit-slider-runnable-track {
+div[slider] > input[type=range]:focus::-webkit-slider-runnable-track {
     background: transparent;
     border: transparent;
 }
 
-div[slider]>input[type=range]:focus {
+div[slider] > input[type=range]:focus {
     outline: none;
 }
 
-div[slider]>input[type=range]::-ms-thumb {
+div[slider] > input[type=range]::-ms-thumb {
     pointer-events: all;
     width: 28px;
     height: 28px;
@@ -100,7 +100,7 @@ div[slider]>input[type=range]::-ms-thumb {
     background: red;
 }
 
-div[slider]>input[type=range]::-moz-range-thumb {
+div[slider] > input[type=range]::-moz-range-thumb {
     pointer-events: all;
     width: 28px;
     height: 28px;
@@ -109,7 +109,7 @@ div[slider]>input[type=range]::-moz-range-thumb {
     background: red;
 }
 
-div[slider]>input[type=range]::-webkit-slider-thumb {
+div[slider] > input[type=range]::-webkit-slider-thumb {
     pointer-events: all;
     width: 28px;
     height: 28px;
@@ -119,27 +119,27 @@ div[slider]>input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
 }
 
-div[slider]>input[type=range]::-ms-fill-lower {
+div[slider] > input[type=range]::-ms-fill-lower {
     background: transparent;
     border: 0 none;
 }
 
-div[slider]>input[type=range]::-ms-fill-upper {
+div[slider] > input[type=range]::-ms-fill-upper {
     background: transparent;
     border: 0 none;
 }
 
-div[slider]>input[type=range]::-ms-tooltip {
+div[slider] > input[type=range]::-ms-tooltip {
     display: none;
 }
 
-[slider]>div>[sign] {
+[slider] > div > [sign] {
     position: absolute;
     margin-left: -11px;
     top: -39px;
     z-index: 3;
     height: 42px;
-    width: 40px;
+    width: 80px;
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
@@ -150,7 +150,7 @@ div[slider]>input[type=range]::-ms-tooltip {
     color: #4F4F4F;
 }
 
-[slider]>div>[sign]>span {
+[slider] > div > [sign] > span {
     font-size: 12px;
     font-weight: 700;
     line-height: 28px;

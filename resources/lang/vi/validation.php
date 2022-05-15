@@ -97,7 +97,7 @@ return [
     'password' => 'Trường password là không chính xác.',
     'present' => 'Trường :attribute phải có mặt.',
     'regex' => 'Trường :attribute định dạng không hợp lệ.',
-    'required' => 'Trường :attribute được yêu cầu.',
+    'required' => 'Trường :attribute không được để trống.',
     'required_if' => 'Trường :attribute được yêu cầu.',
     'required_unless' => 'Trường :attribute được yêu cầu trừ khi :other trong :values.',
     'required_with' => 'Trường :attribute được yêu cầu khi :values có mặt.',

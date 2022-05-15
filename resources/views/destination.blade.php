@@ -5,8 +5,8 @@
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Destinations</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="#">Điểm đến</a></li>
                 </ol>
             </nav>
         </div>

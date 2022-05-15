@@ -5,7 +5,7 @@ function leftRange(el) {
     children[5].style.left = value + '%';
     children[7].style.left = value + '%';
     children[11].style.left = value + '%';
-    children[11].childNodes[1].innerHTML = el.value;
+    children[11].childNodes[1].innerHTML = Number(el.value).toLocaleString();
 }
 
 function rightRange(el) {
@@ -15,7 +15,7 @@ function rightRange(el) {
     children[5].style.right = (100 - value) + '%';
     children[9].style.left = value + '%';
     children[13].style.left = value + '%';
-    children[13].childNodes[1].innerHTML = el.value;
+    children[13].childNodes[1].innerHTML = Number(el.value).toLocaleString();
 }
 
 if (document.getElementById('minPrice') !== null) {

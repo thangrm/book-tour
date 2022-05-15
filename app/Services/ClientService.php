@@ -60,7 +60,7 @@ class ClientService
             'zipcode',
         ]));
         $input['status'] = 1;
-        if(empty($input['email'])){
+        if (empty($input['email'])) {
             $input['email'] = 'Không có email';
         }
         $customer = Customer::create($input);
@@ -154,7 +154,7 @@ class ClientService
     {
         $specialSlug = ['all', 'new', 'trending'];
         $query = Tour::with('destination', 'type')
-            ->where('status', 1)
+            ->where('status', ACTIVE)
             ->latest();
 
         if (!in_array($slug, $specialSlug)) {
@@ -163,12 +163,14 @@ class ClientService
         }
 
         if ($slug == 'trending') {
-            $query->where('trending', 1);
+            $query->where('trending', ACTIVE);
         }
 
         $query = $this->filterTour($request, $query);
+        $tours = $query->paginate(9);
+        $tours->appends(request()->query());
 
-        return $query->paginate(9);
+        return $tours;
     }
 
     /**

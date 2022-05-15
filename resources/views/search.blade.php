@@ -5,7 +5,7 @@
         <div class="container">
             <nav style="--bs-breadcrumb-divider: ''" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Trang chủ</a></li>
                     <li class="breadcrumb-item"><a href="#">Tours</a></li>
                 </ol>
             </nav>
@@ -16,12 +16,12 @@
     <!-------------------- Filter -------------------->
     <div class="box-slide slide-tour list-tours container">
         <div class="header-slide d-flex align-items-end">
-            <p class="title-slide">List tour</p>
+            <p class="title-slide">Danh sách tour</p>
             <div class="btn-filter-wrap">
                 <button class="btn btn-outline btn-filter d-flex align-items-center justify-content-between"
                         id="btnFilterTours" data-bs-toggle="collapse" data-bs-target="#filterCollapse"
                         aria-expanded="false" aria-controls="filterCollapse">
-                    <span>Filter</span>
+                    <span>Lọc</span>
                     <i class="fa fa-x d-none iconBtnFilter"></i>
                     <i class="fa fa-chevron-down iconBtnFilter"></i>
                 </button>
@@ -30,11 +30,11 @@
                     <div class="card card-body">
                         <form action="" id="formSelectFilter">
                             <div class="filter-header d-flex justify-content-between align-items-center">
-                                <p>filter by</p>
-                                <span class="text-clear" id="clearFormFilter">clear</span>
+                                <p>Lọc bởi</p>
+                                <span class="text-clear" id="clearFormFilter">Xóa</span>
                             </div>
                             <div class="budget-bar">
-                                <h5>Budget:</h5>
+                                <h5>Số tiền:</h5>
                                 <div id="sliderRangePrice">
                                     <div slider id="slider-distance">
                                         <div>
@@ -44,18 +44,20 @@
                                             <span thumb></span>
                                             <span thumb></span>
                                             <div sign>
-                                                $<span></span>
+                                                <span></span>đ
                                             </div>
                                             <div sign>
-                                                $<span></span>
+                                                <span></span>đ
                                             </div>
                                         </div>
-                                        <input type="range" tabindex="0" value="{{ request()->min_price ?? 360 }}"
-                                               max="1200" min="0" step="1"
+                                        <input type="range" tabindex="0"
+                                               value="{{ request()->min_price ?? 3000000 }}"
+                                               max="10000000" min="0" step="100000"
                                                oninput="leftRange(this)" name="min_price" id="minPrice"/>
 
-                                        <input type="range" tabindex="0" value="{{ request()->max_price ?? 720 }}"
-                                               value="720" max="1200" min="0" step="1"
+                                        <input type="range" tabindex="0"
+                                               value="{{ request()->max_price ?? 6000000}}"
+                                               max="10000000" min="0" step="100000"
                                                oninput="rightRange(this)" name="max_price" id="maxPrice"/>
                                     </div>
                                 </div>
@@ -64,27 +66,27 @@
                                 <div class="form-group">
                                     <hr>
                                     <h5>Tour</h5>
-                                    <input type="text" class="form-control" name="tour_name" placeholder="Title"
+                                    <input type="text" class="form-control" name="tour_name" placeholder="Tên tour"
                                            value="{{ request()->tour_name }}">
                                 </div>
 
                                 <div class="form-group">
                                     <hr>
-                                    <h5>Destination</h5>
+                                    <h5>Điểm đến</h5>
                                     <input class="form-control" type="text" name="destination_name"
-                                           placeholder="Destination"
+                                           placeholder="Tên điểm đến"
                                            value="{{ request()->destination_name }}">
                                 </div>
 
                                 <div class="form-group">
                                     <hr>
-                                    <h5>Duration</h5>
+                                    <h5>Thời gian</h5>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="filter_duration[]"
                                                value="1"
                                                id="duration1" {{ in_array(1, $filterDuration) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="duration1">
-                                            0-3 days
+                                            0-3 ngày
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -92,7 +94,7 @@
                                                value="2" id="duration2"
                                                id="duration4"{{ in_array(2, $filterDuration) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="duration2">
-                                            3-5 days
+                                            3-5 ngày
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -100,7 +102,7 @@
                                                value="3" id="duration3"
                                                id="duration4"{{ in_array(3, $filterDuration) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="duration3">
-                                            5-7 days
+                                            5-7 ngày
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -108,14 +110,14 @@
                                                value="4"
                                                id="duration4"{{ in_array(4, $filterDuration) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="duration4">
-                                            over 1 week
+                                            trên 1 tuần
                                         </label>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <hr>
-                                    <h5>Type of Tours</h5>
+                                    <h5>Thể loại</h5>
                                     @foreach($types as $type)
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="filter_type[]"
@@ -129,7 +131,7 @@
                                 </div>
 
                                 <button class="btn btn-primary w-100 btn-submit-filter">
-                                    Apply Filter
+                                    Tìm kiếm
                                 </button>
                             </div>
                         </form>
@@ -181,6 +183,11 @@
     </div>
     <!-------------------- End List Tours-------------------->
 
+    <div class="container">
+        <div class="pagination-tours d-flex justify-content-end align-items-baseline w-100">
+            {!! $tours->links('components.pagination') !!}
+        </div>
+    </div>
 @endsection
 
 

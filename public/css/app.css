@@ -771,7 +771,7 @@ div[slider] > input[type=range]::-ms-tooltip {
   top: -39px;
   z-index: 3;
   height: 42px;
-  width: 40px;
+  width: 80px;
   align-items: center;
   justify-content: center;
   text-align: center;

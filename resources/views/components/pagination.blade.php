@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
     @empty($isReviewPage)
-        <div class="pagination-text">Showing {{ $paginator->currentPage() }} / {{ $paginator->lastPage() }}</div>
+        {{--        <div class="pagination-text">Showing {{ $paginator->currentPage() }} / {{ $paginator->lastPage() }}</div>--}}
     @endempty
     <nav class="page-navigation " aria-label="page navigation">
         <ul class="pagination {{ empty($isReviewPage) ? 'justify-content-end' : 'justify-content-start' }}">

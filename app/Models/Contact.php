@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Jobs\SendMailVerifyCodeJob;
+use App\Jobs\SendMailContactJob;
 use App\Libraries\Utilities;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -59,7 +60,7 @@ class Contact extends Model
         $input['status'] = 1;
 
         $contact = Contact::create($input);
-        dispatch(new SendMailVerifyCodeJob($contact));
+        dispatch(new SendMailContactJob($contact));
     }
 
     /**
@@ -95,7 +96,8 @@ class Contact extends Model
                 return ($data->status == 1) ? 'font-weight-bold' : '';
             })
             ->addColumn('date', function ($data) {
-                return date("Y/m/d h:i", strtotime($data->created_at));
+                $date = Carbon::parse($data->created_at);
+                return $date->diffForHumans();
             })
             ->addColumn('action', function ($data) {
                 $link = route('contacts.show', $data->id);
