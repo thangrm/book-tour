@@ -44,7 +44,7 @@ class ClientService
      *
      * @param Request $request
      * @param $tour
-     * @return void
+     * @return Booking
      */
     public function storeBooking(Request $request, $tour)
     {
@@ -86,14 +86,20 @@ class ClientService
         $total = $total - $total * $input['discount'] / 100;
         $input['total'] = $total;
         $input['status'] = 1;
-        $booking = Booking::create($input);
-        if ($coupon) {
-            $coupon->update([
-                'number' => $coupon->number - 1,
-            ]);
+
+        if ($request->booking_id) {
+            $booking = Booking::find($request->booking_id);
+            $booking->update($input);
+        } else {
+            $booking = Booking::create($input);
+            if ($coupon) {
+                $coupon->update([
+                    'number' => $coupon->number - 1,
+                ]);
+            }
         }
 
-        dispatch(new SendMailBookingJob($booking));
+        return $booking;
     }
 
     /**

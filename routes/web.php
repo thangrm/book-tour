@@ -36,6 +36,10 @@ Route::prefix('/tours/{slug}')->group(function () {
     Route::get('booking', [ClientController::class, 'booking'])->name('client.booking.index');
     Route::post('booking', [ClientController::class, 'storeBooking'])->name('client.booking.store');
 });
+Route::get('booking', [ClientController::class, 'thank'])->name('booking.thank');
+Route::get('booking/momo/redirect', [ClientController::class, 'redirectMomo'])->name('booking.momo.redirect');
+Route::post('booking/momo/confirm', [ClientController::class, 'confirmMomo'])->name('booking.momo.confirm');
+
 
 Route::get('/list-tours/{slug}', [ClientController::class, 'listTour'])->name('client.tours.list');
 Route::get('/destination', [ClientController::class, 'destination'])->name('client.destination.index');

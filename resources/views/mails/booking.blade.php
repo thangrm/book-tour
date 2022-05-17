@@ -118,7 +118,8 @@
                                            width="100%">
                                         <tr>
                                             <td style="width:100%;padding-right:0px;padding-left:0px;">
-                                                <p style="text-align: center; color: white; font-size: 22px">Ngao Du</p>
+                                                <p style="text-align: center; color: white; font-size: 22px">Thắng
+                                                    Lợi</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -186,7 +187,7 @@
                                                              </p>
                                                         <p style="margin: 0; font-size: 16px; text-align: left; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;">Đã có một khách hàng đã đặt một tour mới </span><span
-                                                                style="font-size:16px;">vào lúc: <b>{{ $booking->created_at->format('H:i, d/m/Y') }} (UTC)</b>. </span>
+                                                                style="font-size:16px;">vào lúc: <b>{{ $booking->created_at->format('H:i, d/m/Y') }}</b>. </span>
                                                             </br>
                                                             <span style="font-size:16px;">Vui lòng tìm thông tin chi tiết tour bên dưới:</span>
                                                         </p>
@@ -282,11 +283,11 @@
                                                         style="font-size: 14px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 21px; color: #393d47; line-height: 1.5;">
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;"><strong><span
-                                                                        style="color:#5d77a9;">Departure:</span></strong> {{ date('d/m/Y',strtotime($booking->departure_time)) }} </span>
+                                                                        style="color:#5d77a9;">Ngày khởi hành:</span></strong> {{ date('d/m/Y',strtotime($booking->departure_time)) }} </span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;"><strong><span
-                                                                        style="color:#5d77a9;">Customer:</span></strong> {{ $booking->customer->first_name . ' ' . $booking->customer->last_name }}</span>
+                                                                        style="color:#5d77a9;">Khách hàng:</span></strong> {{ $booking->customer->first_name . ' ' . $booking->customer->last_name }}</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;"><strong><span
@@ -294,19 +295,39 @@
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;"><strong><span
-                                                                        style="color:#5d77a9;">Phone:</span></strong>{{ $booking->customer->phone }} </span>
+                                                                        style="color:#5d77a9;">Số điện thoại:</span></strong>{{ $booking->customer->phone }} </span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;"><strong><span
-                                                                        style="color:#5d77a9;">Price:</span></strong> ${{ $booking->price }}</span>
+                                                                        style="color:#5d77a9;">Giá:</span></strong> {{ number_format($booking->price) }}đ</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;"><strong><span
-                                                                        style="color:#5d77a9;">People:</span></strong> {{ $booking->people }}</span>
+                                                                        style="color:#5d77a9;">Số người:</span></strong> {{ $booking->people }}</span>
+                                                        </p>
+                                                        <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
+                                                            <span style="font-size:16px;"><strong><span
+                                                                        style="color:#5d77a9;">Giá:</span></strong> {{ number_format($booking->price) }}đ</span>
+                                                        </p>
+                                                        <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
+                                                            <span style="font-size:16px;"><strong><span
+                                                                        style="color:#5d77a9;">Phòng:</span></strong> {{ $booking->number_room . ' '. $booking->room->name }}</span>
+                                                        </p>
+                                                        <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
+                                                            <span style="font-size:16px;"><strong><span
+                                                                        style="color:#5d77a9;">Giá phòng:</span></strong> {{ number_format($booking->room_price) }}đ</span>
+                                                        </p>
+                                                        <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
+                                                            <span style="font-size:16px;"><strong><span
+                                                                        style="color:#5d77a9;">Số người:</span></strong> {{ $booking->people }}</span>
+                                                        </p>
+                                                        <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
+                                                            <span style="font-size:16px;"><strong><span
+                                                                        style="color:#5d77a9;">Giảm giá:</span></strong> {{ $booking->discount }}%</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;"><span
-                                                                    style="color:#5d77a9;"><strong>Total</strong>:</span> ${{ $booking->price * $booking->people }}</span>
+                                                                    style="color:#5d77a9;"><strong>Tổng cộng</strong>:</span> {{ number_format($booking->total) }}đ</span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -344,12 +365,12 @@
                                                         style="font-size: 14px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 21px; color: #393d47; line-height: 1.5;">
                                                         <p style="margin: 0; font-size: 16px;"><span
                                                                 style="color:#5d77a9;"><strong><span
-                                                                        style="font-size:16px;">Ngao Du</span></strong>
+                                                                        style="font-size:16px;">Công ty Thắng Lợi</span></strong>
                                                                             </span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span
-                                                                style="font-size:16px;">Your Street 12, 34567 AB City</span>
+                                                                style="font-size:16px;">Địa chỉ 12, 34567 Thành phố Hà Nội</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;">(+1) 123 456 789</span></p>
@@ -431,7 +452,8 @@
                                            width="100%">
                                         <tr>
                                             <td style="width:100%;padding-right:0px;padding-left:0px;padding-top:20px;">
-                                                <p style="text-align: center; color: white; font-size: 22px">Ngao Du</p>
+                                                <p style="text-align: center; color: white; font-size: 22px">Thắng
+                                                    Lợi</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -446,10 +468,11 @@
                                                         style="font-size: 14px; mso-line-height-alt: 21px; color: #f9f9f9; line-height: 1.5; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
                                                         <p style="margin: 0; font-size: 12px; text-align: center; mso-line-height-alt: 18px;">
                                                             <span
-                                                                style="font-size:12px;">Your Street 12, 34567 AB City</span>
+                                                                style="font-size:12px;">Địa chỉ 12, 34567 Thành phố Hà Nội</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 12px; text-align: center; mso-line-height-alt: 18px;">
-                                                            <span style="font-size:12px;">info@example.com </span></p>
+                                                            <span style="font-size:12px;">info@example.com </span>
+                                                        </p>
                                                         <p style="margin: 0; font-size: 12px; text-align: center; mso-line-height-alt: 18px;">
                                                             <span style="font-size:12px;">(+1) 123 456 789</span></p>
                                                     </div>

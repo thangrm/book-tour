@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendMailBookingJob;
+use App\Libraries\MomoPayment;
 use App\Libraries\Notification;
 use App\Libraries\Utilities;
+use App\Models\Booking;
 use App\Models\Contact;
 use App\Models\Destination;
 use App\Models\Review;
 use App\Models\Tour;
 use App\Models\Type;
+use App\Providers\MomoServiceProvider;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -84,43 +89,9 @@ class ClientController extends Controller
         $departureTime = $request->departure_time;
         $roomId = $request->room_id;
         $numberRoom = $request->number_room;
+        $booking = null;
 
-        return view('booking', compact(['tour', 'people', 'departureTime', 'roomId', 'numberRoom']));
-    }
-
-    /**
-     * Store booking
-     *
-     * @param Request $request
-     * @param $slug
-     * @param Tour $tourModel
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function storeBooking(Request $request, $slug, Tour $tourModel)
-    {
-        $tour = $tourModel->getTourBySlug($slug);
-        $request->validate($this->clientService->ruleBooking(), [], [
-            'first_name' => 'tên',
-            'last_name' => 'họ',
-            'phone' => 'điện thoại',
-            'people' => 'sô người',
-            'departure_time' => 'ngày',
-            'payment_method' => 'loại thanh toán',
-            'address' => 'địa chỉ',
-            'city' => 'thành phố',
-            'province' => 'huyện',
-            'country' => 'quốc gia',
-            'zipcode' => 'mã zipcode',
-        ]);
-        $this->notification->setMessage('Đặt tour thành công', Notification::SUCCESS);
-
-        try {
-            $this->clientService->storeBooking($request, $tour);
-        } catch (Exception $e) {
-            $this->notification->setMessage('Đặt tour không thành công', Notification::ERROR);
-        }
-
-        return response()->json($this->notification->getMessage());
+        return view('booking', compact(['tour', 'people', 'departureTime', 'roomId', 'numberRoom', 'booking']));
     }
 
     /**
@@ -216,6 +187,129 @@ class ClientController extends Controller
                 ->with('exception', $e->getMessage())
                 ->with($this->notification->getMessage())
                 ->withInput();
+        }
+    }
+
+    public function thank()
+    {
+        return view('admin.bookings.thank');
+    }
+
+    /**
+     * Store booking
+     *
+     * @param Request $request
+     * @param $slug
+     * @param Tour $tourModel
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function storeBooking(Request $request, $slug, Tour $tourModel)
+    {
+        $tour = $tourModel->getTourBySlug($slug);
+        $request->validate($this->clientService->ruleBooking(), [], [
+            'first_name' => 'tên',
+            'last_name' => 'họ',
+            'phone' => 'điện thoại',
+            'people' => 'sô người',
+            'departure_time' => 'ngày',
+            'payment_method' => 'loại thanh toán',
+            'address' => 'địa chỉ',
+            'city' => 'thành phố',
+            'province' => 'huyện',
+            'country' => 'quốc gia',
+            'zipcode' => 'mã zipcode',
+        ]);
+        $this->notification->setMessage('Đặt tour thành công', Notification::SUCCESS);
+
+        DB::beginTransaction();
+        try {
+            $booking = $this->clientService->storeBooking($request, $tour);
+            if ($request->payment_method == PAYMENT_MOMO) {
+                $orderIDMomo = 'MM' . time();
+                $booking->invoice_no = $orderIDMomo;
+                $booking->save();
+
+                $response = MomoPayment::purchase([
+                    'ipnUrl' => route('booking.momo.confirm'),
+                    'redirectUrl' => route('booking.momo.redirect'),
+                    'orderId' => $orderIDMomo,
+                    'amount' => strval($booking->total),
+                    'orderInfo' => 'Thanh toán hóa đơn đặt tour du lịch công ty Thắng Lợi',
+                    'requestId' => $orderIDMomo,
+                    'extraData' => '',
+                ]);
+
+                dispatch(new SendMailBookingJob($booking));
+                if ($response->successful()) {
+                    DB::commit();
+                    return response()->json([
+                        'url' => $response->json('payUrl'),
+                    ]);
+                } else {
+                    DB::rollBack();
+                    $this->notification->setMessage('Serve Momo không phản hồi, vui lòng thử lại sau hoặc chọn phương thức thanh toán khác');
+                }
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            $this->notification->setMessage('Đặt tour không thành công', Notification::ERROR);
+        }
+
+        return response()->json($this->notification->getMessage());
+    }
+
+    /* MOMO */
+    public function redirectMomo(Request $request)
+    {
+        $checkPayment = MomoPayment::completePurchase($request);
+        $notification = array(
+            'message' => $checkPayment['message'],
+            'alert-type' => 'error',
+        );
+        $booking = Booking::where('invoice_no', $request->orderId)->first();
+        if ($booking != null) {
+            if ($checkPayment['success']) {
+                $booking->is_payment = PAYMENT_PAID;
+                $booking->transaction_id = $request->transId;
+                $booking->deposit = $booking->total;
+                $booking->save();
+                $notification = array(
+                    'message' => 'Đặt hàng thành công',
+                    'alert-type' => 'success',
+                );
+            } else {
+                $tour = $booking->tour;
+                $people = $booking->people;
+                $departureTime = $booking->departure_time;
+                $roomId = $booking->room_id;
+                $numberRoom = $booking->number_room;
+                $errorMomo = $notification['message'];
+
+                return view('booking', compact([
+                    'tour',
+                    'people',
+                    'departureTime',
+                    'roomId',
+                    'numberRoom',
+                    'booking',
+                    'errorMomo'
+                ]));
+            }
+
+        } else {
+            $notification['message'] = 'Mã hóa đơn không đúng';
+        }
+
+        return redirect()->route('index')->with($notification);
+    }
+
+    public function confirmMomo(Request $request)
+    {
+        $booking = Booking::where('invoice_no', $request->orderId)->first();
+        if ($booking != null) {
+            $booking->is_payment = PAYMENT_PAID;
+            $booking->transaction_id = $request->transId;
+            $booking->save();
         }
     }
 }

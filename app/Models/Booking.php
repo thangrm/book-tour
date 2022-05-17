@@ -40,6 +40,7 @@ class Booking extends Model
         return $this->belongsTo(Room::class);
     }
 
+
     /**
      * Validate rules for booking
      *

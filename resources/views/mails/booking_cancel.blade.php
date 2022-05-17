@@ -90,7 +90,7 @@
                                 <td class="column"
                                     style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
                                     width="100%">
-                                    <p style="text-align: center; color: white; font-size: 22px">Ngao Du</p>
+                                    <p style="text-align: center; color: white; font-size: 22px">Công ty Thắng Lợi</p>
                                 </td>
                             </tr>
                             </tbody>
@@ -130,8 +130,9 @@
                                                              </p>
                                                         <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 24px;"><span
                                                                 style="font-size:16px;">
-                                                                Tour của bạn đã bị hủy.<br>
-                                                                Chúng tôi thành thật xin lỗi khi không thể hợp tác trong lần này và mong rằng vẫn được hợp tác trong tương lai
+                                                                Tour của bạn đã bị hủy <br>
+                                                                Số tiền sẽ cọc và đã thanh toán sẽ được hoàn theo như chính sách của chúng tôi trong 1 ngày làm việc<br>
+                                                                Chúng tôi thành thật xin lỗi khi không thể hợp tác với quý khách trong lần này và mong rằng vẫn được cùng quý khách trong những chuyến tham quan trong tương lai</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 24px;"><span
                                                                 style="font-size:16px;">Nếu bạn có thắc mắc nào có thể liên hệ: <strong><span
@@ -181,7 +182,7 @@
                                                         style="font-size: 14px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 16.8px; color: #2f2f2f; line-height: 1.2;">
                                                         <p style="margin: 0; text-align: center; letter-spacing: 1px;">
                                                             <strong><span
-                                                                    style="font-size:18px;">TOUR DETAILS</span></strong>
+                                                                    style="font-size:18px;">Thông tin tour</span></strong>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -225,23 +226,19 @@
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; text-align: right;">
                                                             <strong><span style="font-size:16px;"><span
-                                                                        style="color:#5d77a9;">Departure</span></span></strong>
+                                                                        style="color:#5d77a9;">Ngày khởi hành</span></span></strong>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; text-align: right;">
                                                             <strong><span style="font-size:16px;"><span
-                                                                        style="color:#5d77a9;">Customer</span></span></strong>
+                                                                        style="color:#5d77a9;">Khách hàng</span></span></strong>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; text-align: right;">
                                                             <strong><span style="font-size:16px;"><span
-                                                                        style="color:#5d77a9;">Price</span></span></strong>
+                                                                        style="color:#5d77a9;">Số người</span></span></strong>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; text-align: right;">
                                                             <strong><span style="font-size:16px;"><span
-                                                                        style="color:#5d77a9;">People</span></span></strong>
-                                                        </p>
-                                                        <p style="margin: 0; font-size: 16px; text-align: right;">
-                                                            <strong><span style="font-size:16px;"><span
-                                                                        style="color:#5d77a9;">Total</span></span></strong>
+                                                                        style="color:#5d77a9;">Tổng tiền</span></span></strong>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -273,13 +270,10 @@
                                                             {{ $booking->customer->first_name . ' ' . $booking->customer->last_name }}
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; text-align: left;">
-                                                            ${{ number_format($booking->price,2) }}
-                                                        </p>
-                                                        <p style="margin: 0; font-size: 16px; text-align: left;">
                                                             {{ $booking->people }}
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; text-align: left;">
-                                                            ${{ number_format(($booking->price * $booking->people), 2) }}
+                                                            {{ number_format(($booking->total)) }}đ
                                                         </p>
                                                     </div>
                                                 </div>
@@ -350,7 +344,8 @@
                                            role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
                                            width="100%">
                                         <tr>
-                                            <p style="text-align: center; color: white; font-size: 22px">Ngao Du</p>
+                                            <p style="text-align: center; color: white; font-size: 22px">Công ty Thắng
+                                                Lợi</p>
                                         </tr>
                                     </table>
                                     <table border="0" cellpadding="10" cellspacing="0" class="social_block"
@@ -368,7 +363,7 @@
                                                         style="font-size: 14px; mso-line-height-alt: 21px; color: #f9f9f9; line-height: 1.5; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
                                                         <p style="margin: 0; font-size: 12px; text-align: center; mso-line-height-alt: 18px;">
                                                             <span
-                                                                style="font-size:12px;">Your Street 12, 34567 AB City</span>
+                                                                style="font-size:12px;">Địa chỉ 12, 34567 Thành phố Hà Nội</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 12px; text-align: center; mso-line-height-alt: 18px;">
                                                             <span style="font-size:12px;">info@example.com </span></p>

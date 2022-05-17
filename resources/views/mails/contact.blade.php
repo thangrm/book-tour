@@ -118,7 +118,8 @@
                                            width="100%">
                                         <tr>
                                             <td style="width:100%;padding-right:0px;padding-left:0px;">
-                                                <p style="text-align: center; color: white; font-size: 22px">Ngao Du</p>
+                                                <p style="text-align: center; color: white; font-size: 22px">Thắng
+                                                    Lợi</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -185,7 +186,7 @@
                                                         <p style="margin: 0; font-size: 16px; text-align: left; mso-line-height-alt: 21px;">
                                                              </p>
                                                         <p style="margin: 0; font-size: 16px; text-align: left; mso-line-height-alt: 24px;">
-                                                            <span style="font-size:16px;">Đã có một thông tin liên hệ với khách hàng mới </span>
+                                                            <span style="font-size:16px;">Đã có một thông tin liên hệ với khách hàng phản hồi về website </span>
                                                             </br>
                                                         </p>
                                                     </div>
@@ -263,7 +264,8 @@
                                            width="100%">
                                         <tr>
                                             <td style="width:100%;padding-right:0px;padding-left:0px;padding-top:20px;">
-                                                <p style="text-align: center; color: white; font-size: 22px">Ngao Du</p>
+                                                <p style="text-align: center; color: white; font-size: 22px">Thắng
+                                                    Lợi</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -278,7 +280,7 @@
                                                         style="font-size: 14px; mso-line-height-alt: 21px; color: #f9f9f9; line-height: 1.5; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
                                                         <p style="margin: 0; font-size: 12px; text-align: center; mso-line-height-alt: 18px;">
                                                             <span
-                                                                style="font-size:12px;">Your Street 12, 34567 AB City</span>
+                                                                style="font-size:12px;">Địa chỉ 12, 34567 Thành phố Hà Nội</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 12px; text-align: center; mso-line-height-alt: 18px;">
                                                             <span style="font-size:12px;">info@example.com </span></p>

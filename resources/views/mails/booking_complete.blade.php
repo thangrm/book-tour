@@ -90,7 +90,7 @@
                                 <td class="column"
                                     style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
                                     width="100%">
-                                    <p style="text-align: center; color: white; font-size: 22px">Ngao Du</p>
+                                    <p style="text-align: center; color: white; font-size: 22px">Công ty Thắng Lợi</p>
                                 </td>
                             </tr>
                             </tbody>
@@ -177,7 +177,8 @@
                                            role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
                                            width="100%">
                                         <tr>
-                                            <p style="text-align: center; color: white; font-size: 22px">Ngao Du</p>
+                                            <p style="text-align: center; color: white; font-size: 22px">Công ty Thắng
+                                                Lợi</p>
                                         </tr>
                                     </table>
                                     <table border="0" cellpadding="10" cellspacing="0" class="social_block"
@@ -195,7 +196,7 @@
                                                         style="font-size: 14px; mso-line-height-alt: 21px; color: #f9f9f9; line-height: 1.5; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
                                                         <p style="margin: 0; font-size: 12px; text-align: center; mso-line-height-alt: 18px;">
                                                             <span
-                                                                style="font-size:12px;">Your Street 12, 34567 AB City</span>
+                                                                style="font-size:12px;">Địa chỉ 12, 34567 Thành phố Hà Nội</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 12px; text-align: center; mso-line-height-alt: 18px;">
                                                             <span style="font-size:12px;">info@example.com </span></p>

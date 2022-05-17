@@ -33,10 +33,12 @@
                     <div class="card-body">
                         <h4 class="card-title d-flex justify-content-between align-items-center">
                             <span>Thông tin đặt tour</span>
-                            <button class="btn btn-info text-white edit" title="Thanh toán / cọc"
-                                    data-toggle="modal" data-target="#editModal">
-                                Thánh toán / cọc
-                            </button>
+                            @if($booking->is_payment == PAYMENT_UN_PAID)
+                                <button class="btn btn-info text-white edit" title="Thanh toán / cọc"
+                                        data-toggle="modal" data-target="#editModal">
+                                    Thánh toán / cọc
+                                </button>
+                            @endif
                         </h4>
                         <hr>
                         <table>
@@ -53,14 +55,14 @@
                                 <td>
                                     @switch($booking->payment_method)
                                         @case(1)
-                                        Tiền mặt
-                                        @break
+                                            Tiền mặt
+                                            @break
                                         @case(2)
-                                        Thẻ
-                                        @break
+                                            Thẻ
+                                            @break
                                         @case(3)
-                                        Paypal
-                                        @break
+                                            Paypal
+                                            @break
                                     @endswitch
                                 </td>
                             </tr>

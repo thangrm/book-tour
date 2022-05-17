@@ -90,6 +90,9 @@ class Room extends Model
             ->setRowId(function ($data) {
                 return 'Room-' . $data->id;
             })
+            ->editColumn('price', function ($data) {
+                return number_format($data->price) . 'đ';
+            })
             ->addColumn('action', function ($data) {
                 $id = $data->id;
                 $linkEdit = route("rooms.update", [$data->tour_id, $data->id]);

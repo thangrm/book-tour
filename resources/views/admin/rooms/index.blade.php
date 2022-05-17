@@ -7,9 +7,9 @@
                 <div class="d-flex align-items-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Trang chủ</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tour</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Room</li>
+                            <li class="breadcrumb-item active" aria-current="page">Phòng</li>
                         </ol>
                     </nav>
                 </div>
@@ -52,7 +52,7 @@
         <div class="col-12 col-lg-8">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">List of rooms</h4>
+                    <h4 class="card-title">Danh sách phòng</h4>
                     <table class="table table-striped table-bordered" id="destinationTable">
                         <thead>
                         <tr>
@@ -188,6 +188,7 @@
                 let id = $(this).data('id');
                 let nameRoom = $('#Room-' + id).children().eq(1).text();
                 let priceRoom = $('#Room-' + id).children().eq(2).text();
+                priceRoom = priceRoom.replace(/\D+/g, '');
 
                 $('#nameEdit').val(nameRoom);
                 $('#priceEdit').val(priceRoom);
