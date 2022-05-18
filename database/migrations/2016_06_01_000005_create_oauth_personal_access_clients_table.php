@@ -32,7 +32,7 @@ class CreateOauthPersonalAccessClientsTable extends Migration
     public function up()
     {
         $this->schema->create('oauth_personal_access_clients', function (Blueprint $table) {
-            DB::statement('SET SESSION sql_require_primary_key=0');
+//            DB::statement('SET SESSION sql_require_primary_key=0');
             $table->bigIncrements('id');
             $table->unsignedBigInteger('client_id');
             $table->timestamps();

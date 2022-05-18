@@ -32,7 +32,7 @@ class CreateOauthRefreshTokensTable extends Migration
     public function up()
     {
         $this->schema->create('oauth_refresh_tokens', function (Blueprint $table) {
-            DB::statement('SET SESSION sql_require_primary_key=0');
+//            DB::statement('SET SESSION sql_require_primary_key=0');
             $table->string('id', 100)->primary();
             $table->string('access_token_id', 100)->index();
             $table->boolean('revoked');

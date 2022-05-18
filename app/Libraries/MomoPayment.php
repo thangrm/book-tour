@@ -25,9 +25,11 @@ class MomoPayment
         $rawHash = "partnerCode=$partnerCode&accessKey=$accessKey&requestId=$requestId&amount=$amount&orderId=$orderId&orderInfo=$orderInfo&returnUrl=$redirectUrl&notifyUrl=$ipnUrl&extraData=$extraData";
         $signature = hash_hmac("sha256", $rawHash, $secretKey);
         $requestType = "captureMoMoWallet";
-        $response = Http::post($endPoint, [
+
+        return Http::post($endPoint, [
             'accessKey' => $accessKey,
             'partnerCode' => $partnerCode,
+            'partnerName' => 'Công ty du lịch Thắng Lợi',
             'requestType' => $requestType,
             'notifyUrl' => $ipnUrl,
             'returnUrl' => $redirectUrl,
@@ -38,7 +40,6 @@ class MomoPayment
             'extraData' => $extraData,
             'signature' => $signature,
         ]);
-        return $response;
     }
 
     public static function completePurchase(Request $request)

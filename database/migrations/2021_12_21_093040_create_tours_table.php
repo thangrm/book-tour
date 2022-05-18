@@ -22,7 +22,7 @@ class CreateToursTable extends Migration
             $table->string('image', 100);
             $table->string('image_seo', 100)->nullable();
             $table->string('meta_title', 100)->nullable();
-            $table->string('meta_description', 100)->nullable();
+            $table->string('meta_description', 160)->nullable();
             $table->text('map')->nullable();
             $table->string('panoramic_image', 255)->nullable();
             $table->string('video', 100)->nullable();

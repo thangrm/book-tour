@@ -26,7 +26,7 @@ class AddInvoiceNoColumnToBookingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('booking', function (Blueprint $table) {
+        Schema::table('bookings', function (Blueprint $table) {
             $table->dropColumn('transaction_id');
             $table->dropColumn('invoice_no');
         });

@@ -24,25 +24,25 @@ class DestinationsTableSeeder extends Seeder
                 'status' => 1
             ],
             [
-                'name' => 'Hoian, Quangnam',
+                'name' => 'Hội An, Quảng nam',
                 'slug' => 'hoian-quangnam',
                 'image' => 'tmp/jcJuIAKDNE',
                 'status' => 1
             ],
             [
-                'name' => 'Ba Na Hill, Danang',
+                'name' => 'Bà Nà Hill, Đà Nẵng',
                 'slug' => 'ba-na-hill-danang',
                 'image' => 'tmp/ERWwKKxKgH',
                 'status' => 1
             ],
             [
-                'name' => 'Muine, Binhthuan',
+                'name' => 'Mũi né, Bình Thuận',
                 'slug' => 'muine-binhthuan',
                 'image' => 'tmp/wiSVcOWLRF',
                 'status' => 1
             ],
             [
-                'name' => 'Halong, Quangning',
+                'name' => 'Hạ Long, Quảng Ning',
                 'slug' => 'halong-quangning',
                 'image' => 'tmp/IhUukIvvAb',
                 'status' => 2

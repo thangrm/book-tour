@@ -32,7 +32,7 @@ class CreateOauthAuthCodesTable extends Migration
     public function up()
     {
         $this->schema->create('oauth_auth_codes', function (Blueprint $table) {
-            DB::statement('SET SESSION sql_require_primary_key=0');
+//            DB::statement('SET SESSION sql_require_primary_key=0');
             $table->string('id', 100)->primary();
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('client_id');

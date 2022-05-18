@@ -58,10 +58,7 @@
                                             Tiền mặt
                                             @break
                                         @case(2)
-                                            Thẻ
-                                            @break
-                                        @case(3)
-                                            Paypal
+                                            Momo
                                             @break
                                     @endswitch
                                 </td>

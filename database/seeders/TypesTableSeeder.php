@@ -15,11 +15,11 @@ class TypesTableSeeder extends Seeder
     public function run()
     {
         DB::table('tour_types')->insert([
-            ['name' => 'City-Break', 'status' => 1],
-            ['name' => 'Wildlife', 'status' => 1],
-            ['name' => 'Cultural', 'status' => 1],
-            ['name' => 'Ecotourism', 'status' => 1],
-            ['name' => 'Sun and Beaches', 'status' => 1],
+            ['name' => 'Tour trọn gói', 'status' => 1],
+            ['name' => 'Tour gia đình', 'status' => 1],
+            ['name' => 'Tour xuyên việt', 'status' => 1],
+            ['name' => 'Biển', 'status' => 1],
+            ['name' => 'Thiên nhiên vùng núi', 'status' => 1],
         ]);
     }
 }

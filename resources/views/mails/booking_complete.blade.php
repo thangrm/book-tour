@@ -123,7 +123,7 @@
                                                     <div
                                                         style="font-size: 14px; font-family: Georgia, Times, 'Times New Roman', serif; mso-line-height-alt: 16.8px; color: #2f2f2f; line-height: 1.2;">
                                                         <p style="margin: 0; font-size: 14px; text-align: center;"><span
-                                                                style="font-size:42px;">Thank You</span></p>
+                                                                style="font-size:42px;">Thư Cảm Ơn</span></p>
                                                     </div>
                                                 </div>
                                             </td>

@@ -239,16 +239,18 @@ class ClientController extends Controller
                     'extraData' => '',
                 ]);
 
-                dispatch(new SendMailBookingJob($booking));
                 if ($response->successful()) {
                     DB::commit();
                     return response()->json([
                         'url' => $response->json('payUrl'),
+                        'response' => $response->json(),
                     ]);
                 } else {
                     DB::rollBack();
                     $this->notification->setMessage('Serve Momo không phản hồi, vui lòng thử lại sau hoặc chọn phương thức thanh toán khác');
                 }
+            }else{
+                dispatch(new SendMailBookingJob($booking));
             }
         } catch (Exception $e) {
             DB::rollBack();
@@ -277,6 +279,7 @@ class ClientController extends Controller
                     'message' => 'Đặt hàng thành công',
                     'alert-type' => 'success',
                 );
+                dispatch(new SendMailBookingJob($booking));
             } else {
                 $tour = $booking->tour;
                 $people = $booking->people;
@@ -300,7 +303,7 @@ class ClientController extends Controller
             $notification['message'] = 'Mã hóa đơn không đúng';
         }
 
-        return redirect()->route('index')->with($notification);
+        return redirect()->route('booking.thank')->with($notification);
     }
 
     public function confirmMomo(Request $request)
