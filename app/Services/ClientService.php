@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Jobs\SendMailBookingJob;
 use App\Libraries\Utilities;
 use App\Models\Booking;
+use App\Models\BookingRoom;
 use App\Models\Coupon;
 use App\Models\Customer;
 use App\Models\Destination;
@@ -64,25 +65,41 @@ class ClientService
             $input['email'] = 'Không có email';
         }
         $customer = Customer::create($input);
-        $room = Room::findOrFail($request->room_id);
+        $rooms = Room::where('tour_id', $tour->id)->get();
         $coupon = Coupon::where('code', $request->codeCoupon)->first();
+
+        $dataRoom = [];
+        $totalPriceRoom = 0;
+        foreach ($rooms as $room) {
+            $roomInsert = new BookingRoom();
+            $roomInsert->room_id = $room->id;
+            $roomInsert->number = 0;
+            $roomInsert->price = $room->price;
+
+            foreach ($request->room as $roomRequest) {
+                if ($roomRequest['id'] == $room->id && $roomRequest['number'] > 0) {
+                    $roomInsert->number = $roomRequest['number'];
+                }
+            }
+
+            $totalPriceRoom += $roomInsert->number * $roomInsert->price;
+
+            $dataRoom[] = $roomInsert;
+        }
 
         $input = Utilities::clearAllXSS($request->only([
             'people',
             'payment_method',
             'departure_time',
             'requirement',
-            'room_id',
-            'number_room'
         ]));
         $input['customer_id'] = $customer->id;
         $input['tour_id'] = $tour->id;
         $input['price'] = $tour->price;
         $input['discount_code'] = @$coupon->code;
         $input['discount'] = @$coupon->discount ?? 0;
-        $input['room_price'] = $room->price;
 
-        $total = $tour->price * $request->people + $room->price * $request->number_room;
+        $total = $tour->price * $request->people + $totalPriceRoom;
         $total = $total - $total * $input['discount'] / 100;
         $input['total'] = $total;
         $input['status'] = 1;
@@ -92,6 +109,7 @@ class ClientService
             $booking->update($input);
         } else {
             $booking = Booking::create($input);
+            $booking->booking_room()->saveMany($dataRoom);
             if ($coupon) {
                 $coupon->update([
                     'number' => $coupon->number - 1,

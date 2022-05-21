@@ -249,11 +249,14 @@ $(document).ready(function () {
 
     // Calculate Price
     let PRICE_DEFAULT = $('#price').val();
-    $('#selectNumberPeople, #selectRoom').on('change', function () {
+    $('#selectNumberPeople').on('change', function () {
         caculatePrice();
     });
 
-    $('#numberRoom').on('keyup', function () {
+    $('.numberRoom').on('keyup', function () {
+        if ($('.numberRoom').val() < 0) {
+            $('.numberRoom').val(0);
+        }
         caculatePrice();
     });
 
@@ -266,13 +269,19 @@ $(document).ready(function () {
 
             return;
         }
-        let priceRoom = $('#selectRoom option:selected').data('price') * $('#numberRoom').val();
+        let priceRoom = 0;
+        $('.numberRoom').each(function (index) {
+            if ($(this).val() > 0) {
+                priceRoom += $(this).data('price') * $(this).val();
+            }
+        });
+
         price = price + priceRoom;
         let total = price - price * discount / 100;
         $('#totalPrice').text(total.toLocaleString() + ' VNĐ');
 
         $('#priceAfterDiscount').text(price.toLocaleString() + ' VNĐ - ' + discount + '%');
-        if(discount > 0){
+        if (discount > 0) {
             $('#priceAfterDiscount').removeClass('d-none');
         }
     }

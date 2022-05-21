@@ -38,6 +38,17 @@
                             <p class="text-danger" id="errorPrice"></p>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="number" class="col-12">
+                                Số lượng<span class="text-danger">*</span>
+                            </label>
+                            <div class="col-12">
+                                <input type="number" min="0" class="form-control" name="number" id="number"
+                                       placeholder="Số lượng">
+                                <p class="text-danger" id="errorNumber"></p>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-info mb-3">
                                 Thêm phòng
@@ -59,6 +70,7 @@
                             <th>STT</th>
                             <th>Tên</th>
                             <th>Giá</th>
+                            <th>Số lượng</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -92,13 +104,24 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="name" class="col-12">
+                                <label for="price" class="col-12">
                                     Giá phòng<span class="text-danger">*</span>
                                 </label>
                                 <div class="col-12">
-                                    <input type="number" min="0" class="form-control" name="name" id="priceEdit"
+                                    <input type="number" min="0" class="form-control" name="price" id="priceEdit"
                                            placeholder="Giá phòng">
                                     <p class="text-danger" id="errorPriceEdit"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="number" class="col-12">
+                                    Số lượng<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-12">
+                                    <input type="number" min="0" class="form-control" name="number" id="numberEdit"
+                                           placeholder="Số lượng">
+                                    <p class="text-danger" id="errorNumberEdit"></p>
                                 </div>
                             </div>
                         </div>
@@ -134,6 +157,7 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'price', name: 'price'},
+                    {data: 'number', name: 'number'},
                     {data: 'action', name: 'action', className: 'align-middle text-center', width: 65},
                 ],
             });
@@ -188,10 +212,12 @@
                 let id = $(this).data('id');
                 let nameRoom = $('#Room-' + id).children().eq(1).text();
                 let priceRoom = $('#Room-' + id).children().eq(2).text();
+                let numberRoom = $('#Room-' + id).children().eq(3).text();
                 priceRoom = priceRoom.replace(/\D+/g, '');
 
                 $('#nameEdit').val(nameRoom);
                 $('#priceEdit').val(priceRoom);
+                $('#numberEdit').val(numberRoom);
             });
 
             // Add New Room
@@ -204,10 +230,12 @@
                 let link = $(this).attr('action');
                 let name = $('#name').val();
                 let price = $('#price').val();
+                let number = $('#number').val();
 
                 let formData = new FormData();
                 formData.append("name", name);
                 formData.append("price", price);
+                formData.append("number", number);
 
                 $.ajax({
                     url: link,
@@ -234,6 +262,9 @@
                         if (response?.errors?.price !== undefined) {
                             $('#errorPrice').text(response.errors.price[0]);
                         }
+                        if (response?.errors?.number !== undefined) {
+                            $('#errorNumber').text(response.errors.number[0]);
+                        }
                     },
                     complete: function () {
                         enableSubmitButton('#formAddRoom', 300);
@@ -248,12 +279,13 @@
                 $('#errorNameEdit').text('');
                 let name = $('#nameEdit').val();
                 let price = $('#priceEdit').val();
+                let number = $('#numberEdit').val();
 
                 $.ajax({
                     url: linkEditRoom,
                     method: "PUT",
                     dataType: 'json',
-                    data: {name: name, price: price},
+                    data: {name: name, price: price, number: number},
                     success: function (response) {
                         let type = response['alert-type'];
                         let message = response['message'];
@@ -272,6 +304,9 @@
                         }
                         if (response?.errors?.price !== undefined) {
                             $('#errorPriceEdit').text(response.errors.price[0]);
+                        }
+                        if (response?.errors?.number !== undefined) {
+                            $('#errorNumberEdit').text(response.errors.number[0]);
                         }
                     },
                     complete: function () {

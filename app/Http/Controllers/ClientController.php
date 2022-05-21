@@ -12,7 +12,6 @@ use App\Models\Destination;
 use App\Models\Review;
 use App\Models\Tour;
 use App\Models\Type;
-use App\Providers\MomoServiceProvider;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
 use Exception;
@@ -87,11 +86,10 @@ class ClientController extends Controller
         $tour = $tourModel->getTourBySlug($slug);
         $people = $request->people;
         $departureTime = $request->departure_time;
-        $roomId = $request->room_id;
-        $numberRoom = $request->number_room;
+        $listRooms = $request->room;
         $booking = null;
 
-        return view('booking', compact(['tour', 'people', 'departureTime', 'roomId', 'numberRoom', 'booking']));
+        return view('booking', compact(['tour', 'people', 'departureTime', 'listRooms', 'booking']));
     }
 
     /**
@@ -249,7 +247,8 @@ class ClientController extends Controller
                     DB::rollBack();
                     $this->notification->setMessage('Serve Momo không phản hồi, vui lòng thử lại sau hoặc chọn phương thức thanh toán khác');
                 }
-            }else{
+            } else {
+                DB::commit();
                 dispatch(new SendMailBookingJob($booking));
             }
         } catch (Exception $e) {

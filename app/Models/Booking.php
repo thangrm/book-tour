@@ -35,11 +35,16 @@ class Booking extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function room()
+    public function rooms()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsToMany(Room::class, BookingRoom::class)
+            ->withPivot(['id', 'price', 'number']);
     }
 
+    public function booking_room()
+    {
+        return $this->hasMany(BookingRoom::class);
+    }
 
     /**
      * Validate rules for booking

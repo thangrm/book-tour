@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\BookingRoom;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -59,6 +60,30 @@ class BookingController extends Controller
         return json_encode($booking->update([
             'deposit' => $request->deposit,
         ]));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $totalPrice = 0;
+        $booking = Booking::findOrFail($id);
+        $totalPrice += $booking->price * $request->people;
+
+        foreach ($request->room as $key => $value) {
+            $bookingRoom = BookingRoom::find($key);
+            $bookingRoom->update([
+                'number' => $value,
+            ]);
+            $bookingRoom->save();
+            $totalPrice += $bookingRoom->price * $bookingRoom->number;
+        }
+
+        $totalPrice = $totalPrice - ($totalPrice * $booking->discount / 100);
+        $booking->update([
+            'people' => $request->people,
+            'total' => $totalPrice,
+        ]);
+
+        return redirect()->route('bookings.show', $booking->id);
     }
 
 

@@ -148,6 +148,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/show/{id}', [BookingController::class, 'show'])->name('bookings.show');
             Route::put('/{id}/change-status', [BookingController::class, 'changeStatus'])->name('bookings.status');
             Route::put('/{id}/deposit', [BookingController::class, 'updateDeposit'])->name('bookings.deposit');
+            Route::put('/{id}/update', [BookingController::class, 'update'])->name('bookings.update');
             Route::get('/data', [BookingController::class, 'getData'])->name('bookings.data');
             Route::get('/chart', [BookingController::class, 'getChartData'])->name('bookings.chart');
         });

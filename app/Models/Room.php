@@ -34,6 +34,7 @@ class Room extends Model
         return [
             'name' => 'required|string|max:150',
             'price' => 'required|integer|min:0',
+            'number' => 'required|integer|min:0',
         ];
     }
 
@@ -56,6 +57,7 @@ class Room extends Model
 
         $input['name'] = $name;
         $input['price'] = $request->price;
+        $input['number'] = $request->number;
         $room->fill($input);
         $room->save();
 

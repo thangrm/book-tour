@@ -46,7 +46,8 @@ class RoomController extends Controller
     {
         $request->validate($this->room->rules(), [], [
             'name' => __('client.name'),
-            'price' => __('client.price')
+            'price' => __('client.price'),
+            'number' => __('client.number'),
         ]);
 
         try {
@@ -78,7 +79,8 @@ class RoomController extends Controller
     {
         $request->validate($this->room->rules($id), [], [
             'name' => __('client.name'),
-            'price' => __('client.price')
+            'price' => __('client.price'),
+            'number' => __('client.number'),
         ]);
 
         try {

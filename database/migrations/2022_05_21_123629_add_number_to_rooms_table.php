@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDepositColumnToBookingsTable extends Migration
+class AddNumberToRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDepositColumnToBookingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->float('deposit', 10, 0)->default(0)->after('total');
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->integer('number')->after('price');
         });
     }
 
@@ -25,8 +25,8 @@ class AddDepositColumnToBookingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->dropColumn('deposit');
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->dropColumn('number');
         });
     }
 }

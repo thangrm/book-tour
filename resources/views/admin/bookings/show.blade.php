@@ -26,158 +26,203 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title d-flex justify-content-between align-items-center">
-                            <span>Thông tin đặt tour</span>
-                            @if($booking->is_payment == PAYMENT_UN_PAID)
-                                <button class="btn btn-info text-white edit" title="Thanh toán / cọc"
-                                        data-toggle="modal" data-target="#editModal">
-                                    Thánh toán / cọc
-                                </button>
-                            @endif
-                        </h4>
-                        <hr>
-                        <table>
-                            <tr>
-                                <td class="tb-title">Tour:</td>
-                                <td>{{ $booking->tour->name }}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Thời gian:</td>
-                                <td>{{ date('d/m/Y',strtotime($booking->departure_time)) }}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Thanh toán:</td>
-                                <td>
-                                    @switch($booking->payment_method)
-                                        @case(1)
-                                            Tiền mặt
-                                            @break
-                                        @case(2)
-                                            Momo
-                                            @break
-                                    @endswitch
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Trạng thái:</td>
-                                <td>
-                                    @include('components.status_booking', ['status' => $booking->status])
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Giá:</td>
-                                <td>{{ number_format($booking->price) . ' đ'}}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Số người:</td>
-                                <td>{{ $booking->people }}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Phòng:</td>
-                                <td>{{ $booking->room->name }}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Giá phòng:</td>
-                                <td>{{ number_format($booking->room_price) . ' đ' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Số phòng:</td>
-                                <td>{{ $booking->number_room }}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Giảm giá:</td>
-                                <td>{{ $booking->discount }}%</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Tổng:</td>
-                                <td>{{ number_format($booking->total) . ' đ'}}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Đã thanh toán:</td>
-                                <td>{{ number_format($booking->deposit) . ' đ'}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    @if($booking->status == 1)
-                                        <button onclick="changeStatusBooking(2)"
-                                                class="btn btn-success btn-status m-r-5 m-t-30">
-                                            Xác nhận
-                                        </button>
-                                    @elseif($booking->status == 2)
-                                        <button onclick="changeStatusBooking(3)"
-                                                class="btn btn-primary btn-status m-r-5 m-t-30">
-                                            Hoàn thành
-                                        </button>
-                                    @endif
+    <form action="{{ route('bookings.update', $booking->id) }}" method="post">
+        @csrf
+        @method('PUT')
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title d-flex justify-content-between align-items-center">
+                                <span>Thông tin đặt tour</span>
+                                @if($booking->is_payment == PAYMENT_UN_PAID && $booking->status != BOOKING_COMPLETE)
+                                    <button type="button" class="btn btn-info text-white edit" title="Thanh toán / cọc"
+                                            data-toggle="modal" data-target="#editModal">
+                                        Thánh toán / cọc
+                                    </button>
+                                @endif
+                            </h4>
+                            <hr>
+                            <table>
+                                <tr>
+                                    <td class="tb-title">Tour:</td>
+                                    <td>{{ $booking->tour->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Thời gian:</td>
+                                    <td>{{ date('d/m/Y',strtotime($booking->departure_time)) }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Thanh toán:</td>
+                                    <td>
+                                        @switch($booking->payment_method)
+                                            @case(1)
+                                                Tiền mặt
+                                                @break
+                                            @case(2)
+                                                Momo
+                                                @break
+                                        @endswitch
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Trạng thái:</td>
+                                    <td>
+                                        @include('components.status_booking', ['status' => $booking->status])
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Giá:</td>
+                                    <td>{{ number_format($booking->price) . ' đ'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Số người:</td>
+                                    <td>
+                                        @if($booking->status != BOOKING_COMPLETE)
+                                            <input type="number" class="form-control" min="1"
+                                                   value="{{ $booking->people }}" name="people">
+                                        @else
+                                            {{ $booking->people }}
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Giảm giá:</td>
+                                    <td>{{ $booking->discount }}%</td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Tổng:</td>
+                                    <td>{{ number_format($booking->total) . ' đ'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Đã thanh toán:</td>
+                                    <td>{{ number_format($booking->deposit) . ' đ'}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        @if($booking->status == 1)
+                                            <button onclick="changeStatusBooking(2)"
+                                                    class="btn btn-success btn-status m-r-5 m-t-30">
+                                                Xác nhận
+                                            </button>
+                                        @elseif($booking->status == 2)
+                                            <button onclick="changeStatusBooking(3)"
+                                                    class="btn btn-primary btn-status m-r-5 m-t-30">
+                                                Hoàn thành
+                                            </button>
+                                        @endif
 
-                                    @if($booking->status < 3 )
-                                        <button onclick="changeStatusBooking(4)"
-                                                class="btn btn-danger btn-status m-t-30">
-                                            Hủy đơn hàng
-                                        </button>
-                                    @endif
-                                </td>
-                            </tr>
-                        </table>
+                                        @if($booking->status < 3 )
+                                            <button onclick="changeStatusBooking(4)"
+                                                    class="btn btn-danger btn-status m-t-30">
+                                                Hủy đơn hàng
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Ngày tạo: {{  $booking->created_at->format('d/m/Y') }}</h4>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Thông tin khách hàng</h4>
+                            <hr>
+                            <table>
+                                <tr>
+                                    <td class="tb-title">Tên:</td>
+                                    <td>{{ $booking->customer->first_name . ' ' . $booking->customer->last_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Email:</td>
+                                    <td>{{ $booking->customer->email }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Điện thoại:</td>
+                                    <td>{{ $booking->customer->phone }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Địa chỉ:</td>
+                                    <td>
+                                        {{ trim(implode(", ", [
+                                            $booking->customer->address,
+                                             $booking->customer->province,
+                                             $booking->customer->city,
+                                             $booking->customer->country
+                                             ]),', ')  }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tb-title">Zipcode:</td>
+                                    <td>{{  $booking->customer->zipcode  }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Yêu cầu</h4>
+                            <hr>
+                            <p> {{ $booking->requirement }} </p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Ngày tạo: {{  $booking->created_at->format('d/m/Y') }}</h4>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Thông tin khách hàng</h4>
-                        <hr>
-                        <table>
-                            <tr>
-                                <td class="tb-title">Tên:</td>
-                                <td>{{ $booking->customer->first_name . ' ' . $booking->customer->last_name }}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Email:</td>
-                                <td>{{ $booking->customer->email }}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Điện thoại:</td>
-                                <td>{{ $booking->customer->phone }}</td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Địa chỉ:</td>
-                                <td>
-                                    {{ trim(implode(", ", [
-                                        $booking->customer->address,
-                                         $booking->customer->province,
-                                         $booking->customer->city,
-                                         $booking->customer->country
-                                         ]),', ')  }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tb-title">Zipcode:</td>
-                                <td>{{  $booking->customer->zipcode  }}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Yêu cầu</h4>
-                        <hr>
-                        <p> {{ $booking->requirement }} </p>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Thông tin phòng</h4>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tên phòng</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Giá phòng</th>
+                                    <th scope="col">Tông tiền</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($booking->rooms as $room)
+                                    <tr>
+                                        <td>{{ $loop->index + 1  }}</td>
+                                        <td>{{ $room->name }}</td>
+                                        <td>
+                                            @if($booking->status != BOOKING_COMPLETE)
+                                                <input type="number" class="form-control"
+                                                       value="{{ $room->pivot->number }}"
+                                                       name="room[{{ $room->pivot->id }}]">
+                                            @else
+                                                {{ $room->pivot->number }}
+                                            @endif
+                                        </td>
+                                        <td>{{ number_format($room->pivot->price) }}đ</td>
+                                        <td>{{ number_format($room->pivot->number * $room->pivot->price) }}đ</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                            @if($booking->status != BOOKING_COMPLETE)
+                                <button type="submit" class="btn btn-info text-white edit" title="Cập nhật">
+                                    Cập nhật
+                                </button>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <!-- Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"

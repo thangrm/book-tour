@@ -289,30 +289,34 @@
                                     </div>
                                 </div>
 
-                                <!--- THÊM MỚI -->
+                                <!--- PHÒNG -->
                                 <h5>Loại phòng</h5>
                                 <div class="input-inner-icon">
-                                    <img src="{{ asset('images/icon/home_icon.svg') }}" alt="people">
-                                    <select class="form-control" id="selectRoom" name="room_id">
-                                        @foreach($tour->rooms as $room)
-                                            <option value="{{ $room->id }}" data-price="{{ $room->price }}"
-                                                {{ $room->id == $roomId ? 'selected' : '' }}>
-                                                {{ $room->name . ' - ' . number_format($room->price) . 'đ' }}
-                                            </option>
+                                    @foreach($tour->rooms as $room)
+                                        @php
+                                            $numberRoom = 0;
+                                        @endphp
+                                        @foreach($listRooms as $roomItem)
+                                            @if($roomItem['id'] == $room->id)
+                                                @php
+                                                    $numberRoom = $roomItem['number'];
+                                                @endphp
+                                            @endif
                                         @endforeach
-                                    </select>
+                                        <h6>{{ $room->name . ' - ' . number_format($room->price) . 'đ' }}</h6>
+                                        <h7 style="color: grey">Còn 10 phòng</h7>
+                                        <input type="hidden" min="0" class="selectRoom"
+                                               name="room[{{ $loop->index }}][id]" value="{{ $room->id }}">
+                                        <div class="input-inner-icon">
+                                            <img src="{{ asset('images/icon/number.svg') }}" alt="people">
+                                            <input type="number" class="form-control numberRoom"
+                                                   name="room[{{ $loop->index }}][number]"
+                                                   data-price="{{ $room->price }}"
+                                                   value="{{ $numberRoom }}"
+                                                   placeholder="Số lượng phòng" min="0">
+                                        </div>
+                                    @endforeach
                                 </div>
-                                <div class="input-inner-icon">
-                                    <img src="{{ asset('images/icon/number.svg') }}" alt="people">
-                                    <input type="number" class="form-control" id="numberRoom" name="number_room"
-                                           placeholder="Số lượng phòng" min="1" value="{{ $numberRoom }}">
-                                </div>
-
-                                {{--                                <h5>Dịch vụ kèm thêm</h5>--}}
-                                {{--                                - Miễn phí bữa sáng</br>--}}
-                                {{--                                - Miễn phí vé vào cửa</br></br>--}}
-
-                                <!--- KẾT THÚC THÊM MỚI -->
 
                             </div>
                             <div class="total-price-coupon d-flex justify-content-between align-items-center">
