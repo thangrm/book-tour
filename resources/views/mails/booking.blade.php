@@ -307,22 +307,6 @@
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
                                                             <span style="font-size:16px;"><strong><span
-                                                                        style="color:#5d77a9;">Giá:</span></strong> {{ number_format($booking->price) }}đ</span>
-                                                        </p>
-                                                        <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
-                                                            <span style="font-size:16px;"><strong><span
-                                                                        style="color:#5d77a9;">Phòng:</span></strong> {{ $booking->number_room . ' '. $booking->room->name }}</span>
-                                                        </p>
-                                                        <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
-                                                            <span style="font-size:16px;"><strong><span
-                                                                        style="color:#5d77a9;">Giá phòng:</span></strong> {{ number_format($booking->room_price) }}đ</span>
-                                                        </p>
-                                                        <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
-                                                            <span style="font-size:16px;"><strong><span
-                                                                        style="color:#5d77a9;">Số người:</span></strong> {{ $booking->people }}</span>
-                                                        </p>
-                                                        <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
-                                                            <span style="font-size:16px;"><strong><span
                                                                         style="color:#5d77a9;">Giảm giá:</span></strong> {{ $booking->discount }}%</span>
                                                         </p>
                                                         <p style="margin: 0; font-size: 16px; mso-line-height-alt: 24px;">
