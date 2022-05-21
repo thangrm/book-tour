@@ -107,7 +107,7 @@
         <th scope="col">Dịch vụ</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Giá</th>
-        <th scope="col">Tông tiền</th>
+        <th scope="col">Tổng tiền</th>
     </tr>
     </thead>
     <tbody>
@@ -135,9 +135,16 @@
         <td align="right">
             <h2><span style="color: green;">Giá:</span></h2>
         </td>
-        <td align="left" width="250px">
-            <h2>{{ number_format($booking->total / (100 - $booking->discount) * 100) }}₫ - {{ $booking->discount }}
-                %</h2>
+        <td align="left" width="200px">
+            <h2>{{ number_format($booking->total / (100 - $booking->discount) * 100) }}₫</h2>
+        </td>
+    </tr>
+    <tr align="right">
+        <td align="right">
+            <h2><span style="color: green;">Giám giá:</span></h2>
+        </td>
+        <td align="left">
+            <h2>{{ $booking->discount }}%</h2>
         </td>
     </tr>
     <tr align="right">
