@@ -153,7 +153,7 @@ class Tour extends Model
      */
     public function getTourBySlug($slug)
     {
-        return $this->with('destination', 'type', 'itineraries.places')
+        return $this->with('destination', 'type', 'itineraries.places', 'rooms')
             ->where('slug', $slug)
             ->where('status', 1)
             ->firstOrFail();

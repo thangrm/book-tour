@@ -166,7 +166,7 @@ $(document).ready(function () {
         e.target.classList.add("target");
         linkSrc = e.target.getAttribute('src');
         $('#mainImageTour').attr('src', linkSrc);
-    })
+    });
 
     // Rate review{
     $('.rate-star').hover(function (e) {
@@ -245,7 +245,26 @@ $(document).ready(function () {
 
         end.add(durationDay - 1, 'days');
         $('#departureTime').val(start.format("M/D/YYYY") + ' - ' + end.format("M/D/YYYY"));
+        checkRoom(start.format("YYYY-MM-DD"));
     });
+
+    checkRoom($('#departureTimePicker').data('daterangepicker').startDate.format("YYYY-MM-DD"));
+
+    // Check room
+    function checkRoom(date) {
+        let linkCheckRoom = $('#linkCheckRoom').val();
+        $.ajax({
+            url: linkCheckRoom,
+            method: "GET",
+            data: {date: date},
+            success: function (response) {
+                for (const [key, value] of Object.entries(response.room_available)) {
+                    $('#roomAvailable' + key).text(value);
+                    $('#numberRoom' + key).prop('max', value);
+                }
+            }
+        });
+    }
 
     // Calculate Price
     let PRICE_DEFAULT = $('#price').val();
@@ -254,8 +273,8 @@ $(document).ready(function () {
     });
 
     $('.numberRoom').on('keyup', function () {
-        if ($('.numberRoom').val() < 0) {
-            $('.numberRoom').val(0);
+        if ($(this).val() < 0) {
+            $(this).val(0);
         }
         caculatePrice();
     });

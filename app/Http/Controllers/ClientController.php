@@ -13,6 +13,7 @@ use App\Models\Review;
 use App\Models\Tour;
 use App\Models\Type;
 use App\Services\ClientService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -313,5 +314,41 @@ class ClientController extends Controller
             $booking->transaction_id = $request->transId;
             $booking->save();
         }
+    }
+
+    public function checkRoom(Request $request, $slug)
+    {
+        $request->validate([
+            'date' => 'required|date_format:Y-m-d',
+        ]);
+        $tourModel = new Tour();
+        $tour = $tourModel->getTourBySlug($slug);
+        $offsetDate = ($tour->duration - 1) * -1;
+        $startDate = Carbon::parse($request->date)->addDays($offsetDate);
+        $endDate = Carbon::parse($request->date);
+        $bookings = Booking::where('status', '!=', BOOKING_CANCEL)
+            ->with('booking_room')
+            ->whereDate('departure_time', '>=', $startDate)
+            ->whereDate('departure_time', '<=', $endDate)
+            ->get();
+
+        $roomAvailable = [];
+        foreach ($tour->rooms as $room) {
+            $roomAvailable[$room->id] = $room->number;
+        }
+
+        foreach ($bookings as $booking) {
+            foreach ($booking->booking_room as $bookingRoom) {
+                $roomAvailable[$bookingRoom->room_id] -= $bookingRoom->number;
+                if ($roomAvailable[$bookingRoom->room_id] < 0) {
+                    $roomAvailable[$bookingRoom->room_id] = 0;
+                }
+            }
+        }
+
+        return response()->json([
+            'date' => $request->date,
+            'room_available' => $roomAvailable,
+        ]);
     }
 }

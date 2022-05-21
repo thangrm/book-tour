@@ -468,14 +468,17 @@
                             <div class="input-inner-icon">
                                 @foreach($tour->rooms as $room)
                                     <h6>{{ $room->name . ' - ' . number_format($room->price) . 'đ' }}</h6>
-                                    <h7 style="color: grey">Còn 10 phòng</h7>
+                                    <h7 style="color: grey">Còn
+                                        <span id="roomAvailable{{ $room->id }}"></span> phòng
+                                    </h7>
                                     <input type="hidden" min="0" class="selectRoom"
                                            name="room[{{ $loop->index }}][id]" value="{{ $room->id }}">
                                     <div class="input-inner-icon">
                                         <img src="{{ asset('images/icon/number.svg') }}" alt="people">
                                         <input type="number" class="form-control numberRoom"
                                                name="room[{{ $loop->index }}][number]" data-price="{{ $room->price }}"
-                                               placeholder="Số lượng phòng" min="0">
+                                               id="numberRoom{{ $room->id }}" placeholder="Số lượng phòng" min="0"
+                                               value="0">
                                     </div>
 
                                 @endforeach
@@ -511,7 +514,7 @@
             </div>
             <div class="body-slide">
                 <div class="row">
-                    @foreach($relateTours as $tour)
+                    @foreach($relateTours as $tourItem)
                         <div class="col-6 col-lg-4">
                             <div class="card card-tour">
                                 <div class="card-image">
@@ -520,28 +523,29 @@
                                     <div class="rate">
                                         <img src="{{ asset('images/icon/star.svg') }}" alt="star">
                                         <span
-                                            class="text-rate">{{ \App\Libraries\Utilities::calculatorRateReView($tour->reviews)['total'] }}
+                                            class="text-rate">{{ \App\Libraries\Utilities::calculatorRateReView($tourItem->reviews)['total'] }}
                                         </span>
                                     </div>
-                                    <img src="{{ asset('storage/images/tours/'.$tour->image) }}" class="card-img-top"
-                                         alt="{{ $tour->name }}">
+                                    <img src="{{ asset('storage/images/tours/'.$tourItem->image) }}"
+                                         class="card-img-top"
+                                         alt="{{ $tourItem->name }}">
                                 </div>
 
                                 <div class="card-body">
                                     <p class="card-text">
                                         <img src="{{ asset('images/icon/location.svg') }}" alt="location">
-                                        <span>{{ $tour->destination->name }}</span>
+                                        <span>{{ $tourItem->destination->name }}</span>
                                     </p>
                                     <h5 class="card-title"><a
-                                            href="{{ route('client.tours.detail', $tour->slug) }}">{{ $tour->name }}</a>
+                                            href="{{ route('client.tours.detail', $tourItem->slug) }}">{{ $tourItem->name }}</a>
                                     </h5>
                                     <div class="d-inline-flex justify-content-between align-items-center w-100">
                                         <p class="card-text">
                                             <img src="{{ asset('images/icon/schedule.svg') }}" alt="location">
-                                            <span>{{ \App\Libraries\Utilities::durationToString($tour->duration) }}</span>
+                                            <span>{{ \App\Libraries\Utilities::durationToString($tourItem->duration) }}</span>
                                         </p>
                                         <p class="card-text">{{ __('client.from') }} <span
-                                                class="card-title">${{ $tour->price }}</span>
+                                                class="card-title">{{ number_format($tourItem->price) }}đ</span>
                                         </p>
                                     </div>
                                 </div>
@@ -553,9 +557,21 @@
         </div>
     </div>
     <!-------------------- End Related Tours -------------------->
+
+    <!-------------------- Other Data -------------------->
+    <input type="hidden" value="{{ route('client.booking.check-room', $tour->slug) }}" id="linkCheckRoom">
 @endsection
 @section('js')
     <script>
         disableSubmitButton('#formBookNow');
+        $('#formBookNow').submit(function (e) {
+            e.preventDefault();
+            $('.numberRoom').each(function () {
+                if ($(this).val() == "") {
+                    $(this).val(0);
+                }
+            })
+            this.submit();
+        })
     </script>
 @endsection

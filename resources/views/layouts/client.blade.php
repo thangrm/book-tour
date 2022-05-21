@@ -73,7 +73,7 @@
 <!-- toastr -->
 <script src="{{ asset('js/toastr.min.js') }}" type="text/javascript"></script>
 <!-- custom js -->
-<script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/script.js') . '?'.time() }}" type="text/javascript"></script>
 <script src="{{ asset('js/slider.js') }}" type="text/javascript"></script>
 
 <script type="text/javascript">

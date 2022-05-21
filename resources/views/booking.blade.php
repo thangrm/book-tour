@@ -304,7 +304,9 @@
                                             @endif
                                         @endforeach
                                         <h6>{{ $room->name . ' - ' . number_format($room->price) . 'đ' }}</h6>
-                                        <h7 style="color: grey">Còn 10 phòng</h7>
+                                        <h7 style="color: grey">Còn
+                                            <span id="roomAvailable{{ $room->id }}"></span> phòng
+                                        </h7>
                                         <input type="hidden" min="0" class="selectRoom"
                                                name="room[{{ $loop->index }}][id]" value="{{ $room->id }}">
                                         <div class="input-inner-icon">
@@ -313,7 +315,8 @@
                                                    name="room[{{ $loop->index }}][number]"
                                                    data-price="{{ $room->price }}"
                                                    value="{{ $numberRoom }}"
-                                                   placeholder="Số lượng phòng" min="0">
+                                                   id="numberRoom{{ $room->id }}"
+                                                   placeholder="Số lượng phòng">
                                         </div>
                                     @endforeach
                                 </div>
@@ -354,6 +357,9 @@
         </div>
     </div>
     <!-------------------- End Thanks -------------------->
+
+    <!-------------------- Other Data -------------------->
+    <input type="hidden" value="{{ route('client.booking.check-room', $tour->slug) }}" id="linkCheckRoom">
 @endsection
 @section('js')
     <script>
