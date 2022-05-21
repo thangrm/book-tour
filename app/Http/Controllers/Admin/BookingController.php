@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\BookingRoom;
+use PDF;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -106,5 +107,14 @@ class BookingController extends Controller
         return response()->json([
             'booking' => $data
         ]);
+    }
+
+    public function downloadInvoice($id)
+    {
+        $booking = Booking::findOrFail($id);
+
+//        return view('admin.bookings.invoice', compact('booking'));
+        $pdf = PDF::loadView('admin.bookings.invoice', compact('booking'));
+        return $pdf->stream('admin.bookings.invoice')->header('Content-Type', 'application/pdf');
     }
 }

@@ -149,6 +149,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::put('/{id}/change-status', [BookingController::class, 'changeStatus'])->name('bookings.status');
             Route::put('/{id}/deposit', [BookingController::class, 'updateDeposit'])->name('bookings.deposit');
             Route::put('/{id}/update', [BookingController::class, 'update'])->name('bookings.update');
+            Route::get('/{id}/invoice', [BookingController::class, 'downloadInvoice'])->name('bookings.invoice');
             Route::get('/data', [BookingController::class, 'getData'])->name('bookings.data');
             Route::get('/chart', [BookingController::class, 'getChartData'])->name('bookings.chart');
         });

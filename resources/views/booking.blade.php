@@ -102,7 +102,7 @@
                                             <label for="province"
                                                    class="form-label title">Huyện </label>
                                             <input type="text" class="form-control" id="province"
-                                                   placeholder="Your State/Province/Region" name="Huyện"
+                                                   placeholder="Huyện" name="province"
                                                    value="{{ old('province', $booking ? $booking->customer->province : '') }}">
                                             <p class="text-danger" id="errorProvince"></p>
                                             @error('province')

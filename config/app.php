@@ -177,6 +177,8 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -234,6 +236,8 @@ return [
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'DebugBar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

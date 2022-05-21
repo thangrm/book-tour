@@ -102,19 +102,20 @@
                                 <tr>
                                     <td colspan="2">
                                         @if($booking->status == 1)
-                                            <button onclick="changeStatusBooking(2)"
+                                            <button onclick="changeStatusBooking(2)" type="button"
+
                                                     class="btn btn-success btn-status m-r-5 m-t-30">
                                                 Xác nhận
                                             </button>
                                         @elseif($booking->status == 2)
-                                            <button onclick="changeStatusBooking(3)"
+                                            <button onclick="changeStatusBooking(3)" type="button"
                                                     class="btn btn-primary btn-status m-r-5 m-t-30">
                                                 Hoàn thành
                                             </button>
                                         @endif
 
                                         @if($booking->status < 3 )
-                                            <button onclick="changeStatusBooking(4)"
+                                            <button onclick="changeStatusBooking(4)" type="button"
                                                     class="btn btn-danger btn-status m-t-30">
                                                 Hủy đơn hàng
                                             </button>
@@ -217,6 +218,13 @@
                                     Cập nhật
                                 </button>
                             @endif
+                            <a href="{{ route('bookings.invoice', $booking->id) }}"
+                               target="_blank"
+                               class="btn btn-success text-white edit"
+                               title="Hóa đơn">
+                                <i class="fa fa-download"></i>
+                                Hóa đơn
+                            </a>
                         </div>
                     </div>
                 </div>
