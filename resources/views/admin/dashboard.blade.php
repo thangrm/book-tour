@@ -124,13 +124,99 @@
                             <div class="col-2">
                                 <div class='input-group mb-3'>
                                     <select name="bookingChart" id="optionBookingChart" class="form-control">
-                                        <option value="line">Line</option>
-                                        <option value="bar">Bar</option>
+                                        <option value="line">Biểu đồ đường</option>
+                                        <option value="bar">Biểu đồ cột</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div id="bookingArea" style="height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Best tour --}}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body analytics-info">
+                        <h4 class="card-title"> Tour nhiều người chọn nhất </h4>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class='input-group mb-3'>
+                                    <input type='text' id="tourChartDate" class="form-control daterange"/>
+                                    <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <span class="ti-calendar"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class='input-group mb-3'>
+                                    <select name="tourChart" id="optionTourChart" class="form-control">
+                                        <option value="line">Biểu đồ đường</option>
+                                        <option value="bar" selected>Biểu đồ cột</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tourArea" style="height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Room chart --}}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body analytics-info">
+                        <h4 class="card-title"> Số lượng thuê phòng </h4>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class='input-group mb-3'>
+                                    <input type='text' id="roomChartDate" class="form-control daterange"
+                                           style="height: 40px">
+                                    <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <span class="ti-calendar"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <div class='input-group mb-3'>
+                                    <select class="form-control select2" name="tour_id" id="filterTour">
+                                        @foreach($tours as $tour)
+                                            <option value="{{ $tour->id }}"> {{ $tour->name }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <div class='input-group mb-3'>
+                                    <select name="roomType" id="filterRoom" class="form-control"
+                                            style="height: 40px">
+                                        <option value="0">Tất cả</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <div class='input-group mb-3'>
+                                    <select name="roomChart" id="optionRoomChart" class="form-control"
+                                            style="height: 40px">
+                                        <option value="line">Biểu đồ đường</option>
+                                        <option value="bar" selected>Biểu đồ cột</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="roomArea" style="height:400px;"></div>
                     </div>
                 </div>
             </div>
@@ -147,6 +233,8 @@
     <link rel="stylesheet" href="{{ asset('admins/assets/libs/daterangepicker/daterangepicker.css') }}">
     <script src="{{ asset('admins/assets/libs/echarts/dist/echarts-en.min.js') }}"></script>
     <script>
+        $('#filterTour').select2({width: '100%'});
+
         function initChart(idRangeDate, ajaxGetData) {
             let start = moment().subtract(29, 'days');
             let end = moment();
@@ -169,7 +257,7 @@
             });
         }
 
-        function getOptions(color, xAxis, legend, data, typeChart) {
+        function getOptions(color, xAxis, legend, data, typeChart, formatter = '{value}') {
             let seriesData = [];
             let boundaryGap = false;
             if (typeChart === 'bar') {
@@ -238,7 +326,7 @@
                     {
                         type: 'value',
                         axisLabel: {
-                            formatter: '{value}đ'
+                            formatter: formatter,
                         }
                     }
                 ],
@@ -297,16 +385,129 @@
                 reject,
                 other
             ];
-            chartBooking.setOption(getOptions(color, date, legend, dataChart, typeChart));
+            chartBooking.setOption(getOptions(color, date, legend, dataChart, typeChart, '{value}đ'));
+        }
+
+        // Chart tour
+        let dataTour = null;
+
+        function getDataTour(startDate, endDate) {
+            $.ajax({
+                type: "GET",
+                url: `{{ route('tours.chart') }}`,
+                data: {
+                    startDate: startDate,
+                    endDate: endDate
+                },
+                success: function (response) {
+                    dataTour = response;
+                    tourChart(response);
+                }
+            });
+        }
+
+        function tourChart(response) {
+            let tours = response.tours;
+            let number = tours.number;
+            let name = tours.name;
+            let typeChart = $('#optionTourChart').val();
+            let chartTour = echarts.init(document.getElementById('tourArea'));
+
+            let color = ['#A4E0F7'];
+            let legend = [
+                'Tour nổi bật',
+            ];
+            let dataChart = [
+                number,
+            ];
+            chartTour.setOption(getOptions(color, name, legend, dataChart, typeChart, '{value} lượt đặt'));
+        }
+
+        // Chart room
+        let dataRoom = null;
+
+        function getDataRoom(startDate, endDate) {
+            let tourId = $('#filterTour').val();
+            let roomId = $('#filterRoom').val();
+            $.ajax({
+                type: "GET",
+                url: `{{ route('rooms.chart') }}`,
+                data: {
+                    startDate: startDate,
+                    endDate: endDate,
+                    tour_id: tourId,
+                    room_id: roomId,
+                },
+                success: function (response) {
+                    dataRoom = response;
+                    roomChart(response);
+                }
+            });
+        }
+
+        function roomChart(response) {
+            let room = response.room;
+            let responseDate = room.date;
+            let available = room.available;
+            let rented = room.rented;
+            let typeChart = $('#optionRoomChart').val();
+            let chartBooking = echarts.init(document.getElementById('roomArea'));
+            let date = formatDateChart(responseDate);
+
+            let color = ['#DD9A9A', '#ABC4A0'];
+            let legend = [
+                'Đã thuê',
+                'Còn trống',
+            ];
+            let dataChart = [
+                rented,
+                available,
+            ];
+            chartBooking.setOption(getOptions(color, date, legend, dataChart, typeChart, '{value} phòng'));
         }
 
         // Init chart
         $(function () {
             initChart('#bookingChartDate', getDataBooking)
+            initChart('#tourChartDate', getDataTour)
+            initChart('#roomChartDate', getDataRoom)
         });
 
         $('#optionBookingChart').on('change', function () {
             bookingChart(dataBooking);
+        })
+        $('#optionTourChart').on('change', function () {
+            tourChart(dataTour);
+        })
+        $('#optionRoomChart').on('change', function () {
+            roomChart(dataRoom);
+        })
+
+        $('#filterTour').on('change', function () {
+            $.ajax({
+                type: "GET",
+                url: `{{ route('rooms.list') }}`,
+                data: {
+                    tour_id: $('#filterTour').val(),
+                },
+                success: function (response) {
+                    let html = `<option value="0">Tất cả</option>`;
+                    response.rooms.forEach(function (item) {
+                        html += `<option value="${item.id}">${item.name}</option>`;
+                    });
+
+                    $('#filterRoom').html(html);
+                    let start = $('#roomChartDate').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                    let end = $('#roomChartDate').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                    getDataRoom(start, end);
+                }
+            });
+        });
+
+        $('#filterRoom').on('change', function () {
+            let start = $('#roomChartDate').data('daterangepicker').startDate.format('YYYY-MM-DD');
+            let end = $('#roomChartDate').data('daterangepicker').endDate.format('YYYY-MM-DD');
+            getDataRoom(start, end);
         })
     </script>
 @endsection

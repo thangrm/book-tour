@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Libraries\Notification;
+use App\Libraries\Utilities;
+use App\Models\Booking;
 use App\Models\Room;
 use App\Models\Tour;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\QueryException;
@@ -127,5 +130,84 @@ class RoomController extends Controller
         }
 
         return null;
+    }
+
+    public function getRoomByTourId(Request $request)
+    {
+        $rooms = Room::where('tour_id', $request->tour_id)->get();
+
+        $data = [];
+        foreach ($rooms as $room) {
+            $data[] = [
+                'id' => $room->id,
+                'name' => $room->name . ' - ' . number_format($room->price) . 'đ',
+            ];
+        }
+        return response()->json([
+            'rooms' => $data,
+        ]);
+    }
+
+    public function getChartData(Request $request)
+    {
+        $arrDates = Utilities::dateRange($request->startDate, $request->endDate);
+        $tour = Tour::find($request->tour_id);
+
+        $arrRented = [];
+        $arrAvailable = [];
+        foreach ($arrDates as $date) {
+            $result = $this->checkRoom($tour, $date);
+
+            if ($request->room_id == 0) {
+                $arrRented[] = array_sum($result['rented']);
+                $arrAvailable[] = array_sum($result['available']);
+            } else {
+                $arrRented[] = $result['rented'][$request->room_id];
+                $arrAvailable[] = $result['available'][$request->room_id];
+            }
+        }
+
+        return response()->json([
+            'room' => [
+                'date' => $arrDates,
+                'rented' => $arrRented,
+                'available' => $arrAvailable,
+            ]
+        ]);
+    }
+
+    public function checkRoom($tour, $date)
+    {
+        $offsetDate = ($tour->duration - 1) * -1;
+        $startDate = Carbon::parse($date)->addDays($offsetDate);
+        $endDate = Carbon::parse($date);
+        $bookings = Booking::where('status', '!=', BOOKING_CANCEL)
+            ->with('booking_room')
+            ->whereDate('departure_time', '>=', $startDate)
+            ->whereDate('departure_time', '<=', $endDate)
+            ->where('tour_id', $tour->id)
+            ->get();
+
+        $roomRented = [];
+        $roomAvailable = [];
+        foreach ($tour->rooms as $room) {
+            $roomAvailable[$room->id] = $room->number;
+            $roomRented[$room->id] = 0;
+        }
+
+        foreach ($bookings as $booking) {
+            foreach ($booking->booking_room as $bookingRoom) {
+                $roomAvailable[$bookingRoom->room_id] -= $bookingRoom->number;
+                $roomRented[$bookingRoom->room_id] += $bookingRoom->number;
+                if ($roomAvailable[$bookingRoom->room_id] < 0) {
+                    $roomAvailable[$bookingRoom->room_id] = 0;
+                }
+            }
+        }
+
+        return [
+            'available' => $roomAvailable,
+            'rented' => $roomRented,
+        ];
     }
 }

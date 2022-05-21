@@ -152,7 +152,6 @@ Route::group(['prefix' => 'admin'], function () {
             Route::put('/{id}/update', [BookingController::class, 'update'])->name('bookings.update');
             Route::get('/{id}/invoice', [BookingController::class, 'downloadInvoice'])->name('bookings.invoice');
             Route::get('/data', [BookingController::class, 'getData'])->name('bookings.data');
-            Route::get('/chart', [BookingController::class, 'getChartData'])->name('bookings.chart');
         });
 
         // Contact
@@ -161,5 +160,10 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/show/{id}', [ContactController::class, 'show'])->name('contacts.show');
             Route::get('/data', [ContactController::class, 'getData'])->name('contacts.data');
         });
+
+        Route::get('bookings/chart', [BookingController::class, 'getChartData'])->name('bookings.chart');
+        Route::get('tours/chart', [TourController::class, 'getChartData'])->name('tours.chart');
+        Route::get('rooms/chart', [RoomController::class, 'getChartData'])->name('rooms.chart');
+        Route::get('rooms/list-room', [RoomController::class, 'getRoomByTourId'])->name('rooms.list');
     });
 });

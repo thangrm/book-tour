@@ -326,10 +326,11 @@ class ClientController extends Controller
         $offsetDate = ($tour->duration - 1) * -1;
         $startDate = Carbon::parse($request->date)->addDays($offsetDate);
         $endDate = Carbon::parse($request->date);
-        $bookings = Booking::where('status', '!=', BOOKING_CANCEL)
-            ->with('booking_room')
+        $bookings = Booking::with('booking_room')
+            ->where('status', '!=', BOOKING_CANCEL)
             ->whereDate('departure_time', '>=', $startDate)
             ->whereDate('departure_time', '<=', $endDate)
+            ->where('tour_id', $tour->id)
             ->get();
 
         $roomAvailable = [];

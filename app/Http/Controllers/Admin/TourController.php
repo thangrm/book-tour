@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Libraries\Notification;
+use App\Models\Booking;
 use App\Models\Destination;
 use App\Models\Tour;
 use App\Models\Type;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class TourController extends Controller
 {
@@ -53,7 +56,7 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->tour->rules(),[],[
+        $request->validate($this->tour->rules(), [], [
             'name' => 'tên',
             'slug' => 'tên rút gọn',
             'image' => 'ảnh',
@@ -108,7 +111,7 @@ class TourController extends Controller
     public function update(Request $request, int $id)
     {
         Tour::findOrFail($id);
-        $request->validate($this->tour->rules($id), [],[
+        $request->validate($this->tour->rules($id), [], [
             'name' => 'tên',
             'slug' => 'tên rút gọn',
             'image' => 'ảnh',
@@ -171,6 +174,44 @@ class TourController extends Controller
             $data = $this->tour->getListTours($request);
             return $this->tour->getDataTable($data);
         }
+    }
+
+    public function getChartData(Request $request)
+    {
+        $startDate = new Carbon($request->startDate);
+        $endDate = (new Carbon($request->endDate))->addDay();
+        $bookings = Booking::select('tour_id', DB::raw('count(*) as total'))
+            ->where('status', '!=', BOOKING_CANCEL)
+            ->whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<', $endDate)
+            ->groupBy('tour_id')
+            ->orderBy('total', 'desc')
+            ->get()->toArray();
+
+        $arrTourId = [];
+        $arrNumber = [];
+        foreach ($bookings as $booking) {
+            $arrTourId[] = $booking['tour_id'];
+            $arrNumber[] = $booking['total'];
+        }
+
+        $tours = Tour::whereIn('id', $arrTourId)->get();
+
+        $arrTourName = [];
+        foreach ($arrTourId as $id) {
+            foreach ($tours as $tour) {
+                if ($tour->id == $id) {
+                    $arrTourName[] = $tour->name;
+                }
+            }
+        }
+
+        return response()->json([
+            'tours' => [
+                'number' => $arrNumber,
+                'name' => $arrTourName,
+            ]
+        ]);
     }
 
     /**

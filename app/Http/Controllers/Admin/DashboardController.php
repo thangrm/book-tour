@@ -17,6 +17,9 @@ class DashboardController extends Controller
         $numberTypes = Type::where('status', ACTIVE)->count();
         $numberTours = Tour::where('status', ACTIVE)->count();
         $numberBookings = Booking::count();
-        return view('admin.dashboard', compact(['numberDestinations', 'numberTypes', 'numberTours', 'numberBookings']));
+        $tours = Tour::orderBy('name')->get();
+
+        return view('admin.dashboard',
+            compact(['numberDestinations', 'numberTypes', 'numberTours', 'numberBookings', 'tours']));
     }
 }
